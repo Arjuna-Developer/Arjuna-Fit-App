@@ -392,6 +392,8 @@ let yesterdayLog = {};
 // INIT
 // ══════════════════════════════════
 async function init() {
+  // Pre-cache all local foods
+  FOODS_DB.forEach(f => FOOD_CACHE[f.id] = f);
   const now = new Date();
   todayKey = now.toISOString().split('T')[0];
   const yesterday = new Date(now - 86400000).toISOString().split('T')[0];
@@ -736,39 +738,45 @@ function renderFoodResults(q, usdaFoods=[]) {
   document.getElementById('foodResults').innerHTML = localHTML + usdaHTML;
 }
 
+// ── Food cache para evitar problemas con JSON en onclick ──
+const FOOD_CACHE = {};
+
+function cacheFood(f) {
+  FOOD_CACHE[f.id] = f;
+  return f.id;
+}
+
 function foodRow(f) {
+  cacheFood(f);
   const macroStr = `${f.kcal} kcal · ${f.prot}g prot · por ${f.baseQty}${f.unit}`;
   return `
-    <div class="food-result" onclick="openPortionModal('${f.id}','${encodeURIComponent(JSON.stringify(f))}')">
+    <div class="food-result" onclick="openPortionModal('${f.id}')">
       <div class="fr-ico">${f.ico}</div>
       <div class="fr-info">
         <div class="fr-name">${f.name}</div>
         <div class="fr-meta">${macroStr}</div>
       </div>
       <div class="fr-kcal">${f.kcal}</div>
-      <button class="fr-add" onclick="event.stopPropagation();quickAddById('${f.id}','${encodeURIComponent(JSON.stringify(f))}')">+</button>
+      <button class="fr-add" onclick="event.stopPropagation();quickAddById('${f.id}')">+</button>
     </div>`;
 }
 
-// ── Resolver alimento por id o JSON encoded ─────
-function resolveFood(foodId, encodedJson) {
-  if(encodedJson) {
-    try { return JSON.parse(decodeURIComponent(encodedJson)); } catch(e){}
-  }
-  return FOODS_DB.find(f=>f.id===foodId) || null;
+// ── Resolver alimento por id — busca en cache y BD local ──
+function resolveFood(foodId) {
+  return FOOD_CACHE[foodId] || FOODS_DB.find(f=>f.id===foodId) || null;
 }
 
 // Quick add (1 serving)
 window.quickAdd = (foodId) => {
-  const food = FOODS_DB.find(f=>f.id===foodId);
+  const food = resolveFood(foodId);
   if(!food||!activeMeal) return;
   log[activeMeal].push({food, mult:1});
   renderMeals(); updateSummary();
   closeModal();
 };
 
-window.quickAddById = (foodId, encodedJson) => {
-  const food = resolveFood(foodId, encodedJson);
+window.quickAddById = (foodId) => {
+  const food = resolveFood(foodId);
   if(!food||!activeMeal) return;
   log[activeMeal].push({food, mult:1});
   renderMeals(); updateSummary();
@@ -778,8 +786,8 @@ window.quickAddById = (foodId, encodedJson) => {
 // ══════════════════════════════════
 // PORTION MODAL
 // ══════════════════════════════════
-window.openPortionModal = (foodId, encodedJson) => {
-  selectedFood = resolveFood(foodId, encodedJson);
+window.openPortionModal = (foodId) => {
+  selectedFood = resolveFood(foodId);
   if(!selectedFood) return;
   currentMult = 1;
   renderPortionBody(1);
