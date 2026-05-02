@@ -8,175 +8,227 @@
 <script src="../js/theme.js"></script>
 <link rel="stylesheet" href="../css/app.css">
 <style>
-body { background: var(--bg); }
+*{box-sizing:border-box}
+body{background:var(--bg)}
 
-.nut-hdr {
-  padding: 20px 16px 36px;
-  color: white;
-  background: linear-gradient(135deg,#166534,#059669);
-  position: relative; overflow: hidden;
-}
-.back { width:42px;height:42px;background:rgba(255,255,255,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;border:none;color:white }
-.hdr-row { display:flex;align-items:center;justify-content:space-between;margin-bottom:16px }
-.hdr-eye { font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;opacity:.8 }
-.hdr-title { font-size:30px;font-weight:900;letter-spacing:-.5px }
-.hdr-sub { font-size:15px;opacity:.85;margin-top:4px }
+/* Header */
+.nut-hdr{padding:18px 16px 32px;color:white;background:linear-gradient(135deg,#166534,#059669);position:relative;overflow:hidden;flex-shrink:0}
+.nut-hdr::after{content:'🥗';position:absolute;right:-10px;bottom:-20px;font-size:110px;opacity:.08}
+.hdr-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.back{width:42px;height:42px;background:rgba(255,255,255,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;border:none;color:white}
+.hdr-name{font-size:13px;font-weight:700;opacity:.8;text-transform:uppercase;letter-spacing:1px}
+.hdr-title{font-size:26px;font-weight:900}
+.hdr-sub{font-size:14px;opacity:.85;margin-top:3px}
 
-/* Macro card */
-.macro-card {
-  margin: -20px 14px 0;
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 20px;
-  padding: 18px 16px;
-  position: relative; z-index: 2;
-  box-shadow: 0 8px 24px rgba(0,0,0,.1);
-}
-.macro-lbl { font-size:13px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;text-align:center;margin-bottom:14px }
-.macro-row { display:flex;align-items:center;gap:16px }
-.ring-wrap { position:relative;flex-shrink:0 }
-.ring-center { position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center }
-.ring-kcal { font-size:20px;font-weight:900;color:var(--text);line-height:1 }
-.ring-unit { font-size:12px;color:var(--text3);font-weight:600 }
-.bars { flex:1;display:flex;flex-direction:column;gap:10px }
-.bar-row { display:flex;align-items:center;gap:10px }
-.bar-lbl { font-size:14px;font-weight:700;color:var(--text2);width:60px;flex-shrink:0 }
-.bar-track { flex:1;height:8px;background:var(--border);border-radius:99px;overflow:hidden }
-.bar-fill { height:100%;border-radius:99px;transition:width 1s ease }
-.bar-val { font-size:14px;font-weight:800;color:var(--text);width:40px;text-align:right;flex-shrink:0 }
+/* Tabs */
+.tabs{display:flex;background:var(--surface);border-bottom:2px solid var(--border);flex-shrink:0}
+.tab{flex:1;padding:13px 6px;text-align:center;font-size:13px;font-weight:700;color:var(--text3);cursor:pointer;border:none;background:none;font-family:var(--font);border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap}
+.tab.on{color:var(--green);border-bottom-color:var(--green)}
 
-/* Timeline */
-.tl-section { padding:16px 14px 20px }
-.tl-ttl { font-size:17px;font-weight:900;color:var(--text);margin-bottom:14px }
+/* ══ TAB 1: HOY (Contador) ══════════════════════ */
 
-.tl-row { display:flex;gap:12px;margin-bottom:8px }
-.tl-left { display:flex;flex-direction:column;align-items:center;width:52px;flex-shrink:0 }
-.tl-time { font-size:13px;font-weight:800;color:var(--primary);background:var(--primary-light);padding:5px 4px;border-radius:8px;text-align:center;width:52px;line-height:1.2 }
-.tl-line { width:2px;flex:1;background:var(--border);margin:4px 0;min-height:16px }
-.tl-row:last-child .tl-line { display:none }
+/* Macro ring card - sticky top */
+.macro-summary{background:var(--surface);border-bottom:1.5px solid var(--border);padding:14px 16px}
+.ms-top{display:flex;align-items:center;gap:14px}
+.ring-wrap{position:relative;flex-shrink:0}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.ring-remain{font-size:19px;font-weight:900;color:var(--text);line-height:1}
+.ring-lbl{font-size:10px;color:var(--text3);font-weight:600;margin-top:1px}
+.bars{flex:1}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.bar-row:last-child{margin-bottom:0}
+.bar-lbl{font-size:13px;font-weight:700;color:var(--text2);width:58px;flex-shrink:0}
+.bar-track{flex:1;height:7px;background:var(--border);border-radius:99px;overflow:hidden}
+.bar-fill{height:100%;border-radius:99px;transition:width .8s ease}
+.bar-val{font-size:13px;font-weight:800;width:38px;text-align:right;flex-shrink:0}
+.ms-bottom{display:flex;gap:6px;margin-top:10px}
+.ms-chip{flex:1;background:var(--surface2);border-radius:10px;padding:8px;text-align:center;border:1.5px solid var(--border)}
+.ms-chip-v{font-size:15px;font-weight:900;color:var(--primary)}
+.ms-chip-l{font-size:11px;color:var(--text3);margin-top:2px}
+.ms-chip.over .ms-chip-v{color:var(--red)}
+.ms-chip.good .ms-chip-v{color:var(--green)}
 
-/* Meal card */
-.meal-card { flex:1;background:var(--surface);border:1.5px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:10px;cursor:pointer }
-.meal-top { padding:14px 16px;display:flex;align-items:center;gap:12px }
-.meal-icon { font-size:32px;flex-shrink:0 }
-.meal-name { font-size:15px;font-weight:800;color:var(--text) }
-.chips { display:flex;gap:5px;margin-top:5px;flex-wrap:wrap }
-.chip { font-size:12px;font-weight:700;padding:2px 8px;border-radius:99px }
-.chip-k { background:var(--gold-light);color:var(--gold) }
-.chip-p { background:rgba(220,38,38,.08);color:var(--red) }
-.chip-c { background:rgba(5,150,105,.08);color:var(--green) }
-.chip-f { background:var(--primary-light);color:var(--primary) }
-.meal-arr { font-size:16px;color:var(--text3);margin-left:auto;flex-shrink:0;transition:transform .2s }
-.meal-arr.up { transform:rotate(180deg) }
+/* Meal sections */
+.meal-sec{background:var(--surface);border-bottom:1.5px solid var(--border)}
+.meal-hdr{display:flex;align-items:center;gap:10px;padding:13px 16px;cursor:pointer}
+.meal-ico{font-size:24px;flex-shrink:0}
+.meal-name{flex:1;font-size:15px;font-weight:800;color:var(--text)}
+.meal-kcal-badge{font-size:13px;font-weight:700;color:var(--text3)}
+.meal-add-btn{width:34px;height:34px;border-radius:10px;background:var(--green-light);color:var(--green);font-size:22px;font-weight:700;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.meal-add-btn:active{transform:scale(.9)}
+.meal-body{display:none;background:var(--surface2)}
+.meal-body.open{display:block}
+.food-logged{display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--border)}
+.food-logged:last-child{border-bottom:none}
+.fl-ico{font-size:22px;flex-shrink:0;width:28px;text-align:center}
+.fl-info{flex:1;min-width:0}
+.fl-name{font-size:14px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fl-qty{font-size:12px;color:var(--text2);margin-top:2px}
+.fl-kcal{font-size:14px;font-weight:800;color:var(--primary);flex-shrink:0}
+.fl-del{width:28px;height:28px;border-radius:8px;background:var(--red-light);color:var(--red);font-size:14px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.meal-empty{padding:12px 16px;font-size:14px;color:var(--text3);text-align:center}
 
-/* Portions */
-.portions { display:none;border-top:1.5px solid var(--border);padding:12px 16px }
-.portions.open { display:block }
-.portions-ttl { font-size:13px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px }
-.portion-row { display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border) }
-.portion-row:last-child { border-bottom:none }
-.p-ico { font-size:26px;width:32px;text-align:center;flex-shrink:0 }
-.p-name { font-size:14px;font-weight:700;color:var(--text);flex:1 }
-.p-qty { font-size:13px;font-weight:800;color:var(--primary);background:var(--primary-light);padding:4px 10px;border-radius:8px;white-space:nowrap;flex-shrink:0 }
-.p-replaced { font-size:12px;color:var(--green);font-weight:700 }
-.meal-tip { display:flex;gap:8px;padding:10px 12px;background:var(--surface2);font-size:14px;color:var(--text2);line-height:1.5;margin-top:6px;border-radius:10px }
+/* Food search modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.show{display:flex}
+.modal-sheet{background:var(--surface);border-radius:24px 24px 0 0;width:100%;max-width:430px;max-height:92dvh;display:flex;flex-direction:column;overflow:hidden;padding-bottom:env(safe-area-inset-bottom)}
+.modal-hdr{padding:14px 16px 10px;display:flex;align-items:center;gap:10px;border-bottom:1.5px solid var(--border);flex-shrink:0}
+.modal-title{font-size:16px;font-weight:900;color:var(--text);flex:1}
+.modal-close{width:34px;height:34px;border-radius:10px;background:var(--surface2);border:none;font-size:16px;cursor:pointer;color:var(--text)}
+.search-wrap{padding:10px 14px;flex-shrink:0;position:relative}
+.search-inp{width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;padding:11px 40px 11px 42px;font-family:var(--font);font-size:15px;color:var(--text);outline:none}
+.search-inp:focus{border-color:var(--green)}
+.si{position:absolute;left:26px;top:50%;transform:translateY(-50%);font-size:18px;pointer-events:none}
+.si-clear{position:absolute;right:22px;top:50%;transform:translateY(-50%);background:none;border:none;font-size:16px;cursor:pointer;color:var(--text3)}
+.cat-row{display:flex;gap:6px;overflow-x:auto;padding:0 14px 10px;scrollbar-width:none;flex-shrink:0}
+.cat-row::-webkit-scrollbar{display:none}
+.cat-pill{flex-shrink:0;padding:6px 13px;background:var(--surface);border:1.5px solid var(--border);border-radius:999px;font-size:13px;font-weight:700;color:var(--text2);cursor:pointer;white-space:nowrap;transition:all .15s}
+.cat-pill.on{background:var(--green);border-color:var(--green);color:white}
+.food-list{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.food-row{display:flex;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s}
+.food-row:active{background:var(--surface2)}
+.fr-ico{font-size:26px;width:32px;text-align:center;flex-shrink:0}
+.fr-info{flex:1;min-width:0}
+.fr-name{font-size:14px;font-weight:700;color:var(--text)}
+.fr-meta{font-size:12px;color:var(--text2);margin-top:2px}
+.fr-kcal{font-size:15px;font-weight:900;color:var(--green);flex-shrink:0;margin-right:4px}
+.fr-add{width:34px;height:34px;border-radius:10px;background:var(--green);color:white;font-size:18px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.fr-add:active{transform:scale(.9)}
+.usda-badge{font-size:10px;font-weight:700;color:var(--primary);background:var(--primary-light);padding:1px 6px;border-radius:999px;margin-top:2px;display:inline-block}
 
-/* Guide link */
-.guide-link { display:flex;align-items:center;gap:12px;background:var(--primary-light);border:1.5px solid var(--border);border-radius:16px;padding:14px 16px;margin:0 14px 14px;text-decoration:none;cursor:pointer }
-.gl-ttl { font-size:14px;font-weight:800;color:var(--primary) }
-.gl-sub { font-size:13px;color:var(--text2);margin-top:2px }
+/* Portion modal */
+.portion-body{padding:16px}
+.pb-name{font-size:18px;font-weight:900;color:var(--text);margin-bottom:4px}
+.pb-src{font-size:12px;color:var(--text3);margin-bottom:14px}
+.pb-macros{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.pm{background:var(--surface2);border-radius:10px;padding:10px;text-align:center}
+.pm-v{font-size:16px;font-weight:900;color:var(--primary)}
+.pm-l{font-size:11px;color:var(--text3);margin-top:2px}
+.qty-row{display:flex;gap:8px;align-items:center;margin:12px 0}
+.qty-btn{width:50px;height:50px;border-radius:12px;border:2px solid var(--border);background:var(--surface);font-size:24px;font-weight:700;cursor:pointer;color:var(--text);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s}
+.qty-btn:active{transform:scale(.9);background:var(--green-light)}
+.qty-inp{flex:1;padding:13px;border:2.5px solid var(--green);border-radius:12px;font-family:var(--font);font-size:22px;font-weight:900;color:var(--text);background:var(--surface);text-align:center;outline:none}
+.quick-qty{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.qq-btn{padding:7px 14px;background:var(--surface2);border:1.5px solid var(--border);border-radius:999px;font-size:14px;font-weight:700;color:var(--text2);cursor:pointer;transition:all .15s}
+.qq-btn.on{background:var(--green);border-color:var(--green);color:white}
+.add-confirm-btn{width:100%;padding:16px;border:none;border-radius:14px;background:var(--green);color:white;font-family:var(--font);font-size:17px;font-weight:800;cursor:pointer;transition:all .2s;margin-top:12px}
+.add-confirm-btn:active{transform:scale(.97)}
+
+/* Water */
+.water-bar{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--surface);border-bottom:1.5px solid var(--border)}
+.water-drops{display:flex;gap:4px;flex:1}
+.drop{font-size:20px;cursor:pointer;transition:all .2s;filter:grayscale(1);opacity:.35}
+.drop.on{filter:grayscale(0);opacity:1;transform:scale(1.1)}
+.water-lbl{font-size:13px;font-weight:700;color:var(--text2);flex-shrink:0}
+
+/* ══ TAB 2: MI PLAN ════════════════════════════ */
+.plan-sec{padding:0 14px 12px}
+.plan-ttl{font-size:16px;font-weight:800;color:var(--text);margin:14px 0 8px;display:flex;align-items:center;gap:6px}
+.meal-plan-card{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:8px}
+.mp-hdr{display:flex;align-items:center;gap:10px;padding:13px 16px;cursor:pointer}
+.mp-ico{font-size:24px}
+.mp-name{flex:1;font-size:15px;font-weight:800;color:var(--text)}
+.mp-kcal{font-size:13px;font-weight:700;color:var(--text3)}
+.mp-arr{font-size:14px;color:var(--text3);transition:transform .2s}
+.mp-arr.up{transform:rotate(180deg)}
+.mp-body{display:none;border-top:1.5px solid var(--border);padding:12px 16px}
+.mp-body.open{display:block}
+.mp-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)}
+.mp-item:last-child{border-bottom:none}
+.mp-item-ico{font-size:22px;width:28px;text-align:center}
+.mp-item-name{flex:1;font-size:14px;font-weight:600;color:var(--text)}
+.mp-item-qty{font-size:13px;font-weight:800;color:var(--primary);background:var(--primary-light);padding:3px 8px;border-radius:7px}
+.replaced-tag{font-size:11px;color:var(--green);font-weight:700;margin-top:2px}
+.mp-tip{background:var(--primary-light);border-radius:10px;padding:10px 12px;margin-top:8px;font-size:13px;color:var(--primary);line-height:1.5}
 
 /* Rules */
-.rules-sec { margin:0 14px 100px }
-.rules-ttl { font-size:16px;font-weight:900;color:var(--text);margin-bottom:12px }
-.rule-row { display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--border) }
-.rule-row:last-child { border-bottom:none }
-.rule-ico { font-size:22px;flex-shrink:0 }
-.rule-txt { font-size:14px;color:var(--text2);line-height:1.6 }
+.rule-item{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--border)}
+.rule-item:last-child{border-bottom:none}
+.rule-ico{font-size:22px;flex-shrink:0}
+.rule-txt{font-size:14px;color:var(--text2);line-height:1.6}
 
-/* Nav */
-.bottom-nav { display:flex;background:var(--surface);border-top:2px solid var(--border);padding:10px 0;padding-bottom:calc(10px + env(safe-area-inset-bottom));position:sticky;bottom:0;z-index:50 }
-.nav-item { flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;color:var(--text3);font-size:13px;font-weight:700;cursor:pointer;border:none;background:none;font-family:var(--font);text-decoration:none;transition:color .2s;min-height:52px;justify-content:center }
-.nav-item .ni { font-size:26px;line-height:1 }
+/* Copy yesterday */
+.copy-bar{display:flex;align-items:center;gap:12px;background:var(--primary-light);padding:12px 16px;cursor:pointer;border-bottom:1.5px solid var(--border)}
+.copy-txt{flex:1;font-size:14px;font-weight:700;color:var(--primary)}
 
+/* Misc */
+.sec-lbl{font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;padding:10px 16px 4px;background:var(--bg)}
 </style>
 </head>
 <body>
-<div class="shell">
+<div class="shell" style="display:flex;flex-direction:column;height:100dvh;overflow:hidden">
 
-  <div class="nut-hdr" id="nutHdr">
+  <div class="nut-hdr">
     <div class="hdr-row">
       <button class="back" onclick="history.back()">←</button>
       <button class="theme-toggle" onclick="toggleTheme()" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.2)">🌙</button>
     </div>
-    <div class="hdr-eye" id="hdrEye">Tu plan de alimentación</div>
-    <div class="hdr-title" id="hdrTitle">Nutrición</div>
+    <div class="hdr-name" id="hdrName">Tu plan de alimentación</div>
+    <div class="hdr-title" id="hdrTitle">Nutrición 🥗</div>
     <div class="hdr-sub" id="hdrSub">Cargando...</div>
   </div>
 
-  <!-- Macro ring -->
-  <div class="macro-card">
-    <div class="macro-lbl">Tu distribución diaria de macros</div>
-    <div class="macro-row">
+  <div class="tabs">
+    <button class="tab on" onclick="showTab('hoy',this)">🔥 Hoy</button>
+    <button class="tab" onclick="showTab('plan',this)">📋 Mi Plan</button>
+    <button class="tab" onclick="showTab('reglas',this)">💡 Reglas</button>
+  </div>
+
+  <!-- MACRO SUMMARY — siempre visible en tab Hoy -->
+  <div class="macro-summary" id="macroSummary" style="display:none">
+    <div class="ms-top">
       <div class="ring-wrap">
-        <svg width="88" height="88" viewBox="0 0 88 88" style="transform:rotate(-90deg)">
-          <circle cx="44" cy="44" r="36" fill="none" stroke="var(--border)" stroke-width="8"/>
-          <circle id="ringP" cx="44" cy="44" r="36" fill="none" stroke="#dc2626" stroke-width="8"
-            stroke-dasharray="226" stroke-dashoffset="226" style="transition:stroke-dashoffset 1s ease"/>
-          <circle id="ringC" cx="44" cy="44" r="36" fill="none" stroke="#059669" stroke-width="8"
-            stroke-dasharray="226" stroke-dashoffset="226" style="transition:stroke-dashoffset 1s ease .1s"/>
-          <circle id="ringF" cx="44" cy="44" r="36" fill="none" stroke="#7c3aed" stroke-width="8"
-            stroke-dasharray="226" stroke-dashoffset="226" style="transition:stroke-dashoffset 1s ease .2s"/>
+        <svg width="86" height="86" viewBox="0 0 86 86" style="transform:rotate(-90deg)">
+          <circle cx="43" cy="43" r="35" fill="none" stroke="var(--border)" stroke-width="9"/>
+          <circle id="ringFill" cx="43" cy="43" r="35" fill="none" stroke="#059669" stroke-width="9"
+            stroke-dasharray="220" stroke-dashoffset="220" style="transition:stroke-dashoffset .8s ease"/>
         </svg>
         <div class="ring-center">
-          <div class="ring-kcal" id="ringKcal">—</div>
-          <div class="ring-unit">kcal</div>
+          <div class="ring-remain" id="ringRemain">—</div>
+          <div class="ring-lbl">kcal<br>restantes</div>
         </div>
       </div>
       <div class="bars">
         <div class="bar-row">
           <div class="bar-lbl">Proteína</div>
-          <div class="bar-track"><div class="bar-fill" id="barP" style="background:#dc2626;width:0%"></div></div>
-          <div class="bar-val" id="valP">—</div>
+          <div class="bar-track"><div class="bar-fill" id="bProt" style="background:#dc2626;width:0%"></div></div>
+          <div class="bar-val" id="vProt" style="color:#dc2626">0g</div>
         </div>
         <div class="bar-row">
           <div class="bar-lbl">Carbos</div>
-          <div class="bar-track"><div class="bar-fill" id="barC" style="background:#059669;width:0%"></div></div>
-          <div class="bar-val" id="valC">—</div>
+          <div class="bar-track"><div class="bar-fill" id="bCarb" style="background:#059669;width:0%"></div></div>
+          <div class="bar-val" id="vCarb" style="color:#059669">0g</div>
         </div>
         <div class="bar-row">
           <div class="bar-lbl">Grasas</div>
-          <div class="bar-track"><div class="bar-fill" id="barF" style="background:#7c3aed;width:0%"></div></div>
-          <div class="bar-val" id="valF">—</div>
+          <div class="bar-track"><div class="bar-fill" id="bFat" style="background:#7c3aed;width:0%"></div></div>
+          <div class="bar-val" id="vFat" style="color:#7c3aed">0g</div>
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="scroll">
-    <!-- Timeline meals -->
-    <div class="tl-section">
-      <div class="tl-ttl">🕐 Tu día de alimentación</div>
-      <div id="timeline"></div>
-    </div>
-
-    <!-- Guide link -->
-    <a class="guide-link" href="guia.html">
-      <div style="font-size:28px">🥗</div>
-      <div>
-        <div class="gl-ttl">¿Qué productos comprar?</div>
-        <div class="gl-sub">Ver la Guía de Alimentos →</div>
+    <div class="ms-bottom">
+      <div class="ms-chip" id="chipConsumed">
+        <div class="ms-chip-v" id="cvConsumed">0</div>
+        <div class="ms-chip-l">consumidas</div>
       </div>
-    </a>
-
-    <!-- Rules -->
-    <div class="rules-sec">
-      <div class="rules-ttl" id="rulesTtl">💡 Reglas clave</div>
-      <div id="rulesBody"></div>
+      <div class="ms-chip">
+        <div class="ms-chip-v" id="cvGoal">—</div>
+        <div class="ms-chip-l">objetivo</div>
+      </div>
+      <div class="ms-chip" id="chipLeft">
+        <div class="ms-chip-v" id="cvLeft">—</div>
+        <div class="ms-chip-l">restantes</div>
+      </div>
+      <div class="ms-chip">
+        <div class="ms-chip-v" id="cvFoods">0</div>
+        <div class="ms-chip-l">alimentos</div>
+      </div>
     </div>
   </div>
 
-    <div class="bottom-nav">
+  <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch" id="content"></div>
+
+  <div class="bottom-nav">
     <a href="dashboard.html" class="nav-item"><span class="ni">🏠</span>Inicio</a>
     <div class="nav-item on"><span class="ni">🍽️</span>Nutrición</div>
     <a href="guia.html" class="nav-item"><span class="ni">🥗</span>Guía</a>
@@ -184,305 +236,617 @@ body { background: var(--bg); }
   </div>
 </div>
 
+<!-- Food Search Modal -->
+<div class="modal-overlay" id="foodModal">
+  <div class="modal-sheet">
+    <div class="modal-hdr">
+      <div class="modal-title" id="modalTitle">Agregar alimento</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="search-wrap">
+      <span class="si">🔍</span>
+      <input class="search-inp" id="searchInp" placeholder="Busca o escribe un alimento..."
+        oninput="onSearch(this.value)" autocomplete="off">
+      <button class="si-clear" onclick="clearSearch()">✕</button>
+    </div>
+    <div class="cat-row" id="catRow"></div>
+    <div class="food-list" id="foodList"></div>
+  </div>
+</div>
+
+<!-- Portion Modal -->
+<div class="modal-overlay" id="portionModal">
+  <div class="modal-sheet">
+    <div class="modal-hdr">
+      <div class="modal-title">¿Cuánto comiste?</div>
+      <button class="modal-close" onclick="closePortionModal()">✕</button>
+    </div>
+    <div class="portion-body" id="portionBody"></div>
+  </div>
+</div>
+
+<script src="../js/chatbubble.js"></script>
 <script>
-// ── Init Supabase directly ──
 const _sb = supabase.createClient(
   'https://egswsqymkxmbtcpnozcq.supabase.co',
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM'
 );
 
-// ══════════════════════════
-// DATA
-// ══════════════════════════
-const MEALS_CRECER = [
-  {time:'07:00', name:'Desayuno',        icon:'🥚', pct:.22},
-  {time:'10:00', name:'Merienda mañana', icon:'🥣', pct:.15},
-  {time:'13:00', name:'Almuerzo',        icon:'🍗', pct:.30},
-  {time:'16:30', name:'Merienda tarde',  icon:'🥛', pct:.13},
-  {time:'19:30', name:'Cena',            icon:'🐟', pct:.20},
+// ══════════════════════════════════════
+// BASE DE DATOS LOCAL (colombiana)
+// ══════════════════════════════════════
+const LOCAL_FOODS = [
+  {id:'p1',ico:'🍗',name:'Pechuga de pollo a la plancha',cat:'proteina',unit:'g',base:100,kcal:165,prot:31,carb:0,fat:3.6},
+  {id:'p2',ico:'🐟',name:'Tilapia al vapor',cat:'proteina',unit:'g',base:100,kcal:96,prot:20,carb:0,fat:2},
+  {id:'p3',ico:'🥚',name:'Huevo entero',cat:'proteina',unit:'unidad',base:1,kcal:70,prot:6,carb:0.6,fat:5},
+  {id:'p4',ico:'🥚',name:'Clara de huevo',cat:'proteina',unit:'unidad',base:1,kcal:17,prot:3.6,carb:0.2,fat:0},
+  {id:'p5',ico:'🐟',name:'Atún en agua (lata)',cat:'proteina',unit:'lata',base:1,kcal:100,prot:22,carb:0,fat:1},
+  {id:'p6',ico:'🥩',name:'Carne de res magra',cat:'proteina',unit:'g',base:100,kcal:200,prot:26,carb:0,fat:10},
+  {id:'p7',ico:'🦃',name:'Pechuga de pavo',cat:'proteina',unit:'g',base:100,kcal:135,prot:29,carb:0,fat:1},
+  {id:'p8',ico:'🐟',name:'Salmón al horno',cat:'proteina',unit:'g',base:100,kcal:208,prot:20,carb:0,fat:13},
+  {id:'l1',ico:'🫙',name:'Yogur griego natural',cat:'lacteo',unit:'g',base:200,kcal:130,prot:17,carb:6,fat:4},
+  {id:'l2',ico:'🥛',name:'Leche entera',cat:'lacteo',unit:'ml',base:250,kcal:150,prot:8,carb:12,fat:8},
+  {id:'l3',ico:'🥛',name:'Leche descremada',cat:'lacteo',unit:'ml',base:250,kcal:85,prot:8,carb:12,fat:0.5},
+  {id:'l4',ico:'🧀',name:'Queso fresco colombiano',cat:'lacteo',unit:'g',base:50,kcal:100,prot:7,carb:1,fat:8},
+  {id:'c1',ico:'🫓',name:'Arepa de maíz',cat:'carbo',unit:'unidad',base:1,kcal:110,prot:2,carb:22,fat:1.5},
+  {id:'c2',ico:'🍚',name:'Arroz integral cocido',cat:'carbo',unit:'taza',base:1,kcal:216,prot:5,carb:45,fat:1.8},
+  {id:'c3',ico:'🍚',name:'Arroz blanco cocido',cat:'carbo',unit:'taza',base:1,kcal:200,prot:4,carb:44,fat:0.5},
+  {id:'c4',ico:'🍌',name:'Banano',cat:'carbo',unit:'unidad',base:1,kcal:105,prot:1.3,carb:27,fat:0.3},
+  {id:'c5',ico:'🥔',name:'Papa cocida',cat:'carbo',unit:'mediana',base:1,kcal:130,prot:3,carb:30,fat:0.1},
+  {id:'c6',ico:'🥔',name:'Papa criolla',cat:'carbo',unit:'5 unidades',base:1,kcal:70,prot:1.5,carb:16,fat:0.1},
+  {id:'c7',ico:'🥣',name:'Avena en hojuelas',cat:'carbo',unit:'g',base:50,kcal:190,prot:6.5,carb:32,fat:3.5},
+  {id:'c8',ico:'🌾',name:'Quinoa cocida',cat:'carbo',unit:'taza',base:1,kcal:222,prot:8,carb:39,fat:3.5},
+  {id:'c9',ico:'🍌',name:'Plátano maduro',cat:'carbo',unit:'unidad',base:1,kcal:155,prot:1.6,carb:40,fat:0.6},
+  {id:'c10',ico:'🫓',name:'Pan integral (tajada)',cat:'carbo',unit:'tajada',base:1,kcal:80,prot:3,carb:15,fat:1},
+  {id:'c11',ico:'🫘',name:'Fríjoles cocidos',cat:'carbo',unit:'taza',base:1,kcal:227,prot:15,carb:40,fat:1},
+  {id:'c12',ico:'🫘',name:'Lentejas cocidas',cat:'carbo',unit:'taza',base:1,kcal:230,prot:18,carb:40,fat:0.8},
+  {id:'g1',ico:'🥑',name:'Aguacate',cat:'grasa',unit:'½ unidad',base:1,kcal:120,prot:1.5,carb:6,fat:11},
+  {id:'g2',ico:'🥜',name:'Mantequilla de maní',cat:'grasa',unit:'cucharada',base:1,kcal:90,prot:3.5,carb:3,fat:8},
+  {id:'g3',ico:'🥜',name:'Almendras',cat:'grasa',unit:'15 unidades',base:1,kcal:100,prot:3.8,carb:3.5,fat:9},
+  {id:'v1',ico:'🥦',name:'Brócoli',cat:'verdura',unit:'taza',base:1,kcal:31,prot:2.6,carb:6,fat:0.3},
+  {id:'v2',ico:'🥬',name:'Espinaca',cat:'verdura',unit:'taza',base:1,kcal:7,prot:0.9,carb:1.1,fat:0.1},
+  {id:'v3',ico:'🍅',name:'Tomate',cat:'verdura',unit:'unidad',base:1,kcal:22,prot:1.1,carb:4.8,fat:0.2},
+  {id:'v4',ico:'🥒',name:'Pepino',cat:'verdura',unit:'unidad',base:1,kcal:16,prot:0.7,carb:3.6,fat:0.1},
+  {id:'v5',ico:'🥕',name:'Zanahoria',cat:'verdura',unit:'unidad',base:1,kcal:41,prot:0.9,carb:9.6,fat:0.2},
+  {id:'f1',ico:'🍓',name:'Fresas',cat:'fruta',unit:'taza',base:1,kcal:49,prot:1,carb:11.7,fat:0.5},
+  {id:'f2',ico:'🍎',name:'Manzana',cat:'fruta',unit:'unidad',base:1,kcal:95,prot:0.5,carb:25,fat:0.3},
+  {id:'f3',ico:'🫐',name:'Moras colombianas',cat:'fruta',unit:'taza',base:1,kcal:62,prot:2,carb:13.8,fat:0.7},
+  {id:'f4',ico:'🍊',name:'Mandarina',cat:'fruta',unit:'unidad',base:1,kcal:47,prot:0.7,carb:12,fat:0.3},
+  {id:'b1',ico:'☕',name:'Café negro',cat:'bebida',unit:'taza',base:1,kcal:2,prot:0.3,carb:0,fat:0},
+  {id:'b2',ico:'🥛',name:'Batido proteína con agua',cat:'bebida',unit:'vaso',base:1,kcal:120,prot:24,carb:3,fat:1.5},
 ];
-const MEALS_BAJAR = [
-  {time:'07:00', name:'Desayuno',        icon:'🍳', pct:.20},
-  {time:'10:00', name:'Merienda mañana', icon:'🍓', pct:.12},
-  {time:'13:00', name:'Almuerzo',        icon:'🥙', pct:.30},
-  {time:'16:30', name:'Merienda tarde',  icon:'🥛', pct:.13},
-  {time:'19:30', name:'Cena',            icon:'🐟', pct:.25},
+
+const CATS = [
+  {k:'all',l:'🍽️ Todo'},
+  {k:'proteina',l:'🥩 Proteínas'},
+  {k:'carbo',l:'🌾 Carbos'},
+  {k:'grasa',l:'🥑 Grasas'},
+  {k:'verdura',l:'🥦 Verduras'},
+  {k:'fruta',l:'🍓 Frutas'},
+  {k:'lacteo',l:'🥛 Lácteos'},
+  {k:'bebida',l:'☕ Bebidas'},
 ];
 
-const TIPS_CRECER = {
-  'Desayuno':       'Desayuna en la primera hora. El metabolismo es más activo en la mañana.',
-  'Merienda mañana':'Come a las 10am aunque no tengas hambre. Mantén el metabolismo activo.',
-  'Almuerzo':       'Tu comida más importante. No la saltes ni la reduzcas.',
-  'Merienda tarde': 'Toma esta merienda máximo 30 min después de entrenar.',
-  'Cena':           'Cena antes de las 8pm. Proteína y vegetales, sin excesos.',
-};
-const TIPS_BAJAR = {
-  'Desayuno':       'Desayuna siempre. Saltarlo aumenta el hambre y el cortisol.',
-  'Merienda mañana':'Come algo pequeño. Evita llegar con mucha hambre al almuerzo.',
-  'Almuerzo':       'Empieza con la ensalada — llena el estómago con pocas calorías.',
-  'Merienda tarde': 'Solo si entrenas. Si no, esta merienda es opcional.',
-  'Cena':           'La más liviana. Tu cuerpo no necesita energía por la noche.',
-};
+const MEALS = [
+  {id:'breakfast',ico:'🌅',name:'Desayuno',time:'7:00 am'},
+  {id:'snack1',ico:'🍎',name:'Merienda mañana',time:'10:00 am'},
+  {id:'lunch',ico:'☀️',name:'Almuerzo',time:'1:00 pm'},
+  {id:'snack2',ico:'⚡',name:'Merienda tarde',time:'4:30 pm'},
+  {id:'dinner',ico:'🌙',name:'Cena',time:'7:30 pm'},
+];
 
-function getPortions(meal, kcal, obj, restr) {
-  const s = Math.max(.6, kcal/500);
-  const R = restr || [];
-  const db = {
-    'Desayuno': {
-      crecer:[
-        {ico:'🥚',n:'Huevos revueltos con espinaca',q:`${Math.max(2,Math.round(2*s+1))} huevos`},
-        {ico:'🫓',n:'Arepa de maíz o pan integral',  q:`${Math.max(1,Math.round(s+.5))} unidad(es)`},
-        {ico:'🍌',n:'Banano',                         q:'1 unidad mediana'},
-        {ico:'☕',n:'Café o aromática sin azúcar',    q:'1 taza'},
-      ],
-      bajar:[
-        {ico:'🥚',n:'Claras de huevo + 1 entero',q:`${Math.max(3,Math.round(3*s))} claras`},
-        {ico:'🫓',n:'Pan integral',               q:'1 tajada'},
-        {ico:'🍅',n:'Tomate y cebolla salteados', q:'Libre'},
-        {ico:'☕',n:'Café negro sin azúcar',       q:'1 taza'},
-      ],
-    },
-    'Merienda mañana': {
-      crecer:[
-        {ico:'🥣',n:'Avena en hojuelas',    q:`${Math.max(40,Math.round(50*s))}g`},
-        {ico:'🥜',n:'Mantequilla de maní',  q:'1 cucharada'},
-        {ico:'🍎',n:'Manzana o pera',       q:'1 unidad'},
-      ],
-      bajar:[
-        {ico:'🫙',n:'Yogur griego natural', q:'200g'},
-        {ico:'🍓',n:'Fresas o papaya',      q:'½ taza'},
-        {ico:'🥜',n:'Almendras',            q:'12 unidades'},
-      ],
-    },
-    'Almuerzo': {
-      crecer:[
-        {ico:'🍗',n:'Pechuga de pollo a la plancha', q:`${Math.max(150,Math.round(180*s))}g`},
-        {ico:'🍚',n:'Arroz integral',                q:'1 taza cocida'},
-        {ico:'🥑',n:'Aguacate',                      q:'½ unidad'},
-        {ico:'🥗',n:'Ensalada verde',                q:'Sin límite'},
-        {ico:'🫘',n:'Fríjoles o lentejas (opcional)',q:'½ taza cocida'},
-      ],
-      bajar:[
-        {ico:'🍗',n:'Pechuga de pollo al horno', q:`${Math.max(150,Math.round(160*s))}g`},
-        {ico:'🍚',n:'Arroz integral',             q:'½ taza cocida'},
-        {ico:'🥦',n:'Vegetales al vapor',         q:'Sin límite'},
-        {ico:'🍋',n:'Limón y aceite de oliva',    q:'Al gusto'},
-      ],
-    },
-    'Merienda tarde': {
-      crecer:[
-        {ico:'🥛',n:'Batido de proteína',q:'1 scoop con leche o agua'},
-        {ico:'🍌',n:'Banano maduro',     q:'1 unidad'},
-      ],
-      bajar:[
-        {ico:'🥛',n:'Batido de proteína con agua',q:'1 scoop + 300ml agua'},
-        {ico:'🍎',n:'Manzana o mandarina',         q:'1 unidad pequeña'},
-      ],
-    },
-    'Cena': {
-      crecer:[
-        {ico:'🐟',n:'Tilapia, salmón o pechuga', q:`${Math.max(150,Math.round(160*s))}g`},
-        {ico:'🥦',n:'Verduras salteadas',         q:'1 taza'},
-        {ico:'🫘',n:'Lentejas, fríjoles o quinoa',q:'½ taza cocida'},
-        {ico:'🫒',n:'Aceite de oliva',             q:'1 cucharadita'},
-      ],
-      bajar:[
-        {ico:'🐟',n:'Tilapia o corvina al vapor', q:`${Math.max(130,Math.round(140*s))}g`},
-        {ico:'🥦',n:'Vegetales al vapor',          q:'Sin límite'},
-        {ico:'🍲',n:'Caldo de pollo natural',      q:'1 taza'},
-      ],
-    },
-  };
+// ══════════════════════════════════════
+// STATE
+// ══════════════════════════════════════
+let profile = null;
+let goalKcal=2000, goalProt=150, goalCarb=220, goalFat=65;
+let log = {}, water = 0, activeMeal = null;
+let selectedFood = null, currentMult = 1, catFilter = 'all';
+let todayKey = new Date().toISOString().split('T')[0];
+let yesterdayKey = new Date(Date.now()-86400000).toISOString().split('T')[0];
+let FOOD_CACHE = {};
+let searchDebounce = null;
+let currentTab = 'hoy';
 
-  let portions = (db[meal]?.[obj] || []).map(p => ({ico:p.ico, name:p.n, qty:p.q}));
+// Pre-cache local foods
+LOCAL_FOODS.forEach(f => FOOD_CACHE[f.id] = f);
 
-  // Apply restrictions
-  if(R.length === 0) return portions;
-  const rSet = new Set(R);
-  return portions.map(p => {
-    const nl = p.name.toLowerCase();
-    if(rSet.has('vegano')) {
-      if(nl.includes('huevo')||nl.includes('clara')) return {ico:'🫘',name:'Tofu firme revuelto',qty:'150g',replaced:true};
-      if(nl.includes('pollo')||nl.includes('pechuga')) return {ico:'🫘',name:'Tofu o tempeh',qty:'150g',replaced:true};
-      if(nl.includes('tilapia')||nl.includes('pescado')||nl.includes('atún')) return {ico:'🌱',name:'Soja texturizada',qty:'80g seca',replaced:true};
-      if(nl.includes('yogur')) return {ico:'🥥',name:'Yogur de coco natural',qty:'200g',replaced:true};
-    }
-    if(rSet.has('vegetariano')) {
-      if(nl.includes('pollo')||nl.includes('pechuga')) return {ico:'🥚',name:'Huevos enteros',qty:'3 huevos',replaced:true};
-      if(nl.includes('tilapia')||nl.includes('salmón')||nl.includes('corvina')) return {ico:'🫘',name:'Lentejas o fríjoles',qty:'1 taza cocida',replaced:true};
-    }
-    if(rSet.has('huevo') && (nl.includes('huevo')||nl.includes('clara'))) return {ico:'🫙',name:'Yogur griego natural',qty:'200g',replaced:true};
-    if(rSet.has('pollo') && (nl.includes('pollo')||nl.includes('pechuga'))) return {ico:'🐟',name:'Tilapia al horno',qty:'150g',replaced:true};
-    if(rSet.has('pescado') && (nl.includes('tilapia')||nl.includes('corvina')||nl.includes('salmón'))) return {ico:'🍗',name:'Pechuga de pollo',qty:'150g',replaced:true};
-    if(rSet.has('lacteos') && nl.includes('yogur')) return {ico:'🥛',name:'Bebida de almendra',qty:'250ml',replaced:true};
-    if(rSet.has('mani') && nl.includes('maní')) return {ico:'🥑',name:'Aguacate',qty:'¼ unidad',replaced:true};
-    if(rSet.has('aguacate') && nl.includes('aguacate')) return {ico:'🥜',name:'Almendras',qty:'15 unidades',replaced:true};
-    if(rSet.has('arroz') && nl.includes('arroz')) return {ico:'🍠',name:'Batata o papa cocida',qty:'1 mediana',replaced:true};
-    if(rSet.has('platano') && nl.includes('banano')) return {ico:'🍎',name:'Manzana o pera',qty:'1 unidad',replaced:true};
-    if(rSet.has('avena') && nl.includes('avena')) return {ico:'🌽',name:'Arepa de maíz',qty:'2 unidades',replaced:true};
-    return p;
-  });
-}
-
-// ══════════════════════════
+// ══════════════════════════════════════
 // INIT
-// ══════════════════════════
+// ══════════════════════════════════════
 async function init() {
   try {
-    // Auth
-    const { data: { session } } = await _sb.auth.getSession();
-    if (!session) { window.location.href = '../index.html'; return; }
+    const {data:{session}} = await _sb.auth.getSession();
+    if(!session){window.location.href='../index.html';return}
 
-    // Profile
-    const { data: profile, error: pErr } = await _sb
-      .from('profiles').select('*').eq('id', session.user.id).maybeSingle();
+    const {data:p} = await _sb.from('profiles').select('*').eq('id',session.user.id).maybeSingle();
+    profile = p;
 
-    if (pErr) { showError('Error de base de datos: ' + pErr.message); return; }
-    if (!profile) { window.location.href = 'onboarding.html'; return; }
+    if(!profile){window.location.href='onboarding.html';return}
 
-    // Compute macros
-    const obj   = profile.objetivo || 'crecer';
-    const esH   = profile.genero === 'hombre';
-    const kcal  = Math.round(profile.calorias_objetivo  || (obj==='crecer' ? 2200 : 1700));
-    const protG = Math.round(profile.proteina_g         || (obj==='crecer' ?  150 :  140));
-    const carbG = Math.round(profile.carbs_g            || (obj==='crecer' ?  240 :  160));
-    const fatG  = Math.round(profile.grasas_g           || (obj==='crecer' ?   70 :   55));
-    const total = protG*4 + carbG*4 + fatG*9 || 1;
-    const pctP  = Math.round(protG*4/total*100);
-    const pctC  = Math.round(carbG*4/total*100);
-    const pctF  = 100 - pctP - pctC;
-    const circ  = 226;
+    // Set goals from profile
+    goalKcal = Math.round(profile.calorias_objetivo || 2000);
+    goalProt = Math.round(profile.proteina_g       || 150);
+    goalCarb = Math.round(profile.carbs_g          || 220);
+    goalFat  = Math.round(profile.grasas_g         || 65);
 
-    // Header
-    const bg = obj==='crecer'
+    const esH = profile.genero === 'hombre';
+    const obj = profile.objetivo || 'crecer';
+    const nombre = profile.nombre || (esH ? 'Atleta' : 'Campeona');
+
+    document.getElementById('hdrName').textContent = `Plan de ${nombre}`;
+    document.getElementById('hdrTitle').textContent = `Nutrición ${obj==='crecer'?'🍑':'🔥'}`;
+    document.getElementById('hdrSub').textContent = `${goalKcal.toLocaleString()} kcal/día · ${goalProt}g prot · ${goalCarb}g carb · ${goalFat}g grasa`;
+
+    // Change header color by objective
+    document.querySelector('.nut-hdr').style.background = obj==='crecer'
       ? 'linear-gradient(135deg,#166534,#059669)'
       : 'linear-gradient(135deg,#991b1b,#dc2626)';
-    document.getElementById('nutHdr').style.background = bg;
-    document.getElementById('hdrEye').textContent = `Plan de ${profile.nombre || (esH?'Atleta':'Campeona')}`;
-    document.getElementById('hdrTitle').textContent = `Nutrición ${obj==='crecer'?'🍑':'🔥'}`;
-    document.getElementById('hdrSub').textContent  =
-      `${obj==='crecer'?'Crecer y Tonificar':'Bajar Grasa y Tonificar'} · ${kcal.toLocaleString()} kcal/día`;
 
-    // Macros
-    document.getElementById('ringKcal').textContent = kcal.toLocaleString();
-    document.getElementById('valP').textContent = protG+'g';
-    document.getElementById('valC').textContent = carbG+'g';
-    document.getElementById('valF').textContent = fatG+'g';
-    setTimeout(() => {
-      document.getElementById('ringP').style.strokeDashoffset = circ*(1-pctP/100);
-      document.getElementById('ringC').style.strokeDashoffset = circ*(1-pctP/100-pctC/100);
-      document.getElementById('ringF').style.strokeDashoffset = 0;
-      document.getElementById('barP').style.width = pctP+'%';
-      document.getElementById('barC').style.width = pctC+'%';
-      document.getElementById('barF').style.width = pctF+'%';
-    }, 300);
+    // Load log from localStorage
+    const saved = localStorage.getItem(`af_log_${todayKey}`);
+    log = saved ? JSON.parse(saved) : {};
+    MEALS.forEach(m=>{ if(!log[m.id]) log[m.id]=[]; });
 
-    // Timeline
-    const meals = obj==='crecer' ? MEALS_CRECER : MEALS_BAJAR;
-    const tips  = obj==='crecer' ? TIPS_CRECER  : TIPS_BAJAR;
-    const restr = profile.food_restrictions || [];
-    const tl = document.getElementById('timeline');
+    const savedW = localStorage.getItem(`af_water_${todayKey}`);
+    water = savedW ? parseInt(savedW) : 0;
 
-    tl.innerHTML = meals.map((meal, i) => {
-      const mK = Math.round(kcal  * meal.pct);
-      const mP = Math.round(protG * meal.pct);
-      const mC = Math.round(carbG * meal.pct);
-      const mF = Math.round(fatG  * meal.pct);
-      const portions = getPortions(meal.name, mK, obj, restr);
-      const tip = tips[meal.name] || '';
-
-      const portionsHTML = portions.map(p => `
-        <div class="portion-row">
-          <div class="p-ico">${p.ico}</div>
-          <div style="flex:1">
-            <div class="p-name">${p.name}</div>
-            ${p.replaced ? '<div class="p-replaced">✅ Ajustado a tu perfil</div>' : ''}
-          </div>
-          <div class="p-qty">${p.qty}</div>
-        </div>
-      `).join('');
-
-      return `
-        <div class="tl-row">
-          <div class="tl-left">
-            <div class="tl-time">${meal.time}</div>
-            <div class="tl-line"></div>
-          </div>
-          <div style="flex:1">
-            <div class="meal-card">
-              <div class="meal-top" onclick="toggleMeal(${i})">
-                <div class="meal-icon">${meal.icon}</div>
-                <div style="flex:1">
-                  <div class="meal-name">${meal.name}</div>
-                  <div class="chips">
-                    <span class="chip chip-k">~${mK}kcal</span>
-                    <span class="chip chip-p">${mP}g prot</span>
-                    <span class="chip chip-c">${mC}g carbo</span>
-                    <span class="chip chip-f">${mF}g grasa</span>
-                  </div>
-                </div>
-                <div class="meal-arr" id="arr-${i}">▾</div>
-              </div>
-              <div class="portions" id="pt-${i}">
-                <div class="portions-ttl">🍽️ Qué comer exactamente</div>
-                ${portionsHTML}
-                ${tip ? `<div class="meal-tip"><span>💡</span><span>${tip}</span></div>` : ''}
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-    }).join('');
-
-    // Rules
-    const rules = obj==='crecer' ? [
-      {ico:'⏰', txt: esH ? 'Come cada 3-4 horas. No dejes más de 4h sin proteína.' : 'Come cada 3-4 horas. No dejes pasar más de 4 horas sin comer proteína.'},
-      {ico:'💧', txt: esH ? 'Mínimo 3 litros de agua al día.' : 'Mínimo 2.5 litros de agua al día. Hidratación = síntesis muscular.'},
-      {ico:'😴', txt: 'El músculo crece durmiendo. Duerme 7-8 horas obligatorio.'},
-      {ico:'📈', txt: 'Sube el peso cada semana que completes todas las reps. Sin progresión no hay resultado.'},
-    ] : [
-      {ico:'⚡', txt: esH ? 'No bajes de 1.500 kcal. Comer poco destruye músculo.' : 'No bajes de 1.200 kcal. Menos destruye músculo, no grasa.'},
-      {ico:'💪', txt: 'Alta proteína todos los días — protege el músculo mientras pierdes grasa.'},
-      {ico:'🚫', txt: 'Elimina harinas blancas, azúcar y jugos de caja. Son tu mayor enemigo.'},
-      {ico:'💧', txt: 'Toma agua antes de cada comida — reduce el hambre naturalmente.'},
-    ];
-
-    const objLabel = obj==='crecer'
-      ? (esH ? 'ganar masa muscular' : 'crecer y tonificar')
-      : (esH ? 'bajar grasa' : 'bajar grasa y tonificar');
-    document.getElementById('rulesTtl').textContent = `💡 Tus reglas para ${objLabel}`;
-    document.getElementById('rulesBody').innerHTML = rules.map(r => `
-      <div class="rule-row">
-        <div class="rule-ico">${r.ico}</div>
-        <div class="rule-txt">${r.txt}</div>
-      </div>
-    `).join('');
+    showTab('hoy', document.querySelector('.tab'));
 
   } catch(e) {
-    console.error('Nutrition error:', e);
-    showError(e.message);
+    console.error('Nutrition init error:', e);
+    document.getElementById('hdrSub').textContent = '❌ ' + e.message;
   }
 }
 
-function toggleMeal(i) {
-  const pt  = document.getElementById(`pt-${i}`);
-  const arr = document.getElementById(`arr-${i}`);
-  const open = pt.classList.toggle('open');
-  arr.classList.toggle('up', open);
+// ══════════════════════════════════════
+// TABS
+// ══════════════════════════════════════
+window.showTab = (tab, el) => {
+  currentTab = tab;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  if(el) el.classList.add('on');
+  document.getElementById('macroSummary').style.display = tab==='hoy' ? 'block' : 'none';
+  const c = document.getElementById('content');
+  if(tab==='hoy') renderHoy(c);
+  else if(tab==='plan') renderPlan(c);
+  else renderReglas(c);
+};
+
+// ══════════════════════════════════════
+// TAB HOY - Contador de calorías
+// ══════════════════════════════════════
+function renderHoy(c) {
+  updateMacroRing();
+
+  const yesterdayLog = JSON.parse(localStorage.getItem(`af_log_${yesterdayKey}`)||'{}');
+  const hasYesterday = Object.values(yesterdayLog).some(a=>a.length>0);
+
+  c.innerHTML = `
+    <!-- Water -->
+    <div class="water-bar">
+      <span style="font-size:14px;font-weight:700;color:var(--text)">💧 Agua</span>
+      <div class="water-drops" id="waterDrops"></div>
+      <div class="water-lbl" id="waterLbl">0/8</div>
+    </div>
+
+    <!-- Copy yesterday -->
+    ${hasYesterday ? `
+      <div class="copy-bar" onclick="copyYesterday()">
+        <div style="font-size:20px">📋</div>
+        <div class="copy-txt">Copiar comidas de ayer</div>
+        <div style="font-size:18px;color:var(--primary)">→</div>
+      </div>` : ''}
+
+    <!-- Meals -->
+    ${MEALS.map(meal=>{
+      const items = log[meal.id]||[];
+      const mKcal = Math.round(items.reduce((s,{food,mult})=>s+food.kcal*mult,0));
+      return `
+        <div class="sec-lbl">${meal.time}</div>
+        <div class="meal-sec">
+          <div class="meal-hdr" onclick="toggleMeal('mb-${meal.id}')">
+            <div class="meal-ico">${meal.ico}</div>
+            <div class="meal-name">${meal.name}</div>
+            ${mKcal>0?`<div class="meal-kcal-badge">${mKcal} kcal</div>`:''}
+            <button class="meal-add-btn" onclick="event.stopPropagation();openModal('${meal.id}')">+</button>
+          </div>
+          <div class="meal-body ${items.length>0?'open':''}" id="mb-${meal.id}">
+            ${items.length===0
+              ? `<div class="meal-empty">Toca + para agregar</div>`
+              : items.map((item,idx)=>{
+                  const kcal=Math.round(item.food.kcal*item.mult);
+                  const prot=Math.round(item.food.prot*item.mult*10)/10;
+                  const qty=fmtQty(item.food,item.mult);
+                  return `<div class="food-logged">
+                    <div class="fl-ico">${item.food.ico}</div>
+                    <div class="fl-info">
+                      <div class="fl-name">${item.food.name}</div>
+                      <div class="fl-qty">${qty} · ${prot}g prot</div>
+                    </div>
+                    <div class="fl-kcal">${kcal} kcal</div>
+                    <button class="fl-del" onclick="removeFood('${meal.id}',${idx})">🗑</button>
+                  </div>`;
+                }).join('')}
+          </div>
+        </div>`;
+    }).join('')}
+    <div style="height:20px"></div>
+  `;
+
+  renderWater();
 }
 
-function showError(msg) {
-  document.getElementById('hdrSub').textContent = '❌ Error';
-  document.getElementById('timeline').innerHTML = `
-    <div style="padding:24px;text-align:center">
-      <div style="font-size:36px;margin-bottom:12px">⚠️</div>
-      <div style="font-size:15px;color:var(--text2);margin-bottom:6px">${msg}</div>
-      <a href="dashboard.html" style="display:inline-block;margin-top:12px;padding:14px 24px;background:var(--primary);color:white;border-radius:12px;font-weight:800;text-decoration:none">🏠 Volver al inicio</a>
+function updateMacroRing() {
+  let tK=0,tP=0,tC=0,tF=0,tN=0;
+  Object.values(log).forEach(items=>{
+    items.forEach(({food,mult})=>{
+      tK+=food.kcal*mult; tP+=food.prot*mult;
+      tC+=food.carb*mult; tF+=food.fat*mult; tN++;
+    });
+  });
+  tK=Math.round(tK); tP=Math.round(tP); tC=Math.round(tC); tF=Math.round(tF);
+  const remain=Math.max(0,goalKcal-tK);
+  const pct=Math.min(1,tK/goalKcal);
+
+  document.getElementById('ringFill').style.strokeDashoffset = 220*(1-pct);
+  document.getElementById('ringFill').style.stroke = pct>1?'#dc2626':pct>.85?'#d97706':'#059669';
+  document.getElementById('ringRemain').textContent = remain>0?remain.toLocaleString():'✓';
+
+  document.getElementById('bProt').style.width = Math.min(100,Math.round(tP/goalProt*100))+'%';
+  document.getElementById('bCarb').style.width = Math.min(100,Math.round(tC/goalCarb*100))+'%';
+  document.getElementById('bFat').style.width  = Math.min(100,Math.round(tF/goalFat*100))+'%';
+  document.getElementById('vProt').textContent = tP+'g';
+  document.getElementById('vCarb').textContent = tC+'g';
+  document.getElementById('vFat').textContent  = tF+'g';
+
+  document.getElementById('cvConsumed').textContent = tK.toLocaleString();
+  document.getElementById('cvGoal').textContent = goalKcal.toLocaleString();
+  document.getElementById('cvLeft').textContent = remain>0?remain.toLocaleString():'¡Meta!';
+  document.getElementById('cvFoods').textContent = tN;
+
+  const chipLeft = document.getElementById('chipLeft');
+  chipLeft.className = 'ms-chip '+(remain===0?'good':tK>goalKcal?'over':'');
+}
+
+window.toggleMeal = (id) => document.getElementById(id)?.classList.toggle('open');
+
+window.removeFood = (mealId, idx) => {
+  log[mealId].splice(idx,1);
+  saveLog(); renderHoy(document.getElementById('content'));
+};
+
+function saveLog() {
+  localStorage.setItem(`af_log_${todayKey}`, JSON.stringify(log));
+}
+
+window.copyYesterday = () => {
+  const yLog = JSON.parse(localStorage.getItem(`af_log_${yesterdayKey}`)||'{}');
+  if(!Object.values(yLog).some(a=>a.length>0)) return;
+  if(!confirm('¿Copiar todas las comidas de ayer a hoy?')) return;
+  MEALS.forEach(m=>{ log[m.id]=[...(yLog[m.id]||[])]; });
+  saveLog(); renderHoy(document.getElementById('content'));
+};
+
+// Water
+function renderWater() {
+  const drops = document.getElementById('waterDrops');
+  if(!drops) return;
+  drops.innerHTML = Array.from({length:8},(_,i)=>
+    `<div class="drop ${i<water?'on':''}" onclick="setWater(${i+1})">💧</div>`
+  ).join('');
+  document.getElementById('waterLbl').textContent = `${water}/8`;
+  localStorage.setItem(`af_water_${todayKey}`, water);
+}
+window.setWater = (n) => { water = water===n?n-1:n; renderWater(); };
+
+function fmtQty(food, mult) {
+  const q = food.base * mult;
+  if(food.unit==='g') return `${Math.round(q)}g`;
+  if(food.unit==='ml') return `${Math.round(q)}ml`;
+  const r = q%1===0?q:q.toFixed(1);
+  return `${r} ${food.unit}`;
+}
+
+// ══════════════════════════════════════
+// FOOD SEARCH MODAL
+// ══════════════════════════════════════
+window.openModal = (mealId) => {
+  activeMeal = mealId;
+  catFilter = 'all';
+  currentMult = 1;
+  const meal = MEALS.find(m=>m.id===mealId);
+  document.getElementById('modalTitle').textContent = `${meal?.ico} ${meal?.name}`;
+  document.getElementById('searchInp').value = '';
+  renderCats(); renderFoodList('', []);
+  document.getElementById('foodModal').classList.add('show');
+  setTimeout(()=>document.getElementById('searchInp').focus(), 300);
+};
+window.closeModal = () => document.getElementById('foodModal').classList.remove('show');
+
+function renderCats() {
+  document.getElementById('catRow').innerHTML = CATS.map(c=>
+    `<div class="cat-pill ${catFilter===c.k?'on':''}" onclick="setCat('${c.k}')">${c.l}</div>`
+  ).join('');
+}
+window.setCat = (k) => {
+  catFilter = k;
+  renderCats();
+  renderFoodList(document.getElementById('searchInp').value, []);
+};
+
+window.clearSearch = () => {
+  document.getElementById('searchInp').value = '';
+  renderFoodList('', []);
+};
+
+window.onSearch = (q) => {
+  clearTimeout(searchDebounce);
+  renderFoodList(q, []); // show local immediately
+  if(q.length >= 2) searchDebounce = setTimeout(()=>fetchUSDA(q), 600);
+};
+
+async function fetchUSDA(q) {
+  const listEl = document.getElementById('foodList');
+  // Add loading at bottom
+  const loadId = 'usda-load';
+  if(!document.getElementById(loadId)) {
+    listEl.insertAdjacentHTML('beforeend',
+      `<div id="${loadId}" style="text-align:center;padding:12px;font-size:13px;color:var(--text3)">🔍 Buscando en USDA (600k+ alimentos)...</div>`);
+  }
+  try {
+    const r = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?query=${encodeURIComponent(q)}&pageSize=12&api_key=DEMO_KEY`);
+    const data = await r.json();
+    document.getElementById(loadId)?.remove();
+    const usdaFoods = (data.foods||[]).map(usdaConvert);
+    renderFoodList(q, usdaFoods);
+  } catch(e) {
+    document.getElementById(loadId)?.remove();
+  }
+}
+
+function usdaConvert(item) {
+  const get = (n) => (item.foodNutrients||[]).find(x=>x.nutrientName?.toLowerCase().includes(n.toLowerCase()))?.value||0;
+  const d = (item.description||'').toLowerCase();
+  const ico = d.includes('chicken')?'🍗':d.includes('fish')||d.includes('salmon')||d.includes('tuna')||d.includes('tilapia')?'🐟':
+              d.includes('egg')?'🥚':d.includes('beef')||d.includes('meat')?'🥩':
+              d.includes('yogurt')?'🫙':d.includes('milk')?'🥛':d.includes('rice')||d.includes('arroz')?'🍚':
+              d.includes('banana')?'🍌':d.includes('broccoli')?'🥦':d.includes('avocado')?'🥑':'🍽️';
+  const f = {
+    id:'usda_'+item.fdcId,ico,name:item.description,cat:'usda',unit:'g',base:100,
+    kcal:Math.round(get('energy')||get('Energy')||0),
+    prot:Math.round((get('Protein')||0)*10)/10,
+    carb:Math.round((get('Carbohydrate')||0)*10)/10,
+    fat:Math.round((get('Total lipid')||get('Fat')||0)*10)/10,
+    source:'usda'
+  };
+  FOOD_CACHE[f.id] = f;
+  return f;
+}
+
+function renderFoodList(q, usdaFoods) {
+  const listEl = document.getElementById('foodList');
+  let local = LOCAL_FOODS;
+  if(catFilter!=='all') local = local.filter(f=>f.cat===catFilter);
+  if(q) local = local.filter(f=>f.name.toLowerCase().includes(q.toLowerCase()));
+
+  if(!q && catFilter==='all') {
+    listEl.innerHTML = `
+      <div style="padding:10px 16px 4px;font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px">⭐ Frecuentes</div>
+      ${LOCAL_FOODS.slice(0,8).map(foodRowHTML).join('')}
+      <div style="text-align:center;padding:14px;font-size:13px;color:var(--text3)">🔍 Escribe para buscar en 600k+ alimentos</div>`;
+    return;
+  }
+
+  const usdaUnique = usdaFoods.filter(u=>!local.some(l=>l.name.toLowerCase()===u.name.toLowerCase()));
+  const localHTML = local.length ? `
+    <div style="padding:8px 16px 4px;font-size:12px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1px">🇨🇴 Colombianos (${local.length})</div>
+    ${local.map(foodRowHTML).join('')}` : '';
+
+  const usdaHTML = usdaUnique.length ? `
+    <div style="padding:8px 16px 4px;font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:1px">🔬 USDA verificado (${usdaUnique.length})</div>
+    ${usdaUnique.map(foodRowHTML).join('')}` : '';
+
+  listEl.innerHTML = (localHTML||usdaHTML)
+    ? localHTML + usdaHTML
+    : `<div style="text-align:center;padding:32px;color:var(--text3)">Sin resultados para "${q}"<br><span style="font-size:13px">Intenta en inglés</span></div>`;
+}
+
+function foodRowHTML(f) {
+  FOOD_CACHE[f.id] = f;
+  return `
+    <div class="food-row" onclick="openPortion('${f.id}')">
+      <div class="fr-ico">${f.ico}</div>
+      <div class="fr-info">
+        <div class="fr-name">${f.name}</div>
+        <div class="fr-meta">${f.kcal} kcal · ${f.prot}g prot · por ${f.base}${f.unit}</div>
+        ${f.source==='usda'?'<div class="usda-badge">🔬 USDA verificado</div>':''}
+      </div>
+      <div class="fr-kcal">${f.kcal}</div>
+      <button class="fr-add" onclick="event.stopPropagation();quickAdd('${f.id}')">+</button>
+    </div>`;
+}
+
+window.quickAdd = (id) => {
+  const food = FOOD_CACHE[id]; if(!food||!activeMeal) return;
+  log[activeMeal].push({food, mult:1});
+  saveLog(); closeModal(); renderHoy(document.getElementById('content'));
+};
+
+// ══════════════════════════════════════
+// PORTION MODAL
+// ══════════════════════════════════════
+window.openPortion = (id) => {
+  selectedFood = FOOD_CACHE[id]; if(!selectedFood) return;
+  currentMult = 1; renderPortionBody(1);
+  document.getElementById('portionModal').classList.add('show');
+};
+window.closePortionModal = () => document.getElementById('portionModal').classList.remove('show');
+
+function renderPortionBody(mult) {
+  const f = selectedFood;
+  const k=Math.round(f.kcal*mult), p=Math.round(f.prot*mult*10)/10;
+  const c=Math.round(f.carb*mult*10)/10, g=Math.round(f.fat*mult*10)/10;
+  document.getElementById('portionBody').innerHTML = `
+    <div class="pb-name">${f.ico} ${f.name}</div>
+    <div class="pb-src">${f.source==='usda'?'🔬 USDA FoodData Central':'🇨🇴 Base de datos ArjunaFit'}</div>
+    <div class="pb-macros">
+      <div class="pm"><div class="pm-v">${k}</div><div class="pm-l">kcal</div></div>
+      <div class="pm"><div class="pm-v">${p}g</div><div class="pm-l">prot</div></div>
+      <div class="pm"><div class="pm-v">${c}g</div><div class="pm-l">carb</div></div>
+      <div class="pm"><div class="pm-v">${g}g</div><div class="pm-l">grasa</div></div>
+    </div>
+    <div style="font-size:14px;font-weight:700;color:var(--text2);margin-bottom:8px">
+      Porciones <span style="color:var(--text3);font-weight:500">(1 = ${f.base} ${f.unit})</span>
+    </div>
+    <div class="quick-qty">
+      ${[0.5,1,1.5,2,3].map(q=>`<div class="qq-btn ${mult===q?'on':''}" onclick="setMult(${q})">${q}x</div>`).join('')}
+    </div>
+    <div class="qty-row">
+      <button class="qty-btn" onclick="adjMult(-.5)">−</button>
+      <input class="qty-inp" id="multInp" type="number" min=".25" step=".25" value="${mult}" oninput="onMultInput(this.value)">
+      <button class="qty-btn" onclick="adjMult(.5)">+</button>
+    </div>
+    ${(f.unit==='g'||f.unit==='ml')?`<div style="text-align:center;font-size:14px;font-weight:700;color:var(--primary);margin-bottom:10px">${Math.round(f.base*mult)}${f.unit} en total</div>`:''}
+    <button class="add-confirm-btn" onclick="confirmAdd()">✓ Agregar — ${k} kcal · ${p}g prot</button>
+  `;
+}
+
+window.setMult = (m) => { currentMult=m; document.getElementById('multInp').value=m; renderPortionBody(m); };
+window.adjMult = (d) => { currentMult=Math.max(.25,Math.round((currentMult+d)*4)/4); document.getElementById('multInp').value=currentMult; renderPortionBody(currentMult); };
+window.onMultInput = (v) => { currentMult=Math.max(.25,parseFloat(v)||1); renderPortionBody(currentMult); };
+window.confirmAdd = () => {
+  if(!selectedFood||!activeMeal) return;
+  log[activeMeal].push({food:selectedFood, mult:currentMult});
+  currentMult=1; saveLog(); closePortionModal(); closeModal();
+  renderHoy(document.getElementById('content'));
+};
+
+// ══════════════════════════════════════
+// TAB PLAN — Plan de nutrición del día
+// ══════════════════════════════════════
+function renderPlan(c) {
+  if(!profile){c.innerHTML='<div style="padding:32px;text-align:center">Cargando...</div>';return}
+  const obj = profile.objetivo||'crecer';
+  const esH = profile.genero==='hombre';
+  const restr = profile.food_restrictions||[];
+
+  const MEALS_PLAN = obj==='crecer' ? [
+    {ico:'🌅',name:'Desayuno',time:'7:00 am',kcalPct:.22,
+     items:[{ico:'🥚',n:'Huevos revueltos',q:`${esH?'3-4':'3'} huevos`},{ico:'🫓',n:'Arepa o pan integral',q:'2 unidades'},{ico:'🍌',n:'Banano',q:'1 mediano'},{ico:'☕',n:'Café sin azúcar',q:'1 taza'}],
+     tip:'Come en la primera hora del día. El metabolismo es más activo en la mañana.'},
+    {ico:'🍎',name:'Merienda mañana',time:'10:00 am',kcalPct:.15,
+     items:[{ico:'🥣',n:'Avena en hojuelas',q:'50g con leche'},{ico:'🥜',n:'Mantequilla de maní',q:'1 cucharada'},{ico:'🍎',n:'Manzana o pera',q:'1 unidad'}],
+     tip:'Come aunque no tengas hambre. Mantiene el metabolismo activo.'},
+    {ico:'☀️',name:'Almuerzo',time:'1:00 pm',kcalPct:.30,
+     items:[{ico:'🍗',n:'Pechuga a la plancha',q:`${esH?'200g':'180g'}`},{ico:'🍚',n:'Arroz integral',q:'1 taza cocida'},{ico:'🥑',n:'Aguacate',q:'½ unidad'},{ico:'🥗',n:'Ensalada verde',q:'Sin límite'}],
+     tip:'Tu comida más importante. No la saltes ni la reduzcas.'},
+    {ico:'⚡',name:'Merienda tarde',time:'4:30 pm',kcalPct:.13,
+     items:[{ico:'🥛',n:'Batido de proteína',q:'1 scoop con leche'},{ico:'🍌',n:'Banano maduro',q:'1 unidad'}],
+     tip:'Post-entreno: tómala en los primeros 30 min después de entrenar.'},
+    {ico:'🌙',name:'Cena',time:'7:30 pm',kcalPct:.20,
+     items:[{ico:'🐟',n:'Tilapia o pechuga',q:`${esH?'180g':'160g'}`},{ico:'🥦',n:'Verduras salteadas',q:'1 taza'},{ico:'🫘',n:'Lentejas o fríjoles',q:'½ taza cocida'}],
+     tip:'Cena antes de las 8pm. Proteína y vegetales, sin excesos de carbohidrato.'},
+  ] : [
+    {ico:'🌅',name:'Desayuno',time:'7:00 am',kcalPct:.20,
+     items:[{ico:'🥚',n:'Claras de huevo + 1 entero',q:`${esH?'5 claras':'4 claras'}`},{ico:'🫓',n:'Pan integral',q:'1 tajada'},{ico:'🍅',n:'Tomate y espinaca',q:'Al gusto'},{ico:'☕',n:'Café negro sin azúcar',q:'1 taza'}],
+     tip:'Saltarse el desayuno aumenta el cortisol y el hambre. Siempre desayuna.'},
+    {ico:'🍓',name:'Merienda mañana',time:'10:00 am',kcalPct:.12,
+     items:[{ico:'🫙',n:'Yogur griego natural',q:'200g'},{ico:'🍓',n:'Fresas o moras',q:'½ taza'},{ico:'🥜',n:'Almendras',q:'10-12 unidades'}],
+     tip:'Fruta de bajo índice glucémico + proteína = merienda perfecta.'},
+    {ico:'☀️',name:'Almuerzo',time:'1:00 pm',kcalPct:.30,
+     items:[{ico:'🍗',n:'Pechuga al horno',q:`${esH?'180g':'160g'}`},{ico:'🍚',n:'Arroz integral',q:'½ taza cocida'},{ico:'🥦',n:'Vegetales al vapor',q:'Sin límite'},{ico:'🍋',n:'Limón y aceite de oliva',q:'Al gusto'}],
+     tip:'Empieza con la ensalada — llena el estómago con pocas calorías.'},
+    {ico:'⚡',name:'Merienda tarde',time:'4:30 pm',kcalPct:.13,
+     items:[{ico:'🥛',n:'Batido proteína con agua',q:'1 scoop + 300ml'},{ico:'🍎',n:'Manzana pequeña',q:'1 unidad'}],
+     tip:'Solo si entrenaste. Si no, esta merienda es opcional.'},
+    {ico:'🌙',name:'Cena',time:'7:30 pm',kcalPct:.25,
+     items:[{ico:'🐟',n:'Tilapia o corvina al vapor',q:`${esH?'160g':'140g'}`},{ico:'🥦',n:'Vegetales al vapor',q:'Sin límite'},{ico:'🍲',n:'Caldo de pollo natural',q:'1 taza'}],
+     tip:'La más ligera del día. Tu cuerpo no necesita mucha energía por la noche.'},
+  ];
+
+  c.innerHTML = `<div class="plan-sec">
+    <div style="background:var(--primary-light);border:1.5px solid var(--border);border-radius:14px;padding:14px;margin-top:14px;margin-bottom:4px;font-size:14px;color:var(--primary);line-height:1.5">
+      📋 Este es tu plan recomendado para <strong>${obj==='crecer'?'crecer y tonificar':'bajar grasa'}</strong>.
+      Úsalo como guía y registra lo que comiste en la pestaña <strong>🔥 Hoy</strong>.
+    </div>
+    ${MEALS_PLAN.map((m,i)=>`
+      <div class="meal-plan-card" style="margin-top:8px">
+        <div class="mp-hdr" onclick="togglePlanMeal('pm-${i}','pa-${i}')">
+          <div class="mp-ico">${m.ico}</div>
+          <div>
+            <div class="mp-name">${m.name}</div>
+            <div style="font-size:12px;color:var(--text3)">${m.time} · ~${Math.round(goalKcal*m.kcalPct)} kcal</div>
+          </div>
+          <div class="mp-arr" id="pa-${i}">▾</div>
+        </div>
+        <div class="mp-body" id="pm-${i}">
+          ${m.items.map(item=>`
+            <div class="mp-item">
+              <div class="mp-item-ico">${item.ico}</div>
+              <div style="flex:1"><div class="mp-item-name">${item.n}</div></div>
+              <div class="mp-item-qty">${item.q}</div>
+            </div>`).join('')}
+          <div class="mp-tip">💡 ${m.tip}</div>
+          <button style="width:100%;margin-top:10px;padding:11px;border:none;border-radius:10px;background:var(--green);color:white;font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer"
+            onclick="event.stopPropagation();showTab('hoy',document.querySelector('.tab'));setTimeout(()=>openModal('${MEALS[i]?.id}'),200)">
+            + Registrar esta comida
+          </button>
+        </div>
+      </div>`).join('')}
+    <div style="height:80px"></div>
+  </div>`;
+}
+
+window.togglePlanMeal = (bodyId, arrId) => {
+  document.getElementById(bodyId)?.classList.toggle('open');
+  const arr=document.getElementById(arrId);
+  if(arr) arr.classList.toggle('up');
+};
+
+// ══════════════════════════════════════
+// TAB REGLAS
+// ══════════════════════════════════════
+function renderReglas(c) {
+  const obj=profile?.objetivo||'crecer', esH=profile?.genero==='hombre';
+  const rules = obj==='crecer'?[
+    {ico:'⏰',txt:'Come cada 3-4 horas. No dejes pasar más de 4 horas sin proteína.'},
+    {ico:'💧',txt:`Mínimo ${esH?'3':'2.5'} litros de agua al día. Hidratación = síntesis muscular.`},
+    {ico:'😴',txt:'El músculo crece durmiendo. 7-8 horas es obligatorio si quieres resultados.'},
+    {ico:'📈',txt:'Sube el peso en el gym cada semana que completes todas las reps.'},
+    {ico:'🥩',txt:`Tu objetivo es ${goalProt}g de proteína al día. Es tu número más importante.`},
+    {ico:'🍚',txt:'No elimines los carbohidratos — son tu combustible para crecer.'},
+    {ico:'📸',txt:'Tómate una foto cada lunes. Los cambios tardan 3-4 semanas en verse.'},
+  ]:[
+    {ico:'⚡',txt:`No bajes de ${esH?'1.500':'1.200'} kcal. Menos destruye músculo, no grasa.`},
+    {ico:'🥩',txt:`Alta proteína (${goalProt}g/día) para proteger el músculo mientras pierdes grasa.`},
+    {ico:'🚫',txt:'Elimina harinas blancas, azúcar y jugos de caja. Son tu mayor enemigo.'},
+    {ico:'💧',txt:'Agua antes de cada comida — reduce el hambre naturalmente.'},
+    {ico:'😴',txt:'Duerme bien. El cortisol alto por mal sueño acumula grasa abdominal.'},
+    {ico:'🏋️',txt:'Mantén el entrenamiento de fuerza. Sin él, perderás músculo junto con la grasa.'},
+    {ico:'📊',txt:'Pésate siempre en ayunas, el mismo día. El peso fluctúa 1-2kg normal.'},
+  ];
+  c.innerHTML=`
+    <div style="margin:14px 14px 0;background:var(--surface);border:1.5px solid var(--border);border-radius:18px;padding:16px">
+      <div style="font-size:16px;font-weight:900;color:var(--text);margin-bottom:12px">
+        💡 Tus reglas para ${obj==='crecer'?(esH?'ganar masa muscular':'crecer y tonificar'):(esH?'bajar grasa':'bajar grasa y tonificar')}
+      </div>
+      ${rules.map(r=>`<div class="rule-item"><div class="rule-ico">${r.ico}</div><div class="rule-txt">${r.txt}</div></div>`).join('')}
+    </div>
+    <div style="margin:12px 14px 100px;background:var(--surface);border:1.5px solid var(--border);border-radius:18px;padding:16px">
+      <div style="font-size:15px;font-weight:800;color:var(--text);margin-bottom:12px">📊 Tus macros objetivo</div>
+      ${[['🔥 Calorías',goalKcal+' kcal'],['🥩 Proteína',goalProt+'g'],['🌾 Carbohidratos',goalCarb+'g'],['🥑 Grasas',goalFat+'g']].map(([l,v])=>`
+        <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)">
+          <span style="font-size:14px;color:var(--text2)">${l}</span>
+          <span style="font-size:15px;font-weight:900;color:var(--primary)">${v}</span>
+        </div>`).join('')}
+      <div style="font-size:13px;color:var(--text3);margin-top:10px;line-height:1.5">
+        Calculado con la fórmula Mifflin-St Jeor según tu peso, altura, edad y nivel de actividad.
+      </div>
     </div>`;
 }
 
 init();
 </script>
-<script src="../js/chatbubble.js"></script>
 </body>
 </html>
