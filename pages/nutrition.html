@@ -789,8 +789,8 @@ function renderPlan(c) {
             </div>`).join('')}
           <div class="mp-tip">💡 ${m.tip}</div>
           <button style="width:100%;margin-top:10px;padding:11px;border:none;border-radius:10px;background:var(--green);color:white;font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer"
-            onclick="event.stopPropagation();showTab('hoy',document.querySelector('.tab'));setTimeout(()=>openModal('${MEALS[i]?.id}'),200)">
-            + Registrar esta comida
+            onclick="goToMealLog('${MEALS[i]?.id||MEALS[0].id}')">
+            ➕ Agregar a mi registro de hoy
           </button>
         </div>
       </div>`).join('')}
@@ -798,7 +798,17 @@ function renderPlan(c) {
   </div>`;
 }
 
-window.togglePlanMeal = (bodyId, arrId) => {
+window.goToMealLog = (mealId) => {
+  // Switch to Hoy tab first
+  const tabEl = document.querySelector('.tab');
+  showTab('hoy', tabEl);
+  // Wait for render then open modal
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      openModal(mealId);
+    });
+  });
+};
   document.getElementById(bodyId)?.classList.toggle('open');
   const arr=document.getElementById(arrId);
   if(arr) arr.classList.toggle('up');
