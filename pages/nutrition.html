@@ -175,7 +175,7 @@ body{background:var(--bg)}
   </div>
 
   <!-- MACRO SUMMARY — siempre visible en tab Hoy -->
-  <div class="macro-summary" id="macroSummary" style="display:none">
+  <div class="macro-summary" id="macroSummary">
     <div class="ms-top">
       <div class="ring-wrap">
         <svg width="86" height="86" viewBox="0 0 86 86" style="transform:rotate(-90deg)">
@@ -355,24 +355,38 @@ LOCAL_FOODS.forEach(f => FOOD_CACHE[f.id] = f);
 // INIT
 // ══════════════════════════════════════
 async function init() {
+  // Step 1: Always initialize log first so renderHoy never crashes
+  MEALS.forEach(m=>{ if(!log[m.id]) log[m.id]=[]; });
+  const savedLog = localStorage.getItem(`af_log_${todayKey}`);
+  if(savedLog) {
+    try {
+      const parsed = JSON.parse(savedLog);
+      MEALS.forEach(m=>{ log[m.id] = parsed[m.id]||[]; });
+    } catch(e) {}
+  }
+  const savedW = localStorage.getItem(`af_water_${todayKey}`);
+  water = savedW ? parseInt(savedW) : 0;
+
+  // Step 2: Render immediately with defaults (never wait for Supabase to show UI)
+  showTab('hoy', document.querySelector('.tab'));
+
+  // Step 3: Load profile in background and update UI
   try {
     const {data:{session}} = await _sb.auth.getSession();
     if(!session){ window.location.href='../index.html'; return; }
 
-    const {data:p, error:pErr} = await _sb
+    const {data:p} = await _sb
       .from('profiles').select('*').eq('id',session.user.id).maybeSingle();
 
-    if(pErr) console.warn('Profile error:', pErr.message);
-    profile = p || {}; // Never null — use empty object as fallback
+    profile = p || {};
 
-    // Set goals — always fallback to sensible defaults
     goalKcal = Math.round(profile.calorias_objetivo || 2000);
     goalProt = Math.round(profile.proteina_g        || 150);
     goalCarb = Math.round(profile.carbs_g           || 220);
     goalFat  = Math.round(profile.grasas_g          || 65);
 
-    const esH   = profile.genero === 'hombre';
-    const obj   = profile.objetivo || 'crecer';
+    const esH    = profile.genero === 'hombre';
+    const obj    = profile.objetivo || 'crecer';
     const nombre = profile.nombre || (esH ? 'Atleta' : 'Campeona');
 
     document.getElementById('hdrName').textContent  = `Plan de ${nombre}`;
@@ -384,17 +398,10 @@ async function init() {
       ? 'linear-gradient(135deg,#166534,#059669)'
       : 'linear-gradient(135deg,#991b1b,#dc2626)';
 
-    // Load today's log from localStorage
-    const saved = localStorage.getItem(`af_log_${todayKey}`);
-    log = saved ? JSON.parse(saved) : {};
-    MEALS.forEach(m=>{ if(!log[m.id]) log[m.id]=[]; });
+    // Update ring with real goals
+    updateMacroRing();
 
-    const savedW = localStorage.getItem(`af_water_${todayKey}`);
-    water = savedW ? parseInt(savedW) : 0;
-
-    showTab('hoy', document.querySelector('.tab'));
-
-    // Check if coming from guia with a pending food
+    // Check pending food from guia
     const pending = sessionStorage.getItem('af_pending_food');
     if(pending) {
       sessionStorage.removeItem('af_pending_food');
@@ -402,16 +409,14 @@ async function init() {
         const {food, mult} = JSON.parse(pending);
         log['lunch'].push({food, mult: mult||1});
         saveLog();
-        showToast(`✅ ${food.name.slice(0,30)} agregado`);
+        renderHoy(document.getElementById('content'));
+        showToast(`✅ ${food.name.slice(0,30)} agregado al almuerzo`);
       } catch(e) {}
     }
 
   } catch(e) {
-    console.error('Nutrition init error:', e);
-    // Show error but still render with defaults
-    document.getElementById('hdrSub').textContent = '⚠️ Cargando con valores por defecto';
-    MEALS.forEach(m=>{ if(!log[m.id]) log[m.id]=[]; });
-    showTab('hoy', document.querySelector('.tab'));
+    console.error('Profile load error:', e);
+    document.getElementById('hdrSub').textContent = `${goalKcal} kcal · ${goalProt}g prot (valores por defecto)`;
   }
 }
 
