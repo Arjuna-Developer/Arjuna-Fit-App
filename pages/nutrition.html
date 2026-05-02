@@ -357,33 +357,34 @@ LOCAL_FOODS.forEach(f => FOOD_CACHE[f.id] = f);
 async function init() {
   try {
     const {data:{session}} = await _sb.auth.getSession();
-    if(!session){window.location.href='../index.html';return}
+    if(!session){ window.location.href='../index.html'; return; }
 
-    const {data:p} = await _sb.from('profiles').select('*').eq('id',session.user.id).maybeSingle();
-    profile = p;
+    const {data:p, error:pErr} = await _sb
+      .from('profiles').select('*').eq('id',session.user.id).maybeSingle();
 
-    if(!profile){window.location.href='onboarding.html';return}
+    if(pErr) console.warn('Profile error:', pErr.message);
+    profile = p || {}; // Never null — use empty object as fallback
 
-    // Set goals from profile
+    // Set goals — always fallback to sensible defaults
     goalKcal = Math.round(profile.calorias_objetivo || 2000);
-    goalProt = Math.round(profile.proteina_g       || 150);
-    goalCarb = Math.round(profile.carbs_g          || 220);
-    goalFat  = Math.round(profile.grasas_g         || 65);
+    goalProt = Math.round(profile.proteina_g        || 150);
+    goalCarb = Math.round(profile.carbs_g           || 220);
+    goalFat  = Math.round(profile.grasas_g          || 65);
 
-    const esH = profile.genero === 'hombre';
-    const obj = profile.objetivo || 'crecer';
+    const esH   = profile.genero === 'hombre';
+    const obj   = profile.objetivo || 'crecer';
     const nombre = profile.nombre || (esH ? 'Atleta' : 'Campeona');
 
-    document.getElementById('hdrName').textContent = `Plan de ${nombre}`;
+    document.getElementById('hdrName').textContent  = `Plan de ${nombre}`;
     document.getElementById('hdrTitle').textContent = `Nutrición ${obj==='crecer'?'🍑':'🔥'}`;
-    document.getElementById('hdrSub').textContent = `${goalKcal.toLocaleString()} kcal/día · ${goalProt}g prot · ${goalCarb}g carb · ${goalFat}g grasa`;
+    document.getElementById('hdrSub').textContent   =
+      `${goalKcal.toLocaleString()} kcal · ${goalProt}g prot · ${goalCarb}g carb · ${goalFat}g grasa`;
 
-    // Change header color by objective
     document.querySelector('.nut-hdr').style.background = obj==='crecer'
       ? 'linear-gradient(135deg,#166534,#059669)'
       : 'linear-gradient(135deg,#991b1b,#dc2626)';
 
-    // Load log from localStorage
+    // Load today's log from localStorage
     const saved = localStorage.getItem(`af_log_${todayKey}`);
     log = saved ? JSON.parse(saved) : {};
     MEALS.forEach(m=>{ if(!log[m.id]) log[m.id]=[]; });
@@ -393,9 +394,24 @@ async function init() {
 
     showTab('hoy', document.querySelector('.tab'));
 
+    // Check if coming from guia with a pending food
+    const pending = sessionStorage.getItem('af_pending_food');
+    if(pending) {
+      sessionStorage.removeItem('af_pending_food');
+      try {
+        const {food, mult} = JSON.parse(pending);
+        log['lunch'].push({food, mult: mult||1});
+        saveLog();
+        showToast(`✅ ${food.name.slice(0,30)} agregado`);
+      } catch(e) {}
+    }
+
   } catch(e) {
     console.error('Nutrition init error:', e);
-    document.getElementById('hdrSub').textContent = '❌ ' + e.message;
+    // Show error but still render with defaults
+    document.getElementById('hdrSub').textContent = '⚠️ Cargando con valores por defecto';
+    MEALS.forEach(m=>{ if(!log[m.id]) log[m.id]=[]; });
+    showTab('hoy', document.querySelector('.tab'));
   }
 }
 
@@ -518,6 +534,14 @@ window.removeFood = (mealId, idx) => {
 
 function saveLog() {
   localStorage.setItem(`af_log_${todayKey}`, JSON.stringify(log));
+}
+
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--primary);color:white;padding:12px 20px;border-radius:999px;font-size:14px;font-weight:700;z-index:999;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.2)';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(), 2500);
 }
 
 window.copyYesterday = () => {

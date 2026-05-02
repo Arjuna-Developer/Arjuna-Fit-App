@@ -533,38 +533,171 @@ function renderTips(b) {
 }
 
 // ── SEARCH ──
-window.onSearch = (val) => {
-  if(!val.trim()){render(currentSec);return}
-  const q=val.toLowerCase();
-  const b=document.getElementById('guiaBody');
-  const all=[...DATA.proteinas,...DATA.carbos,...DATA.grasas,...DATA.snacks,...DATA.suplementos]
-    .filter(f=>f.name.toLowerCase().includes(q)||f.brand.toLowerCase().includes(q)||f.benefit.toLowerCase().includes(q));
+let guiaSearchDebounce = null;
+const GUIA_FOOD_CACHE = {};
 
-  if(!all.length){
-    b.innerHTML=`<div class="empty"><div class="empty-ico">🔍</div><div style="font-size:16px;font-weight:700">No encontramos "${val}"</div><div style="margin-top:6px;color:var(--text3);font-size:14px">Prueba con otro nombre</div></div>`;
-    return;
+window.onSearch = (val) => {
+  if(!val.trim()){ render(currentSec); return; }
+  clearTimeout(guiaSearchDebounce);
+  const q = val.toLowerCase();
+
+  // Local results immediately
+  const local = [...DATA.proteinas,...DATA.carbos,...DATA.grasas,...DATA.snacks]
+    .filter(f=>f.name.toLowerCase().includes(q)||f.brand.toLowerCase().includes(q));
+
+  renderSearchResults(val, local, []);
+
+  // USDA after 500ms
+  guiaSearchDebounce = setTimeout(() => fetchUsdaGuia(val, local), 500);
+};
+
+async function fetchUsdaGuia(q, local) {
+  const b = document.getElementById('guiaBody');
+  const loadEl = document.getElementById('guia-usda-load');
+  if(!loadEl) {
+    b.insertAdjacentHTML('beforeend',
+      `<div id="guia-usda-load" style="text-align:center;padding:14px;font-size:14px;color:var(--text3)">🔬 Buscando en USDA (600k+ alimentos)...</div>`);
   }
-  b.innerHTML=`<div style="font-size:14px;color:var(--text2);margin-bottom:14px">${all.length} resultado${all.length>1?'s':''} para "<strong>${val}</strong>"</div>`+
-    all.map((item,i)=>`
-      <div class="prod-card ${item.status}" onclick="toggleProd(${i})">
-        <div class="prod-top">
-          <div class="prod-emo">${item.emo}</div>
-          <div class="prod-info">
-            <div class="prod-name">${item.name}</div>
-            <div class="prod-brand">${item.brand}</div>
-            <div class="prod-tags">
-              <span class="ptag ${item.status==='rec'?'ptag-rec':'ptag-mod'}">${item.status==='rec'?'✅ Recomendado':'⚠️ Moderado'}</span>
-              <span class="ptag ptag-kcal">${item.kcal}</span>
+  try {
+    const r = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?query=${encodeURIComponent(q)}&pageSize=15&api_key=DEMO_KEY`);
+    const data = await r.json();
+    document.getElementById('guia-usda-load')?.remove();
+    const usdaFoods = (data.foods||[]).map(item => {
+      const get = n => (item.foodNutrients||[]).find(x=>x.nutrientName?.toLowerCase().includes(n.toLowerCase()))?.value||0;
+      const f = {
+        id: 'usda_'+item.fdcId,
+        emo: guiaGetEmo(item.description),
+        name: item.description,
+        brand: item.brandOwner||item.dataType||'USDA FoodData Central',
+        kcal: Math.round(get('energy')||get('Energy')||0),
+        prot: Math.round((get('Protein')||0)*10)/10,
+        carb: Math.round((get('Carbohydrate')||0)*10)/10,
+        fat:  Math.round((get('Total lipid')||get('Fat')||0)*10)/10,
+        source: 'usda',
+        fdcId: item.fdcId,
+      };
+      GUIA_FOOD_CACHE[f.id] = f;
+      return f;
+    });
+    renderSearchResults(q, local, usdaFoods);
+  } catch(e) {
+    document.getElementById('guia-usda-load')?.remove();
+  }
+}
+
+function guiaGetEmo(desc) {
+  const d = (desc||'').toLowerCase();
+  if(d.includes('chicken')||d.includes('pollo')) return '🍗';
+  if(d.includes('fish')||d.includes('salmon')||d.includes('tuna')||d.includes('tilapia')) return '🐟';
+  if(d.includes('egg')||d.includes('huevo')) return '🥚';
+  if(d.includes('beef')||d.includes('meat')||d.includes('res')) return '🥩';
+  if(d.includes('yogurt')||d.includes('yogur')) return '🫙';
+  if(d.includes('milk')||d.includes('leche')) return '🥛';
+  if(d.includes('rice')||d.includes('arroz')) return '🍚';
+  if(d.includes('banana')||d.includes('banano')) return '🍌';
+  if(d.includes('broccoli')) return '🥦';
+  if(d.includes('avocado')||d.includes('aguacate')) return '🥑';
+  if(d.includes('oat')||d.includes('avena')) return '🥣';
+  if(d.includes('bread')||d.includes('pan')) return '🍞';
+  return '🍽️';
+}
+
+function renderSearchResults(q, local, usdaFoods) {
+  const b = document.getElementById('guiaBody');
+  const total = local.length + usdaFoods.length;
+
+  let html = `<div style="font-size:14px;color:var(--text2);margin-bottom:12px">
+    ${total} resultado${total!==1?'s':''} para "<strong>${q}</strong>"
+    <span style="font-size:12px;color:var(--text3);margin-left:6px">· Toca + para agregar a tu registro</span>
+  </div>`;
+
+  // Local results
+  if(local.length) {
+    html += `<div style="font-size:12px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">🇨🇴 Base ArjunaFit (${local.length})</div>`;
+    html += local.map((item,i) => `
+      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:14px;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="font-size:28px">${item.emo}</div>
+          <div style="flex:1">
+            <div style="font-size:15px;font-weight:800;color:var(--text)">${item.name}</div>
+            <div style="font-size:13px;color:var(--text2);margin-top:2px">${item.brand}</div>
+            <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap">
+              <span style="font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;background:${item.status==='rec'?'var(--green-light)':'var(--gold-light)'};color:${item.status==='rec'?'var(--green)':'var(--gold)'}">${item.status==='rec'?'✅ Recomendado':'⚠️ Moderado'}</span>
+              <span style="font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--gold-light);color:var(--gold)">${item.kcal}</span>
             </div>
           </div>
-          <div class="prod-chev" id="pc-${i}">▾</div>
+          <a href="nutrition.html" style="width:36px;height:36px;border-radius:10px;background:var(--green);color:white;font-size:20px;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0" title="Agregar a nutrición">+</a>
         </div>
-        <div class="prod-body" id="pb-${i}">
-          <div class="prod-benefit"><strong>¿Por qué?</strong><br>${item.benefit}</div>
-          <div class="prod-how">💡 <span>${item.how}</span></div>
+        <div style="margin-top:10px;font-size:14px;color:var(--text2);line-height:1.5">${item.benefit}</div>
+        <div style="margin-top:6px;font-size:13px;color:var(--primary);background:var(--primary-light);padding:8px 12px;border-radius:10px">💡 ${item.how}</div>
+      </div>`).join('');
+  }
+
+  // USDA results
+  if(usdaFoods.length) {
+    html += `<div style="font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:1px;margin:14px 0 8px">🔬 USDA FoodData Central — verificado (${usdaFoods.length})</div>`;
+    html += usdaFoods.map(f => `
+      <div id="guia-card-${f.id}" style="background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:14px;margin-bottom:8px;cursor:pointer"
+        onclick="toggleGuiaCard('${f.id}')">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="font-size:26px">${f.emo}</div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:800;color:var(--text);line-height:1.3">${f.name}</div>
+            <div style="font-size:12px;color:var(--text3);margin-top:2px">${f.brand}</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <div style="font-size:18px;font-weight:900;color:var(--primary)">${f.kcal}</div>
+            <div style="font-size:11px;color:var(--text3)">kcal/100g</div>
+          </div>
+          <a href="nutrition.html" style="width:36px;height:36px;border-radius:10px;background:var(--green);color:white;font-size:20px;display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;margin-left:6px" title="Agregar a nutrición" onclick="event.stopPropagation();saveToLog('${f.id}')">+</a>
         </div>
-      </div>
-    `).join('');
+        <div id="guia-detail-${f.id}" style="display:none;margin-top:12px">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+            <div style="background:rgba(220,38,38,.08);border-radius:10px;padding:10px;text-align:center">
+              <div style="font-size:17px;font-weight:900;color:#dc2626">${f.prot}g</div>
+              <div style="font-size:11px;color:var(--text3)">Proteína</div>
+            </div>
+            <div style="background:rgba(5,150,105,.08);border-radius:10px;padding:10px;text-align:center">
+              <div style="font-size:17px;font-weight:900;color:#059669">${f.carb}g</div>
+              <div style="font-size:11px;color:var(--text3)">Carbos</div>
+            </div>
+            <div style="background:var(--primary-light);border-radius:10px;padding:10px;text-align:center">
+              <div style="font-size:17px;font-weight:900;color:var(--primary)">${f.fat}g</div>
+              <div style="font-size:11px;color:var(--text3)">Grasas</div>
+            </div>
+          </div>
+          <div style="font-size:12px;color:var(--text3);margin-top:8px">🔬 USDA FoodData Central · ID ${f.fdcId} · Datos por 100g</div>
+        </div>
+      </div>`).join('');
+  }
+
+  if(!total) {
+    html = `<div style="text-align:center;padding:32px">
+      <div style="font-size:40px;margin-bottom:12px">🔍</div>
+      <div style="font-size:16px;font-weight:700;color:var(--text)">Sin resultados para "${q}"</div>
+      <div style="font-size:14px;color:var(--text2);margin-top:6px">Intenta en inglés: "chicken breast", "oats"</div>
+    </div>`;
+  }
+
+  b.innerHTML = html;
+}
+
+window.toggleGuiaCard = (id) => {
+  const el = document.getElementById(`guia-detail-${id}`);
+  if(el) el.style.display = el.style.display==='none'?'block':'none';
+};
+
+// Save USDA food to nutrition log (lunch by default, opens nutrition page)
+window.saveToLog = (id) => {
+  const food = GUIA_FOOD_CACHE[id];
+  if(!food) return;
+  // Store pending food to add in sessionStorage
+  sessionStorage.setItem('af_pending_food', JSON.stringify({
+    food: {id:food.id,ico:food.emo,name:food.name,cat:'usda',unit:'g',base:100,
+           kcal:food.kcal,prot:food.prot,carb:food.carb,fat:food.fat,source:'usda'},
+    mult: 1
+  }));
+  window.location.href = 'nutrition.html';
 };
 
 window.clearSearch = () => { document.getElementById('searchIn').value=''; render(currentSec); };
