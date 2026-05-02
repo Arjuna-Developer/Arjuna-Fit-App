@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ArjunaFit — Entrenamiento</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../js/af.js"></script>
+<script src="../js/theme.js"></script>
+<link rel="stylesheet" href="../css/app.css">
+<style>
+body { background: var(--surface); }
+.day-hdr { padding:16px;display:flex;align-items:center;gap:12px;color:white;flex-shrink:0 }
+.back { width:40px;height:40px;background:rgba(255,255,255,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;flex-shrink:0;border:none;color:white }
+.hdr-info { flex:1 }
+.hdr-sub { font-size:13px;opacity:.8;text-transform:uppercase;letter-spacing:1px }
+.hdr-title { font-size:18px;font-weight:900 }
+.hdr-badge { background:rgba(255,255,255,.25);padding:6px 14px;border-radius:999px;font-size:13px;font-weight:800 }
+
+.ptabs { display:flex;background:var(--surface);border-bottom:2px solid var(--border);flex-shrink:0 }
+.ptab { flex:1;padding:14px 6px;text-align:center;font-size:14px;font-weight:700;color:var(--text3);cursor:pointer;border:none;background:none;font-family:var(--font);border-bottom:3px solid transparent;transition:all .2s }
+.ptab.on { color:var(--primary);border-bottom-color:var(--primary) }
+
+/* Exercise card */
+.ex-card { background:var(--surface);border:2px solid var(--border);border-radius:18px;margin-bottom:12px;overflow:hidden;transition:border-color .3s }
+.ex-card.done-ex { border-color:var(--green) }
+.ex-hdr { padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer }
+.ex-num { width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;background:var(--primary-light);color:var(--primary) }
+.ex-num.ok { background:var(--green-light);color:var(--green) }
+.ex-name { font-size:15px;font-weight:800;color:var(--text) }
+.ex-meta { font-size:13px;color:var(--text2);margin-top:2px }
+.ex-chev { font-size:16px;color:var(--text3);transition:transform .2s }
+.ex-chev.up { transform:rotate(180deg) }
+.ex-body { display:none;padding:14px 16px }
+.ex-body.open { display:block }
+
+/* Video */
+.vid-wrap { background:#000;border-radius:12px;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;margin-bottom:12px;overflow:hidden }
+.vid-ph { display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:white;text-align:center;padding:16px;background:linear-gradient(135deg,#1e1e2e,#2d2d44);width:100%;height:100% }
+
+/* Serie item */
+.serie-item { border:2px solid var(--border);border-radius:14px;padding:14px;margin-bottom:8px;transition:all .25s }
+.serie-item.active { border-color:var(--primary);background:var(--primary-light) }
+.serie-item.done { border-color:var(--green);background:var(--green-light);opacity:.7 }
+.serie-label { font-size:15px;font-weight:800;color:var(--text) }
+.serie-item.active .serie-label { color:var(--primary) }
+.serie-item.done .serie-label { color:var(--green) }
+.serie-sub { font-size:13px;color:var(--text3);margin-top:3px }
+
+/* Kg input */
+.kg-row { display:flex;gap:8px;align-items:center;margin:12px 0 }
+.kg-btn { width:48px;height:48px;border-radius:12px;border:2px solid var(--border);background:var(--surface);font-size:22px;font-weight:700;cursor:pointer;color:var(--text);flex-shrink:0;transition:all .15s }
+.kg-btn:active { transform:scale(.92) }
+.kg-in { flex:1;padding:14px;border:2px solid var(--primary);border-radius:12px;font-family:var(--font);font-size:24px;font-weight:900;color:var(--text);background:var(--surface);text-align:center;outline:none }
+/* Kg input — layout fijo sin overflow */
+.kg-row { display:grid;grid-template-columns:52px 1fr 52px;gap:8px;align-items:center;margin:12px 0;width:100% }
+.kg-btn { width:52px;height:52px;border-radius:12px;border:2px solid var(--border);background:var(--surface);font-size:26px;font-weight:700;cursor:pointer;color:var(--text);transition:all .15s;display:flex;align-items:center;justify-content:center }
+.kg-btn:active { transform:scale(.9);background:var(--primary-light) }
+.kg-in { width:100%;padding:14px 36px 14px 14px;border:2.5px solid var(--primary);border-radius:12px;font-family:var(--font);font-size:24px;font-weight:900;color:var(--text);background:var(--surface);text-align:center;outline:none;box-sizing:border-box }
+.kg-in-wrap { position:relative;min-width:0 }
+.kg-in-unit { position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:700;color:var(--text3);pointer-events:none }
+.kg-unit { font-size:13px;color:var(--text3);text-align:center }
+.done-kg { font-size:14px;font-weight:700;color:var(--green);margin-top:6px }
+.last-kg { font-size:14px;color:var(--text3);text-align:center;margin-bottom:10px;background:var(--surface2);border-radius:10px;padding:8px 12px }
+.kg-suggest { background:var(--green-light);border:1.5px solid rgba(5,150,105,.25);border-radius:12px;padding:10px 14px;margin-bottom:10px;font-size:14px;color:var(--green);font-weight:700;display:flex;gap:8px;align-items:center;line-height:1.4 }
+.complete-btn { width:100%;padding:16px;border:none;border-radius:12px;background:var(--primary);color:white;font-family:var(--font);font-size:16px;font-weight:800;cursor:pointer;transition:all .2s;margin-top:12px }
+.complete-btn:active { transform:scale(.97) }
+
+/* Timer */
+.timer-overlay { position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(6px) }
+.timer-overlay.show { display:flex }
+.timer-sheet { background:var(--surface);border-radius:24px 24px 0 0;padding:28px 24px;padding-bottom:calc(28px + env(safe-area-inset-bottom));width:100%;max-width:430px;text-align:center }
+.timer-title { font-size:13px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px }
+.timer-ex { font-size:18px;font-weight:900;color:var(--text);margin-bottom:20px }
+.timer-num { font-size:72px;font-weight:900;color:var(--primary);line-height:1;margin-bottom:4px;font-variant-numeric:tabular-nums }
+.timer-lbl { font-size:14px;color:var(--text3);margin-bottom:24px }
+.timer-btns { display:flex;gap:12px }
+
+/* Complete */
+.complete-wrap { position:sticky;bottom:0;background:var(--surface);border-top:2px solid var(--border);padding:14px;padding-bottom:calc(14px + env(safe-area-inset-bottom));display:none }
+
+/* Celebrate */
+.cel { position:fixed;inset:0;background:linear-gradient(135deg,#1e40af,#7c3aed);z-index:300;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:32px }
+.cel.show { display:flex }
+.cel-emo { font-size:80px;animation:pulse 1s ease infinite }
+.cel-title { font-size:30px;font-weight:900;color:white }
+.cel-sub { font-size:16px;color:rgba(255,255,255,.8);line-height:1.6;max-width:300px }
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+</style>
+</head>
+<body>
+<div class="shell" id="shell" style="background:#7c3aed">
+
+  <div class="day-hdr">
+    <button class="back" onclick="history.back()">←</button>
+    <div class="hdr-info">
+      <div class="hdr-sub" id="hdrSub">Cargando...</div>
+      <div class="hdr-title" id="hdrTitle">...</div>
+    </div>
+    <div class="hdr-badge" id="hdrBadge">S1</div>
+  </div>
+
+  <div class="ptabs">
+    <button class="ptab on" id="tabMethod"   onclick="showTab('method')">📋 Método</button>
+    <button class="ptab"    id="tabWarmup"   onclick="showTab('warmup')">🔥 Calentamiento</button>
+    <button class="ptab"    id="tabMain"     onclick="showTab('main')">💪 Entrenamiento</button>
+  </div>
+
+  <div class="scroll" id="mainScroll" style="background:var(--bg)">
+    <div id="content" style="padding:14px"></div>
+  </div>
+
+  <div class="complete-wrap" id="completeWrap">
+    <button class="btn btn-green" onclick="doComplete()">✅ Completar entrenamiento</button>
+  </div>
+</div>
+
+<!-- Timer -->
+<div class="timer-overlay" id="timerOverlay">
+  <div class="timer-sheet">
+    <div class="timer-title">⏱ DESCANSO</div>
+    <div class="timer-ex" id="timerEx">...</div>
+    <div class="timer-num" id="timerNum">90</div>
+    <div class="timer-lbl">segundos</div>
+    <div class="timer-btns">
+      <button class="btn btn-outline btn-sm" style="flex:1" onclick="skipTimer()">Saltar</button>
+      <button class="btn btn-primary btn-sm" style="flex:1" id="pauseBtn" onclick="pauseTimer()">Pausar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Celebrate -->
+<div class="cel" id="celOverlay">
+  <div class="cel-emo">🎉</div>
+  <div class="cel-title" id="celTitle">¡Día completado!</div>
+  <div class="cel-sub" id="celSub">Excelente trabajo.</div>
+  <button class="btn btn-ghost" style="max-width:280px;margin-top:16px" onclick="window.location.href='dashboard.html'">🏠 Volver al inicio</button>
+</div>
+
+<script>
+// ══════════════════════════════
+// DATA
+// ══════════════════════════════
+const COLORS = { glutes:'#7c3aed', posterior:'#be185d', anterior:'#059669' };
+const PATTERN = ['train','rest','train','rest','train','rest','rest'];
+const TRAIN_TYPES = ['glutes','posterior','anterior'];
+const NAMES = { glutes:'Glúteos 🍑', posterior:'Posterior 💪', anterior:'Anterior 🦵' };
+
+function getDayInfo(d) {
+  const wi = Math.floor((d-1)/7), di = (d-1)%7;
+  const wn = wi+1, type = PATTERN[di];
+  if(type==='rest') return {type:'rest', weekNum:wn, dayNum:d};
+  const ti = [0,2,4].indexOf(di);
+  const tt = TRAIN_TYPES[ti];
+  return {type:'train', trainType:tt, weekNum:wn, dayNum:d, title:NAMES[tt]};
+}
+
+// ══════════════════════════════════════════════
+// SISTEMA DE EJERCICIOS CON ADAPTACIONES
+// ── Sin lesiones → máxima intensidad
+// ── Con lesiones → alternativas seguras
+// ══════════════════════════════════════════════
+
+const EXERCISES_BASE = {
+  // ─── GLÚTEOS ───────────────────────────────
+  glutes: {
+    gym: [
+      {
+        name:'Hip Thrust con Barra', emg:'EMG 143%', rest:90, driveId:'',
+        ok:'Empuja con talones, pausa 1s arriba apretando el glúteo',
+        err:'No arquees la espalda — la espalda baja no debe moverse',
+        tips:['Rodillas a 90°','Barbell sobre caderas con pad','Barbilla metida al pecho'],
+        // Adaptaciones por lesión
+        mod_lumbar: null, // reemplazar
+        mod_rodilla: {name:'Hip Thrust con Banda (rango reducido)', ok:'Solo sube hasta 45° — evita hiperextensión', err:'No fuerces si hay dolor', tips:['Rango corto sin dolor']},
+        mod_cadera: {name:'Glute Bridge Bilateral (suelo)', ok:'Pausa 2s arriba, sin peso', err:'Detente si hay dolor en la cadera', tips:['Posición cómoda para la cadera']},
+      },
+      {
+        name:'Step-Up con Mancuernas', emg:'EMG 169%', rest:90, driveId:'',
+        ok:'Talón completo en el cajón, empuja con el glúteo',
+        err:'No des impulso con la pierna de abajo',
+        tips:['Cajón a altura de rodilla','Tronco levemente inclinado','Baja lento 3s'],
+        mod_rodilla: {name:'Abducción en Máquina (sentado)', ok:'Lento y controlado, pausa arriba', err:'No uses impulso', tips:['Elimina impacto en rodilla']},
+        mod_tobillo: {name:'Step-Up bajo (escalón 15cm)', ok:'Cajón muy bajo, pie completo', err:'Sin dolor en el tobillo', tips:['Altura mínima, sin estrés en tobillo']},
+      },
+      {
+        name:'Hip Thrust Unilateral', emg:'EMG 135%', rest:75, driveId:'',
+        ok:'Cadera nivelada, glúteo de la pierna activa siempre contraído',
+        err:'No dejes caer la cadera hacia el lado libre',
+        tips:['Empieza con peso corporal','Pausa 1s arriba'],
+        mod_lumbar: {name:'Clamshell con Banda (costado)', ok:'Abre la rodilla controlado', err:'No rotes la pelvis', tips:['Activa glúteo medio sin carga lumbar']},
+        mod_cadera: {name:'Patada Glútea en Cuadrupedia', ok:'Glúteo contraído arriba', err:'No arquees la espalda', tips:['Rodilla a 90°']},
+      },
+      {
+        name:'Abducción en Máquina', emg:'EMG 103%', rest:60, driveId:'',
+        ok:'Lento hacia afuera, pausa 1s, lento de vuelta',
+        err:'No uses el torso para ayudarte',
+        tips:['Rango completo sin dolor','Asiento bien ajustado'],
+        mod_cadera: {name:'Abducción de pie con banda', ok:'Pelvis nivelada, movimiento puro', err:'No inclines el tronco', tips:['Apoyo en pared si necesitas']},
+      },
+    ],
+    casa: [
+      {
+        name:'Hip Thrust con Banda', emg:'~110%', rest:90, driveId:'',
+        ok:'Aprieta el glúteo al máximo arriba, pausa 2s',
+        err:'No arquees la espalda baja',
+        tips:['Banda sobre caderas','Espalda en el sofá o cama'],
+        mod_lumbar: {name:'Glute Bridge Bilateral sin banda', ok:'Suave y controlado', err:'Para si hay dolor lumbar', tips:['Cero carga en columna']},
+        mod_rodilla: {name:'Hip Thrust con banda (rango limitado)', ok:'Sube solo hasta donde no duela la rodilla', err:'Sin flexión forzada', tips:['Rango 20-30°']},
+      },
+      {
+        name:'Step-Up en Silla', emg:'~150%', rest:90, driveId:'',
+        ok:'Talón al frente, empuja con el glúteo, no con impulso',
+        err:'No des patadas con la pierna libre',
+        tips:['Silla estable contra la pared','Baja controlado 3s'],
+        mod_rodilla: {name:'Abducción con banda (de pie)', ok:'Pelvis nivelada, lento', err:'Sin dolor en rodilla', tips:['Apoyo en pared']},
+        mod_tobillo: {name:'Puente de glúteo en suelo', ok:'Pausa arriba 2s', err:'Sin dolor', tips:['Cero impacto en tobillo']},
+      },
+      {
+        name:'Glute Bridge Unilateral', emg:'~120%', rest:75, driveId:'',
+        ok:'Cadera bien arriba, pausa 2s, baja 3s',
+        err:'No gires la pelvis al levantar',
+        tips:['Una pierna extendida al aire','Progresa a peso en cadera'],
+        mod_lumbar: {name:'Glute Bridge Bilateral (ambas piernas)', ok:'Más fácil para la lumbar', err:'Para si hay molestia', tips:['Variante más segura']},
+      },
+      {
+        name:'Abducción con Banda', emg:'~100%', rest:60, driveId:'',
+        ok:'Pelvis nivelada, movimiento puro de cadera',
+        err:'No inclines el tronco para ayudarte',
+        tips:['Banda en tobillos','Apoyo en pared'],
+        mod_cadera: {name:'Clamshell con banda (costado)', ok:'Abre la rodilla sin mover la pelvis', err:'No rotar la espalda', tips:['Posición lateral cómoda']},
+      },
+    ]
+  },
+
+  // ─── CADENA POSTERIOR ──────────────────────
+  posterior: {
+    gym: [
+      {
+        name:'Peso Muerto Rumano', emg:'~110%', rest:90, driveId:'',
+        ok:'Cadera hacia atrás, espalda recta como tabla, siente el estiramiento de isquios',
+        err:'NUNCA redondees la espalda — para inmediatamente si lo haces',
+        tips:['Barra pegada al cuerpo todo el recorrido','Rodillas levemente flexionadas','Mira 1m adelante'],
+        mod_lumbar: {name:'Curl Femoral en Máquina (sentado)', ok:'Baja en 3s controlado', err:'No levantes la cadera', tips:['Cero estrés en lumbar','Activa isquios puro']},
+        mod_postparto: {name:'Good Morning con Banda liviana', ok:'Bisagra suave, sin peso', err:'Para si hay presión abdominal', tips:['Muy liviano, primero conectar con el cuerpo']},
+      },
+      {
+        name:'Sentadilla Búlgara', emg:'121%', rest:90, driveId:'',
+        ok:'Pie delantero bien adelante, rodilla delantera sigue la punta del pie',
+        err:'Rodilla delantera no debe colapsar hacia adentro',
+        tips:['Tronco 15° adelante activa glúteo','Banco a altura de rodilla','Baja 3s'],
+        mod_rodilla: {name:'Curl Femoral Tumbado en Máquina', ok:'Rango completo sin dolor', err:'No arquees la espalda', tips:['Elimina todo impacto en rodilla']},
+        mod_tobillo: {name:'Peso Muerto Rumano (peso moderado)', ok:'Bisagra de cadera pura', err:'Cero impacto en tobillo', tips:['Alternativa sin trabajo de tobillo']},
+      },
+      {
+        name:'Curl Femoral Máquina', emg:'Isquios', rest:75, driveId:'',
+        ok:'Baja en 3 segundos controlado, sube en 1s',
+        err:'No levantes la cadera del asiento',
+        tips:['Caderas pegadas siempre','Puntas de pie neutras'],
+        mod_rodilla: {name:'Curl Femoral con banda (sentado)', ok:'Rango sin dolor', err:'No fuerces si duele', tips:['Ajusta rango a tu comodidad']},
+      },
+      {
+        name:'Patada Glútea en Cable', emg:'Glúteo', rest:60, driveId:'',
+        ok:'Contrae el glúteo en la posición alta, pausa 1s',
+        err:'No arquees la lumbar para llegar más arriba',
+        tips:['Rodilla a 90° en el recorrido','Apoyo estable en la máquina'],
+        mod_lumbar: {name:'Clamshell con Banda (costado)', ok:'Abre rodilla sin mover pelvis', err:'Sin compensación lumbar', tips:['Cero carga axial']},
+        mod_cadera: {name:'Abducción en Máquina', ok:'Lento y controlado', err:'Sin dolor en cadera', tips:['Consulta si hay dolor agudo']},
+      },
+    ],
+    casa: [
+      {
+        name:'Good Morning con Banda', emg:'~100%', rest:90, driveId:'',
+        ok:'Cadera hacia atrás, espalda en tabla, siente el isquio',
+        err:'No redondees la espalda',
+        tips:['Banda en nuca y pies','Rodillas levemente dobladas'],
+        mod_lumbar: {name:'Curl Isquiotibial con banda (tumbado)', ok:'Doblando la rodilla contra resistencia', err:'Espalda pegada al suelo', tips:['Cero carga lumbar']},
+      },
+      {
+        name:'Sentadilla Búlgara', emg:'~110%', rest:90, driveId:'',
+        ok:'Talón delantero empuja, glúteo abajo y arriba',
+        err:'Rodilla no pasa la punta del pie',
+        tips:['Pie trasero en silla o cama','Baja 3s'],
+        mod_rodilla: {name:'Curl Nórdico Modificado (asistido)', ok:'Baja 3s controlando, sube con manos', err:'Nunca colapses', tips:['Activa isquios sin cargar rodilla en flexión']},
+        mod_tobillo: {name:'Good Morning con banda', ok:'Bisagra de cadera sin tobillo', err:'Sin dolor', tips:['Alternativa sin estrés en tobillo']},
+      },
+      {
+        name:'Curl Nórdico', emg:'Isquios', rest:75, driveId:'',
+        ok:'Isquios controlan la bajada en 3-5 segundos',
+        err:'No te dejes caer — es el error más común',
+        tips:['Rodillas en suelo con cojín','Sube usando manos si es necesario'],
+        mod_rodilla: {name:'Patada trasera con banda (cuadrupedia)', ok:'Glúteo contraído arriba', err:'Sin hiperextensión de rodilla', tips:['Activa cadena posterior sin carga en rodilla']},
+      },
+      {
+        name:'Patada Glútea Cuadrupedia', emg:'Glúteo', rest:60, driveId:'',
+        ok:'Glúteo contraído en la posición alta, pausa 2s',
+        err:'No arquees la espalda para llegar más arriba',
+        tips:['Rodilla 90°','Muñecas bajo hombros'],
+        mod_lumbar: {name:'Abducción de pie con banda', ok:'Pelvis nivelada', err:'Sin inclinación del tronco', tips:['Cero carga lumbar']},
+        mod_cadera: {name:'Clamshell con banda', ok:'Abre controlado', err:'Sin dolor en cadera', tips:['Posición lateral']},
+      },
+    ]
+  },
+
+  // ─── ANTERIOR ──────────────────────────────
+  anterior: {
+    gym: [
+      {
+        name:'Sentadilla con Barra', emg:'~90%', rest:90, driveId:'',
+        ok:'Rodillas siguen la punta de los pies, pecho arriba, baja paralelo',
+        err:'No colapses las rodillas hacia adentro — activa el glúteo',
+        tips:['Pies más anchos que hombros','Puntas 30° hacia afuera','Respira antes de bajar'],
+        mod_rodilla: {name:'Prensa de Piernas (rango limitado 0-60°)', ok:'No pases de 60° de flexión', err:'Detente si hay dolor en la rodilla', tips:['Rango seguro para rodilla lesionada','Pies altos en la plataforma']},
+        mod_lumbar: {name:'Sentadilla en Goblet con Kettlebell', ok:'Peso frente al pecho, espalda recta', err:'No redondees la lumbar', tips:['El peso adelante protege la lumbar']},
+        mod_postparto: {name:'Sentadilla Sumo (sin barra)', ok:'Mancuerna central, muy controlado', err:'Sin presión abdominal excesiva', tips:['Activa el suelo pélvico']},
+      },
+      {
+        name:'Prensa de Piernas', emg:'~75%', rest:90, driveId:'',
+        ok:'Pies altos activan más glúteo, baja lento 3s',
+        err:'No bloquees las rodillas al extender — siempre leve flexión',
+        tips:['Pies a la anchura de caderas o más','No despegues la cadera del asiento'],
+        mod_rodilla: {name:'Extensión de Cuádriceps (rango 90-30°)', ok:'Solo en rango sin dolor', err:'No bajes más si duele', tips:['Rango corto, mucho menos estrés en rodilla']},
+        mod_lumbar: {name:'Prensa con respaldo inclinado suave', ok:'Asiento más reclinado protege la lumbar', err:'No flexiones más de 90°', tips:['Ajusta el asiento']},
+      },
+      {
+        name:'Estocada con paso largo', emg:'~95%', rest:75, driveId:'',
+        ok:'Paso largo activa el glúteo, rodilla delantera sobre el tobillo',
+        err:'Rodilla delantera no pasa la punta del pie',
+        tips:['Tronco levemente inclinado','Baja 3s, sube 1s'],
+        mod_rodilla: {name:'Sentadilla en Caja (Box Squat)', ok:'Siéntate en la caja, levántate controlado', err:'Sin dolor al sentarte', tips:['Elimina el estrés de rodilla en el punto bajo']},
+        mod_tobillo: {name:'Prensa de Piernas (pies altos)', ok:'Pies altos, sin movimiento de tobillo', err:'Sin estrés en tobillo', tips:['Alternativa sin trabajo de tobillo']},
+      },
+      {
+        name:'Extensión de Cuádriceps', emg:'Cuáds', rest:60, driveId:'',
+        ok:'Aprieta el cuádriceps arriba 1s, baja lento 3s',
+        err:'No bloquees la rodilla en extensión completa',
+        tips:['Rango 90°-30° es lo más seguro','Asiento bien ajustado'],
+        mod_rodilla: {name:'Terminal Knee Extension con banda', ok:'Extiende la rodilla desde 30° a 0°', err:'Sin dolor', tips:['El rango más seguro para rodilla']},
+      },
+    ],
+    casa: [
+      {
+        name:'Sentadilla Sumo', emg:'~85%', rest:90, driveId:'',
+        ok:'Rodillas hacia afuera siguiendo los pies, pecho arriba',
+        err:'No caigas el torso hacia adelante',
+        tips:['Pies muy separados, puntas 45°','Mancuerna central','Baja 3s'],
+        mod_rodilla: {name:'Wall Sit (sentadilla en pared)', ok:'Espalda pegada, rodillas a 90° o menos si duele', err:'Para si hay dolor agudo', tips:['Sube el ángulo si duele — 60° en vez de 90°']},
+        mod_lumbar: {name:'Sentadilla Goblet con mancuerna', ok:'Peso frente, espalda recta', err:'Sin redondear', tips:['Peso protege la postura']},
+      },
+      {
+        name:'Sentadilla Búlgara', emg:'~100%', rest:90, driveId:'',
+        ok:'Tronco vertical o ligeramente inclinado, baja 3s',
+        err:'Rodilla delantera no pasa la punta',
+        tips:['Pie trasero en silla','Progresa con mancuernas'],
+        mod_rodilla: {name:'Sentadilla al aire (rango 0-45°)', ok:'Solo hasta donde no duela', err:'Sin colapso de rodilla', tips:['Rango muy corto protege la rodilla']},
+        mod_tobillo: {name:'Sentadilla en Caja (silla baja)', ok:'Siéntate y levántate controlado', err:'Sin tobillo forzado', tips:['Caja alta = menos rango de tobillo']},
+      },
+      {
+        name:'Estocada con paso largo', emg:'~90%', rest:75, driveId:'',
+        ok:'Paso largo, rodilla sobre el tobillo, glúteo activo',
+        err:'Rodilla no pasa la punta del pie',
+        tips:['Sin peso o con mancuernas','Baja 3s'],
+        mod_rodilla: {name:'Step-Up bajo (escalón 15cm)', ok:'Pie completo, empuja con el talón', err:'Sin dolor en rodilla', tips:['Bajo impacto en rodilla']},
+        mod_tobillo: {name:'Sentadilla Sumo sin paso', ok:'Pies quietos, sin movimiento de tobillo', err:'Sin dolor', tips:['Sin estrés en tobillo']},
+      },
+      {
+        name:'Wall Sit', emg:'Cuáds', rest:60, driveId:'',
+        ok:'Espalda plana en la pared, rodillas a 90°',
+        err:'No dejes que las rodillas colapsen hacia adentro',
+        tips:['Rodillas 90° o el ángulo que toleres','Activa cuádriceps al máximo'],
+        mod_rodilla: {name:'Contracción isométrica de cuádriceps (sentado)', ok:'Contrae el cuáds con la pierna estirada', err:'Sin dolor', tips:['Cero flexión de rodilla']},
+      },
+    ]
+  }
+};
+
+// ══════════════════════════════════════════════
+// Función para adaptar ejercicios según lesiones
+// ══════════════════════════════════════════════
+function getAdaptedExercises(trainType, entorno, injuries) {
+  const base = EXERCISES_BASE[trainType]?.[entorno] || EXERCISES_BASE[trainType]?.gym || [];
+  const injSet = new Set(injuries || []);
+
+  // Sin lesiones → plan completo
+  if(injSet.size === 0 || injSet.has('ninguna')) return base.map(ex => ({...ex, adapted:false}));
+
+  return base.map(ex => {
+    // Prioridad: rodilla > lumbar > cadera > tobillo > postparto
+    let mod = null;
+    if(injSet.has('rodilla')   && ex.mod_rodilla)   mod = ex.mod_rodilla;
+    else if(injSet.has('lumbar')    && ex.mod_lumbar)    mod = ex.mod_lumbar;
+    else if(injSet.has('cadera')    && ex.mod_cadera)    mod = ex.mod_cadera;
+    else if(injSet.has('tobillo')   && ex.mod_tobillo)   mod = ex.mod_tobillo;
+    else if(injSet.has('postparto') && ex.mod_postparto) mod = ex.mod_postparto;
+
+    if(!mod) return {...ex, adapted:false};
+
+    // Si mod es null (ejercicio no recomendado) → saltar con alternativa segura
+    if(mod === null) return {
+      ...ex,
+      name: ex.name + ' — EVITAR',
+      ok: '⚠️ Este ejercicio no está recomendado con tu lesión. Habla con tu entrenador en el chat.',
+      err: 'Consulta antes de intentarlo',
+      tips: ['Ve al chat del entrenador para una alternativa personalizada'],
+      adapted: true,
+      adaptedName: 'Ejercicio no recomendado',
+      injuryWarning: true,
+    };
+
+    return {
+      ...ex,
+      ...mod,
+      emg: ex.emg, rest: ex.rest, driveId: ex.driveId,
+      adapted: true,
+      originalName: ex.name,
+    };
+  });
+}
+
+const EXERCISES = EXERCISES_BASE; // backward compat
+
+const WARMUP = {
+  glutes:[
+    {name:'Activación glúteo medio con banda', sets:'2×15', desc:'Abducción lateral de pie', dur:60},
+    {name:'Clamshell con banda',               sets:'2×12 c/lado', desc:'De costado, abre la rodilla', dur:45},
+    {name:'Glute Bridge sin peso + pausa 3s',  sets:'2×10', desc:'Conexión mente-músculo', dur:45},
+    {name:'Caminata con banda',                sets:'5 minutos', desc:'Activa cadena posterior', dur:300},
+  ],
+  posterior:[
+    {name:'Gato-Camello',                      sets:'2×10', desc:'Movilidad lumbar en cuadrupedia', dur:40},
+    {name:'Buenos días con barra vacía',       sets:'2×10', desc:'Patrón bisagra de cadera', dur:45},
+    {name:'Curl de isquio con banda',          sets:'2×12', desc:'Pre-activación de isquios', dur:45},
+    {name:'Patada trasera con banda',          sets:'2×12 c/lado', desc:'Activa glúteo', dur:45},
+  ],
+  anterior:[
+    {name:'Sentadilla al aire + pausa 3s',     sets:'2×15', desc:'Activa cuádriceps', dur:45},
+    {name:'Lunges caminando sin peso',         sets:'2×10 pasos', desc:'Movilidad de cadera', dur:40},
+    {name:'Movilidad de tobillo en pared',     sets:'2×10 c/lado', desc:'Mejora profundidad', dur:30},
+    {name:'Bicicleta o caminata suave',        sets:'5 minutos', desc:'Cardio de activación', dur:300},
+  ]
+};
+
+const COOLDOWN = {
+  glutes:    ['Figura 4 (glúteo + piriforme): 60s c/lado','Flexores de cadera en media luna: 45s','Foam roller en glúteos: 90s'],
+  posterior: ['Isquiotibiales (pierna recta): 60s c/lado','Paloma (piriforme): 60s c/lado','Pantorrillas en pared: 30s'],
+  anterior:  ['Cuádriceps de pie: 45s c/lado','Aductores (mariposa): 60s','Child pose: 45s'],
+};
+
+// ══════════════════════════════
+// STATE
+// ══════════════════════════════
+let user, profile, dayNum, dayInfo, exercises;
+let completedSets = {};  // { exIdx: [0,1,2,3,4] }
+let savedKg = {};        // { 'exIdx-serieIdx': kg }
+let exerciseHistory = {};
+let currentTab = 'method';
+let timerInterval = null, timerSecs = 0, timerPaused = false;
+
+// ══════════════════════════════
+// INIT
+// ══════════════════════════════
+async function init() {
+  try {
+    user = await AF.requireAuth('../index.html');
+    if (!user) return;
+
+    profile = await AF.getProfile(user.id);
+    if (!profile) { window.location.href = 'onboarding.html'; return; }
+
+    const params = new URLSearchParams(window.location.search);
+    dayNum = parseInt(params.get('day') || sessionStorage.getItem('af_day') || '1');
+    dayInfo = getDayInfo(dayNum);
+    if (dayInfo.type === 'rest') { window.location.href = 'dashboard.html'; return; }
+
+    const entorno = profile.entorno || 'gym';
+    const injuries = profile.injuries || [];
+    exercises = getAdaptedExercises(dayInfo.trainType, entorno, injuries);
+    exercises.forEach((_, i) => { completedSets[i] = []; exerciseHistory[exercises[i].name] = []; });
+
+    // Load history silently
+    try {
+      await Promise.all(exercises.map(ex =>
+        AF.getLastSession(user.id, ex.name, dayInfo.weekNum)
+          .then(d => { exerciseHistory[ex.name] = d || []; })
+          .catch(() => {})
+      ));
+    } catch(e) {}
+
+    // Header
+    document.getElementById('shell').style.background = COLORS[dayInfo.trainType] || '#7c3aed';
+    document.getElementById('hdrSub').textContent = `Semana ${dayInfo.weekNum} · Día ${dayNum} de 56`;
+    document.getElementById('hdrTitle').textContent = dayInfo.title;
+    document.getElementById('hdrBadge').textContent = `S${dayInfo.weekNum}`;
+
+    showTab('method');
+
+  } catch(e) {
+    console.error(e);
+    document.getElementById('hdrSub').textContent = '❌ ' + e.message;
+    document.getElementById('content').innerHTML = `
+      <div style="padding:32px;text-align:center">
+        <div style="font-size:40px;margin-bottom:12px">⚠️</div>
+        <div style="font-size:15px;color:var(--text2);margin-bottom:20px">${e.message}</div>
+        <a href="dashboard.html" style="padding:16px 28px;background:var(--primary);color:white;border-radius:14px;font-weight:800;text-decoration:none;font-size:16px">🏠 Volver al inicio</a>
+      </div>`;
+  }
+}
+
+// ══════════════════════════════
+// TABS
+// ══════════════════════════════
+function showTab(tab) {
+  currentTab = tab;
+  ['method','warmup','main'].forEach(t => {
+    const el = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
+    if(el) el.classList.toggle('on', t === tab);
+  });
+  const c = document.getElementById('content');
+  document.getElementById('mainScroll').scrollTop = 0;
+  document.getElementById('completeWrap').style.display = 'none';
+
+  if (tab === 'method')  renderMethod(c);
+  if (tab === 'warmup')  renderWarmup(c);
+  if (tab === 'main')  { renderMain(c); checkComplete(); }
+}
+
+// ══════════════════════════════
+// METHOD
+// ══════════════════════════════
+function renderMethod(c) {
+  const reps = profile.nivel_entrenamiento==='avanzado'?'6-8':profile.nivel_entrenamiento==='intermedio'?'8-10':'10-12';
+  const rest = profile.descanso_segundos || 90;
+  const msgs = {
+    glutes:    { emo:'🍑', msg:'¡Hoy trabajamos glúteos! Hip Thrust primero. Máxima activación.' },
+    posterior: { emo:'💪', msg:'Cadena posterior al máximo. Siente cada contracción.' },
+    anterior:  { emo:'🦵', msg:'Cuádriceps y pierna completa. Sentadilla profunda con técnica.' },
+  };
+  const m = msgs[dayInfo.trainType] || {};
+
+  c.innerHTML = `
+    <div style="background:linear-gradient(135deg,var(--primary),var(--pink));border-radius:20px;padding:20px;color:white;text-align:center;margin-bottom:16px">
+      <div style="font-size:48px;margin-bottom:10px">${m.emo||'💪'}</div>
+      <div style="font-size:20px;font-weight:900;margin-bottom:8px">El Método ArjunaFit</div>
+      <div style="font-size:15px;opacity:.9;line-height:1.5">${m.msg}</div>
+    </div>
+
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:18px;padding:18px;margin-bottom:12px">
+      <div style="font-size:16px;font-weight:800;color:var(--text);margin-bottom:14px">📋 Estructura de cada ejercicio</div>
+
+      <div style="background:var(--surface2);border-radius:14px;padding:14px;margin-bottom:10px">
+        <div style="font-size:13px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">🔄 Primero calientas</div>
+        <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center">
+          <div style="background:var(--surface);border-radius:12px;padding:14px;text-align:center">
+            <div style="font-size:30px;font-weight:900;color:var(--text3)">20</div>
+            <div style="font-size:12px;color:var(--text3);margin-top:2px">reps · Peso liviano</div>
+          </div>
+          <div style="font-size:20px;color:var(--text3)">→</div>
+          <div style="background:var(--surface);border-radius:12px;padding:14px;text-align:center">
+            <div style="font-size:30px;font-weight:900;color:var(--text3)">15</div>
+            <div style="font-size:12px;color:var(--text3);margin-top:2px">reps · Peso medio</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--primary-light);border:1.5px solid var(--border);border-radius:14px;padding:14px">
+        <div style="font-size:13px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">🔥 Luego las efectivas</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+          ${[1,2,3].map(n=>`
+            <div style="background:var(--primary);border-radius:12px;padding:14px;text-align:center">
+              <div style="font-size:20px;font-weight:900;color:white">S${n}</div>
+              <div style="font-size:12px;color:rgba(255,255,255,.8);margin-top:2px">${reps} reps</div>
+            </div>
+          `).join('')}
+        </div>
+        <div style="font-size:13px;color:var(--primary);text-align:center;margin-top:10px;font-weight:700">⏱ ${rest}s de descanso entre series</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
+      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:14px;text-align:center">
+        <div style="font-size:26px;font-weight:900;color:var(--primary)">${exercises.length}</div>
+        <div style="font-size:13px;color:var(--text2);margin-top:4px">ejercicios</div>
+      </div>
+      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:14px;text-align:center">
+        <div style="font-size:26px;font-weight:900;color:var(--primary)">2+3</div>
+        <div style="font-size:13px;color:var(--text2);margin-top:4px">series c/u</div>
+      </div>
+      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:14px;text-align:center">
+        <div style="font-size:26px;font-weight:900;color:var(--primary)">${rest}s</div>
+        <div style="font-size:13px;color:var(--text2);margin-top:4px">descanso</div>
+      </div>
+    </div>
+
+    <button class="btn btn-green" onclick="showTab('warmup')">🔥 ¡Empezar calentamiento!</button>
+    <div style="height:20px"></div>
+  `;
+}
+
+// ══════════════════════════════
+// WARMUP
+// ══════════════════════════════
+function renderWarmup(c) {
+  let wm = WARMUP[dayInfo.trainType] || [];
+  const injSet = new Set(profile.injuries || []);
+  // Adapt warmup for injuries
+  if(injSet.has('lumbar')) {
+    wm = wm.map(w => w.name.toLowerCase().includes('buenos días') || w.name.toLowerCase().includes('barra')
+      ? {...w, name:'Gato-Camello (movilidad lumbar)', desc:'Sin carga — movilidad suave', dur:45}
+      : w);
+  }
+  if(injSet.has('rodilla')) {
+    wm = wm.map(w => w.name.toLowerCase().includes('sentadilla al aire')
+      ? {...w, name:'Sentadilla parcial (0-45°)', desc:'Solo hasta donde no duela', dur:45}
+      : w);
+  }
+  if(injSet.has('tobillo')) {
+    wm = wm.map(w => w.name.toLowerCase().includes('tobillo')
+      ? {...w, name:'Movilidad de tobillo (rango libre)', desc:'Solo el rango cómodo', dur:30}
+      : w);
+  }
+
+  const injuryNote = (injSet.size > 0 && !injSet.has('ninguna'))
+    ? `<div style="background:var(--gold-light);border:1.5px solid rgba(146,64,14,.2);border-radius:12px;padding:12px 14px;margin-bottom:12px;font-size:14px;color:var(--gold)">⚡ <strong>Plan adaptado por tu lesión.</strong> Sigue las instrucciones modificadas y para si sientes dolor agudo.</div>`
+    : '';
+
+  c.innerHTML = `
+    ${injuryNote}
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:14px;margin-bottom:12px;font-size:15px;color:var(--text2);line-height:1.5">
+      🔥 <strong style="color:var(--text)">10-15 minutos</strong> de activación. No saltes esto — protege las rodillas y activa el glúteo.
+    </div>
+    ${wm.map((w,i)=>`
+      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer" onclick="startTimer(${w.dur},'${w.name}')">
+        <div style="width:56px;height:56px;border-radius:12px;background:var(--primary-light);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0">🏃</div>
+        <div style="flex:1">
+          <div style="font-size:15px;font-weight:700;color:var(--text)">${w.name}</div>
+          <div style="font-size:13px;color:var(--text2);margin-top:2px">${w.sets} · ${w.desc}</div>
+        </div>
+        <div style="background:var(--primary);color:white;padding:8px 14px;border-radius:10px;font-size:13px;font-weight:700;flex-shrink:0">▶ ${w.dur>=60?Math.round(w.dur/60)+'min':w.dur+'s'}</div>
+      </div>
+    `).join('')}
+    <button class="btn btn-primary" style="margin-top:14px" onclick="showTab('main')">✅ ¡Listo, a entrenar! 💪</button>
+    <div style="margin-top:16px;background:var(--green-light);border:1.5px solid rgba(5,150,105,.2);border-radius:14px;padding:14px">
+      <div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">🧘 Vuelta a la calma — al terminar</div>
+      ${(COOLDOWN[dayInfo.trainType]||[]).map(cl=>`<div style="font-size:14px;color:var(--text2);padding:6px 0;border-bottom:1px solid rgba(5,150,105,.1)">${cl}</div>`).join('')}
+    </div>
+    <div style="height:20px"></div>
+  `;
+}
+
+// ══════════════════════════════
+// MAIN — Series secuenciales
+// ══════════════════════════════
+function renderMain(c) {
+  const repsRango = profile.nivel_entrenamiento==='avanzado'?'6-8':profile.nivel_entrenamiento==='intermedio'?'8-10':'10-12';
+
+  const SERIES = [
+    {idx:0, label:'A1 — Calentamiento', reps:'20 reps', peso:'Peso liviano (40-50%)', isAprox:true},
+    {idx:1, label:'A2 — Activación',    reps:'15 reps', peso:'Peso medio (55-60%)',   isAprox:true},
+    {idx:2, label:'Serie 1 — Efectiva', reps:repsRango+' reps', peso:'Tu peso máximo',isAprox:false},
+    {idx:3, label:'Serie 2 — Efectiva', reps:repsRango+' reps', peso:'Tu peso máximo',isAprox:false},
+    {idx:4, label:'Serie 3 — Efectiva', reps:repsRango+' reps', peso:'Tu peso máximo',isAprox:false},
+  ];
+
+  c.innerHTML = exercises.map((ex,ei) => {
+    const done = completedSets[ei] || [];
+    const allDone = [2,3,4].every(s => done.includes(s));
+    const hist = exerciseHistory[ex.name] || [];
+    const lastKg = hist.length ? (hist[hist.length-1]?.kg || null) : null;
+    const nextIdx = SERIES.findIndex(s => !done.includes(s.idx));
+
+    const vid = ex.driveId
+      ? `<iframe src="https://drive.google.com/file/d/${ex.driveId}/preview" allowfullscreen style="width:100%;height:100%;border:none"></iframe>`
+      : `<div class="vid-ph" style="flex-direction:column;gap:8px;padding:20px;text-align:center">
+          <div style="font-size:40px">🎬</div>
+          <div style="font-size:15px;font-weight:800;color:white">${ex.name}</div>
+          <div style="font-size:13px;color:rgba(255,255,255,.7);line-height:1.5">Video por grabar<br>Fondo verde · CapCut</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px">driveId: '${ex.name.replace(/\s/g,'_').toLowerCase()}'</div>
+        </div>`;
+
+    return `
+      <div class="ex-card ${allDone?'done-ex':''}" id="ec-${ei}">
+        <div class="ex-hdr" onclick="toggleEx(${ei})">
+          <div class="ex-num ${allDone?'ok':''}">${allDone?'✓':ei+1}</div>
+          <div style="flex:1">
+            <div class="ex-name">${ex.name}</div>
+            <div class="ex-meta">
+              ${ex.adapted
+                ? `<span style="color:var(--gold);font-weight:700">⚡ Adaptado</span>${ex.originalName ? ` · reemplaza: ${ex.originalName}` : ''}`
+                : `${lastKg?`Última semana: ${lastKg}kg · `:''}${done.filter(s=>s>=2).length}/3 series`
+              }
+            </div>
+          </div>
+          <span style="font-size:11px;background:${ex.adapted?'var(--gold-light)':'var(--primary-light)'};color:${ex.adapted?'var(--gold)':'var(--primary)'};padding:3px 8px;border-radius:999px;font-weight:700;flex-shrink:0">${ex.emg}</span>
+          <span class="ex-chev ${ei===0?'up':''}" id="chev-${ei}">▾</span>
+        </div>
+
+        <div class="ex-body ${ei===0?'open':''}" id="eb-${ei}">
+          ${ex.adapted ? `<div style="background:var(--gold-light);border:1.5px solid rgba(146,64,14,.2);border-radius:12px;padding:12px 14px;margin-bottom:12px;font-size:14px;color:var(--gold);line-height:1.5">⚡ <strong>Adaptado por tu lesión.</strong> ${ex.originalName ? `Reemplaza "${ex.originalName}" para protegerte.` : ''} <a href="chat.html" style="display:block;margin-top:4px;color:var(--primary);font-weight:700;text-decoration:none">💬 Habla con el entrenador →</a></div>` : ''}
+          <div class="vid-wrap">${vid}</div>
+
+          <div style="display:flex;gap:8px;margin-bottom:14px">
+            <div style="flex:1;background:var(--green-light);border-radius:10px;padding:10px;font-size:14px;color:var(--green);font-weight:700">✅ ${ex.ok}</div>
+            <div style="flex:1;background:var(--red-light);border-radius:10px;padding:10px;font-size:14px;color:var(--red);font-weight:700">❌ ${ex.err}</div>
+          </div>
+
+          ${SERIES.map(s => {
+            const isDone = done.includes(s.idx);
+            const isActive = !isDone && s.idx === nextIdx;
+            const kg = savedKg[`${ei}-${s.idx}`] || '';
+
+            return `
+              <div class="serie-item ${isDone?'done':isActive?'active':''}" id="si-${ei}-${s.idx}">
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <div>
+                    <div class="serie-label">${isDone?'✓ ':''}${s.label}</div>
+                    <div class="serie-sub">${s.reps} · ${s.peso}</div>
+                  </div>
+                  ${isDone && savedKg[`${ei}-${s.idx}`] ? `<div class="done-kg">⚖️ ${savedKg[`${ei}-${s.idx}`]}kg</div>` : ''}
+                </div>
+
+                ${isActive ? `
+                  ${lastKg ? `
+                    <div class="last-kg" style="margin-top:10px">
+                      Semana pasada usaste <strong>${lastKg} kg</strong>
+                    </div>
+                    <div class="kg-suggest">
+                      🚀 Sugerencia: intenta con <strong>${Math.round((lastKg + (lastKg>=30?2.5:1.25))*4)/4} kg</strong> si la semana pasada completaste todas las reps
+                    </div>
+                  ` : `<div style="font-size:14px;color:var(--text3);text-align:center;margin-top:10px;margin-bottom:8px">Primera vez — empieza con un peso cómodo y ajusta</div>`}
+                  <div class="kg-row">
+                    <button class="kg-btn" onclick="adjKg(${ei},${s.idx},-2.5)">−</button>
+                    <div class="kg-in-wrap">
+                      <input class="kg-in" type="number" id="kg-${ei}-${s.idx}"
+                        value="${kg}" placeholder="${lastKg||'0'}" step="0.25" min="0"
+                        oninput="saveKgInput(${ei},${s.idx},this.value)">
+                      <span class="kg-in-unit">kg</span>
+                    </div>
+                    <button class="kg-btn" onclick="adjKg(${ei},${s.idx},2.5)">+</button>
+                  </div>
+                  <button class="complete-btn"
+                    onclick="completeSerie(${ei},${s.idx},${ex.rest},'${ex.name}',${s.isAprox})">
+                    ✓ Completé esta serie
+                  </button>
+                ` : ''}
+              </div>
+            `;
+          }).join('')}
+
+          <div style="margin-top:14px">
+            ${ex.tips.map(t=>`<div style="font-size:14px;color:var(--text2);padding:5px 0;display:flex;gap:8px"><span>💡</span>${t}</div>`).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('') + '<div style="height:20px"></div>';
+}
+
+function toggleEx(ei) {
+  const body = document.getElementById(`eb-${ei}`);
+  const chev = document.getElementById(`chev-${ei}`);
+  body.classList.toggle('open');
+  chev.classList.toggle('up', body.classList.contains('open'));
+}
+
+function adjKg(ei, si, delta) {
+  const inp = document.getElementById(`kg-${ei}-${si}`);
+  if(!inp) return;
+  const val = Math.max(0, Math.round(((parseFloat(inp.value)||0) + delta) * 4) / 4);
+  inp.value = val;
+  saveKgInput(ei, si, val);
+}
+
+function saveKgInput(ei, si, val) {
+  savedKg[`${ei}-${si}`] = parseFloat(val) || null;
+}
+
+async function completeSerie(ei, si, rest, exName, isAprox) {
+  if((completedSets[ei]||[]).includes(si)) return;
+  if(!completedSets[ei]) completedSets[ei] = [];
+  completedSets[ei].push(si);
+
+  // Save to DB silently
+  try {
+    await AF.saveSet(user.id, {
+      day_num: dayNum, week_num: dayInfo.weekNum,
+      exercise_name: exName, exercise_idx: ei,
+      set_type: isAprox ? 'aprox' : 'efectiva',
+      set_num: si, kg: savedKg[`${ei}-${si}`] || null,
+    });
+  } catch(e) {}
+
+  // Re-render
+  const c = document.getElementById('content');
+  renderMain(c);
+  checkComplete();
+
+  // Timer only on efectivas
+  if(!isAprox) startTimer(rest, exName);
+
+  // Scroll to card
+  setTimeout(() => {
+    document.getElementById(`ec-${ei}`)?.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }, 100);
+}
+
+function checkComplete() {
+  const allDone = exercises.every((_,i) => [2,3,4].every(s => (completedSets[i]||[]).includes(s)));
+  document.getElementById('completeWrap').style.display = (currentTab==='main' && allDone) ? 'block' : 'none';
+}
+
+async function doComplete() {
+  try {
+    await AF.completeDay(user.id, dayNum);
+    console.log('Day', dayNum, 'completed!');
+  } catch(e) {
+    console.error('Complete day error:', e);
+  }
+  const nextDay = dayNum + 1;
+  const nextInfo = getDayInfo(nextDay);
+  document.getElementById('celTitle').textContent = `¡Día ${dayNum} completado! 🎉`;
+  document.getElementById('celSub').textContent = nextDay <= 56
+    ? `${nextInfo.type==='rest'
+        ? `Mañana es día de descanso — el músculo crece descansando. 💤`
+        : `¡Mañana es día ${nextDay}! Descansa bien esta noche. 💪`}`
+    : '¡Completaste el reto de 8 semanas! Eres increíble. 🏆';
+  document.getElementById('celOverlay').classList.add('show');
+}
+
+// ══════════════════════════════
+// TIMER
+// ══════════════════════════════
+function startTimer(secs, label) {
+  clearInterval(timerInterval);
+  timerSecs = secs; timerPaused = false;
+  document.getElementById('timerEx').textContent = label;
+  document.getElementById('timerNum').textContent = secs;
+  document.getElementById('pauseBtn').textContent = 'Pausar';
+  document.getElementById('timerOverlay').classList.add('show');
+  timerInterval = setInterval(() => {
+    if(timerPaused) return;
+    timerSecs--;
+    document.getElementById('timerNum').textContent = timerSecs;
+    if(timerSecs <= 0) {
+      clearInterval(timerInterval);
+      document.getElementById('timerOverlay').classList.remove('show');
+      if(navigator.vibrate) navigator.vibrate([200,80,200]);
+    }
+  }, 1000);
+}
+function skipTimer() { clearInterval(timerInterval); document.getElementById('timerOverlay').classList.remove('show'); }
+function pauseTimer() {
+  timerPaused = !timerPaused;
+  document.getElementById('pauseBtn').textContent = timerPaused ? 'Reanudar' : 'Pausar';
+}
+
+// Start
+init();
+</script>
+<script src="../js/chatbubble.js"></script>
+</body>
+</html>

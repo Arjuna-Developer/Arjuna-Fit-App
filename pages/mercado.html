@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../js/af.js"></script>
+<script src="../js/theme.js"></script>
+<script src="../js/lang.js"></script>
+<title>ArjunaFit — Lista de Mercado</title>
+<link rel="stylesheet" href="../css/app.css">
+<style>
+body { background: var(--bg); }
+
+/* Header */
+.merc-hdr {
+  padding: 20px 16px 28px; color:white;
+  position:relative; overflow:hidden;
+}
+.merc-hdr::after {
+  content:'🛒'; position:absolute; right:-10px; bottom:-20px;
+  font-size:100px; opacity:.1; pointer-events:none;
+}
+.back-row { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+.back { width:42px;height:42px;background:rgba(255,255,255,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;border:none;color:white;flex-shrink:0; }
+.hdr-title { font-size:26px;font-weight:900;letter-spacing:-.5px; }
+.hdr-sub { font-size:14px;opacity:.85;margin-top:3px; }
+
+/* Progress card */
+.prog-card {
+  margin: -16px 14px 0;
+  background:var(--surface); border-radius:20px;
+  border:1.5px solid var(--border);
+  box-shadow:0 4px 20px rgba(0,0,0,.08);
+  padding:16px 18px; position:relative; z-index:2;
+}
+.prog-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.prog-label { font-size:15px; font-weight:700; color:var(--text); }
+.prog-count { font-size:16px; font-weight:900; }
+.prog-reset {
+  font-size:16px; font-weight:700; cursor:pointer;
+  background:none; border:none; font-family:var(--font);
+  color:var(--red); padding:4px 8px;
+}
+.prog-bar { height:8px; background:var(--border); border-radius:999px; overflow:hidden; }
+.prog-fill { height:100%; border-radius:999px; transition:width .5s ease; }
+
+/* Share btn */
+.share-btn {
+  margin:12px 14px 0;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  padding:13px; background:var(--surface); border:1.5px solid var(--border);
+  border-radius:14px; font-family:var(--font); font-size:15px; font-weight:700;
+  color:var(--text2); cursor:pointer; transition:all .2s;
+}
+.share-btn:active { background:var(--bg); }
+
+/* Content */
+.merc-content { padding:16px 14px 100px; }
+
+/* Category */
+.cat-block { margin-bottom:6px; }
+.cat-title {
+  font-size:17px; font-weight:900; color:var(--text);
+  padding:10px 0 8px; display:flex; align-items:center; gap:8px;
+  border-bottom:2px solid var(--border); margin-bottom:6px;
+  letter-spacing:-.2px;
+}
+
+/* Item */
+.item {
+  display:flex; align-items:center; gap:14px;
+  padding:13px 14px; margin-bottom:6px;
+  background:var(--surface); border:1.5px solid var(--border);
+  border-radius:14px; cursor:pointer; transition:all .15s;
+  user-select:none;
+}
+.item:active { transform:scale(.98); }
+
+.item-check {
+  width:28px; height:28px; border-radius:8px;
+  border:2.5px solid var(--border); display:flex;
+  align-items:center; justify-content:center;
+  flex-shrink:0; transition:all .2s; font-size:16px;
+}
+.item.done .item-check { background:var(--green); border-color:var(--green); }
+
+.item-name { font-size:15px; font-weight:700; color:var(--text); flex:1; line-height:1.3; }
+.item.done .item-name { text-decoration:line-through; color:var(--text3); }
+
+.item-tag {
+  font-size:14px; font-weight:700; padding:4px 10px;
+  border-radius:999px; flex-shrink:0; white-space:nowrap;
+}
+.tag-must { background:rgba(37,99,235,.08); color:var(--primary); }
+.tag-opt  { background:rgba(148,163,184,.1); color:var(--text3); }
+.tag-ctrl { background:rgba(217,119,6,.1); color:var(--gold); }
+.tag-free { background:rgba(22,163,74,.08); color:var(--green); }
+
+/* Bottom nav */
+.bottom-nav {
+  display:flex; background:var(--surface);
+  border-top:1.5px solid var(--border);
+  padding:8px 0; padding-bottom:calc(8px + env(safe-area-inset-bottom));
+  position:sticky; bottom:0; z-index:50;
+}
+.nav-item { flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;color:var(--text3);font-size:14px;font-weight:700;cursor:pointer;border:none;background:none;font-family:var(--font);text-decoration:none;transition:color .2s; }
+.nav-item .ni { font-size:26px;line-height:1; }
+.nav-item.on { color:var(--primary); }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- Header — color dinámico -->
+  <div class="merc-hdr" id="mercHdr">
+    <div class="back-row">
+      <button class="back" onclick="history.back()">←</button>
+      <div>
+        <div class="hdr-title">Lista de Mercado 🛒</div>
+        <div class="hdr-sub" id="hdrSub">Cargando tu lista...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <div class="prog-card">
+    <div class="prog-top">
+      <div class="prog-label">✅ Productos marcados</div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="prog-count" id="progCount" style="color:var(--gold)">0/0</div>
+        <button class="prog-reset" onclick="resetList()">Resetear</button>
+      </div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%;background:var(--gold)"></div></div>
+  </div>
+
+  <!-- Share -->
+  <button class="share-btn" onclick="shareList()">
+    📤 Compartir lista por WhatsApp
+  </button>
+
+  <!-- Content -->
+  <div class="scroll">
+    <div class="merc-content" id="mercContent">
+      <div style="text-align:center;padding:40px;color:var(--text3)">Cargando...</div>
+    </div>
+  </div>
+
+    <div class="bottom-nav">
+    <a href="dashboard.html" class="nav-item"><span class="ni">🏠</span>Inicio</a>
+    <a href="nutrition.html" class="nav-item"><span class="ni">🍽️</span>Nutrición</a>
+    <a href="guia.html" class="nav-item"><span class="ni">🥗</span>Guía</a>
+    <a href="chat.html" class="nav-item"><span class="ni">🤖</span>Entrenador</a>
+  </div>
+</div>
+</div>
+
+<script>
+
+// ── Listas por objetivo ──
+const LISTS = {
+  crecer: {
+    label: '🍑 Crecer y Tonificar',
+    color: 'linear-gradient(135deg, #166534, #16a34a)',
+    progColor: '#16a34a',
+    cats: [
+      {
+        cat:'🥩 Proteínas', items:[
+          { name:'Pechuga de pollo', tag:'must' },
+          { name:'Atún en agua (4 latas)', tag:'must' },
+          { name:'Huevos (12 unidades)', tag:'must' },
+          { name:'Carne magra de res (500g)', tag:'must' },
+          { name:'Tilapia o corvina (500g)', tag:'must' },
+          { name:'Proteína ISO o Whey (1 tarro)', tag:'opt' },
+          { name:'Yogur griego Zorba o San Martín', tag:'must' },
+        ]
+      },
+      {
+        cat:'🌾 Carbohidratos', items:[
+          { name:'Arroz integral (1 kg)', tag:'must' },
+          { name:'Avena Why Not en hojuelas', tag:'must' },
+          { name:'Arepas Sary Extra Delgadas', tag:'must' },
+          { name:'Bananos (1 racimo)', tag:'must' },
+          { name:'Pan integral Edén Fit', tag:'must' },
+          { name:'Lentejas o fríjoles (500g)', tag:'must' },
+          { name:'Batata o papa (1 kg)', tag:'must' },
+        ]
+      },
+      {
+        cat:'🥑 Grasas Saludables', items:[
+          { name:'Aguacates (4 unidades)', tag:'must' },
+          { name:'Crema de maní WakeUp sin azúcar', tag:'must' },
+          { name:'Aceite de oliva extra virgen', tag:'must' },
+          { name:'Almendras o nueces (200g)', tag:'opt' },
+        ]
+      },
+      {
+        cat:'🥦 Verduras y Frutas', items:[
+          { name:'Espinaca o lechuga', tag:'must' },
+          { name:'Brócoli (1 cabeza)', tag:'must' },
+          { name:'Tomates (6 unidades)', tag:'must' },
+          { name:'Pepino (2 unidades)', tag:'must' },
+          { name:'Pimentón rojo o verde', tag:'must' },
+          { name:'Manzanas (4 unidades)', tag:'must' },
+          { name:'Fresas o papaya (500g)', tag:'must' },
+        ]
+      },
+      {
+        cat:'🧂 Extras', items:[
+          { name:'Limones (6 unidades)', tag:'must' },
+          { name:'Ajo y cebolla', tag:'must' },
+          { name:'Canela en polvo', tag:'must' },
+          { name:'Creatina monohidratada (5g/día)', tag:'opt' },
+          { name:'Omega-3 Viva Naturals', tag:'opt' },
+        ]
+      },
+    ]
+  },
+
+  bajar: {
+    label: '🔥 Bajar Grasa y Tonificar',
+    color: 'linear-gradient(135deg, #991b1b, #dc2626)',
+    progColor: '#dc2626',
+    cats: [
+      {
+        cat:'🥩 Proteínas', items:[
+          { name:'Pechuga de pollo (1 kg)', tag:'must' },
+          { name:'Claras de huevo (18 huevos)', tag:'must' },
+          { name:'Atún en agua — NO en aceite (4 latas)', tag:'must' },
+          { name:'Tilapia o corvina (500g)', tag:'must' },
+          { name:'Yogur griego Alpina Finesse 0% azúcar', tag:'must' },
+          { name:'Cottage Cheese Breakstone\'s', tag:'opt' },
+          { name:'Proteína ISO Dymatize o ON Whey', tag:'opt' },
+        ]
+      },
+      {
+        cat:'🌾 Carbos Controlados', items:[
+          { name:'Arroz integral (500g — porción pequeña)', tag:'ctrl' },
+          { name:'Avena Why Not en hojuelas', tag:'must' },
+          { name:'Arepas Sary Extra Delgadas (87 kcal)', tag:'must' },
+          { name:'Manzanas (4 unidades)', tag:'must' },
+          { name:'Fresas o papaya (500g)', tag:'must' },
+        ]
+      },
+      {
+        cat:'🥑 Grasas (porción controlada)', items:[
+          { name:'Aguacates (2-3 unidades)', tag:'ctrl' },
+          { name:'Aceite de oliva extra virgen', tag:'must' },
+          { name:'Almendras (100g — solo 10 al día)', tag:'ctrl' },
+        ]
+      },
+      {
+        cat:'🥦 Verduras Libres — Come todo lo que quieras', items:[
+          { name:'Espinaca', tag:'free' },
+          { name:'Brócoli (1-2 cabezas)', tag:'free' },
+          { name:'Zucchini (2 unidades)', tag:'free' },
+          { name:'Espárragos (1 manojo)', tag:'free' },
+          { name:'Lechuga (1 cabeza)', tag:'free' },
+          { name:'Pepino (3 unidades)', tag:'free' },
+          { name:'Tomate (6 unidades)', tag:'free' },
+          { name:'Zanahoria (500g)', tag:'free' },
+        ]
+      },
+      {
+        cat:'🧂 Extras', items:[
+          { name:'Limones (8 unidades — para aderezos)', tag:'must' },
+          { name:'Ajo y cebolla', tag:'must' },
+          { name:'Hierbas y especias sin sal', tag:'must' },
+          { name:'Creatina monohidratada (5g/día)', tag:'opt' },
+          { name:'Omega-3 Viva Naturals', tag:'opt' },
+        ]
+      },
+    ]
+  }
+};
+
+const TAG_LABELS = {
+  must: '✅ Esencial',
+  opt:  '⭐ Opcional',
+  ctrl: '⚠️ Controlado',
+  free: '🟢 Libre',
+};
+
+let obj = 'crecer';
+let planData = null;
+let checked = {};
+let userId = null;
+
+async function init() {
+  const user = await AF.requireAuth('../index.html');
+  if (!user) return;
+  userId = user.id;
+
+  const profile = await AF.getProfile(userId);
+  obj = profile?.objetivo || 'crecer';
+  planData = LISTS[obj];
+
+  // Header color según objetivo
+  document.getElementById('mercHdr').style.background = planData.color;
+  document.getElementById('hdrSub').textContent = `${planData.label} · Todo para esta semana`;
+  document.getElementById('progFill').style.background = planData.progColor;
+  document.getElementById('progCount').style.color = planData.progColor;
+
+  // Load saved checks
+  try { checked = JSON.parse(localStorage.getItem(`af_merc_${userId}_${obj}`) || '{}'); } catch { checked = {}; }
+
+  render();
+}
+
+function allItems() {
+  return planData.cats.flatMap((c, ci) => c.items.map((item, ii) => ({ item, key:`${ci}_${ii}` })));
+}
+
+function render() {
+  const items = allItems();
+  const total = items.length;
+  const done = items.filter(({key}) => checked[key]).length;
+  const pct = total ? Math.round(done/total*100) : 0;
+
+  document.getElementById('progCount').textContent = `${done}/${total} (${pct}%)`;
+  document.getElementById('progFill').style.width = pct + '%';
+
+  document.getElementById('mercContent').innerHTML = planData.cats.map((cat, ci) => `
+    <div class="cat-block">
+      <div class="cat-title">${cat.cat}</div>
+      ${cat.items.map((item, ii) => {
+        const key = `${ci}_${ii}`;
+        const isDone = !!checked[key];
+        return `
+          <div class="item ${isDone?'done':''}" onclick="toggleItem('${key}')">
+            <div class="item-check">${isDone?'✓':''}</div>
+            <div class="item-name">${item.name}</div>
+            <div class="item-tag tag-${item.tag}">${TAG_LABELS[item.tag]}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `).join('');
+}
+
+window.toggleItem = (key) => {
+  checked[key] = !checked[key];
+  localStorage.setItem(`af_merc_${userId}_${obj}`, JSON.stringify(checked));
+  render();
+};
+
+window.resetList = () => {
+  if (!confirm('¿Resetear toda la lista?')) return;
+  checked = {};
+  localStorage.removeItem(`af_merc_${userId}_${obj}`);
+  render();
+  showToast('✅ Lista reseteada');
+};
+
+window.shareList = () => {
+  let text = `🛒 *Lista de Mercado ArjunaFit*\n${planData.label}\n\n`;
+  planData.cats.forEach(cat => {
+    text += `*${cat.cat}*\n`;
+    cat.items.forEach(item => { text += `• ${item.name}\n`; });
+    text += '\n';
+  });
+  text += '💪 ArjunaFit — Reto 8 Semanas';
+
+  if (navigator.share) {
+    navigator.share({ title:'Lista de Mercado ArjunaFit', text });
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(text);
+    showToast('📋 Lista copiada. Pégala en WhatsApp.');
+  } else {
+    showToast('📋 Copia el texto manualmente');
+  }
+};
+
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.className = 'toast'; t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+}
+
+init();
+</script>
+<script src="../js/chatbubble.js"></script>
+</body>
+</html>

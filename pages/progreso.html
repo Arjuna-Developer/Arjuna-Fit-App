@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ArjunaFit — Mi Progreso</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../js/theme.js"></script>
+<link rel="stylesheet" href="../css/app.css">
+<style>
+body{background:var(--bg)}
+.prog-hdr{background:linear-gradient(135deg,#1e1b4b,#4c1d95);padding:20px 16px 32px;color:white;position:relative;overflow:hidden}
+.prog-hdr::after{content:'📈';position:absolute;right:-10px;bottom:-20px;font-size:110px;opacity:.08}
+.back-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.back{width:42px;height:42px;background:rgba(255,255,255,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;border:none;color:white}
+.hdr-title{font-size:26px;font-weight:900;letter-spacing:-.5px}
+.hdr-sub{font-size:14px;opacity:.85;margin-top:3px}
+
+/* Tabs */
+.tabs{display:flex;background:var(--surface);border-bottom:2px solid var(--border);flex-shrink:0}
+.tab{flex:1;padding:13px 6px;text-align:center;font-size:13px;font-weight:700;color:var(--text3);cursor:pointer;border:none;background:none;font-family:var(--font);border-bottom:3px solid transparent;transition:all .2s}
+.tab.on{color:var(--primary);border-bottom-color:var(--primary)}
+
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:-18px 14px 0;position:relative;z-index:2}
+.stat-box{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:14px;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.stat-n{font-size:24px;font-weight:900;color:var(--primary);line-height:1}
+.stat-l{font-size:12px;color:var(--text2);margin-top:4px;font-weight:600}
+.stat-box.pr .stat-n{color:var(--gold)}
+.stat-box.vol .stat-n{color:var(--green)}
+
+/* Exercise selector */
+.ex-sec-ttl{font-size:14px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;padding:16px 14px 8px}
+.ex-scroll{display:flex;gap:8px;padding:0 14px 12px;overflow-x:auto;scrollbar-width:none}
+.ex-scroll::-webkit-scrollbar{display:none}
+.ex-pill{flex-shrink:0;padding:9px 16px;background:var(--surface);border:1.5px solid var(--border);border-radius:999px;font-size:14px;font-weight:700;color:var(--text2);cursor:pointer;white-space:nowrap;transition:all .15s}
+.ex-pill.on{background:var(--primary);border-color:var(--primary);color:white}
+
+/* PR Badge */
+.pr-badge{background:linear-gradient(135deg,#92400e,#d97706);color:white;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:800}
+
+/* Chart */
+.chart-card{margin:0 14px 12px;background:var(--surface);border:1.5px solid var(--border);border-radius:20px;padding:18px;overflow:hidden}
+.chart-ttl{font-size:16px;font-weight:900;color:var(--text);margin-bottom:2px}
+.chart-sub{font-size:13px;color:var(--text2);margin-bottom:14px}
+svg.prog-chart{width:100%;overflow:visible}
+.chart-line{fill:none;stroke:var(--primary);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.chart-area{opacity:.15;fill:var(--primary)}
+.chart-dot{fill:var(--primary);cursor:pointer}
+.chart-dot.pr-dot{fill:var(--gold)}
+.chart-lbl{font-size:11px;fill:var(--text3);font-family:'Outfit',sans-serif}
+.chart-val-lbl{font-size:12px;fill:var(--primary);font-family:'Outfit',sans-serif;font-weight:800}
+.chart-grid{stroke:var(--border);stroke-dasharray:3,3}
+.no-data{text-align:center;padding:32px;color:var(--text3)}
+
+/* Comparison */
+.compare-row{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;margin:0 14px 12px;align-items:center}
+.comp-box{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:14px;text-align:center}
+.comp-val{font-size:22px;font-weight:900;color:var(--text)}
+.comp-lbl{font-size:12px;color:var(--text3);margin-top:3px;font-weight:600}
+.comp-box.now{background:var(--primary-light);border-color:var(--primary)}
+.comp-box.now .comp-val{color:var(--primary)}
+.comp-arrow{font-size:22px;text-align:center}
+
+/* Volume bars */
+.vol-card{margin:0 14px 12px;background:var(--surface);border:1.5px solid var(--border);border-radius:18px;padding:16px}
+.vol-ttl{font-size:15px;font-weight:800;color:var(--text);margin-bottom:12px}
+.vol-row{margin-bottom:10px}
+.vol-head{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px}
+.vol-name{color:var(--text2);font-weight:600}
+.vol-val{color:var(--primary);font-weight:800}
+.vol-bar{height:8px;background:var(--border);border-radius:99px;overflow:hidden}
+.vol-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--primary),var(--pink));transition:width 1.2s ease}
+
+/* History table */
+.hist-card{margin:0 14px 12px;background:var(--surface);border:1.5px solid var(--border);border-radius:18px;overflow:hidden}
+.hist-head{padding:14px 16px;font-size:15px;font-weight:800;color:var(--text);border-bottom:1.5px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.hist-row{display:grid;grid-template-columns:70px 1fr 70px 50px;gap:6px;padding:11px 16px;border-bottom:1px solid var(--border);align-items:center}
+.hist-row:last-child{border-bottom:none}
+.hist-row.header{background:var(--surface2);font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase}
+.hist-week{font-size:14px;font-weight:800;color:var(--primary)}
+.hist-sets{font-size:13px;color:var(--text2)}
+.hist-kg{font-size:15px;font-weight:900;color:var(--text)}
+.hist-trend{font-size:16px;text-align:center}
+
+/* Progression alert */
+.prog-alert{margin:14px 14px 0;border-radius:16px;padding:16px;display:flex;gap:12px;align-items:flex-start}
+.prog-alert.up{background:var(--green-light);border:1.5px solid rgba(6,95,70,.2)}
+.prog-alert.hold{background:var(--primary-light);border:1.5px solid var(--border)}
+.prog-alert.first{background:var(--gold-light);border:1.5px solid rgba(146,64,14,.15)}
+.pa-ico{font-size:26px;flex-shrink:0}
+.pa-ttl{font-size:15px;font-weight:800;margin-bottom:3px}
+.pa-up .pa-ttl{color:var(--green)}
+.pa-hold .pa-ttl{color:var(--primary)}
+.pa-first .pa-ttl{color:var(--gold)}
+.pa-txt{font-size:14px;color:var(--text2);line-height:1.5}
+
+/* Overview tab */
+.overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px 14px}
+.ov-card{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:14px;cursor:pointer;transition:all .2s}
+.ov-card:active{transform:scale(.97)}
+.ov-ico{font-size:30px;margin-bottom:8px}
+.ov-val{font-size:22px;font-weight:900;color:var(--primary);line-height:1}
+.ov-lbl{font-size:13px;color:var(--text2);margin-top:4px}
+.ov-sub{font-size:12px;color:var(--text3);margin-top:2px}
+
+/* Week activity heatmap */
+.heatmap-card{margin:0 14px 12px;background:var(--surface);border:1.5px solid var(--border);border-radius:18px;padding:16px}
+.hm-ttl{font-size:15px;font-weight:800;color:var(--text);margin-bottom:12px}
+.hm-grid{display:flex;gap:4px;flex-wrap:wrap}
+.hm-day{width:28px;height:28px;border-radius:6px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--text3);transition:all .3s}
+.hm-day.done{background:var(--primary);color:white}
+.hm-day.today{background:var(--pink);color:white;box-shadow:0 0 0 2px var(--pink)}
+.hm-day.rest{background:var(--surface2)}
+
+/* Streak */
+.streak-card{margin:14px 14px 0;background:linear-gradient(135deg,var(--primary),var(--pink));border-radius:18px;padding:18px;color:white;display:flex;align-items:center;gap:16px}
+.streak-fire{font-size:48px;line-height:1}
+.streak-n{font-size:42px;font-weight:900;line-height:1}
+.streak-lbl{font-size:14px;opacity:.85;margin-top:2px}
+</style>
+</head>
+<body>
+<div class="shell" style="display:flex;flex-direction:column;height:100dvh;overflow:hidden">
+
+  <div class="prog-hdr">
+    <div class="back-row">
+      <button class="back" onclick="history.back()">←</button>
+      <button class="theme-toggle" onclick="toggleTheme()" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.2)">🌙</button>
+    </div>
+    <div class="hdr-title">Mi Progreso 📈</div>
+    <div class="hdr-sub" id="hdrSub">Cargando...</div>
+  </div>
+
+  <!-- Stats top -->
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-n" id="stDays">—</div><div class="stat-l">Días hechos</div></div>
+    <div class="stat-box pr"><div class="stat-n" id="stPR">—</div><div class="stat-l">Records 🏆</div></div>
+    <div class="stat-box vol"><div class="stat-n" id="stVol">—</div><div class="stat-l">Volumen total</div></div>
+  </div>
+
+  <div class="tabs" style="margin-top:18px">
+    <button class="tab on"  onclick="showTab('overview',this)">🏠 General</button>
+    <button class="tab"     onclick="showTab('exercises',this)">💪 Ejercicios</button>
+    <button class="tab"     onclick="showTab('activity',this)">📅 Actividad</button>
+  </div>
+
+  <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:80px" id="content"></div>
+
+  <div class="bottom-nav">
+    <a href="dashboard.html" class="nav-item"><span class="ni">🏠</span>Inicio</a>
+    <a href="nutrition.html" class="nav-item"><span class="ni">🍽️</span>Nutrición</a>
+    <div class="nav-item on"><span class="ni">📊</span>Progreso</div>
+    <a href="chat.html" class="nav-item"><span class="ni">🤖</span>Entrenador</a>
+  </div>
+</div>
+
+<script src="../js/chatbubble.js"></script>
+<script>
+const _sb = supabase.createClient(
+  'https://egswsqymkxmbtcpnozcq.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM'
+);
+
+let user, allSets=[], completedDays=[], weeklyVol=[], exercises=[], selectedEx=null, currentTab='overview';
+
+async function init() {
+  const {data:{session}} = await _sb.auth.getSession();
+  if(!session){window.location.href='../index.html';return}
+  user = session.user;
+
+  // Load all data in parallel
+  const [setsRes, daysRes] = await Promise.all([
+    _sb.from('workout_sets').select('*').eq('user_id',user.id).order('week_num').order('day_num'),
+    _sb.from('progress').select('day_num').eq('user_id',user.id)
+  ]);
+
+  allSets = setsRes.data || [];
+  completedDays = (daysRes.data || []).map(d=>d.day_num);
+
+  // Compute stats
+  const efectivas = allSets.filter(s=>s.set_type==='efectiva');
+  const totalVol = efectivas.reduce((s,e)=>s+((e.kg||0)*(e.reps_done||0)),0);
+  exercises = [...new Set(efectivas.map(s=>s.exercise_name))];
+
+  // PRs per exercise
+  const prCount = exercises.filter(ex => {
+    const sets = efectivas.filter(s=>s.exercise_name===ex);
+    const kgs = sets.map(s=>s.kg||0);
+    return kgs.length > 1 && kgs[kgs.length-1] >= Math.max(...kgs.slice(0,-1));
+  }).length;
+
+  // Stats
+  document.getElementById('stDays').textContent = completedDays.length;
+  document.getElementById('stPR').textContent = prCount || '—';
+  document.getElementById('stVol').textContent = totalVol > 1000 ? Math.round(totalVol/1000)+'t' : Math.round(totalVol)+'kg';
+  document.getElementById('hdrSub').textContent = `${completedDays.length} de 56 días completados · Semana ${Math.min(8,Math.floor(completedDays.length/3)+1)}`;
+
+  showTab('overview', document.querySelector('.tab'));
+}
+
+// ── TABS ───────────────────────────────────────
+window.showTab = (tab, el) => {
+  currentTab=tab;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  if(el) el.classList.add('on');
+  const c = document.getElementById('content');
+  if(tab==='overview') renderOverview(c);
+  else if(tab==='exercises') renderExercises(c);
+  else renderActivity(c);
+};
+
+// ── OVERVIEW ───────────────────────────────────
+function renderOverview(c) {
+  const efectivas = allSets.filter(s=>s.set_type==='efectiva');
+  const weekNums = [...new Set(efectivas.map(s=>s.week_num))].sort((a,b)=>a-b);
+  const streak = calcStreak();
+  const pct = Math.round((completedDays.length/56)*100);
+
+  // Volume by week
+  const volByWeek = weekNums.map(w=>({
+    w, vol: efectivas.filter(s=>s.week_num===w).reduce((s,e)=>s+((e.kg||0)*(e.reps_done||0)),0)
+  }));
+  const maxVol = Math.max(...volByWeek.map(v=>v.vol),1);
+
+  c.innerHTML = `
+    <!-- Streak -->
+    ${streak>0?`
+      <div class="streak-card">
+        <div class="streak-fire">🔥</div>
+        <div>
+          <div class="streak-n">${streak}</div>
+          <div class="streak-lbl">${streak===1?'día de racha':'días de racha consecutivos'}</div>
+        </div>
+      </div>
+    `:''}
+
+    <!-- Overview cards -->
+    <div class="overview-grid">
+      <div class="ov-card" onclick="showTab('exercises',document.querySelectorAll('.tab')[1])">
+        <div class="ov-ico">💪</div>
+        <div class="ov-val">${exercises.length}</div>
+        <div class="ov-lbl">Ejercicios registrados</div>
+        <div class="ov-sub">Toca para ver detalle</div>
+      </div>
+      <div class="ov-card">
+        <div class="ov-ico">📅</div>
+        <div class="ov-val">${completedDays.length}/56</div>
+        <div class="ov-lbl">Días completados</div>
+        <div class="ov-sub">${pct}% del reto</div>
+      </div>
+      <div class="ov-card">
+        <div class="ov-ico">🗓️</div>
+        <div class="ov-val">${weekNums.length}</div>
+        <div class="ov-lbl">Semanas activas</div>
+        <div class="ov-sub">de 8 semanas</div>
+      </div>
+      <div class="ov-card">
+        <div class="ov-ico">⚡</div>
+        <div class="ov-val">${efectivas.length}</div>
+        <div class="ov-lbl">Series efectivas</div>
+        <div class="ov-sub">totales registradas</div>
+      </div>
+    </div>
+
+    <!-- Progress bar reto -->
+    <div style="margin:0 14px 12px;background:var(--surface);border:1.5px solid var(--border);border-radius:18px;padding:16px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+        <div style="font-size:15px;font-weight:800;color:var(--text)">Progreso del reto</div>
+        <div style="font-size:15px;font-weight:900;color:var(--primary)">${pct}%</div>
+      </div>
+      <div style="height:12px;background:var(--border);border-radius:99px;overflow:hidden;margin-bottom:8px">
+        <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--primary),var(--pink));border-radius:99px;transition:width 1s ease"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text3)">
+        <span>Día 1</span>
+        <span>Día ${completedDays.length} actual</span>
+        <span>Día 56</span>
+      </div>
+    </div>
+
+    <!-- Volumen por semana -->
+    ${volByWeek.length>0?`
+      <div class="vol-card">
+        <div class="vol-ttl">📦 Volumen total por semana (kg×reps)</div>
+        ${volByWeek.map(({w,vol})=>`
+          <div class="vol-row">
+            <div class="vol-head">
+              <span class="vol-name">Semana ${w}</span>
+              <span class="vol-val">${Math.round(vol)} kg·rep</span>
+            </div>
+            <div class="vol-bar"><div class="vol-fill" style="width:${Math.round(vol/maxVol*100)}%"></div></div>
+          </div>
+        `).join('')}
+      </div>
+    `:''}
+
+    ${efectivas.length===0?`
+      <div style="text-align:center;padding:32px">
+        <div style="font-size:52px;margin-bottom:14px">🏋️</div>
+        <div style="font-size:17px;font-weight:800;color:var(--text);margin-bottom:8px">Sin datos aún</div>
+        <div style="font-size:14px;color:var(--text2)">Completa tu primer entrenamiento registrando los pesos para ver tu progreso aquí</div>
+      </div>
+    `:''}
+  `;
+}
+
+function calcStreak() {
+  if(!completedDays.length) return 0;
+  const sorted = [...completedDays].sort((a,b)=>b-a);
+  let streak=1;
+  for(let i=0;i<sorted.length-1;i++){
+    if(sorted[i]-sorted[i+1]<=2) streak++; else break;
+  }
+  return streak;
+}
+
+// ── EXERCISES ──────────────────────────────────
+function renderExercises(c) {
+  const efectivas = allSets.filter(s=>s.set_type==='efectiva');
+
+  if(!exercises.length){
+    c.innerHTML=`<div class="no-data"><div style="font-size:52px;margin-bottom:14px">💪</div><div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px">Sin ejercicios aún</div><div style="font-size:14px;color:var(--text2)">Registra pesos en tu entrenamiento para ver la progresión</div></div>`;
+    return;
+  }
+
+  if(!selectedEx) selectedEx = exercises[0];
+
+  // Get data for selected exercise
+  const exSets = efectivas.filter(s=>s.exercise_name===selectedEx);
+  const byWeek = {};
+  exSets.forEach(s=>{
+    if(!byWeek[s.week_num]) byWeek[s.week_num]=[];
+    byWeek[s.week_num].push(s);
+  });
+  const weeks = Object.keys(byWeek).map(Number).sort((a,b)=>a-b);
+  const maxKgs = weeks.map(w=>Math.max(...byWeek[w].map(s=>s.kg||0)));
+  const maxVols = weeks.map(w=>byWeek[w].reduce((s,e)=>s+((e.kg||0)*(e.reps_done||0)),0));
+  const allMaxKg = maxKgs.length ? Math.max(...maxKgs) : 0;
+  const lastKg = maxKgs[maxKgs.length-1]||0;
+  const prevKg = maxKgs.length>1?maxKgs[maxKgs.length-2]:0;
+  const inc = lastKg>=30?2.5:1.25;
+
+  // Is PR this week?
+  const isPR = lastKg >= allMaxKg && weeks.length>1;
+
+  // Suggestion
+  const lastWeekSets = weeks.length ? byWeek[weeks[weeks.length-1]] : [];
+  const allReps = lastWeekSets.every(s=>(s.reps_done||0)>=8);
+
+  c.innerHTML = `
+    <!-- Exercise pills -->
+    <div class="ex-sec-ttl">Selecciona ejercicio</div>
+    <div class="ex-scroll">
+      ${exercises.map(ex=>`
+        <div class="ex-pill ${ex===selectedEx?'on':''}" onclick="selectEx('${ex.replace(/'/g,"\\'")}')">
+          ${ex.split(' ').slice(0,2).join(' ')}
+        </div>
+      `).join('')}
+    </div>
+
+    ${weeks.length===0?`<div class="no-data">Sin datos para este ejercicio aún</div>`:`
+
+      <!-- Progression alert -->
+      ${allReps?`
+        <div class="prog-alert up pa-up">
+          <div class="pa-ico">🚀</div>
+          <div>
+            <div class="pa-ttl">¡Lista para subir peso!</div>
+            <div class="pa-txt">Completaste todas las reps con <strong>${lastKg}kg</strong>. Esta semana prueba con <strong>${Math.round((lastKg+inc)*4)/4}kg</strong>.</div>
+          </div>
+        </div>
+      `:prevKg?`
+        <div class="prog-alert hold pa-hold">
+          <div class="pa-ico">💡</div>
+          <div>
+            <div class="pa-ttl">Mantén la carga</div>
+            <div class="pa-txt">Trabaja hasta completar todas las reps con <strong>${lastKg}kg</strong>. Cuando lo logres, subirás a <strong>${Math.round((lastKg+inc)*4)/4}kg</strong>.</div>
+          </div>
+        </div>
+      `:`
+        <div class="prog-alert first pa-first">
+          <div class="pa-ico">⭐</div>
+          <div>
+            <div class="pa-ttl">¡Primer dato registrado!</div>
+            <div class="pa-txt">Registra más sesiones para ver tu progresión semana a semana.</div>
+          </div>
+        </div>
+      `}
+
+      <!-- Chart -->
+      <div class="chart-card">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:2px">
+          <div class="chart-ttl">${selectedEx}</div>
+          ${isPR?`<span class="pr-badge">🏆 PR</span>`:''}
+        </div>
+        <div class="chart-sub">Peso máximo por semana · kg</div>
+        ${renderChart(weeks, maxKgs, allMaxKg)}
+
+        <!-- Week comparison -->
+        ${weeks.length>=2?`
+          <div class="compare-row" style="margin:14px 0 0">
+            <div class="comp-box">
+              <div class="comp-val">${prevKg}kg</div>
+              <div class="comp-lbl">Sem ${weeks[weeks.length-2]}</div>
+            </div>
+            <div class="comp-arrow">${lastKg>prevKg?'📈':lastKg<prevKg?'📉':'➡️'}</div>
+            <div class="comp-box now">
+              <div class="comp-val">${lastKg}kg</div>
+              <div class="comp-lbl">Sem ${weeks[weeks.length-1]} · Ahora</div>
+            </div>
+          </div>
+        `:''}
+      </div>
+
+      <!-- History table -->
+      <div class="hist-card">
+        <div class="hist-head">
+          <span>Historial detallado</span>
+          <span style="font-size:13px;color:var(--text3)">${weeks.length} semanas</span>
+        </div>
+        <div class="hist-row header">
+          <div>Semana</div><div>Sets</div><div>Máx kg</div><div></div>
+        </div>
+        ${[...weeks].reverse().map((w,i)=>{
+          const wMaxKg = maxKgs[weeks.indexOf(w)];
+          const prevW = weeks.indexOf(w)>0 ? maxKgs[weeks.indexOf(w)-1] : 0;
+          const trend = wMaxKg>prevW?'📈':wMaxKg<prevW&&prevW>0?'📉':'—';
+          return `
+            <div class="hist-row">
+              <div class="hist-week">Sem ${w}</div>
+              <div class="hist-sets">${byWeek[w].length} series</div>
+              <div class="hist-kg">${wMaxKg}kg</div>
+              <div class="hist-trend">${trend}</div>
+            </div>`;
+        }).join('')}
+      </div>
+
+      <!-- Volume chart -->
+      <div class="chart-card">
+        <div class="chart-ttl">Volumen total (kg × reps)</div>
+        <div class="chart-sub">Trabajo acumulado por semana</div>
+        ${renderBarChart(weeks, maxVols)}
+      </div>
+    `}
+  `;
+}
+
+window.selectEx = (ex) => {
+  selectedEx = ex;
+  renderExercises(document.getElementById('content'));
+  document.getElementById('content').scrollTop = 0;
+};
+
+function renderChart(weeks, values, maxVal) {
+  if(!weeks.length) return '<div class="no-data">Sin datos</div>';
+  const W=320, H=120, pad=24;
+  const minY=Math.max(0,Math.min(...values)-5);
+  const maxY=Math.max(maxVal+5,1);
+  const xStep=weeks.length>1?(W-pad*2)/(weeks.length-1):0;
+  const yS=v=>H-pad-((v-minY)/(maxY-minY))*(H-pad*2);
+  const xS=i=>pad+i*xStep;
+  const pts=values.map((v,i)=>`${xS(i)},${yS(v)}`).join(' ');
+  const area=`${xS(0)},${H-pad} ${pts} ${xS(values.length-1)},${H-pad}`;
+  return `
+    <svg class="prog-chart" viewBox="0 0 ${W} ${H}" style="height:140px">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--primary)" stop-opacity=".6"/>
+          <stop offset="100%" stop-color="var(--primary)" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      ${[0,.5,1].map(f=>`<line x1="${pad}" y1="${pad+f*(H-pad*2)}" x2="${W-pad}" y2="${pad+f*(H-pad*2)}" class="chart-grid"/>`).join('')}
+      <polygon points="${area}" fill="url(#g)" opacity=".25"/>
+      <polyline points="${pts}" class="chart-line"/>
+      ${values.map((v,i)=>`
+        <circle cx="${xS(i)}" cy="${yS(v)}" r="5" class="chart-dot ${v===Math.max(...values)?'pr-dot':''}"/>
+        <text x="${xS(i)}" y="${yS(v)-10}" text-anchor="middle" class="chart-val-lbl">${v}kg</text>
+        <text x="${xS(i)}" y="${H-6}" text-anchor="middle" class="chart-lbl">S${weeks[i]}</text>
+      `).join('')}
+    </svg>`;
+}
+
+function renderBarChart(weeks, values) {
+  if(!weeks.length) return '';
+  const maxV=Math.max(...values,1);
+  const W=320,H=80,pad=24,bw=Math.min(32,(W-pad*2-weeks.length*4)/weeks.length);
+  const xS=i=>pad+i*((W-pad*2)/(weeks.length||1));
+  const bH=v=>((v/maxV)*(H-pad));
+  return `
+    <svg class="prog-chart" viewBox="0 0 ${W} ${H}" style="height:90px">
+      ${weeks.map((w,i)=>`
+        <rect x="${xS(i)-bw/2}" y="${H-pad-bH(values[i])}" width="${bw}" height="${bH(values[i])}"
+          rx="4" fill="var(--primary)" opacity=".7"/>
+        <text x="${xS(i)}" y="${H-2}" text-anchor="middle" class="chart-lbl">S${w}</text>
+      `).join('')}
+    </svg>`;
+}
+
+// ── ACTIVITY ───────────────────────────────────
+function renderActivity(c) {
+  // Generate 56-day heatmap
+  const PATTERN=['train','rest','train','rest','train','rest','rest'];
+  const TYPES={0:'glutes',2:'posterior',4:'anterior'};
+  const cells=[];
+  for(let d=1;d<=56;d++){
+    const di=(d-1)%7;
+    const type=PATTERN[di];
+    const done=completedDays.includes(d);
+    const isToday=completedDays.length>0&&d===completedDays.length+1;
+    cells.push({d,type,done,isToday,isRest:type==='rest'});
+  }
+
+  // Stats by training type
+  const byType={glutes:0,posterior:0,anterior:0};
+  completedDays.forEach(d=>{
+    const di=(d-1)%7;
+    const tt=TYPES[di];
+    if(tt) byType[tt]++;
+  });
+
+  const totalSets=allSets.filter(s=>s.set_type==='efectiva').length;
+  const avgKg=totalSets?Math.round(allSets.filter(s=>s.set_type==='efectiva'&&s.kg).reduce((s,e)=>s+(e.kg||0),0)/totalSets):0;
+
+  c.innerHTML=`
+    <!-- Heatmap -->
+    <div class="heatmap-card" style="margin-top:14px">
+      <div class="hm-ttl">🗓️ Actividad — 56 días del reto</div>
+      <div style="display:flex;gap:6px;margin-bottom:8px">
+        <span style="font-size:12px;color:var(--text3)">🟣 Entrenamiento</span>
+        <span style="font-size:12px;color:var(--text3)">⬜ Descanso</span>
+        <span style="font-size:12px;color:var(--text3)">✅ Completado</span>
+      </div>
+      <div class="hm-grid">
+        ${cells.map(cell=>`
+          <div class="hm-day ${cell.done?'done':cell.isRest?'rest':cell.isToday?'today':''}"
+            title="${cell.isRest?'Descanso':'Día '+cell.d}">
+            ${cell.done?'✓':cell.isRest?'':cell.d}
+          </div>
+        `).join('')}
+      </div>
+      <div style="font-size:13px;color:var(--text2);margin-top:10px">
+        ${completedDays.length} de 56 días completados (${Math.round(completedDays.length/56*100)}%)
+      </div>
+    </div>
+
+    <!-- Split stats -->
+    <div style="margin:0 14px 12px;background:var(--surface);border:1.5px solid var(--border);border-radius:18px;padding:16px">
+      <div style="font-size:15px;font-weight:800;color:var(--text);margin-bottom:12px">💪 Por tipo de entrenamiento</div>
+      ${[
+        {k:'glutes',l:'Glúteos 🍑',c:'var(--primary)'},
+        {k:'posterior',l:'Posterior 💪',c:'var(--pink)'},
+        {k:'anterior',l:'Anterior 🦵',c:'var(--green)'},
+      ].map(({k,l,c})=>`
+        <div style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:14px;color:var(--text2)">${l}</span>
+            <span style="font-size:14px;font-weight:800;color:var(--text)">${byType[k]} sesiones</span>
+          </div>
+          <div style="height:8px;background:var(--border);border-radius:99px;overflow:hidden">
+            <div style="height:100%;width:${Math.round(byType[k]/Math.max(completedDays.length,1)*100)}%;background:${c};border-radius:99px"></div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <!-- Quick stats -->
+    <div style="margin:0 14px 100px;background:var(--surface);border:1.5px solid var(--border);border-radius:18px;padding:16px">
+      <div style="font-size:15px;font-weight:800;color:var(--text);margin-bottom:12px">📊 Estadísticas generales</div>
+      ${[
+        ['⚡ Series efectivas',totalSets],
+        ['⚖️ Peso promedio por serie',avgKg?avgKg+'kg':'—'],
+        ['🔥 Racha actual',calcStreak()+' días'],
+        ['📅 Semana actual','Sem '+Math.min(8,Math.floor(completedDays.length/3)+1)+' de 8'],
+        ['🎯 Días restantes',(56-completedDays.length)+' días'],
+      ].map(([l,v])=>`
+        <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)">
+          <span style="font-size:14px;color:var(--text2)">${l}</span>
+          <span style="font-size:14px;font-weight:800;color:var(--primary)">${v}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+init();
+</script>
+</body>
+</html>

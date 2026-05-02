@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ArjunaFit — Admin</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../js/theme.js"></script>
+<link rel="stylesheet" href="../css/app.css">
+<style>
+body{background:var(--bg)}
+.admin-hdr{background:linear-gradient(135deg,#1e1b4b,#3730a3);padding:20px 16px 24px;color:white;position:relative;overflow:hidden;flex-shrink:0}
+.admin-hdr::after{content:'👑';position:absolute;right:-15px;bottom:-25px;font-size:110px;opacity:.08}
+.hdr-row{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.back{width:42px;height:42px;background:rgba(255,255,255,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;border:none;color:white;flex-shrink:0}
+.hdr-title{font-size:22px;font-weight:900;flex:1}
+
+/* Tabs */
+.tabs{display:flex;background:var(--surface);border-bottom:2px solid var(--border);flex-shrink:0;overflow-x:auto}
+.tab{flex-shrink:0;padding:14px 16px;font-size:14px;font-weight:700;color:var(--text3);cursor:pointer;border:none;background:none;font-family:var(--font);border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap}
+.tab.on{color:var(--primary);border-bottom-color:var(--primary)}
+
+/* Stats grid */
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:14px}
+.stat-card{background:var(--surface);border:1.5px solid var(--border);border-radius:18px;padding:16px;text-align:center}
+.stat-n{font-size:30px;font-weight:900;color:var(--primary);line-height:1}
+.stat-l{font-size:14px;color:var(--text2);margin-top:4px;font-weight:600}
+.stat-card.green .stat-n{color:var(--green)}
+.stat-card.pink .stat-n{color:var(--pink)}
+.stat-card.gold .stat-n{color:var(--gold)}
+
+/* Client list */
+.client-item{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:14px 16px;margin-bottom:8px;cursor:pointer;transition:all .2s}
+.client-item:active{transform:scale(.99)}
+.client-top{display:flex;align-items:center;gap:12px}
+.client-ava{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--pink));display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:white;flex-shrink:0}
+.client-name{font-size:16px;font-weight:800;color:var(--text)}
+.client-meta{font-size:13px;color:var(--text2);margin-top:2px}
+.client-pct{font-size:18px;font-weight:900;color:var(--primary);margin-left:auto}
+.prog-bar{height:6px;background:var(--border);border-radius:99px;overflow:hidden;margin-top:10px}
+.prog-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--primary),var(--pink))}
+.chip-row{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.chip{font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--surface2);color:var(--text2)}
+.chip.green{background:var(--green-light);color:var(--green)}
+.chip.red{background:var(--red-light);color:var(--red)}
+.chip.gold{background:var(--gold-light);color:var(--gold)}
+
+/* Client detail */
+.detail-hdr{background:linear-gradient(135deg,var(--primary),var(--pink));padding:20px 16px;color:white}
+.detail-name{font-size:22px;font-weight:900}
+.detail-sub{font-size:15px;opacity:.85;margin-top:4px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px}
+.info-card{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:12px;text-align:center}
+.info-val{font-size:18px;font-weight:900;color:var(--primary)}
+.info-lbl{font-size:13px;color:var(--text2);margin-top:3px}
+
+/* Photos */
+.photo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:14px}
+.photo-card{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;overflow:hidden}
+.photo-week{padding:8px 12px;font-size:13px;font-weight:800;color:var(--text);display:flex;justify-content:space-between}
+.photo-img{width:100%;aspect-ratio:3/4;object-fit:cover;cursor:pointer;display:block;transition:transform .2s}
+.photo-img:active{transform:scale(.98)}
+.photo-weight{padding:7px 12px;font-size:13px;color:var(--text2);font-weight:600}
+
+/* Compare */
+.compare-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 14px 14px}
+.compare-card{border-radius:14px;overflow:hidden;border:1.5px solid var(--border)}
+.compare-lbl{padding:8px 12px;font-size:13px;font-weight:800;text-align:center}
+.compare-img{width:100%;aspect-ratio:3/4;object-fit:cover}
+
+/* Lightbox */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.94);z-index:300;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+.lightbox.show{display:flex}
+.lb-img{max-width:100%;max-height:80dvh;object-fit:contain;border-radius:12px}
+.lb-close{position:absolute;top:16px;right:16px;width:44px;height:44px;background:rgba(255,255,255,.15);border-radius:50%;border:none;color:white;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lb-lbl{color:white;font-size:16px;font-weight:700;margin-top:14px;text-align:center}
+
+/* Rankings */
+.rank-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1.5px solid var(--border)}
+.rank-item:last-child{border-bottom:none}
+.rank-pos{font-size:20px;font-weight:900;width:32px;text-align:center;flex-shrink:0}
+.rank-name{flex:1;font-size:15px;font-weight:700;color:var(--text)}
+.rank-val{font-size:15px;font-weight:800;color:var(--primary)}
+
+/* Search */
+.search-wrap{padding:10px 14px;position:relative}
+.search-in{width:100%;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:12px 16px 12px 42px;font-family:'Outfit',sans-serif;font-size:15px;color:var(--text);outline:none}
+.search-in:focus{border-color:var(--primary)}
+.search-ico{position:absolute;left:26px;top:50%;transform:translateY(-50%);font-size:18px;pointer-events:none}
+
+/* Toast */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--primary);color:white;padding:12px 24px;border-radius:999px;font-size:14px;font-weight:700;z-index:999;animation:toastIn .3s ease;pointer-events:none}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+.empty{text-align:center;padding:40px 20px}
+.empty-ico{font-size:52px;margin-bottom:14px}
+.empty-ttl{font-size:18px;font-weight:800;color:var(--text);margin-bottom:6px}
+.empty-sub{font-size:15px;color:var(--text2)}
+</style>
+</head>
+<body>
+<div class="shell" style="display:flex;flex-direction:column;height:100dvh">
+
+  <div class="admin-hdr">
+    <div class="hdr-row">
+      <button class="back" onclick="history.back()">←</button>
+      <div class="hdr-title">Panel Admin 👑</div>
+      <button class="theme-toggle" onclick="toggleTheme()" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.2)">🌙</button>
+    </div>
+    <div style="font-size:14px;opacity:.8" id="adminSub">Cargando datos...</div>
+  </div>
+
+  <div class="tabs" id="tabsEl">
+    <button class="tab on" onclick="showTab('overview',this)">📊 Resumen</button>
+    <button class="tab" onclick="showTab('clients',this)">👥 Clientas</button>
+    <button class="tab" onclick="showTab('photos',this)">📸 Fotos</button>
+    <button class="tab" onclick="showTab('ranking',this)">🏆 Ranking</button>
+  </div>
+
+  <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch" id="content">
+    <div class="empty"><div class="empty-ico">⏳</div><div class="empty-ttl">Cargando...</div></div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lb" onclick="closeLb()">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <img class="lb-img" id="lbImg" src="" alt="">
+  <div class="lb-lbl" id="lbLbl"></div>
+</div>
+
+<script>
+const _sb = supabase.createClient(
+  'https://egswsqymkxmbtcpnozcq.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM'
+);
+
+let allClients=[], allPhotos=[], allProgress=[], currentTab='overview', selectedClient=null, searchTerm='';
+
+async function init() {
+  // Auth check
+  const {data:{session}} = await _sb.auth.getSession();
+  if(!session){window.location.href='../index.html';return}
+  const {data:me} = await _sb.from('profiles').select('role').eq('id',session.user.id).maybeSingle();
+  if(me?.role !== 'admin'){
+    document.getElementById('content').innerHTML=`<div class="empty"><div class="empty-ico">🔒</div><div class="empty-ttl">Acceso restringido</div><div class="empty-sub">Solo el administrador puede ver este panel</div></div>`;
+    return;
+  }
+
+  await loadAll();
+  document.getElementById('adminSub').textContent=`${allClients.length} clientas · ${allPhotos.length} fotos`;
+  showTab('overview', document.querySelector('.tab'));
+}
+
+async function loadAll() {
+  // Load all profiles (not admin)
+  const {data:profiles} = await _sb.from('profiles').select('*').neq('role','admin').order('nombre');
+  // Load progress counts
+  const {data:prog} = await _sb.from('progress').select('user_id,day_num');
+  // Load photos
+  const {data:photos} = await _sb.from('progress_photos').select('*').order('created_at',{ascending:false});
+
+  allProgress = prog||[];
+  allPhotos = photos||[];
+
+  // Enrich clients with progress
+  const progMap = {};
+  allProgress.forEach(p=>{ progMap[p.user_id]=(progMap[p.user_id]||0)+1; });
+
+  allClients = (profiles||[]).map(c=>({
+    ...c,
+    days_done: progMap[c.id]||0,
+    week_num: Math.min(8,Math.floor((progMap[c.id]||0)/3)+1),
+    photos: (photos||[]).filter(p=>p.user_id===c.id),
+    pct: Math.round(((progMap[c.id]||0)/56)*100)
+  }));
+}
+
+// ─── TABS ────────────────────────────────
+window.showTab = (tab, el) => {
+  if(selectedClient) { selectedClient=null; }
+  currentTab=tab;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  if(el) el.classList.add('on');
+  const c = document.getElementById('content');
+  if(tab==='overview') renderOverview(c);
+  else if(tab==='clients') renderClients(c);
+  else if(tab==='photos') renderPhotos(c);
+  else if(tab==='ranking') renderRanking(c);
+};
+
+// ─── OVERVIEW ────────────────────────────
+function renderOverview(c) {
+  const active = allClients.filter(cl=>cl.days_done>0).length;
+  const completed = allClients.filter(cl=>cl.days_done>=56).length;
+  const totalVol = allProgress.length;
+  const avgPct = allClients.length ? Math.round(allClients.reduce((s,cl)=>s+cl.pct,0)/allClients.length) : 0;
+  const crecer = allClients.filter(cl=>cl.objetivo==='crecer').length;
+  const bajar  = allClients.filter(cl=>cl.objetivo==='bajar').length;
+  const gym    = allClients.filter(cl=>cl.entorno==='gym').length;
+  const casa   = allClients.filter(cl=>cl.entorno==='casa').length;
+  const injured= allClients.filter(cl=>(cl.injuries||[]).some(i=>i!=='ninguna')).length;
+
+  // Top 3 clients
+  const top3 = [...allClients].sort((a,b)=>b.days_done-a.days_done).slice(0,3);
+
+  c.innerHTML = `
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-n">${allClients.length}</div><div class="stat-l">Total clientas</div></div>
+      <div class="stat-card green"><div class="stat-n">${active}</div><div class="stat-l">Activas ahora</div></div>
+      <div class="stat-card pink"><div class="stat-n">${allPhotos.length}</div><div class="stat-l">Fotos subidas</div></div>
+      <div class="stat-card gold"><div class="stat-n">${avgPct}%</div><div class="stat-l">Progreso promedio</div></div>
+    </div>
+
+    <div style="padding:0 14px 14px">
+      <!-- Distribución -->
+      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:18px;padding:18px;margin-bottom:12px">
+        <div style="font-size:16px;font-weight:900;color:var(--text);margin-bottom:14px">📊 Distribución</div>
+        ${[
+          ['🍑 Crecer y Tonificar', crecer, allClients.length],
+          ['🔥 Bajar Grasa', bajar, allClients.length],
+          ['🏋️ Gimnasio', gym, allClients.length],
+          ['🏠 Casa', casa, allClients.length],
+          ['🩹 Con lesiones', injured, allClients.length],
+          ['✅ Reto completo', completed, allClients.length],
+        ].map(([lbl,val,tot])=>`
+          <div style="margin-bottom:10px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+              <span style="font-size:14px;color:var(--text2)">${lbl}</span>
+              <span style="font-size:14px;font-weight:800;color:var(--primary)">${val} / ${tot}</span>
+            </div>
+            <div class="prog-bar"><div class="prog-fill" style="width:${tot?Math.round(val/tot*100):0}%"></div></div>
+          </div>
+        `).join('')}
+      </div>
+
+      <!-- Top 3 -->
+      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:18px;overflow:hidden">
+        <div style="padding:16px 18px 12px;font-size:16px;font-weight:900;color:var(--text)">🏆 Top 3 en progreso</div>
+        ${top3.map((cl,i)=>`
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 18px;border-top:1.5px solid var(--border);cursor:pointer" onclick="openClient('${cl.id}')">
+            <div style="font-size:22px;font-weight:900;width:32px;text-align:center">${i===0?'🥇':i===1?'🥈':'🥉'}</div>
+            <div class="client-ava" style="width:38px;height:38px;font-size:18px">${cl.nombre?.charAt(0)?.toUpperCase()||'?'}</div>
+            <div style="flex:1">
+              <div style="font-size:15px;font-weight:700;color:var(--text)">${cl.nombre||'Sin nombre'}</div>
+              <div style="font-size:13px;color:var(--text2)">${cl.days_done} días · Sem ${cl.week_num}</div>
+            </div>
+            <div style="font-size:16px;font-weight:900;color:var(--primary)">${cl.pct}%</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// ─── CLIENTS ─────────────────────────────
+function renderClients(c) {
+  const filtered = allClients.filter(cl=>
+    !searchTerm ||
+    cl.nombre?.toLowerCase().includes(searchTerm) ||
+    cl.objetivo?.includes(searchTerm)
+  );
+
+  if(selectedClient) { renderClientDetail(c); return; }
+
+  c.innerHTML = `
+    <div class="search-wrap">
+      <span class="search-ico">🔍</span>
+      <input class="search-in" placeholder="Buscar clienta..." oninput="onSearch(this.value)" value="${searchTerm}">
+    </div>
+    <div style="padding:0 14px 100px">
+      ${filtered.length===0 ? '<div class="empty"><div class="empty-ico">👥</div><div class="empty-ttl">Sin resultados</div></div>' :
+        filtered.map(cl=>`
+          <div class="client-item" onclick="openClient('${cl.id}')">
+            <div class="client-top">
+              <div class="client-ava">${cl.nombre?.charAt(0)?.toUpperCase()||'?'}</div>
+              <div style="flex:1">
+                <div class="client-name">${cl.nombre||'Sin nombre'}</div>
+                <div class="client-meta">${cl.objetivo==='crecer'?'🍑 Crecer':'🔥 Bajar'} · ${cl.entorno==='gym'?'🏋️ Gym':'🏠 Casa'} · Sem ${cl.week_num}</div>
+              </div>
+              <div class="client-pct">${cl.pct}%</div>
+            </div>
+            <div class="prog-bar"><div class="prog-fill" style="width:${cl.pct}%"></div></div>
+            <div class="chip-row">
+              <span class="chip">${cl.days_done}/56 días</span>
+              ${cl.photos.length>0?`<span class="chip green">📸 ${cl.photos.length} fotos</span>`:''}
+              ${(cl.injuries||[]).some(i=>i!=='ninguna')?`<span class="chip gold">🩹 Lesión</span>`:''}
+              ${cl.days_done>=56?`<span class="chip green">✅ Completó</span>`:''}
+            </div>
+          </div>
+        `).join('')}
+    </div>
+  `;
+}
+
+window.onSearch = (val) => { searchTerm=val.toLowerCase(); renderClients(document.getElementById('content')); };
+
+window.openClient = (id) => {
+  selectedClient = allClients.find(cl=>cl.id===id);
+  if(!selectedClient) return;
+  renderClientDetail(document.getElementById('content'));
+};
+
+function renderClientDetail(c) {
+  const cl = selectedClient;
+  const lesiones = (cl.injuries||[]).filter(i=>i!=='ninguna');
+  const photos = cl.photos.sort((a,b)=>a.week_num-b.week_num);
+
+  c.innerHTML = `
+    <!-- Back -->
+    <div style="padding:12px 14px;display:flex;align-items:center;gap:10px;border-bottom:1.5px solid var(--border);cursor:pointer" onclick="goBackToClients()">
+      <span style="font-size:20px">←</span>
+      <span style="font-size:15px;font-weight:700;color:var(--primary)">Volver a clientas</span>
+    </div>
+
+    <!-- Header -->
+    <div class="detail-hdr">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px">
+        <div class="client-ava" style="width:56px;height:56px;font-size:26px">${cl.nombre?.charAt(0)?.toUpperCase()||'?'}</div>
+        <div>
+          <div class="detail-name">${cl.nombre||'Sin nombre'}</div>
+          <div class="detail-sub">${cl.objetivo==='crecer'?'🍑 Crecer y Tonificar':'🔥 Bajar Grasa'} · ${cl.entorno==='gym'?'🏋️ Gym':'🏠 Casa'}</div>
+        </div>
+      </div>
+      <div class="prog-bar" style="height:8px;background:rgba(255,255,255,.25)">
+        <div class="prog-fill" style="width:${cl.pct}%;background:white"></div>
+      </div>
+      <div style="font-size:14px;margin-top:6px;opacity:.85">${cl.days_done} de 56 días completados (${cl.pct}%)</div>
+    </div>
+
+    <!-- Info grid -->
+    <div class="info-grid">
+      ${[
+        ['⚖️ Peso',cl.peso?cl.peso+'kg':'—'],
+        ['📏 Altura',cl.altura?cl.altura+'cm':'—'],
+        ['🎂 Edad',cl.edad?cl.edad+' años':'—'],
+        ['🔥 Calorías',cl.calorias_objetivo?Math.round(cl.calorias_objetivo)+'kcal':'—'],
+        ['💪 Proteína',cl.proteina_g?Math.round(cl.proteina_g)+'g':'—'],
+        ['📸 Fotos',photos.length],
+        ['📅 Semana','Sem '+cl.week_num+' de 8'],
+        ['🩹 Lesiones',lesiones.length>0?lesiones.join(', '):'Ninguna'],
+      ].map(([l,v])=>`
+        <div class="info-card">
+          <div style="font-size:13px;color:var(--text3);margin-bottom:3px">${l}</div>
+          <div class="info-val" style="font-size:15px">${v}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <!-- Comparación fotos -->
+    ${photos.length>=2 ? `
+      <div style="padding:0 14px 10px">
+        <div style="font-size:16px;font-weight:900;color:var(--text);margin-bottom:10px">📸 Transformación</div>
+        <div class="compare-row" style="padding:0">
+          <div class="compare-card">
+            <div class="compare-lbl" style="background:var(--surface2)">Semana 1 — Inicio</div>
+            <img class="compare-img" src="${photos[0].photo_url}" onclick="openLb('${photos[0].photo_url}','Inicio · ${cl.nombre}')">
+          </div>
+          <div class="compare-card">
+            <div class="compare-lbl" style="background:var(--primary-light);color:var(--primary)">Semana ${photos[photos.length-1].week_num} — Ahora</div>
+            <img class="compare-img" src="${photos[photos.length-1].photo_url}" onclick="openLb('${photos[photos.length-1].photo_url}','Semana ${photos[photos.length-1].week_num} · ${cl.nombre}')">
+          </div>
+        </div>
+      </div>
+    ` : ''}
+
+    <!-- Todas las fotos -->
+    ${photos.length > 0 ? `
+      <div style="padding:0 14px 14px">
+        <div style="font-size:16px;font-weight:900;color:var(--text);margin-bottom:10px">Todas las fotos (${photos.length})</div>
+        <div class="photo-grid" style="padding:0">
+          ${photos.map(p=>`
+            <div class="photo-card">
+              <div class="photo-week">
+                <span>Semana ${p.week_num}</span>
+                ${p.peso_semana?`<span style="color:var(--primary);font-weight:800">${p.peso_semana}kg</span>`:''}
+              </div>
+              <img class="photo-img" src="${p.photo_url}" onclick="openLb('${p.photo_url}','${cl.nombre} · Semana ${p.week_num}')" onerror="this.parentElement.style.display='none'">
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    ` : `<div class="empty" style="padding:24px"><div class="empty-ico" style="font-size:40px">📷</div><div class="empty-ttl">Sin fotos aún</div></div>`}
+
+    <!-- Acciones -->
+    <div style="padding:0 14px 100px;display:flex;flex-direction:column;gap:8px">
+      <a href="chat.html" class="btn btn-primary" style="text-decoration:none;text-align:center">💬 Ver chat del entrenador</a>
+    </div>
+  `;
+}
+
+window.goBackToClients = () => {
+  selectedClient = null;
+  renderClients(document.getElementById('content'));
+};
+
+// ─── PHOTOS ──────────────────────────────
+function renderPhotos(c) {
+  if(allPhotos.length===0){
+    c.innerHTML=`<div class="empty"><div class="empty-ico">📸</div><div class="empty-ttl">Sin fotos aún</div><div class="empty-sub">Las clientas subirán fotos cada lunes</div></div>`;
+    return;
+  }
+
+  // Group by client
+  const byClient = {};
+  allPhotos.forEach(p=>{
+    const cl = allClients.find(c=>c.id===p.user_id);
+    if(!cl) return;
+    if(!byClient[p.user_id]) byClient[p.user_id]={cl, photos:[]};
+    byClient[p.user_id].photos.push(p);
+  });
+
+  c.innerHTML = `<div style="padding:14px">` +
+    Object.values(byClient).map(({cl,photos})=>`
+      <div style="margin-bottom:24px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;cursor:pointer" onclick="openClient('${cl.id}');showTab('clients',null)">
+          <div class="client-ava" style="width:36px;height:36px;font-size:16px">${cl.nombre?.charAt(0)?.toUpperCase()||'?'}</div>
+          <div style="font-size:16px;font-weight:800;color:var(--text);flex:1">${cl.nombre||'Sin nombre'}</div>
+          <span style="font-size:14px;font-weight:700;color:var(--primary)">${photos.length} fotos →</span>
+        </div>
+        <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none">
+          ${photos.sort((a,b)=>a.week_num-b.week_num).map(p=>`
+            <div style="flex-shrink:0;width:100px">
+              <img src="${p.photo_url}"
+                style="width:100px;height:133px;object-fit:cover;border-radius:12px;cursor:pointer;border:1.5px solid var(--border)"
+                onclick="openLb('${p.photo_url}','${cl.nombre} · Semana ${p.week_num}')"
+                onerror="this.style.display='none'">
+              <div style="font-size:13px;font-weight:700;color:var(--text2);text-align:center;margin-top:4px">Sem ${p.week_num}</div>
+              ${p.peso_semana?`<div style="font-size:12px;color:var(--primary);font-weight:700;text-align:center">${p.peso_semana}kg</div>`:''}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `).join('') + '</div>';
+}
+
+// ─── RANKING ─────────────────────────────
+function renderRanking(c) {
+  const byDays = [...allClients].sort((a,b)=>b.days_done-a.days_done);
+  const byPhotos = [...allClients].sort((a,b)=>b.photos.length-a.photos.length);
+
+  c.innerHTML = `
+    <div style="padding:14px">
+      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:12px">
+        <div style="padding:16px 18px;font-size:16px;font-weight:900;color:var(--text);border-bottom:1.5px solid var(--border)">🏆 Ranking por días completados</div>
+        ${byDays.map((cl,i)=>`
+          <div class="rank-item" style="cursor:pointer" onclick="openClient('${cl.id}');showTab('clients',null)">
+            <div class="rank-pos">${i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)+'.'}</div>
+            <div class="client-ava" style="width:34px;height:34px;font-size:15px;flex-shrink:0">${cl.nombre?.charAt(0)?.toUpperCase()||'?'}</div>
+            <div class="rank-name">${cl.nombre||'Sin nombre'}</div>
+            <div class="rank-val">${cl.days_done}/56</div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:18px;overflow:hidden">
+        <div style="padding:16px 18px;font-size:16px;font-weight:900;color:var(--text);border-bottom:1.5px solid var(--border)">📸 Ranking por fotos subidas</div>
+        ${byPhotos.filter(cl=>cl.photos.length>0).map((cl,i)=>`
+          <div class="rank-item" style="cursor:pointer" onclick="openClient('${cl.id}');showTab('clients',null)">
+            <div class="rank-pos">${i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)+'.'}</div>
+            <div class="client-ava" style="width:34px;height:34px;font-size:15px;flex-shrink:0">${cl.nombre?.charAt(0)?.toUpperCase()||'?'}</div>
+            <div class="rank-name">${cl.nombre||'Sin nombre'}</div>
+            <div class="rank-val">${cl.photos.length} fotos</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// ─── LIGHTBOX ────────────────────────────
+window.openLb = (url,lbl) => {
+  document.getElementById('lbImg').src=url;
+  document.getElementById('lbLbl').textContent=lbl;
+  document.getElementById('lb').classList.add('show');
+};
+window.closeLb = () => document.getElementById('lb').classList.remove('show');
+
+// ─── TOAST ───────────────────────────────
+function toast(msg) {
+  const t=document.createElement('div');t.className='toast';t.textContent=msg;
+  document.body.appendChild(t);setTimeout(()=>t.remove(),2500);
+}
+
+init();
+</script>
+<script src="../js/chatbubble.js"></script>
+</body>
+</html>

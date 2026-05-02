@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#7c3aed">
+<title>ArjunaFit</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap');
+
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html, body {
+  min-height:100dvh;
+  background:#0c0714;
+  font-family:'Outfit',sans-serif;
+  color:white;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Fondo */
+.bg {
+  position:fixed; inset:0; z-index:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(124,58,237,.4) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(236,72,153,.2) 0%, transparent 60%),
+    #0c0714;
+}
+.orb {
+  position:absolute; border-radius:50%; filter:blur(60px);
+  animation:drift ease-in-out infinite alternate;
+}
+.o1{width:300px;height:300px;top:-80px;left:-60px;background:rgba(124,58,237,.25);animation-duration:12s}
+.o2{width:200px;height:200px;bottom:30%;right:-40px;background:rgba(236,72,153,.2);animation-duration:16s;animation-delay:-5s}
+@keyframes drift{from{transform:translateY(0)}to{transform:translateY(-30px)}}
+
+/* Shell */
+.shell {
+  position:relative; z-index:1;
+  min-height:100dvh; max-width:430px; margin:0 auto;
+  display:flex; flex-direction:column;
+}
+
+/* Hero */
+.hero {
+  flex:1; display:flex; flex-direction:column;
+  justify-content:center; padding:48px 28px 28px;
+}
+.logo { display:flex; align-items:center; gap:10px; margin-bottom:48px; }
+.logo-mark {
+  width:42px; height:42px; border-radius:12px;
+  background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.15);
+  display:flex; align-items:center; justify-content:center; font-size:22px;
+}
+.logo-name { font-size:20px; font-weight:800; color:rgba(255,255,255,.9); }
+.eyebrow {
+  font-size:12px; font-weight:700; letter-spacing:2.5px;
+  text-transform:uppercase; color:rgba(196,181,253,.75); margin-bottom:12px;
+}
+.hero-title {
+  font-size:clamp(36px,10vw,52px); font-weight:900; line-height:1.02;
+  letter-spacing:-2px; margin-bottom:14px; color:white;
+}
+.hero-title span {
+  background:linear-gradient(135deg,#c4b5fd,#f9a8d4);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.hero-sub { font-size:15px; color:rgba(255,255,255,.55); line-height:1.6; max-width:280px; }
+
+/* Form */
+.form-card {
+  background:rgba(20,12,34,.97);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:28px 28px 0 0;
+  padding:28px 24px;
+  padding-bottom:calc(32px + env(safe-area-inset-bottom));
+}
+.form-title { font-size:22px; font-weight:800; color:white; margin-bottom:4px; }
+.form-sub { font-size:15px; color:rgba(255,255,255,.45); margin-bottom:24px; }
+
+/* Error */
+.err-msg {
+  background:rgba(248,113,113,.12); border:1.5px solid rgba(248,113,113,.3);
+  color:#fca5a5; padding:14px 16px; border-radius:12px;
+  font-size:15px; font-weight:600; margin-bottom:16px;
+  display:none; line-height:1.5;
+}
+
+/* Fields */
+.field { display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
+.field-label {
+  font-size:13px; font-weight:700; color:rgba(255,255,255,.5);
+  letter-spacing:.5px; text-transform:uppercase;
+}
+.field-wrap { position:relative; }
+.field-ico {
+  position:absolute; left:16px; top:50%;
+  transform:translateY(-50%); font-size:20px; pointer-events:none;
+}
+.field-in {
+  width:100%; padding:17px 17px 17px 48px;
+  background:rgba(255,255,255,.07); border:2px solid rgba(255,255,255,.1);
+  border-radius:14px; font-family:'Outfit',sans-serif; font-size:17px;
+  font-weight:600; color:white; outline:none; transition:all .2s;
+}
+/* Fix autofill blanco en Chrome/Android */
+.field-in:-webkit-autofill,
+.field-in:-webkit-autofill:hover,
+.field-in:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px rgba(30,15,50,.95) inset !important;
+  -webkit-text-fill-color: white !important;
+  caret-color: white;
+  border-color: rgba(196,181,253,.5) !important;
+}
+.field-in::placeholder { color:rgba(255,255,255,.25); }
+.field-in:focus { border-color:rgba(196,181,253,.6); background:rgba(255,255,255,.1); }
+.field-eye {
+  position:absolute; right:14px; top:50%; transform:translateY(-50%);
+  background:none; border:none; cursor:pointer; font-size:20px;
+  padding:8px; color:rgba(255,255,255,.5);
+}
+
+/* Forgot */
+.forgot-row { text-align:right; margin-bottom:20px; margin-top:-4px; }
+.forgot-link {
+  font-size:14px; color:rgba(196,181,253,.8);
+  font-weight:700; cursor:pointer; text-decoration:none;
+}
+
+/* Submit */
+.submit-btn {
+  width:100%; padding:18px; border:none; border-radius:16px;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  color:white; font-family:'Outfit',sans-serif;
+  font-size:18px; font-weight:800; cursor:pointer;
+  transition:all .2s; display:flex; align-items:center;
+  justify-content:center; gap:10px; min-height:58px;
+  box-shadow:0 8px 32px rgba(124,58,237,.45);
+}
+.submit-btn:active { transform:scale(.98); }
+.submit-btn:disabled { opacity:.6; cursor:not-allowed; transform:none; }
+.btn-txt { display:block; }
+
+/* Spinner */
+.spinner {
+  width:22px; height:22px;
+  border:3px solid rgba(255,255,255,.3);
+  border-top-color:white; border-radius:50%;
+  animation:spin .7s linear infinite; display:none;
+}
+@keyframes spin { to{transform:rotate(360deg)} }
+
+/* Social proof */
+.social-proof {
+  display:flex; align-items:center; gap:10px;
+  margin-top:20px; padding-top:18px;
+  border-top:1px solid rgba(255,255,255,.07);
+}
+.sp-dots { display:flex; }
+.sp-dot {
+  width:26px; height:26px; border-radius:50%;
+  border:2px solid rgba(20,12,34,.9);
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  font-size:12px; display:flex; align-items:center; justify-content:center;
+  margin-left:-7px;
+}
+.sp-dot:first-child { margin-left:0; }
+.sp-text { font-size:13px; color:rgba(255,255,255,.45); line-height:1.4; }
+.sp-text strong { color:rgba(255,255,255,.7); }
+
+/* Loading overlay */
+.loading {
+  position:fixed; inset:0; background:#0c0714; z-index:999;
+  display:flex; flex-direction:column; align-items:center;
+  justify-content:center; gap:14px; opacity:0;
+  pointer-events:none; transition:opacity .3s;
+}
+.loading.show { opacity:1; pointer-events:all; }
+.loading-logo { font-size:52px; animation:pulse 1s ease infinite; }
+.loading-txt { font-size:16px; font-weight:700; color:rgba(255,255,255,.5); }
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+</style>
+</head>
+<body>
+
+<div class="bg">
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+</div>
+
+<div class="shell">
+  <!-- Hero -->
+  <div class="hero">
+    <div class="logo">
+      <div class="logo-mark">🏋️</div>
+      <div class="logo-name">ArjunaFit</div>
+    </div>
+    <div class="eyebrow">Reto 8 semanas</div>
+    <h1 class="hero-title">Tu mejor<br>versión <span>te espera.</span></h1>
+    <p class="hero-sub">Glúteos firmes, piernas definidas y la confianza que siempre quisiste.</p>
+  </div>
+
+  <!-- Form -->
+  <div class="form-card">
+    <div class="form-title">¡Hola de nuevo! 👋</div>
+    <div class="form-sub">Entra y continúa tu reto</div>
+
+    <div class="err-msg" id="errMsg"></div>
+
+    <div class="field">
+      <div class="field-label">Correo</div>
+      <div class="field-wrap">
+        <span class="field-ico">📧</span>
+        <input type="email" class="field-in" id="emailIn"
+          placeholder="tu@correo.com"
+          autocomplete="email" inputmode="email"
+          oninput="hideErr()">
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-label">Contraseña</div>
+      <div class="field-wrap">
+        <span class="field-ico">🔒</span>
+        <input type="password" class="field-in" id="passIn"
+          placeholder="••••••••"
+          autocomplete="current-password"
+          oninput="hideErr()"
+          onkeydown="if(event.key==='Enter') doLogin()">
+        <button class="field-eye" type="button" onclick="togglePass()">👁️</button>
+      </div>
+    </div>
+
+    <div class="forgot-row">
+      <span class="forgot-link" onclick="forgotPass()">¿Olvidaste tu contraseña?</span>
+    </div>
+
+    <button class="submit-btn" id="loginBtn" type="button" onclick="doLogin()">
+      <div class="spinner" id="sp"></div>
+      <span class="btn-txt" id="btnTxt">Entrar a mi reto 🚀</span>
+    </button>
+
+    <div class="social-proof">
+      <div class="sp-dots">
+        <div class="sp-dot">👩</div>
+        <div class="sp-dot">👩</div>
+        <div class="sp-dot">👩</div>
+      </div>
+      <div class="sp-text"><strong>+100 mujeres</strong> ya transformando su cuerpo 🔥</div>
+    </div>
+  </div>
+</div>
+
+<div class="loading" id="loading">
+  <div class="loading-logo">🏋️</div>
+  <div class="loading-txt">Cargando tu reto...</div>
+</div>
+
+<!-- Supabase directo — sin módulos para evitar problemas de scope -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+// ── Init Supabase ──
+const { createClient } = supabase;
+const _sb = createClient(
+  'https://egswsqymkxmbtcpnozcq.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM'
+);
+
+// ── Redirect ──
+function goTo(hasProfile) {
+  document.getElementById('loading').classList.add('show');
+  setTimeout(()=>{
+    window.location.href = hasProfile
+      ? 'pages/dashboard.html'
+      : 'pages/onboarding.html';
+  }, 500);
+}
+
+// ── Check session on load ──
+(async function() {
+  try {
+    const { data: { session } } = await _sb.auth.getSession();
+    if (session?.user) {
+      const { data: profile } = await _sb
+        .from('profiles')
+        .select('peso')
+        .eq('id', session.user.id)
+        .maybeSingle();
+      goTo(!!profile?.peso);
+    }
+  } catch(e) {
+    console.log('No session:', e);
+  }
+})();
+
+// ── UI helpers ──
+function hideErr() {
+  document.getElementById('errMsg').style.display = 'none';
+}
+
+function showErr(msg) {
+  const el = document.getElementById('errMsg');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function setLoading(on) {
+  const btn = document.getElementById('loginBtn');
+  const sp  = document.getElementById('sp');
+  const txt = document.getElementById('btnTxt');
+  btn.disabled = on;
+  sp.style.display  = on ? 'block' : 'none';
+  txt.textContent   = on ? 'Entrando...' : 'Entrar a mi reto 🚀';
+}
+
+function togglePass() {
+  const inp = document.getElementById('passIn');
+  const btn = document.querySelector('.field-eye');
+  const isPass = inp.type === 'password';
+  inp.type = isPass ? 'text' : 'password';
+  btn.textContent = isPass ? '🙈' : '👁️';
+}
+
+async function forgotPass() {
+  const email = document.getElementById('emailIn').value.trim();
+  if (!email) { showErr('Escribe tu correo primero 😊'); return; }
+  await _sb.auth.resetPasswordForEmail(email);
+  showErr('📧 Revisa tu correo para restablecer la contraseña');
+}
+
+// ── LOGIN — función global principal ──
+async function doLogin() {
+  const email = document.getElementById('emailIn').value.trim();
+  const pass  = document.getElementById('passIn').value;
+
+  hideErr();
+
+  if (!email || !pass) {
+    showErr('Ingresa tu correo y contraseña 😊');
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    const { data, error } = await _sb.auth.signInWithPassword({ email, password: pass });
+
+    if (error) {
+      setLoading(false);
+      const msgs = {
+        'Invalid login credentials': 'Correo o contraseña incorrectos 🤔',
+        'Email not confirmed':        'Confirma tu correo — revisa tu bandeja 📧',
+        'Too many requests':          'Demasiados intentos, espera un momento ⏳',
+      };
+      showErr(msgs[error.message] || 'Error: ' + error.message);
+      return;
+    }
+
+    // Login exitoso
+    document.getElementById('btnTxt').textContent = '✅ ¡Bienvenida!';
+
+    const { data: profile } = await _sb
+      .from('profiles')
+      .select('peso')
+      .eq('id', data.user.id)
+      .maybeSingle();
+
+    goTo(!!profile?.peso);
+
+  } catch(e) {
+    setLoading(false);
+    showErr('Error de conexión. Revisa tu internet 📶');
+    console.error('Login error:', e);
+  }
+}
+</script>
+</body>
+</html>

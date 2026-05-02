@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ArjunaFit — Recetario & Restaurantes</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../js/theme.js"></script>
+<link rel="stylesheet" href="../css/app.css">
+<style>
+body{background:var(--bg)}
+.page-hdr{background:linear-gradient(135deg,#be185d,#ec4899);padding:18px 16px 30px;color:white;position:relative;overflow:hidden;flex-shrink:0}
+.page-hdr::after{content:'🍽️';position:absolute;right:-10px;bottom:-20px;font-size:110px;opacity:.08}
+.back-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.back{width:42px;height:42px;background:rgba(255,255,255,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;border:none;color:white}
+.hdr-title{font-size:24px;font-weight:900}
+.hdr-sub{font-size:14px;opacity:.85;margin-top:3px}
+
+/* Tabs */
+.tabs{display:flex;background:var(--surface);border-bottom:2px solid var(--border);flex-shrink:0}
+.tab{flex:1;padding:13px 6px;text-align:center;font-size:13px;font-weight:700;color:var(--text3);cursor:pointer;border:none;background:none;font-family:var(--font);border-bottom:3px solid transparent;transition:all .2s}
+.tab.on{color:var(--pink);border-bottom-color:var(--pink)}
+
+/* Search */
+.search-bar{padding:10px 14px;position:relative;flex-shrink:0}
+.search-in{width:100%;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:12px 42px 12px 44px;font-family:var(--font);font-size:15px;color:var(--text);outline:none}
+.search-in:focus{border-color:var(--pink)}
+.search-ico{position:absolute;left:26px;top:50%;transform:translateY(-50%);font-size:20px;pointer-events:none}
+.search-clear{position:absolute;right:22px;top:50%;transform:translateY(-50%);background:none;border:none;font-size:18px;cursor:pointer;color:var(--text3);padding:4px}
+
+/* Filter pills */
+.filters{display:flex;gap:7px;overflow-x:auto;padding:0 14px 10px;scrollbar-width:none;flex-shrink:0}
+.filters::-webkit-scrollbar{display:none}
+.pill{flex-shrink:0;padding:7px 14px;background:var(--surface);border:1.5px solid var(--border);border-radius:999px;font-size:13px;font-weight:700;color:var(--text2);cursor:pointer;white-space:nowrap;transition:all .15s}
+.pill.on{background:var(--pink);border-color:var(--pink);color:white}
+
+/* Recipe grid */
+.recipe-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 14px 100px}
+.recipe-card{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:all .2s}
+.recipe-card:active{transform:scale(.97)}
+.recipe-emo{height:80px;display:flex;align-items:center;justify-content:center;font-size:50px;background:linear-gradient(135deg,var(--pink-light),var(--primary-light))}
+.recipe-body{padding:10px}
+.recipe-name{font-size:13px;font-weight:800;color:var(--text);line-height:1.3;margin-bottom:6px}
+.recipe-tags{display:flex;gap:4px;flex-wrap:wrap}
+.rtag{font-size:11px;font-weight:700;padding:2px 7px;border-radius:999px}
+.rtag-k{background:var(--gold-light);color:var(--gold)}
+.rtag-p{background:rgba(220,38,38,.08);color:var(--red)}
+.rtag-t{background:var(--primary-light);color:var(--primary)}
+.rtag-o{background:var(--green-light);color:var(--green)}
+
+/* Recipe detail */
+.recipe-detail{padding-bottom:100px}
+.detail-back{padding:12px 14px;display:flex;align-items:center;gap:8px;border-bottom:1.5px solid var(--border);cursor:pointer;background:var(--surface);position:sticky;top:0;z-index:10}
+.detail-emo{height:180px;display:flex;align-items:center;justify-content:center;font-size:90px;background:linear-gradient(135deg,var(--pink-light),var(--primary-light))}
+.detail-body{padding:16px}
+.detail-title{font-size:20px;font-weight:900;color:var(--text);margin-bottom:6px}
+.detail-meta{font-size:14px;color:var(--text2);margin-bottom:14px}
+.macros-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.macro-b{background:var(--surface2);border-radius:12px;padding:10px;text-align:center}
+.macro-v{font-size:17px;font-weight:900;color:var(--primary)}
+.macro-l{font-size:11px;color:var(--text3);margin-top:2px}
+.sec-h{font-size:15px;font-weight:800;color:var(--text);margin:14px 0 8px;display:flex;align-items:center;gap:6px}
+.ing-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.ing-row:last-child{border-bottom:none}
+.ing-ico{font-size:22px;width:28px;text-align:center;flex-shrink:0}
+.ing-name{flex:1;font-size:14px;font-weight:600;color:var(--text)}
+.ing-qty{font-size:13px;font-weight:800;color:var(--primary);background:var(--primary-light);padding:3px 8px;border-radius:7px;white-space:nowrap}
+.step-row{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.step-row:last-child{border-bottom:none}
+.step-n{width:26px;height:26px;border-radius:50%;background:var(--pink);color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;margin-top:2px}
+.step-t{font-size:14px;color:var(--text2);line-height:1.6;flex:1}
+.tip-b{background:var(--primary-light);border:1.5px solid var(--border);border-radius:12px;padding:12px 14px;margin-top:14px;font-size:14px;color:var(--primary);line-height:1.6}
+
+/* City picker */
+.city-picker{padding:10px 14px;flex-shrink:0}
+.city-select{width:100%;padding:13px 16px;background:var(--surface);border:1.5px solid var(--border);border-radius:14px;font-family:var(--font);font-size:16px;font-weight:700;color:var(--text);outline:none;cursor:pointer}
+.city-select:focus{border-color:var(--pink)}
+
+/* Restaurant card */
+.rest-card{background:var(--surface);border:1.5px solid var(--border);border-radius:18px;padding:16px;margin-bottom:10px}
+.rest-top{display:flex;gap:12px;margin-bottom:10px;align-items:flex-start}
+.rest-ava{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;background:var(--primary-light)}
+.rest-name{font-size:15px;font-weight:800;color:var(--text);line-height:1.2}
+.rest-zone{font-size:13px;color:var(--text2);margin-top:3px}
+.rest-stars{font-size:12px;color:var(--gold);margin-top:2px}
+.rest-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
+.rest-tag{font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--surface2);color:var(--text2)}
+.rest-best{background:var(--green-light);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--green);font-weight:700;margin-bottom:6px;line-height:1.5}
+.rest-tip{font-size:13px;color:var(--text2);line-height:1.5;padding:8px;background:var(--surface2);border-radius:10px}
+.delivery-badge{font-size:11px;font-weight:700;background:var(--primary-light);color:var(--primary);padding:4px 8px;border-radius:8px;text-align:center;margin-left:auto;flex-shrink:0}
+
+/* Fast food */
+.ff-card{background:var(--surface);border:1.5px solid var(--border);border-radius:18px;padding:16px;margin-bottom:10px}
+.ff-top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.ff-emo{font-size:36px}
+.ff-name{font-size:16px;font-weight:800;color:var(--text)}
+.ff-sub{font-size:13px;color:var(--text2);margin-top:2px}
+.ff-item{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border)}
+.ff-item:last-child{border-bottom:none}
+.ff-item-emo{font-size:18px}
+.ff-item-name{flex:1;font-size:14px;font-weight:600;color:var(--text)}
+.ff-item-kcal{font-size:12px;color:var(--text3);margin-right:4px}
+.ff-item-tip{font-size:12px;font-weight:700;color:var(--green);background:var(--green-light);padding:3px 8px;border-radius:7px;white-space:nowrap}
+.ff-avoid{background:var(--red-light);border-radius:10px;padding:10px;font-size:13px;color:var(--red);margin-top:8px;font-weight:600}
+.ff-pro{background:var(--primary-light);border-radius:10px;padding:10px;font-size:13px;color:var(--primary);margin-top:6px;line-height:1.5}
+
+.empty-state{text-align:center;padding:40px 20px}
+.empty-ico{font-size:52px;margin-bottom:14px}
+.empty-ttl{font-size:17px;font-weight:800;color:var(--text);margin-bottom:6px}
+.empty-sub{font-size:14px;color:var(--text2)}
+</style>
+</head>
+<body>
+<div class="shell" style="display:flex;flex-direction:column;height:100dvh;overflow:hidden">
+  <div class="page-hdr">
+    <div class="back-row">
+      <button class="back" onclick="history.back()">←</button>
+      <button class="theme-toggle" onclick="toggleTheme()" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.2)">🌙</button>
+    </div>
+    <div class="hdr-title">Recetario & Restaurantes 🍽️</div>
+    <div class="hdr-sub">30+ recetas · Comida rápida fit · 6 ciudades Colombia</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab on"  onclick="showTab('recipes',this)">📖 Recetario</button>
+    <button class="tab"     onclick="showTab('fast',this)">⚡ Rápido</button>
+    <button class="tab"     onclick="showTab('rests',this)">📍 Restaurantes</button>
+  </div>
+
+  <!-- Dynamic header area for filters/search/city -->
+  <div id="dynHeader"></div>
+
+  <!-- Main content -->
+  <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch" id="content"></div>
+
+  <div class="bottom-nav">
+    <a href="dashboard.html" class="nav-item"><span class="ni">🏠</span>Inicio</a>
+    <a href="nutrition.html" class="nav-item"><span class="ni">🍽️</span>Nutrición</a>
+    <a href="guia.html" class="nav-item"><span class="ni">🥗</span>Guía</a>
+    <a href="chat.html" class="nav-item"><span class="ni">🤖</span>Entrenador</a>
+  </div>
+</div>
+
+<script src="../js/chatbubble.js"></script>
+<script>
+// ══════════════════════════════════════════════════
+// RECETARIO — 30+ recetas prácticas con ingredientes
+// fáciles de conseguir en cualquier ciudad de Colombia
+// ══════════════════════════════════════════════════
+const RECIPES = [
+  // ─── DESAYUNOS ────────────────────────────────────
+  {id:'d1',cat:'desayuno',obj:['crecer','bajar'],emo:'🥚',name:'Huevos Revueltos con Arepa y Aguacate',time:'15min',kcal:420,prot:28,carb:32,fat:18,diff:'fácil',
+   desc:'El desayuno colombiano fitness clásico. Proteína, carbohidrato limpio y grasas buenas.',
+   ing:[{i:'🥚',n:'Huevos enteros',q:'3'},{i:'🫓',n:'Arepa delgada',q:'2'},{i:'🥑',n:'Aguacate',q:'½'},{i:'🍅',n:'Tomate',q:'1'},{i:'🧂',n:'Sal y pimienta',q:'Al gusto'}],
+   steps:['Calienta sartén antiadherente a fuego medio. Rompe los huevos y revuelve constantemente — quedan cremosos en 3-4 min.','Calienta las arepas en plancha o tostadora 2-3 min.','Aplasta el aguacate con tenedor, agrega limón y sal.','Sirve los huevos sobre las arepas con el aguacate al lado.'],
+   tip:'💡 Huevos cremosos (scrambled) retienen más nutrientes. No los cocines de más.'},
+
+  {id:'d2',cat:'desayuno',obj:['crecer','bajar'],emo:'🥣',name:'Overnight Oats con Fresas',time:'5min+noche',kcal:380,prot:22,carb:48,fat:10,diff:'fácil',
+   desc:'Prepara la noche anterior — mañana desayuno listo en 0 segundos.',
+   ing:[{i:'🥣',n:'Avena en hojuelas',q:'50g'},{i:'🥛',n:'Leche descremada',q:'200ml'},{i:'🫙',n:'Yogur griego',q:'100g'},{i:'🍓',n:'Fresas',q:'100g'},{i:'🥜',n:'Maní o almendras',q:'1 cda'}],
+   steps:['Mezcla avena + leche + yogur en un frasco. Agrega 1 cdita de miel si quieres.','Tapa y refrigera toda la noche (mínimo 6h).','Al servir: corta las fresas y ponlas encima con el maní.','¡Listo! Sin cocción, sin esfuerzo.'],
+   tip:'💡 Prepara 5 frascos el domingo — desayuno de toda la semana. Duran 4 días en nevera.'},
+
+  {id:'d3',cat:'desayuno',obj:['bajar'],emo:'🍳',name:'Tortilla de Claras con Espinaca',time:'10min',kcal:210,prot:30,carb:4,fat:7,diff:'fácil',
+   desc:'Alta proteína, muy baja en grasa. El desayuno de definición.',
+   ing:[{i:'🥚',n:'Claras de huevo',q:'6'},{i:'🥬',n:'Espinaca baby',q:'1 taza'},{i:'🍅',n:'Tomate',q:'½'},{i:'🧅',n:'Cebolla',q:'¼'},{i:'🧂',n:'Sal y ajo en polvo',q:'Al gusto'}],
+   steps:['Saltea cebolla y tomate en sartén con spray de aceite por 2 min.','Agrega espinaca, cocina 1 min hasta marchitar.','Bate las claras con sal. Vierte sobre las verduras.','Tapa y cocina a fuego bajo 3-4 min. Dobla y sirve.'],
+   tip:'💡 Con ½ aguacate al lado agregas grasas buenas que mejoran absorción de vitaminas.'},
+
+  {id:'d4',cat:'desayuno',obj:['crecer'],emo:'🥞',name:'Pancakes de Avena y Banano',time:'15min',kcal:380,prot:24,carb:52,fat:8,diff:'fácil',
+   desc:'Sin harina blanca, sin azúcar añadida. Pancakes fitness de verdad.',
+   ing:[{i:'🥣',n:'Avena en hojuelas',q:'80g'},{i:'🍌',n:'Banano muy maduro',q:'1'},{i:'🥚',n:'Huevos',q:'2'},{i:'🥛',n:'Leche',q:'4 cdas'},{i:'🫙',n:'Yogur griego',q:'50g'}],
+   steps:['Licúa o procesa todos los ingredientes hasta mezcla homogénea.','Calienta sartén antiadherente a fuego medio — sin aceite.','Vierte ¼ de la mezcla. Cocina 2-3 min hasta ver burbujas. Voltea y 1 min más.','Repite. Sirve con fruta fresca o miel.'],
+   tip:'💡 Congela el banano un día antes para textura más cremosa.'},
+
+  {id:'d5',cat:'desayuno',obj:['crecer','bajar'],emo:'🫙',name:'Bowl de Yogur Proteico',time:'5min',kcal:280,prot:22,carb:26,fat:6,diff:'fácil',
+   desc:'Sin cocción. El desayuno más rápido del recetario.',
+   ing:[{i:'🫙',n:'Yogur griego natural',q:'200g'},{i:'🍌',n:'Banano',q:'½'},{i:'🍓',n:'Fresas o moras',q:'80g'},{i:'🥣',n:'Granola sin azúcar',q:'2 cdas'},{i:'🥜',n:'Mantequilla de maní',q:'1 cdita'}],
+   steps:['Coloca el yogur en un bowl.','Corta el banano en rodajas y las fresas en mitades.','Agrega las frutas encima del yogur.','Finaliza con la granola y el maní. ¡Listo!'],
+   tip:'💡 Zorba o San Martín natural: los mejores yogures colombianos. 17g proteína por 200g.'},
+
+  // ─── ALMUERZOS ────────────────────────────────────
+  {id:'a1',cat:'almuerzo',obj:['crecer','bajar'],emo:'🍗',name:'Pollo a la Plancha con Arroz y Ensalada',time:'25min',kcal:520,prot:45,carb:48,fat:12,diff:'fácil',
+   desc:'El almuerzo colombiano fitness clásico. Simple y perfecto.',
+   ing:[{i:'🍗',n:'Pechuga de pollo',q:'180g'},{i:'🍚',n:'Arroz integral',q:'½ taza seco'},{i:'🥗',n:'Lechuga romana',q:'2 tazas'},{i:'🍅',n:'Tomate',q:'1'},{i:'🍋',n:'Limón',q:'1'},{i:'🧄',n:'Ajo',q:'2 dientes'}],
+   steps:['Marina el pollo con ajo, limón y sal por 10 min.','Cocina el arroz integral con 1:2 agua por 25 min.','Cocina el pollo en plancha caliente 6-7 min por lado.','Pica la lechuga y tomate. Adereza con limón y sal.'],
+   tip:'💡 Prepara 500g de pollo el domingo. Nevera 4 días. Almuerzo listo cada día.'},
+
+  {id:'a2',cat:'almuerzo',obj:['crecer','bajar'],emo:'🐟',name:'Bowl de Tilapia con Quinoa',time:'20min',kcal:480,prot:42,carb:36,fat:14,diff:'media',
+   desc:'Proteína completa + carbohidrato limpio + grasas antiinflamatorias.',
+   ing:[{i:'🐟',n:'Filete de tilapia',q:'180g'},{i:'🌾',n:'Quinoa',q:'60g seca'},{i:'🥑',n:'Aguacate',q:'½'},{i:'🫑',n:'Pimentón',q:'½'},{i:'🍋',n:'Limón y cilantro',q:'Al gusto'}],
+   steps:['Lava la quinoa. Cocina con 1:2 agua por 15 min.','Sazona la tilapia con limón, sal y ajo.','Cocina en plancha caliente 4 min por lado.','Arma el bowl: quinoa + tilapia + aguacate + pimentón picado.'],
+   tip:'💡 La tilapia colombiana es barata y tiene 30g de proteína por 150g. Cómprala fresca en el mercado.'},
+
+  {id:'a3',cat:'almuerzo',obj:['crecer'],emo:'🥩',name:'Lomo con Papa Criolla y Brócoli',time:'25min',kcal:620,prot:50,carb:42,fat:20,diff:'media',
+   desc:'Alto en nutrientes para días de entrenamiento pesado.',
+   ing:[{i:'🥩',n:'Lomo de res magro',q:'180g'},{i:'🥔',n:'Papa criolla',q:'6 unidades'},{i:'🥦',n:'Brócoli',q:'1.5 tazas'},{i:'🧄',n:'Ajo',q:'3 dientes'},{i:'🫒',n:'Aceite de oliva',q:'1 cdita'}],
+   steps:['Cocina la papa criolla en agua con sal por 15 min.','Sazona la carne. Sella en plancha muy caliente 3 min por lado.','Saltea el brócoli con ajo y aceite 5 min — verde y crujiente.','Sirve el lomo sobre las papas con brócoli al lado.'],
+   tip:'💡 Término medio conserva más nutrientes. No cocines de más la carne.'},
+
+  {id:'a4',cat:'almuerzo',obj:['bajar'],emo:'🥙',name:'Wrap Fit de Pollo',time:'15min',kcal:380,prot:38,carb:28,fat:10,diff:'fácil',
+   desc:'Rápido, portátil. Perfecto para llevar al trabajo o al gym.',
+   ing:[{i:'🫓',n:'Tortilla integral o arepa',q:'2'},{i:'🍗',n:'Pechuga cocida',q:'150g'},{i:'🥬',n:'Lechuga',q:'2 hojas'},{i:'🍅',n:'Tomate',q:'1'},{i:'🫙',n:'Yogur griego (salsa)',q:'2 cdas'}],
+   steps:['Desmecha el pollo con dos tenedores.','Mezcla el yogur griego con ajo en polvo y limón — es tu salsa.','Calienta la tortilla. Unta la salsa de yogur.','Agrega lechuga, pollo y tomate. Enrolla y sirve.'],
+   tip:'💡 El yogur griego reemplaza la mayonesa: 10x menos grasa y más proteína.'},
+
+  {id:'a5',cat:'almuerzo',obj:['crecer','bajar'],emo:'🫘',name:'Sancocho Fit de Pollo',time:'40min',kcal:420,prot:38,carb:35,fat:8,diff:'media',
+   desc:'El plato colombiano por excelencia, versión fitness. Sin papa frita, sin grasas innecesarias.',
+   ing:[{i:'🍗',n:'Pechuga de pollo',q:'200g'},{i:'🌽',n:'Mazorca',q:'½'},{i:'🥔',n:'Papa',q:'2 pequeñas'},{i:'🥕',n:'Zanahoria',q:'1'},{i:'🌿',n:'Cilantro, cebolla, ajo',q:'Al gusto'}],
+   steps:['Hierve el pollo con cebolla, ajo y cilantro por 20 min.','Agrega papa, zanahoria y mazorca. Cocina 20 min más.','Verifica que todo esté tierno.','Sirve con ½ aguacate y arroz integral aparte.'],
+   tip:'💡 El caldo del sancocho es hidratante y tiene electrolitos naturales. Perfecto post-entreno.'},
+
+  {id:'a6',cat:'almuerzo',obj:['bajar'],emo:'🥗',name:'Ensalada Paisa Fitness',time:'15min',kcal:350,prot:35,carb:25,fat:10,diff:'fácil',
+   desc:'Inspirada en los sabores colombianos pero pensada para tu objetivo.',
+   ing:[{i:'🍗',n:'Pollo desmenuzado',q:'150g'},{i:'🫘',n:'Fríjoles cocidos',q:'½ taza'},{i:'🍅',n:'Tomate',q:'1'},{i:'🥑',n:'Aguacate',q:'¼'},{i:'🌽',n:'Maíz tierno',q:'¼ taza'},{i:'🍋',n:'Limón y cilantro',q:'Al gusto'}],
+   steps:['Desmecha el pollo cocido.','Mezcla fríjoles + tomate + maíz + cilantro.','Agrega el pollo y el aguacate en cubos.','Adereza con limón y sal. Sirve fresco.'],
+   tip:'💡 Los fríjoles + pollo hacen una proteína completa. Sin necesitar suplementos.'},
+
+  {id:'a7',cat:'almuerzo',obj:['crecer','bajar'],emo:'🐟',name:'Atún con Patacones Fit',time:'20min',kcal:400,prot:32,carb:38,fat:10,diff:'fácil',
+   desc:'El almuerzo colombiano más rápido. Con patacón al horno, no frito.',
+   ing:[{i:'🐟',n:'Atún en agua (lata)',q:'2 latas'},{i:'🍌',n:'Plátano verde',q:'1'},{i:'🍅',n:'Tomate y cebolla',q:'1 de cada uno'},{i:'🍋',n:'Limón',q:'1'},{i:'🌿',n:'Cilantro',q:'Al gusto'}],
+   steps:['Corta el plátano verde en rodajas de 2cm. Hornea a 200°C por 15 min, aplana y hornea 10 min más.','Mezcla el atún con tomate, cebolla y cilantro picados.','Adereza con limón y sal.','Sirve el atún sobre los patacones al horno.'],
+   tip:'💡 Patacón al horno: mismo sabor, sin el aceite. Ahorras ~200 kcal vs frito.'},
+
+  // ─── CENAS ─────────────────────────────────────────
+  {id:'c1',cat:'cena',obj:['crecer','bajar'],emo:'🐟',name:'Tilapia al Horno con Vegetales',time:'30min',kcal:320,prot:40,carb:12,fat:10,diff:'fácil',
+   desc:'La cena perfecta. Ligera, proteica, lista en el horno.',
+   ing:[{i:'🐟',n:'Filete de tilapia',q:'180g'},{i:'🥦',n:'Brócoli',q:'1 taza'},{i:'🥕',n:'Zanahoria',q:'1'},{i:'🍋',n:'Limón',q:'1'},{i:'🧄',n:'Ajo',q:'3 dientes'},{i:'🫒',n:'Aceite de oliva',q:'1 cdita'}],
+   steps:['Precalienta horno a 180°C.','En bandeja: vegetales cortados + aceite + ajo + sal.','Coloca el filete encima. Exprime limón sobre todo.','Hornea 20-25 min hasta que el pescado esté opaco.'],
+   tip:'💡 Prepara 2-3 porciones en la misma bandeja. Cena lista para varios días.'},
+
+  {id:'c2',cat:'cena',obj:['bajar'],emo:'🥗',name:'Ensalada de Pollo y Garbanzo',time:'15min',kcal:280,prot:35,carb:22,fat:6,diff:'fácil',
+   desc:'Cena liviana pero muy saciante. El garbanzo mantiene la saciedad toda la noche.',
+   ing:[{i:'🍗',n:'Pollo cocido',q:'130g'},{i:'🫘',n:'Garbanzo cocido',q:'½ taza'},{i:'🥬',n:'Lechuga mixta',q:'3 tazas'},{i:'🍅',n:'Tomate cherry',q:'8'},{i:'🍋',n:'Limón y orégano',q:'Al gusto'}],
+   steps:['Desmecha o corta el pollo en cubos.','Si usas garbanzo en lata, escurre y lava.','Mezcla todos los ingredientes en un bowl.','Adereza con limón, orégano y sal.'],
+   tip:'💡 Cena máximo a las 8pm. Esta ensalada es perfecta para cortar el antojo nocturno.'},
+
+  {id:'c3',cat:'cena',obj:['crecer'],emo:'🍲',name:'Sopa de Lentejas con Pollo',time:'35min',kcal:380,prot:38,carb:35,fat:6,diff:'media',
+   desc:'Proteína doble: animal + vegetal. Perfecta para recuperación nocturna.',
+   ing:[{i:'🫘',n:'Lentejas',q:'½ taza seca'},{i:'🍗',n:'Pechuga de pollo',q:'150g'},{i:'🥕',n:'Zanahoria y apio',q:'1 de cada uno'},{i:'🧅',n:'Cebolla y ajo',q:'Al gusto'},{i:'🌿',n:'Comino y cilantro',q:'Al gusto'}],
+   steps:['Cocina las lentejas con agua 2:1 por 20 min.','En otra olla, cocina el pollo con cebolla y ajo.','Desmecha el pollo y agrégalo a las lentejas.','Añade zanahoria picada. Cocina 10 min más. Sazona.'],
+   tip:'💡 Las lentejas + pollo dan proteína completa con todos los aminoácidos esenciales.'},
+
+  {id:'c4',cat:'cena',obj:['bajar'],emo:'🥦',name:'Bowl Verde de Espinaca y Huevo',time:'15min',kcal:240,prot:28,carb:12,fat:10,diff:'fácil',
+   desc:'La cena más ligera. Menos de 250 kcal con alta proteína.',
+   ing:[{i:'🥬',n:'Espinaca',q:'3 tazas'},{i:'🥚',n:'Huevos',q:'3'},{i:'🧄',n:'Ajo',q:'2 dientes'},{i:'🫒',n:'Aceite de oliva',q:'1 cdita'},{i:'🍋',n:'Limón',q:'½'}],
+   steps:['Saltea el ajo con aceite 1 min.','Agrega la espinaca y cocina hasta marchitar.','Abre los huevos encima. Tapa y cocina 3-4 min (huevos semi-firmes).','Exprime limón y sirve directo del sartén.'],
+   tip:'💡 La espinaca con huevo y aceite de oliva es una de las combinaciones más nutritivas posibles.'},
+
+  // ─── MERIENDAS ─────────────────────────────────────
+  {id:'m1',cat:'merienda',obj:['crecer','bajar'],emo:'🥛',name:'Smoothie Proteico de Banano',time:'5min',kcal:320,prot:26,carb:34,fat:8,diff:'fácil',
+   desc:'Post-entreno perfecto. Sin suplementos, solo ingredientes naturales.',
+   ing:[{i:'🍌',n:'Banano maduro',q:'1'},{i:'🫙',n:'Yogur griego',q:'150g'},{i:'🥛',n:'Leche o bebida vegetal',q:'200ml'},{i:'🥜',n:'Mantequilla de maní',q:'1 cda'},{i:'🧊',n:'Hielo',q:'4-5 cubos'}],
+   steps:['Congela el banano previamente para textura cremosa.','Agrega todos los ingredientes a la licuadora.','Licúa 30-45 segundos.','Sirve inmediatamente.'],
+   tip:'💡 Tómalo en los primeros 30-45 min post-entreno para mejor recuperación.'},
+
+  {id:'m2',cat:'merienda',obj:['bajar'],emo:'🍓',name:'Bowl de Yogur con Frutos Rojos',time:'5min',kcal:190,prot:18,carb:20,fat:3,diff:'fácil',
+   desc:'La merienda anti-ansiedad. Alta proteína, bajo en calorías.',
+   ing:[{i:'🫙',n:'Yogur griego natural',q:'200g'},{i:'🍓',n:'Fresas',q:'100g'},{i:'🫐',n:'Moras o arándanos',q:'½ taza'},{i:'🥜',n:'Almendras',q:'8 unidades'}],
+   steps:['Coloca el yogur en un bowl.','Corta las fresas por la mitad.','Agrega las frutas encima.','Finaliza con las almendras. ¡Listo!'],
+   tip:'💡 Moras colombianas: las más económicas y altas en antioxidantes.'},
+
+  {id:'m3',cat:'merienda',obj:['crecer','bajar'],emo:'🥜',name:'Tostada de Maní con Banana',time:'5min',kcal:280,prot:12,carb:30,fat:13,diff:'fácil',
+   desc:'La merienda pre-entreno perfecta. Energía rápida y sostenida.',
+   ing:[{i:'🫓',n:'Pan integral tostado',q:'2 tajadas'},{i:'🥜',n:'Mantequilla de maní',q:'2 cdas'},{i:'🍌',n:'Banano',q:'½'},{i:'🍯',n:'Miel (opcional)',q:'½ cdita'}],
+   steps:['Tuesta el pan.','Unta la mantequilla de maní generosamente.','Corta el banano en rodajas encima.','Agrega un chorrito de miel si quieres.'],
+   tip:'💡 Perfecta 1 hora antes de entrenar. Carbohidrato + grasa = energía duradera.'},
+
+  {id:'m4',cat:'merienda',obj:['crecer'],emo:'🫙',name:'Huevos Duros con Atún',time:'15min',kcal:220,prot:28,carb:2,fat:10,diff:'fácil',
+   desc:'La merienda de proteína más rápida del mundo.',
+   ing:[{i:'🥚',n:'Huevos',q:'2'},{i:'🐟',n:'Atún en agua',q:'1 lata'},{i:'🍋',n:'Limón',q:'½'},{i:'🌿',n:'Cilantro picado',q:'Al gusto'}],
+   steps:['Hierve los huevos 10 min. Enfría con agua.','Mezcla el atún con limón y cilantro.','Pela los huevos y córtalos en mitades.','Sirve el atún encima de los huevos o al lado.'],
+   tip:'💡 Prepara 6 huevos duros los domingos. Nevera 5 días. Merienda lista siempre.'},
+
+  {id:'m5',cat:'merienda',obj:['crecer','bajar'],emo:'🫘',name:'Hummus con Zanahoria y Pepino',time:'10min',kcal:180,prot:10,carb:18,fat:8,diff:'fácil',
+   desc:'Fibra + proteína vegetal. La merienda del cerebro y los músculos.',
+   ing:[{i:'🫘',n:'Garbanzo cocido',q:'1 taza'},{i:'🧄',n:'Ajo',q:'2 dientes'},{i:'🍋',n:'Limón',q:'1'},{i:'🫒',n:'Aceite de oliva',q:'1 cda'},{i:'🥕',n:'Zanahoria y pepino',q:'Para acompañar'}],
+   steps:['Licúa el garbanzo + ajo + limón + aceite + sal.','Si queda muy espeso, agrega 2-3 cdas de agua.','Sirve en un bowl.','Acompaña con las tiras de zanahoria y pepino.'],
+   tip:'💡 Puedes preparar el hummus en 10 min y dura 5 días en nevera.'},
+
+  // ─── ESPECIALES ────────────────────────────────────
+  {id:'e1',cat:'especial',obj:['crecer','bajar'],emo:'🥘',name:'Arroz Frito Fit con Huevo',time:'15min',kcal:420,prot:24,carb:48,fat:12,diff:'fácil',
+   desc:'La versión fit del clásico arroz chino. Con arroz integral y sin aceite excesivo.',
+   ing:[{i:'🍚',n:'Arroz integral cocido (frío)',q:'1 taza'},{i:'🥚',n:'Huevos',q:'2'},{i:'🥦',n:'Brócoli y pimentón',q:'½ taza c/u'},{i:'🧅',n:'Cebolla y ajo',q:'Al gusto'},{i:'🫒',n:'Aceite de ajonjolí o oliva',q:'1 cdita'}],
+   steps:['Saltea cebolla y ajo 2 min en aceite.','Agrega las verduras. Cocina 3 min.','Agrega el arroz frío (de nevera). Mezcla bien 3 min.','Haz espacio en el centro, cocina los huevos, mezcla todo.'],
+   tip:'💡 El arroz del día anterior (frío) funciona mejor — el almidón resistente mejora.'},
+
+  {id:'e2',cat:'especial',obj:['crecer'],emo:'🫔',name:'Burrito Fitness Colombiano',time:'20min',kcal:560,prot:42,carb:52,fat:16,diff:'media',
+   desc:'Inspirado en los burritos pero con ingredientes colombianos y sin grasas innecesarias.',
+   ing:[{i:'🫓',n:'Tortilla integral grande',q:'2'},{i:'🍗',n:'Pollo a la plancha',q:'180g'},{i:'🍚',n:'Arroz integral',q:'½ taza'},{i:'🫘',n:'Fríjoles negros',q:'½ taza'},{i:'🥑',n:'Aguacate',q:'¼'},{i:'🧀',n:'Queso fresco',q:'30g'}],
+   steps:['Calienta la tortilla. Coloca el arroz en el centro.','Agrega el pollo desmenuzado sobre el arroz.','Añade los fríjoles, el aguacate y el queso.','Enrolla firmemente y corta en diagonal.'],
+   tip:'💡 Prepara el pollo y el arroz el domingo. Armar el burrito tarda solo 5 minutos.'},
+
+  {id:'e3',cat:'especial',obj:['bajar'],emo:'🫑',name:'Pimientos Rellenos de Atún',time:'25min',kcal:240,prot:28,carb:15,fat:8,diff:'media',
+   desc:'Bajo en calorías, alto en sabor y proteína.',
+   ing:[{i:'🫑',n:'Pimiento grande',q:'2'},{i:'🐟',n:'Atún en agua',q:'2 latas'},{i:'🧅',n:'Cebolla y tomate',q:'½ c/u'},{i:'🌿',n:'Cilantro y limón',q:'Al gusto'},{i:'🧀',n:'Queso mozzarella (opcional)',q:'30g'}],
+   steps:['Corta los pimientos por la mitad. Retira semillas.','Mezcla atún + cebolla + tomate + cilantro + limón.','Rellena los pimientos con la mezcla.','Hornea 20 min a 180°C (o con queso encima si quieres).'],
+   tip:'💡 Los pimientos asados mejoran la absorción de vitamina C del atún.'},
+
+  {id:'e4',cat:'especial',obj:['crecer','bajar'],emo:'🍌',name:'Batido Verde Post-Entreno',time:'5min',kcal:260,prot:20,carb:32,fat:6,diff:'fácil',
+   desc:'Recuperación completa en un vaso. Electrolitos + proteína + antioxidantes.',
+   ing:[{i:'🍌',n:'Banano',q:'1'},{i:'🥬',n:'Espinaca baby',q:'1 taza'},{i:'🫙',n:'Yogur griego',q:'100g'},{i:'🥛',n:'Leche de coco o leche',q:'200ml'},{i:'🍍',n:'Piña o mango',q:'½ taza'}],
+   steps:['Agrega todos los ingredientes a la licuadora.','Licúa 30-40 segundos.','Prueba y ajusta dulzor con más fruta si quieres.','Sirve inmediatamente.'],
+   tip:'💡 La espinaca no se siente — el banano y la fruta la camuflan completamente.'},
+
+  {id:'e5',cat:'especial',obj:['crecer'],emo:'🍕',name:'Pizza Fit de Arepa',time:'20min',kcal:420,prot:32,carb:38,fat:14,diff:'fácil',
+   desc:'La pizza colombiana fitness. Base de arepa, alta proteína, sin masa industrial.',
+   ing:[{i:'🫓',n:'Arepa grande',q:'2'},{i:'🍅',n:'Salsa de tomate natural',q:'4 cdas'},{i:'🍗',n:'Pollo o atún',q:'100g'},{i:'🧀',n:'Mozzarella baja en grasa',q:'40g'},{i:'🫑',n:'Pimentón y champiñones',q:'Al gusto'}],
+   steps:['Precalienta el horno a 200°C.','Coloca las arepas en una bandeja.','Unta la salsa de tomate. Agrega el pollo/atún y las verduras.','Cubre con el queso y hornea 10-12 min hasta que derrita.'],
+   tip:'💡 La arepa es la mejor base de pizza fit colombiana. Sin harinas blancas.'},
+];
+
+// ══════════════════════════════════════════════════
+// RESTAURANTES POR CIUDAD
+// ══════════════════════════════════════════════════
+const CITIES = {
+  cali: {
+    name:'Cali 🌴', emoji:'🌴',
+    restaurants:[
+      {emo:'🥗',n:'Fit Choices',zone:'Múltiples sedes',stars:'⭐⭐⭐⭐⭐',del:'Rappi · Ifood',
+       tags:['Bowls','Wraps','Proteínas','Vegano'],
+       desc:'El más completo de Cali. Bowls, wraps y platos altos en proteína para todos los objetivos.',
+       best:'🏆 Bowl de pollo con quinoa · Wrap de tilapia · Smoothie proteico',
+       tip:'Menciona tu objetivo — tienen opciones específicas para crecer o bajar.'},
+      {emo:'🥦',n:'Sanissimo',zone:'Granada · El Peñón',stars:'⭐⭐⭐⭐',del:'Rappi',
+       tags:['Vegetariano','Sin gluten','Bowls','Mercado'],
+       desc:'Restaurante y mercado. Bowls personalizables. Excelente para vegetarianos.',
+       best:'🏆 Bowl personalizado · Ensalada proteica · Jugos naturales sin azúcar',
+       tip:'También venden productos saludables para llevar. Mercado muy bien surtido.'},
+      {emo:'🫐',n:'Sanatos Colombia',zone:'Sur de Cali',stars:'⭐⭐⭐⭐⭐',del:'Rappi · Web',
+       tags:['Açaí','Smoothie bowls','Frutas'],
+       desc:'El mejor Açaí bowl de Colombia. De Miami. Ingredientes premium, perfecto post-entreno.',
+       best:'🏆 Açaí bowl con granola · Bowl de frutas con yogur griego',
+       tip:'El açaí es antioxidante y tiene proteína. Pídelo sin miel extra.'},
+      {emo:'🏪',n:'Mercados Populares de Cali',zone:'Toda la ciudad',stars:'⭐⭐⭐⭐',del:'No',
+       tags:['Económico','Fresco','Colombiano'],
+       desc:'Los almuerzos más completos y económicos. Pide tu proteína sin frito.',
+       best:'🏆 Pollo a la plancha + arroz + ensalada · Sopa de lentejas · Tilapia al vapor',
+       tip:'Di explícitamente "sin frito, a la plancha" y "sin salsa especial".'},
+      {emo:'🛵',n:'Meal Prep Cali (Instagram)',zone:'Domicilio a toda la ciudad',stars:'⭐⭐⭐⭐',del:'WhatsApp · Rappi',
+       tags:['Meal prep','Macros calculados','Semanal'],
+       desc:'Emprendedores en Instagram que preparan comida fit con macros calculados.',
+       best:'🏆 Busca en Instagram: #MealPrepCali #ComidaFitCali #TupperFitCali',
+       tip:'Planes desde ~$80.000/semana. Almuerzo y cena listos, macros exactos.'},
+    ]
+  },
+  bogota: {
+    name:'Bogotá 🏙️', emoji:'🏙️',
+    restaurants:[
+      {emo:'🥗',n:'SanArte Cocina',zone:'Bogotá (domicilio)',stars:'⭐⭐⭐⭐⭐',del:'Domicilio propio',
+       tags:['Meal prep','Semanal','Nutricionista'],
+       desc:'Servicio personalizado con menú supervisado por nutricionista. Cambia cada 8 semanas.',
+       best:'🏆 Plan semanal de almuerzos y cenas · Personalizable según restricciones',
+       tip:'Pide con 1 día de anticipación. sanartecocina.com'},
+      {emo:'🥦',n:'Gokela Bowls',zone:'Bogotá',stars:'⭐⭐⭐⭐',del:'Rappi · Ifood',
+       tags:['Bowls','Wraps','Salads','Proteínas'],
+       desc:'Wraps, ensaladas, burritos y bowls. Sin grasas trans ni fritos.',
+       best:'🏆 Bowl de pollo · Wrap de pavo · Ensalada proteica con guacamole',
+       tip:'Tienen reto detox si quieres resetear la alimentación.'},
+      {emo:'🍜',n:'Freshii Bogotá',zone:'Múltiples sedes',stars:'⭐⭐⭐⭐',del:'Rappi · Ifood',
+       tags:['Bowls','Wraps','Canadiense','Vegano'],
+       desc:'Cadena canadiense presente en 6 ciudades de Colombia. Opciones variadas para fit.',
+       best:'🏆 Teriyaki bowl · Ensalada energizante · Smoothies sin azúcar añadida',
+       tip:'Pregunta por el bowl de alto contenido proteico — lo pueden personalizar.'},
+      {emo:'🫙',n:'Doctora Gourmet',zone:'Bogotá (domicilio)',stars:'⭐⭐⭐⭐',del:'Domicilio propio',
+       tags:['Personalizado','Saludable','Domicilio'],
+       desc:'Comida saludable personalizada a domicilio en Bogotá. doctoragourmet.co',
+       best:'🏆 Planes de alimentación completos según objetivo',
+       tip:'Ideal si no tienes tiempo de cocinar. Menú adaptable.'},
+      {emo:'🏪',n:'Bioplaza',zone:'Chicó · Nogal · Usaquén · Chapinero',stars:'⭐⭐⭐⭐',del:'Presencial',
+       tags:['Orgánico','Mercado','Proteínas','Vegano'],
+       desc:'Restaurante + mercado orgánico. Proteína animal o vegetal en platos balanceados.',
+       best:'🏆 Plato de pollo campesino · Proteína vegetal con quinoa · Postres sin azúcar',
+       tip:'También tienen mercado orgánico para comprar ingredientes frescos.'},
+    ]
+  },
+  medellin: {
+    name:'Medellín 🌸', emoji:'🌸',
+    restaurants:[
+      {emo:'🥦',n:'Saludpan Laureles',zone:'Cq. 4 #70-84, Laureles',stars:'⭐⭐⭐⭐⭐',del:'Presencial',
+       tags:['Vegetariano','Vegano','Orgánico','Huerta propia'],
+       desc:'Ingredientes de su propia huerta en Santa Elena. Sin pesticidas. Almuerzos saludables únicos.',
+       best:'🏆 Almuerzos del día · Platos vegetarianos y veganos · Todo fresco',
+       tip:'Saludpan.com — ve temprano, se agotan los platos especiales.'},
+      {emo:'🍜',n:'Freshii Medellín',zone:'Múltiples sedes',stars:'⭐⭐⭐⭐',del:'Rappi',
+       tags:['Bowls','Wraps','Internacional'],
+       desc:'La misma cadena de Bogotá, muy popular en el Poblado y El Centro.',
+       best:'🏆 Bowl de pollo teriyaki · Ensalada energizante · Smoothie sin azúcar',
+       tip:'Abre temprano, ideal para desayuno o almuerzo post-entreno.'},
+      {emo:'🛵',n:'Meal Prep Medellín',zone:'Domicilio toda la ciudad',stars:'⭐⭐⭐⭐',del:'WhatsApp · Instagram',
+       tags:['Meal prep','Tuppers','Macros'],
+       desc:'Gran comunidad de meal prep en Medellín. Instagram y WhatsApp.',
+       best:'🏆 Busca: #MealPrepMedellin #ComidaFitMedellin en Instagram',
+       tip:'El Poblado tiene muchos restaurantes saludables en formato de domicilio.'},
+      {emo:'🥗',n:'Restaurantes Zona Rosa (El Poblado)',zone:'El Poblado · Laureles',stars:'⭐⭐⭐⭐',del:'Rappi',
+       tags:['Bowls','Internacional','Variado'],
+       desc:'Zona con mayor concentración de restaurantes saludables de Medellín.',
+       best:'🏆 Busca bowls y ensaladas con proteína en Rappi filtrando "saludable"',
+       tip:'El Poblado tiene opciones para todos los objetivos.'},
+    ]
+  },
+  barranquilla: {
+    name:'Barranquilla 🌊', emoji:'🌊',
+    restaurants:[
+      {emo:'🍜',n:'Freshii Barranquilla',zone:'Múltiples sedes',stars:'⭐⭐⭐⭐',del:'Rappi',
+       tags:['Bowls','Wraps','Saludable'],
+       desc:'La cadena saludable canadiense está presente en Barranquilla.',
+       best:'🏆 Bowl proteico · Ensalada con pollo · Smoothies naturales',
+       tip:'Revisa Rappi para sedes disponibles y horarios.'},
+      {emo:'🫘',n:'El Boleo (Bowls)',zone:'Barranquilla',stars:'⭐⭐⭐⭐',del:'Rappi · Ifood',
+       tags:['Poke bowls','Proteínas','Colombiano'],
+       desc:'Poke bowls colombianos. Tienen el "Paisa bowl" — proteína colombiana en formato saludable.',
+       best:'🏆 Bowl de pollo o camarón · Paisa bowl · Opción vegetariana con falafel',
+       tip:'Usan freidoras de aire — sin aceite en sus preparaciones.'},
+      {emo:'🛵',n:'Domicilios Fit Barranquilla',zone:'Domicilio',stars:'⭐⭐⭐',del:'WhatsApp · Rappi',
+       tags:['Meal prep','Domicilio'],
+       desc:'Emprendimientos locales de comida fit. Busca en Instagram.',
+       best:'🏆 #MealPrepBarranquilla #ComidaFitBarranquilla',
+       tip:'Barranquilla tiene una cultura fitness en crecimiento. Hay opciones.'},
+    ]
+  },
+  cartagena: {
+    name:'Cartagena 🏖️', emoji:'🏖️',
+    restaurants:[
+      {emo:'🐟',n:'Restaurantes del Mercado de Bazurto',zone:'Bazurto · Getsemaní',stars:'⭐⭐⭐',del:'No',
+       tags:['Pescado','Económico','Fresco'],
+       desc:'El mercado más auténtico de Cartagena. Pescado fresco directo del mar. Pide a la plancha.',
+       best:'🏆 Mojarra a la plancha · Camarones al ajillo · Corvina al limón',
+       tip:'Di "sin fritura, a la plancha" — te lo hacen. El pescado más fresco de la costa.'},
+      {emo:'🥗',n:'Restaurantes en Bocagrande',zone:'Bocagrande · Laguito',stars:'⭐⭐⭐⭐',del:'Rappi',
+       tags:['Internacional','Bowls','Turístico'],
+       desc:'Zona turística con más opciones saludables. Varios restaurantes con menú fitness.',
+       best:'🏆 Ensaladas grandes con proteína · Bowl de mariscos · Jugos naturales',
+       tip:'Pregunta siempre por opciones sin fritura. Cartagena tiene mucho mariscos saludables.'},
+      {emo:'🛵',n:'Domicilios Fit Cartagena',zone:'Domicilio',stars:'⭐⭐⭐',del:'WhatsApp · Rappi',
+       tags:['Meal prep','Domicilio'],
+       desc:'Emprendimientos locales. Busca en Instagram y Rappi.',
+       best:'🏆 #ComidaFitCartagena #MealPrepCartagena',
+       tip:'Muy recomendable el pescado costero — proteína alta y económica.'},
+    ]
+  },
+  bucaramanga: {
+    name:'Bucaramanga 🌿', emoji:'🌿',
+    restaurants:[
+      {emo:'🍜',n:'Freshii Bucaramanga',zone:'Cabecera · Floridablanca',stars:'⭐⭐⭐⭐',del:'Rappi',
+       tags:['Bowls','Wraps','Saludable'],
+       desc:'Presente en Bucaramanga y su área metropolitana.',
+       best:'🏆 Bowl proteico · Ensalada energizante · Wraps integrales',
+       tip:'Bucaramanga tiene muy buena cultura fitness. Explora el área de Cabecera.'},
+      {emo:'🥗',n:'Restaurantes Cabecera del Llano',zone:'Cabecera del Llano',stars:'⭐⭐⭐⭐',del:'Rappi · Presencial',
+       tags:['Saludable','Bowls','Variado'],
+       desc:'Zona con mayor concentración de restaurantes saludables de Bucaramanga.',
+       best:'🏆 Busca en Rappi "saludable" o "bowls" en la zona de Cabecera',
+       tip:'Bucaramanga tiene uno de los mejores ecosistemas fitness del nororiente colombiano.'},
+      {emo:'🛵',n:'Meal Prep Bucaramanga',zone:'Domicilio',stars:'⭐⭐⭐',del:'WhatsApp · Instagram',
+       tags:['Meal prep','Tuppers'],
+       desc:'Comunidad creciente de meal prep en la ciudad.',
+       best:'🏆 #ComidaFitBucaramanga #MealPrepBucaramanga',
+       tip:'Precio promedio más económico que Bogotá y Medellín.'},
+    ]
+  }
+};
+
+// FAST FOOD
+const FAST_FOOD = [
+  {emo:'🍔',n:"McDonald's",sub:'Pide inteligente — no todo arruina tu objetivo',
+   items:[
+     {e:'🥗',n:"McWrap de Pollo Plancha",k:'~420kcal',t:'✅ Mejor opción'},
+     {e:'🍗',n:"McPollo sin salsa especial",k:'~400kcal',t:'✅ Sin mayo'},
+     {e:'🥗',n:"Ensalada César con pollo",k:'~280kcal',t:'✅ Ideal bajar'},
+   ],
+   avoid:'❌ Evita: Big Mac, papas fritas, McFlurry, jugos azucarados',
+   pro:'💡 Pide sin papas y sin gaseosa. Cambias ~400 kcal de diferencia.'},
+  {emo:'🥖',n:'Subway',sub:'La más friendly para fitness si pides bien',
+   items:[
+     {e:'🥖',n:"Pechuga Pollo pan integral 6\"",k:'~320kcal',t:'✅ Alta proteína'},
+     {e:'🥗',n:"Ensalada Pechuga (sin pan)",k:'~200kcal',t:'✅ Mejor bajar'},
+     {e:'🐟',n:"Atún con mostaza integral",k:'~350kcal',t:'✅ Omega 3'},
+   ],
+   avoid:'❌ Evita: Meatball Marinara, salsas ranch/chipotle, cookies',
+   pro:'💡 Pide extra vegetales (gratis). Salsas OK: mostaza, vinagre, limón.'},
+  {emo:'🥩',n:'El Corral',sub:'Colombia — más posibilidades de pedir bien',
+   items:[
+     {e:'🥩',n:"Carne sin pan (en lechuga)",k:'~280kcal',t:'✅ Proteína pura'},
+     {e:'🥗',n:"Ensalada con pollo plancha",k:'~300kcal',t:'✅ Recomendado'},
+     {e:'🍗',n:"Pechuga plancha (menú ejecutivo)",k:'~380kcal',t:'✅ Sin salsas'},
+   ],
+   avoid:'❌ Evita: papas fritas, salsas especiales, aros de cebolla',
+   pro:'💡 Pide la hamburguesa en lechuga en vez de pan. Ahorras ~200 kcal.'},
+  {emo:'🥪',n:'Sandwich Qbano',sub:'Opciones si sabes elegir',
+   items:[
+     {e:'🥪',n:"Pechuga en pan integral",k:'~380kcal',t:'✅ Con mostaza'},
+     {e:'🥗',n:"Ensalada fresca con proteína",k:'~280kcal',t:'✅ Para bajar'},
+     {e:'🐟',n:"Atún con aguacate",k:'~350kcal',t:'✅ Grasas buenas'},
+   ],
+   avoid:'❌ Evita: Qbano hawaiano, papas bravas, gaseosas',
+   pro:'💡 Reemplaza la papa por ensalada. Te lo dan si preguntas.'},
+  {emo:'🌮',n:'Frisby',sub:'Difícil para dieta — poca opciones a la plancha',
+   items:[
+     {e:'🍗',n:"Pechuga a la plancha SIN salsa",k:'~300kcal',t:'✅ Solo plancha'},
+     {e:'🥗',n:"Ensalada de acompañamiento",k:'~80kcal',t:'✅ Siempre'},
+   ],
+   avoid:'❌ Evita: todo lo apanado, papas, salsas. 90% es frito.',
+   pro:'💡 Si no hay opción a la plancha, busca otro restaurante ese día.'},
+  {emo:'🍕',n:'Dominos / Pizza Hut',sub:'Una pizza no destruye tu dieta si pides bien',
+   items:[
+     {e:'🍕',n:"Thin Crust pollo y vegetales",k:'~280kcal/2 trozos',t:'✅ Masa delgada'},
+     {e:'🥗',n:"Ensalada como acompañamiento",k:'~150kcal',t:'✅ Siempre'},
+   ],
+   avoid:'❌ Evita: Stuffed Crust, Extra Cheese, salsas BBQ dulces',
+   pro:'💡 2 trozos de pizza thin + ensalada = ~430 kcal. Sí cabe en tu dieta.'},
+];
+
+// ══════════════════════════════════
+// STATE
+// ══════════════════════════════════
+let currentTab='recipes', recipeFilter='all', selectedRecipe=null, searchQ='', selectedCity='cali';
+
+async function init() {
+  const _sb = supabase.createClient(
+    'https://egswsqymkxmbtcpnozcq.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM'
+  );
+  const {data:{session}} = await _sb.auth.getSession();
+  if(session) {
+    const {data:p} = await _sb.from('profiles').select('objetivo').eq('id',session.user.id).maybeSingle();
+    // Could use profile to pre-filter
+  }
+  showTab('recipes', document.querySelector('.tab'));
+}
+
+// ══════════════════════════════════
+// TABS
+// ══════════════════════════════════
+window.showTab = (tab, el) => {
+  selectedRecipe=null; currentTab=tab;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  if(el) el.classList.add('on');
+  renderDynHeader();
+  renderContent();
+};
+
+function renderDynHeader() {
+  const dh = document.getElementById('dynHeader');
+  if(currentTab==='recipes') {
+    dh.innerHTML = `
+      <div class="search-bar">
+        <span class="search-ico">🔍</span>
+        <input class="search-in" id="searchIn" placeholder="Buscar receta..." value="${searchQ}"
+          oninput="onSearch(this.value)">
+        ${searchQ?`<button class="search-clear" onclick="clearSearch()">✕</button>`:''}
+      </div>
+      <div class="filters">
+        ${[{k:'all',l:'🍽️ Todas'},{k:'desayuno',l:'🌅 Desayunos'},{k:'almuerzo',l:'☀️ Almuerzos'},
+           {k:'cena',l:'🌙 Cenas'},{k:'merienda',l:'⚡ Meriendas'},{k:'especial',l:'⭐ Especiales'}]
+          .map(f=>`<div class="pill ${recipeFilter===f.k?'on':''}" onclick="setFilter('${f.k}')">${f.l}</div>`).join('')}
+      </div>`;
+  } else if(currentTab==='rests') {
+    dh.innerHTML = `
+      <div class="city-picker">
+        <select class="city-select" onchange="setCity(this.value)">
+          ${Object.entries(CITIES).map(([k,v])=>`<option value="${k}" ${selectedCity===k?'selected':''}>${v.emoji} ${v.name}</option>`).join('')}
+        </select>
+      </div>`;
+  } else {
+    dh.innerHTML='';
+  }
+}
+
+function renderContent() {
+  const c = document.getElementById('content');
+  if(currentTab==='recipes') renderRecipes(c);
+  else if(currentTab==='fast') renderFast(c);
+  else renderRestaurants(c);
+}
+
+// ══════════════════════════════════
+// RECIPES
+// ══════════════════════════════════
+function renderRecipes(c) {
+  if(selectedRecipe) { renderDetail(c); return; }
+  let list = RECIPES;
+  if(recipeFilter!=='all') list=list.filter(r=>r.cat===recipeFilter);
+  if(searchQ) list=list.filter(r=>r.name.toLowerCase().includes(searchQ)||r.desc.toLowerCase().includes(searchQ));
+  if(!list.length){c.innerHTML=`<div class="empty-state"><div class="empty-ico">🔍</div><div class="empty-ttl">Sin resultados</div><div class="empty-sub">Prueba otra búsqueda</div></div>`;return;}
+  c.innerHTML=`<div class="recipe-grid">${list.map(r=>`
+    <div class="recipe-card" onclick="openRecipe('${r.id}')">
+      <div class="recipe-emo">${r.emo}</div>
+      <div class="recipe-body">
+        <div class="recipe-name">${r.name}</div>
+        <div class="recipe-tags">
+          <span class="rtag rtag-k">~${r.kcal}kcal</span>
+          <span class="rtag rtag-p">${r.prot}g prot</span>
+          <span class="rtag rtag-t">⏱${r.time}</span>
+        </div>
+      </div>
+    </div>`).join('')}</div>`;
+}
+
+window.setFilter=(f)=>{recipeFilter=f;renderDynHeader();renderRecipes(document.getElementById('content'));};
+window.onSearch=(v)=>{searchQ=v.toLowerCase();renderDynHeader();renderRecipes(document.getElementById('content'));};
+window.clearSearch=()=>{searchQ='';renderDynHeader();renderRecipes(document.getElementById('content'));};
+window.openRecipe=(id)=>{selectedRecipe=RECIPES.find(r=>r.id===id);renderDetail(document.getElementById('content'));document.getElementById('content').scrollTop=0;};
+window.backRecipes=()=>{selectedRecipe=null;renderContent();};
+
+function renderDetail(c) {
+  const r=selectedRecipe;
+  c.innerHTML=`
+    <div class="detail-back" onclick="backRecipes()"><span style="font-size:20px">←</span><span style="font-size:15px;font-weight:700;color:var(--pink)">Volver al recetario</span></div>
+    <div class="recipe-detail">
+      <div class="detail-emo">${r.emo}</div>
+      <div class="detail-body">
+        <div class="detail-title">${r.name}</div>
+        <div class="detail-meta">⏱ ${r.time} · 🔥 Dificultad: ${r.diff} · 🍽️ 1 porción</div>
+        <div class="macros-grid">
+          <div class="macro-b"><div class="macro-v">${r.kcal}</div><div class="macro-l">kcal</div></div>
+          <div class="macro-b"><div class="macro-v">${r.prot}g</div><div class="macro-l">proteína</div></div>
+          <div class="macro-b"><div class="macro-v">${r.carb}g</div><div class="macro-l">carbos</div></div>
+          <div class="macro-b"><div class="macro-v">${r.fat}g</div><div class="macro-l">grasas</div></div>
+        </div>
+        <div class="sec-h">🛒 Ingredientes</div>
+        <div>${r.ing.map(i=>`<div class="ing-row"><div class="ing-ico">${i.i}</div><div class="ing-name">${i.n}</div><div class="ing-qty">${i.q}</div></div>`).join('')}</div>
+        <div class="sec-h">👩‍🍳 Preparación</div>
+        <div>${r.steps.map((s,i)=>`<div class="step-row"><div class="step-n">${i+1}</div><div class="step-t">${s}</div></div>`).join('')}</div>
+        <div class="tip-b">${r.tip}</div>
+      </div>
+    </div>`;
+}
+
+// ══════════════════════════════════
+// FAST FOOD
+// ══════════════════════════════════
+function renderFast(c) {
+  c.innerHTML=`
+    <div style="margin:14px 14px 0;background:var(--gold-light);border:1.5px solid rgba(146,64,14,.15);border-radius:14px;padding:14px;font-size:14px;color:var(--gold);line-height:1.6">
+      💡 <strong>La regla de oro:</strong> La comida rápida no destruye tu dieta si sabes pedir. Proteína a la plancha, sin salsas, sin papas, con agua.
+    </div>
+    <div style="padding:14px 14px 100px">
+      ${FAST_FOOD.map(f=>`
+        <div class="ff-card">
+          <div class="ff-top"><div class="ff-emo">${f.emo}</div><div><div class="ff-name">${f.n}</div><div class="ff-sub">${f.sub}</div></div></div>
+          <div style="font-size:14px;font-weight:700;color:var(--text2);margin-bottom:8px">✅ Pide esto:</div>
+          ${f.items.map(i=>`<div class="ff-item"><div class="ff-item-emo">${i.e}</div><div class="ff-item-name">${i.n}</div><div class="ff-item-kcal">${i.k}</div><div class="ff-item-tip">${i.t}</div></div>`).join('')}
+          <div class="ff-avoid">${f.avoid}</div>
+          <div class="ff-pro">${f.pro}</div>
+        </div>`).join('')}
+    </div>`;
+}
+
+// ══════════════════════════════════
+// RESTAURANTS BY CITY
+// ══════════════════════════════════
+window.setCity=(c)=>{selectedCity=c;renderRestaurants(document.getElementById('content'));};
+
+function renderRestaurants(c) {
+  const city=CITIES[selectedCity];
+  c.innerHTML=`
+    <div style="padding:14px 14px 0;display:flex;align-items:center;gap:8px;font-size:22px;font-weight:900;color:var(--text)">
+      ${city.emoji} ${city.name}
+      <span style="font-size:13px;font-weight:600;color:var(--text3)">${city.restaurants.length} lugares</span>
+    </div>
+    <div style="padding:10px 14px 100px">
+      ${city.restaurants.map(r=>`
+        <div class="rest-card">
+          <div class="rest-top">
+            <div class="rest-ava">${r.emo}</div>
+            <div style="flex:1">
+              <div class="rest-name">${r.n}</div>
+              <div class="rest-zone">📍 ${r.zone}</div>
+              <div class="rest-stars">${r.stars}</div>
+            </div>
+            ${r.del!=='No'?`<div class="delivery-badge">🛵<br>${r.del}</div>`:''}
+          </div>
+          <div class="rest-tags">${r.tags.map(t=>`<span class="rest-tag">${t}</span>`).join('')}</div>
+          <div style="font-size:14px;color:var(--text2);margin-bottom:8px;line-height:1.5">${r.desc}</div>
+          <div class="rest-best">${r.best}</div>
+          <div class="rest-tip">💡 ${r.tip}</div>
+        </div>`).join('')}
+    </div>`;
+}
+
+init();
+</script>
+</body>
+</html>

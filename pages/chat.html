@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ArjunaFit — Entrenador IA</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../js/theme.js"></script>
+<link rel="stylesheet" href="../css/app.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg)}
+
+.chat-shell{max-width:430px;margin:0 auto;height:100dvh;display:flex;flex-direction:column;background:var(--surface)}
+
+/* Header */
+.chat-hdr{
+  background:linear-gradient(135deg,#4c1d95,#7c3aed);
+  padding:16px;padding-top:calc(16px + env(safe-area-inset-top));
+  display:flex;align-items:center;gap:12px;flex-shrink:0
+}
+.back{width:40px;height:40px;background:rgba(255,255,255,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;border:none;color:white;flex-shrink:0}
+.ai-ava{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;border:2px solid rgba(255,255,255,.25)}
+.hdr-name{font-size:16px;font-weight:800;color:white}
+.hdr-status{font-size:13px;color:rgba(255,255,255,.75);display:flex;align-items:center;gap:5px;margin-top:2px}
+.online-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* Key info */
+.key-bar{background:var(--surface2);border-bottom:1.5px solid var(--border);padding:8px 12px;flex-shrink:0}
+.key-input-row{display:flex;gap:8px;align-items:center}
+.key-lbl{font-size:13px;font-weight:700;color:var(--text3);white-space:nowrap}
+.key-in{flex:1;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:8px 12px;font-family:'Outfit',sans-serif;font-size:13px;color:var(--text);outline:none;font-weight:600}
+.key-in:focus{border-color:var(--primary)}
+.key-save{padding:8px 14px;background:var(--primary);color:white;border:none;border-radius:10px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+.key-note{font-size:12px;color:var(--text3);margin-top:5px;line-height:1.4}
+
+/* Quick topics */
+.topics{padding:8px 12px;background:var(--surface);border-bottom:1.5px solid var(--border);flex-shrink:0}
+.topics-scroll{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none}
+.topics-scroll::-webkit-scrollbar{display:none}
+.topic{flex-shrink:0;padding:7px 14px;background:var(--surface2);border:1.5px solid var(--border);border-radius:999px;font-size:13px;font-weight:700;color:var(--text2);cursor:pointer;white-space:nowrap;transition:all .15s}
+.topic:active{background:var(--primary-light);border-color:var(--primary);color:var(--primary)}
+
+/* Messages */
+.msgs{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch}
+
+.msg{display:flex;gap:8px;max-width:88%;animation:popIn .2s ease}
+.msg.user{align-self:flex-end;flex-direction:row-reverse}
+.msg.ai{align-self:flex-start}
+@keyframes popIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.msg-ava{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;align-self:flex-end}
+.msg.ai .msg-ava{background:linear-gradient(135deg,#4c1d95,#7c3aed)}
+.msg.user .msg-ava{background:linear-gradient(135deg,#be185d,#ec4899)}
+
+.bubble{padding:12px 15px;border-radius:18px;font-size:15px;line-height:1.65;color:var(--text);font-family:'Outfit',sans-serif;font-weight:500}
+.msg.ai .bubble{background:var(--surface2);border:1.5px solid var(--border);border-bottom-left-radius:4px}
+.msg.user .bubble{background:linear-gradient(135deg,#7c3aed,#a855f7);color:white;border-bottom-right-radius:4px}
+.msg-time{font-size:11px;color:var(--text3);margin-top:3px;padding:0 4px}
+
+/* Typing */
+.typing-wrap{display:flex;gap:8px;align-self:flex-start;animation:popIn .2s ease}
+.typing-bubble{background:var(--surface2);border:1.5px solid var(--border);border-radius:18px;border-bottom-left-radius:4px;padding:14px 18px;display:flex;gap:5px}
+.t-dot{width:8px;height:8px;border-radius:50%;background:var(--text3);animation:tdot .8s ease infinite}
+.t-dot:nth-child(2){animation-delay:.15s}
+.t-dot:nth-child(3){animation-delay:.3s}
+@keyframes tdot{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+/* Input */
+.input-bar{padding:10px 12px;padding-bottom:calc(10px + env(safe-area-inset-bottom));background:var(--surface);border-top:1.5px solid var(--border);display:flex;gap:8px;align-items:flex-end;flex-shrink:0}
+.txt-in{flex:1;background:var(--surface2);border:1.5px solid var(--border);border-radius:22px;padding:12px 16px;font-family:'Outfit',sans-serif;font-size:16px;color:var(--text);resize:none;outline:none;max-height:120px;min-height:46px;line-height:1.5;transition:border-color .2s;font-weight:500}
+.txt-in:focus{border-color:var(--primary)}
+.txt-in::placeholder{color:var(--text3)}
+.send{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#ec4899);border:none;color:white;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.send:active{transform:scale(.9)}
+.send:disabled{opacity:.45;cursor:not-allowed;transform:none}
+</style>
+</head>
+<body>
+<div class="chat-shell">
+
+  <div class="chat-hdr">
+    <button class="back" onclick="history.back()">←</button>
+    <div class="ai-ava">🤖</div>
+    <div style="flex:1">
+      <div class="hdr-name">Entrenador ArjunaFit</div>
+      <div class="hdr-status"><span class="online-dot"></span>Powered by GPT-4o mini</div>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.2)">🌙</button>
+  </div>
+
+  <!-- OpenAI Key input -->
+  <div class="key-bar" id="keyBar">
+    <div class="key-input-row">
+      <span class="key-lbl">🔑 API Key:</span>
+      <input class="key-in" type="password" id="keyIn" placeholder="sk-..." autocomplete="off">
+      <button class="key-save" onclick="saveKey()">Guardar</button>
+    </div>
+    <div class="key-note">Tu OpenAI API Key — se guarda solo en este dispositivo. <a href="https://platform.openai.com/api-keys" target="_blank" style="color:var(--primary)">Obtener key gratis →</a></div>
+  </div>
+
+  <!-- Quick topics -->
+  <div class="topics">
+    <div class="topics-scroll">
+      <div class="topic" onclick="ask('¿Cómo ejecuto bien el Hip Thrust sin lastimar la espalda?')">🍑 Hip Thrust</div>
+      <div class="topic" onclick="ask('Me duele la rodilla al hacer sentadillas. ¿Qué hago?')">🦵 Rodilla</div>
+      <div class="topic" onclick="ask('¿Cuánta proteína necesito al día para mis objetivos?')">🥩 Proteína</div>
+      <div class="topic" onclick="ask('Llevo 2 semanas y no veo resultados. ¿Es normal?')">📊 Resultados</div>
+      <div class="topic" onclick="ask('¿Puedo entrenar si tengo agujetas?')">💪 Agujetas</div>
+      <div class="topic" onclick="ask('¿Qué como después de entrenar para recuperarme mejor?')">🍽️ Post-entreno</div>
+      <div class="topic" onclick="ask('No tengo motivación para entrenar hoy. Ayúdame.')">💬 Motivación</div>
+      <div class="topic" onclick="ask('¿Qué ejercicio hago si tengo dolor lumbar?')">🔙 Lumbar</div>
+      <div class="topic" onclick="ask('¿Cuántas calorías debo comer para bajar grasa sin perder músculo?')">🔥 Calorías</div>
+      <div class="topic" onclick="ask('¿Cómo sé si estoy progresando aunque no baje de peso?')">📈 Progreso</div>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div class="msgs" id="msgs"></div>
+
+  <!-- Input -->
+  <div class="input-bar">
+    <textarea class="txt-in" id="txtIn" rows="1"
+      placeholder="Escribe tu pregunta..."
+      oninput="resize(this)"
+      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg()}"></textarea>
+    <button class="send" id="sendBtn" onclick="sendMsg()">➤</button>
+  </div>
+</div>
+
+<script>
+// ── Supabase ──
+const _sb = supabase.createClient(
+  'https://egswsqymkxmbtcpnozcq.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM'
+);
+
+let profile = null;
+let msgs = [];   // historial para contexto
+let apiKey = localStorage.getItem('af_openai_key') || '';
+
+// ── API Key ──
+function saveKey() {
+  const val = document.getElementById('keyIn').value.trim();
+  if(!val.startsWith('sk-')) { alert('La key debe empezar con sk-'); return; }
+  apiKey = val;
+  localStorage.setItem('af_openai_key', val);
+  document.getElementById('keyBar').style.display = 'none';
+  addMsg('ai', '✅ ¡API Key guardada! Ya puedes hablar conmigo. ¿En qué te ayudo hoy? 💜');
+}
+
+if(apiKey) document.getElementById('keyBar').style.display = 'none';
+
+// ── Init ──
+async function init() {
+  const { data:{ session } } = await _sb.auth.getSession();
+  if(!session){ window.location.href='../index.html'; return; }
+  const { data:p } = await _sb.from('profiles').select('*').eq('id',session.user.id).maybeSingle();
+  profile = p;
+
+  const nombre = profile?.nombre || 'campeona';
+  const obj = profile?.objetivo==='crecer' ? 'crecer y tonificar glúteos y piernas' : 'bajar grasa y tonificar';
+  const lesiones = (profile?.injuries||[]).filter(i=>i!=='ninguna');
+  const semana = Math.min(8, Math.floor((profile?.days_done||0)/3)+1);
+
+  let bienvenida = `¡Hola ${nombre}! 💜 Soy tu entrenador personal ArjunaFit.\n\n`;
+  bienvenida += `Estoy aquí para:\n• 💪 Técnica y ejercicios\n• 🍽️ Nutrición deportiva\n• 🩹 Lesiones y fisioterapia\n• 😔 Motivación\n• ❓ Cualquier duda del reto\n\n`;
+  if(lesiones.length > 0) bienvenida += `Veo que tienes molestias en **${lesiones.join(', ')}** — siempre te daré alternativas seguras.\n\n`;
+  bienvenida += `Estás en la **semana ${semana}** con objetivo de ${obj}. ¿En qué te ayudo hoy?`;
+
+  addMsg('ai', bienvenida);
+
+  // Pedimos la key si no la tiene
+  if(!apiKey) {
+    setTimeout(()=>{
+      addMsg('ai', '🔑 Para que pueda responderte necesitas ingresar tu **OpenAI API Key** arriba. Es gratis obtenerla en <a href="https://platform.openai.com/api-keys" target="_blank" style="color:#a78bfa">platform.openai.com</a> y solo se guarda en tu celular.');
+    }, 1500);
+  }
+}
+
+// ── System prompt ──
+function buildSystem() {
+  const nombre = profile?.nombre || 'el usuario';
+  const obj = profile?.objetivo==='crecer' ? 'ganar masa muscular y tonificar glúteos y piernas' : 'bajar grasa y tonificar el cuerpo';
+  const entorno = profile?.entorno==='gym' ? 'gimnasio' : 'casa';
+  const lesiones = (profile?.injuries||[]).filter(i=>i!=='ninguna');
+  const semana = Math.min(8, Math.floor((profile?.days_done||0)/3)+1);
+  const esH = profile?.genero==='hombre';
+
+  return `Eres el entrenador personal de ArjunaFit, una app fitness colombiana. Eres experto en entrenamiento de fuerza, nutrición deportiva y fisioterapia básica.
+Eres cálido, directo, motivador y profesional. Hablas en español colombiano. Usas emojis con moderación.
+
+PERFIL DEL USUARIO:
+- Nombre: ${nombre} (${esH?'hombre':'mujer'})
+- Objetivo: ${obj}
+- Lugar de entrenamiento: ${entorno}
+- Semana actual del reto: ${semana} de 8
+- Peso: ${profile?.peso||'no registrado'} kg
+- Calorías objetivo: ${profile?.calorias_objetivo ? Math.round(profile.calorias_objetivo) : 'no calculado'} kcal/día
+- Proteína objetivo: ${profile?.proteina_g ? Math.round(profile.proteina_g) : 'no calculado'}g/día
+${lesiones.length > 0 ? `- LESIONES ACTIVAS: ${lesiones.join(', ')} — SIEMPRE sugiere modificaciones seguras para estas lesiones` : '- Sin lesiones reportadas'}
+
+REGLAS:
+1. Respuestas concisas (max 180 palabras salvo que sea necesario más)
+2. Si hablan de dolor/lesión: identifica qué podría ser, qué EVITAR y qué hacer en su lugar
+3. Si hablan de nutrición: da cantidades exactas y alimentos colombianos accesibles
+4. Si no tienen motivación: escucha primero, luego motiva con datos reales y el progreso que ya llevan
+5. Si preguntan por técnica: describe el error más común y la corrección exacta
+6. Nunca reemplazas al médico — si algo es serio di que consulten a un profesional de salud
+7. Para lesiones graves o post-operatorias: siempre recomienda fisioterapeuta primero
+8. Termina siempre con una acción concreta que puedan hacer HOY`;
+}
+
+// ── Send ──
+async function sendMsg() {
+  const inp = document.getElementById('txtIn');
+  const text = inp.value.trim();
+  if(!text) return;
+  if(!apiKey) { document.getElementById('keyBar').style.display='block'; addMsg('ai','🔑 Primero guarda tu API Key arriba para que pueda responderte.'); return; }
+
+  inp.value=''; inp.style.height='auto';
+  document.getElementById('sendBtn').disabled = true;
+  addMsg('user', text);
+  msgs.push({role:'user', content:text});
+  showTyping();
+
+  try {
+    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization': `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini',
+        max_tokens: 600,
+        temperature: 0.75,
+        messages: [
+          {role:'system', content: buildSystem()},
+          ...msgs.slice(-12)
+        ]
+      })
+    });
+
+    const data = await res.json();
+
+    if(data.error) {
+      removeTyping();
+      const errMsg = data.error.code==='invalid_api_key'
+        ? '🔑 API Key inválida. Revisa que esté bien escrita y tenga créditos disponibles.'
+        : `❌ Error: ${data.error.message}`;
+      addMsg('ai', errMsg);
+      document.getElementById('sendBtn').disabled = false;
+      return;
+    }
+
+    const reply = data.choices?.[0]?.message?.content || 'Lo siento, no pude responder. Intenta de nuevo.';
+    removeTyping();
+    addMsg('ai', reply);
+    msgs.push({role:'assistant', content:reply});
+
+  } catch(e) {
+    removeTyping();
+    addMsg('ai', '❌ Error de conexión. Revisa tu internet e intenta de nuevo.');
+    console.error(e);
+  }
+  document.getElementById('sendBtn').disabled = false;
+}
+
+window.ask = (text) => {
+  document.getElementById('txtIn').value = text;
+  sendMsg();
+};
+
+// ── UI ──
+function addMsg(role, text) {
+  const c = document.getElementById('msgs');
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const html = text
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\n/g,'<br>');
+  const now = new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+  div.innerHTML = `
+    <div class="msg-ava">${role==='ai'?'🤖':'👤'}</div>
+    <div>
+      <div class="bubble">${html}</div>
+      <div class="msg-time">${now}</div>
+    </div>`;
+  c.appendChild(div);
+  c.scrollTop = c.scrollHeight;
+}
+
+function showTyping() {
+  const c = document.getElementById('msgs');
+  const div = document.createElement('div');
+  div.className='typing-wrap'; div.id='typing';
+  div.innerHTML=`<div class="msg-ava">🤖</div><div class="typing-bubble"><div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div></div>`;
+  c.appendChild(div);
+  c.scrollTop=c.scrollHeight;
+}
+function removeTyping(){ document.getElementById('typing')?.remove(); }
+function resize(el){ el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,120)+'px'; }
+
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ArjunaFit — Guía de Alimentos</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../js/af.js"></script>
+<script src="../js/theme.js"></script>
+<script src="../js/lang.js"></script>
+<link rel="stylesheet" href="../css/app.css">
+<style>
+body{background:var(--bg)}
+
+.guia-hdr{
+  padding:20px 16px 28px;color:white;
+  background:linear-gradient(135deg,#059669,#10b981);
+  position:relative;overflow:hidden;
+}
+.guia-hdr::after{content:'🥗';position:absolute;right:-10px;bottom:-20px;font-size:100px;opacity:.1}
+.back-row{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.back{width:40px;height:40px;background:rgba(255,255,255,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:19px;border:none;color:white}
+.hdr-title{font-size:26px;font-weight:900;letter-spacing:-.5px}
+.hdr-sub{font-size:14px;opacity:.85;margin-top:3px}
+
+/* Search */
+.search-wrap{
+  margin:-16px 14px 0;position:relative;z-index:5;
+  background:var(--surface);border-radius:16px;border:1.5px solid var(--border);
+  box-shadow:var(--shadow);display:flex;align-items:center;gap:10px;padding:13px 16px;
+  transition:background .25s,border-color .25s;
+}
+.search-ico{font-size:20px;color:var(--text3);flex-shrink:0}
+.search-in{flex:1;border:none;outline:none;font-family:var(--font);font-size:16px;font-weight:600;color:var(--text);background:transparent}
+.search-in::placeholder{color:var(--text3)}
+.search-clear{background:none;border:none;cursor:pointer;font-size:18px;color:var(--text3);padding:2px 6px}
+
+/* Section pills */
+.pills{display:flex;gap:8px;padding:16px 14px 8px;overflow-x:auto;scrollbar-width:none}
+.pills::-webkit-scrollbar{display:none}
+.pill-btn{flex-shrink:0;padding:9px 16px;border-radius:999px;font-size:16px;font-weight:700;cursor:pointer;background:var(--surface);border:2px solid var(--border);color:var(--text2);transition:all .2s;white-space:nowrap}
+.pill-btn.on{background:var(--green);border-color:var(--green);color:white}
+
+.guia-body{padding:12px 14px 100px}
+
+/* ── SEMAFORO ── */
+.sem-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+.sem-card{border-radius:16px;padding:14px 8px;text-align:center;cursor:pointer;transition:all .2s}
+.sem-card.g{background:var(--green-light);border:2px solid rgba(5,150,105,.2)}
+.sem-card.y{background:var(--gold-light);border:2px solid rgba(217,119,6,.2)}
+.sem-card.r{background:var(--red-light);border:2px solid rgba(220,38,38,.2)}
+.sem-card:active{transform:scale(.97)}
+.sem-emo{font-size:32px;display:block;margin-bottom:6px}
+.sem-ttl{font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+.sem-card.g .sem-ttl{color:var(--green)}
+.sem-card.y .sem-ttl{color:var(--gold)}
+.sem-card.r .sem-ttl{color:var(--red)}
+.sem-count{font-size:14px;color:var(--text3);margin-top:3px;font-weight:600}
+
+.sem-exp{border-radius:16px;padding:14px 16px;margin-bottom:10px;display:none}
+.sem-exp.open{display:block}
+.sem-exp.g{background:var(--green-light);border:2px solid rgba(5,150,105,.2)}
+.sem-exp.y{background:var(--gold-light);border:2px solid rgba(217,119,6,.2)}
+.sem-exp.r{background:var(--red-light);border:2px solid rgba(220,38,38,.2)}
+.sem-exp-ttl{font-size:14px;font-weight:800;margin-bottom:10px}
+.sem-exp.g .sem-exp-ttl{color:var(--green)}
+.sem-exp.y .sem-exp-ttl{color:var(--gold)}
+.sem-exp.r .sem-exp-ttl{color:var(--red)}
+.sem-item{font-size:14px;color:var(--text);padding:7px 0;border-bottom:1px solid rgba(0,0,0,.06);display:flex;gap:8px;align-items:flex-start;line-height:1.4}
+.sem-item:last-child{border-bottom:none}
+.sem-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:6px}
+.g .sem-dot{background:var(--green)}
+.y .sem-dot{background:var(--gold)}
+.r .sem-dot{background:var(--red)}
+
+/* ── PRODUCTS (from PDF) ── */
+.sec-title{font-size:19px;font-weight:900;color:var(--text);margin-bottom:4px;letter-spacing:-.2px;display:flex;align-items:center;gap:8px}
+.sec-sub{font-size:16px;color:var(--text2);margin-bottom:14px;line-height:1.5}
+
+.prod-card{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;margin-bottom:10px;overflow:hidden;cursor:pointer;transition:all .2s}
+.prod-card:active{transform:scale(.99)}
+.prod-card.rec{border-left:4px solid var(--green)}
+.prod-card.mod{border-left:4px solid var(--gold)}
+
+.prod-top{padding:14px 16px;display:flex;align-items:center;gap:12px}
+.prod-emo{font-size:30px;flex-shrink:0}
+.prod-info{flex:1}
+.prod-name{font-size:14px;font-weight:800;color:var(--text);line-height:1.2}
+.prod-brand{font-size:15px;color:var(--text2);margin-top:2px}
+.prod-tags{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.ptag{font-size:14px;font-weight:700;padding:3px 9px;border-radius:999px}
+.ptag-rec{background:rgba(5,150,105,.1);color:var(--green)}
+.ptag-mod{background:rgba(217,119,6,.1);color:var(--gold)}
+.ptag-kcal{background:var(--primary-light);color:var(--primary)}
+.prod-chev{font-size:15px;color:var(--text3);transition:transform .2s;flex-shrink:0}
+.prod-chev.up{transform:rotate(180deg)}
+
+.prod-body{display:none;padding:0 16px 14px;border-top:1.5px solid var(--border);animation:fadeUp .25s ease}
+.prod-body.open{display:block}
+.prod-benefit{margin-top:12px;padding:12px 14px;background:var(--surface2);border-radius:12px;font-size:14px;color:var(--text2);line-height:1.6}
+.prod-how{margin-top:8px;padding:10px 14px;background:var(--primary-light);border-radius:12px;font-size:16px;color:var(--primary);line-height:1.5;display:flex;gap:7px}
+
+/* Reemplazos */
+.rep-card{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:10px}
+.rep-row{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;padding:13px 16px;border-bottom:1.5px solid var(--border);align-items:start}
+.rep-row:last-child{border-bottom:none}
+.rep-from{font-size:16px;font-weight:700;color:var(--text2)}
+.rep-arrow{font-size:18px;color:var(--text3);padding-top:2px}
+.rep-to{font-size:16px;font-weight:700;color:var(--green)}
+.rep-note{font-size:14px;color:var(--text3);margin-top:3px}
+
+/* Tips */
+.tip-card{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:16px;margin-bottom:10px;display:flex;gap:14px}
+.tip-ico{font-size:24px;flex-shrink:0;width:36px;height:36px;background:var(--primary-light);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.tip-title{font-size:15px;font-weight:800;color:var(--text);margin-bottom:4px}
+.tip-txt{font-size:16px;color:var(--text2);line-height:1.5}
+
+/* Empty */
+.empty{text-align:center;padding:40px 20px;color:var(--text3)}
+.empty-ico{font-size:48px;margin-bottom:12px}
+
+/* Bottom nav */
+.bottom-nav{display:flex;background:var(--surface);border-top:1.5px solid var(--border);padding:8px 0;padding-bottom:calc(8px + env(safe-area-inset-bottom));position:sticky;bottom:0;z-index:50}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;color:var(--text3);font-size:14px;font-weight:700;cursor:pointer;border:none;background:none;font-family:var(--font);text-decoration:none;transition:color .2s}
+.nav-item .ni{font-size:26px;line-height:1}
+.nav-item.on{color:var(--green)}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="guia-hdr">
+    <div class="back-row">
+      <button class="back" onclick="history.back()">←</button>
+      <div>
+        <div class="hdr-title">Guía de Alimentos 🥗</div>
+        <div class="hdr-sub">Colombia 🇨🇴 · Qué comer, qué evitar, qué comprar</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="search-wrap">
+    <div class="search-ico">🔍</div>
+    <input class="search-in" id="searchIn" placeholder="Buscar alimento o producto..." oninput="onSearch(this.value)">
+    <button class="search-clear" onclick="clearSearch()">✕</button>
+  </div>
+
+  <div class="pills" id="pillsRow">
+    <button class="pill-btn on" onclick="showSec('semaforo',this)">🚦 Semáforo</button>
+    <button class="pill-btn" onclick="showSec('proteinas',this)">🥩 Proteínas</button>
+    <button class="pill-btn" onclick="showSec('carbos',this)">🌾 Carbos</button>
+    <button class="pill-btn" onclick="showSec('grasas',this)">🥑 Grasas</button>
+    <button class="pill-btn" onclick="showSec('snacks',this)">🍫 Snacks</button>
+    <button class="pill-btn" onclick="showSec('suplementos',this)">💊 Suplementos</button>
+    <button class="pill-btn" onclick="showSec('reemplazos',this)">🔄 Reemplazos</button>
+    <button class="pill-btn" onclick="showSec('tips',this)">💡 Tips</button>
+  </div>
+
+  <div class="scroll"><div class="guia-body" id="guiaBody"></div></div>
+
+    <div class="bottom-nav">
+    <a href="dashboard.html" class="nav-item"><span class="ni">🏠</span>Inicio</a>
+    <a href="nutrition.html" class="nav-item"><span class="ni">🍽️</span>Nutrición</a>
+    <div class="nav-item on"><span class="ni">🥗</span>Guía</div>
+    <a href="chat.html" class="nav-item"><span class="ni">🤖</span>Entrenador</a>
+  </div>
+</div>
+
+<script>
+(async()=>{ await AF.requireAuth('../index.html'); })();
+
+// ── DATA desde el PDF — solo RECOMENDACIONES ──
+const DATA = {
+  semaforo: {
+    verde: ['Pollo, pavo, atún, huevo entero','Vegetales verdes y de colores','Yogur griego natural sin azúcar (Zorba, San Martín)','Avena, arroz integral, batata','Aceite de oliva extra virgen, aguacate','Creatina, Omega-3, proteína ISO/Whey','Agua, té verde, café negro sin azúcar','Arepas Sary Extra Delgadas','Crema de maní WakeUp sin azúcar'],
+    amarillo: ['Frutas muy dulces (mango, uvas, plátano maduro)','Pan integral, tortillas fit (Rapiditas)','Granola sin azúcar añadido','Queso crema light (Taeq)','Crema de maní con chocolate','Barras proteicas (revisar azúcar)','Ghee y aceite de coco','Frutas deshidratadas'],
+    rojo: ['Azúcar entre los primeros 3 ingredientes','Bebidas azucaradas y jugos de caja','Papas fritas y galletas industriales','Embutidos con exceso de grasa y sodio','Cereales de desayuno azucarados','Salsas industriales (ketchup, mayonesa regular)','Alcohol frecuente','Ultraprocesados en general'],
+  },
+
+  proteinas: [
+    {emo:'🥚',name:'Huevos enteros',brand:'Proteína natural · La más completa · Mercado',status:'rec',kcal:'~70 kcal c/u',freq:'Diaria',
+     benefit:'La proteína más completa y económica que existe. Contiene todos los aminoácidos esenciales. La yema tiene vitamina D, colina y grasas buenas — no la botes. Mejor que cualquier suplemento.',how:'3-4 huevos en el desayuno. Revueltos con espinaca, cocidos, en omelette o pochados. Siempre con carbohidrato.'},
+    {emo:'🍗',name:'Pechuga de pollo',brand:'Proteína animal · Sin piel · Mercado o supermercado',status:'rec',kcal:'~165 kcal/150g',freq:'Diaria',
+     benefit:'31g de proteína por cada 150g. La fuente de proteína más limpia y versátil. Sin grasa saturada. Ideal en todas las comidas del día.',how:'Al horno con ajo y limón, a la plancha o cocida. Prepara 500g el domingo para toda la semana.'},
+    {emo:'🐟',name:'Tilapia o corvina',brand:'Pescado fresco · Mercado de Paloquemao o supermercado',status:'rec',kcal:'~110 kcal/150g',freq:'4x semana',
+     benefit:'Alta proteína, casi cero grasa, bajo en calorías. La tilapia colombiana es económica y de fácil preparación. Excelente para la cena.',how:'Al vapor con limón y hierbas, al horno. 150g con vegetales es la cena perfecta para bajar grasa.'},
+    {emo:'🐟',name:'Atún en agua',brand:'Van Camps · Isabel · Lata individual · NUNCA en aceite',status:'rec',kcal:'~100 kcal/lata',freq:'3x semana',
+     benefit:'25g de proteína por lata. El almuerzo más rápido y económico. El atún en aceite tiene el triple de calorías — siempre en agua.',how:'1 lata en el almuerzo con arroz integral y ensalada. Mezcla con limón, tomate y cebolla.'},
+    {emo:'🫙',name:'Yogur griego natural',brand:'Zorba · San Martín · Natural sin azúcar',status:'rec',kcal:'~100 kcal/200g',freq:'Diaria',
+     benefit:'17g proteína por 200g + probióticos para la digestión. Las marcas Zorba y San Martín son las mejores locales. Compra siempre el natural, nunca el de sabores.',how:'En el desayuno con fresas o en la merienda. Revisa que diga "natural" o "sin azúcar añadida".'},
+    {emo:'🥩',name:'Carne de res magra',brand:'Lomo o falda · Mercado · Sin grasa visible',status:'rec',kcal:'~200 kcal/150g',freq:'2x semana',
+     benefit:'Hierro hem biodisponible — el que mejor absorbe el cuerpo. Vitamina B12 y zinc para la recuperación muscular. Máximo 2 veces por semana.',how:'150g al horno o a la plancha. Retira toda la grasa visible. Acompaña con vegetales, no con papa frita.'},
+    {emo:'🦃',name:'Pechuga de pavo',brand:'Jamón de pavo · Zenú sin conservantes',status:'rec',kcal:'~60 kcal/3 tajadas',freq:'Moderada',
+     benefit:'Proteína magra rápida para snacks o desayuno sin cocinar. Busca la versión sin conservantes. Menos procesado = mejor.',how:'3 tajadas en el desayuno con pan integral y aguacate. O en un wrap con lechuga y tomate.'},
+    {emo:'🫘',name:'Fríjoles y lentejas',brand:'A granel · Cargamanto · Bola roja · Cualquier tienda',status:'rec',kcal:'~220 kcal/taza',freq:'3x semana',
+     benefit:'Proteína vegetal + carbohidrato complejo + hierro + fibra. El súper alimento colombiano más económico. Combinados con arroz forman proteína completa.',how:'1 taza cocida. El sancocho con legumbres es una de las mejores comidas fitness colombianas.'},
+    {emo:'🧀',name:'Queso cottage',brand:'Cualquier supermercado · Bajo en grasa',status:'rec',kcal:'~110 kcal/½ taza',freq:'Moderada',
+     benefit:'Caseína natural de digestión lenta. Perfecto antes de dormir — libera proteína lentamente durante la noche para recuperación muscular.',how:'½ taza antes de acostarte. Con una cucharadita de miel o canela.'},
+    {emo:'🥛',name:'Leche entera o semidescremada',brand:'Alquería · Alpina · Parmalat',status:'rec',kcal:'~150 kcal/vaso',freq:'Diaria',
+     benefit:'8g proteína + calcio + vitamina D. La leche entera es mejor opción que la descremada — más saciante y con vitaminas liposolubles.',how:'1 vaso con el desayuno o para preparar avena. Nunca con azúcar añadida.'},
+  ],
+
+  carbos: [
+    {emo:'🥣',name:'Avena en hojuelas',brand:'Why Not · Sin gluten · Grano entero',status:'rec',kcal:'~150 kcal/40g',freq:'Diaria',
+     benefit:'El mejor carbohidrato para el desayuno. Fibra beta-glucano que da energía por horas sin disparar el azúcar. Reduce el colesterol y mejora la digestión.',how:'40g (½ taza) con agua o leche + canela. También en pancakes fitness o batidos.'},
+    {emo:'🍚',name:'Arroz integral',brand:'A granel · Cualquier tienda',status:'rec',kcal:'~200 kcal/taza',freq:'Diaria',
+     benefit:'Energía limpia con fibra y vitaminas del complejo B. Mucho mejor que el arroz blanco para controlar el azúcar.',how:'1 taza cocida en el almuerzo. Cocina con poca sal y aceite de oliva.'},
+    {emo:'🍠',name:'Batata / Camote',brand:'Natural · Mercado o tienda',status:'rec',kcal:'~130 kcal/mediana',freq:'Diaria',
+     benefit:'Carbohidrato de bajo índice glucémico. Rica en vitamina A, potasio y fibra. Perfecta para antes de entrenar.',how:'1 mediana horneada o cocida. Acompaña con pollo o carne.'},
+    {emo:'🫓',name:'Arepa de maíz',brand:'Sary Extra Delgadas · 87 kcal',status:'rec',kcal:'~87-150 kcal',freq:'Diaria',
+     benefit:'El carbohidrato colombiano por excelencia. Las Sary Extra Delgadas son las más ligeras del mercado. Sin gluten.',how:'2 arepas en el desayuno con huevo y aguacate. O 1 en el almuerzo con proteína.'},
+    {emo:'🫘',name:'Lentejas',brand:'A granel · Muy económicas',status:'rec',kcal:'~230 kcal/taza',freq:'3x semana',
+     benefit:'Doble beneficio: proteína vegetal (18g/taza) + carbohidrato complejo + hierro. El alimento más completo y económico.',how:'1 taza cocida en la cena. Con arroz integral forman una proteína completa.'},
+    {emo:'🫘',name:'Fríjoles',brand:'Cargamanto · Bola roja · A granel',status:'rec',kcal:'~220 kcal/taza',freq:'3x semana',
+     benefit:'Proteína + fibra + hierro + carbohidrato lento. El plato colombiano más nutritivo. Saciedad duradera por horas.',how:'1 taza cocida. La combinación arroz + fríjol = proteína completa sin carne.'},
+    {emo:'🌽',name:'Plátano verde / maduro',brand:'Natural · Mercado',status:'rec',kcal:'~120-150 kcal',freq:'Diaria',
+     benefit:'El plátano verde tiene almidón resistente que alimenta las bacterias buenas del intestino. El maduro da energía rápida post-entreno.',how:'Plátano verde: cocinado con proteína. Maduro: después de entrenar como carbohidrato rápido.'},
+    {emo:'🥔',name:'Papa criolla',brand:'Natural · Mercado colombiano',status:'rec',kcal:'~110 kcal/mediana',freq:'Moderada',
+     benefit:'Rica en vitamina C y potasio. Mejor que la papa pastusa para dieta por su menor índice glucémico.',how:'2-3 unidades cocidas o al horno. Nunca fritas. Con proteína magra.'},
+    {emo:'🌾',name:'Quinoa',brand:'A granel · Tiendas naturistas',status:'rec',kcal:'~220 kcal/taza',freq:'Moderada',
+     benefit:'El único carbohidrato con proteína completa (8g/taza). Ideal para vegetarianas que necesitan más proteína.',how:'1 taza cocida como sustituto del arroz. Cocina como el arroz pero tarda 15 min.'},
+    {emo:'🫓',name:'Pan integral de masa madre',brand:'Edén Fit · Artesanal',status:'rec',kcal:'~80 kcal/tajada',freq:'Moderada',
+     benefit:'El pan más digestivo. La fermentación reduce el gluten y mejora la absorción de nutrientes. Muy diferente al pan industrial.',how:'2 tajadas en el desayuno con huevo o proteína. Nunca con mantequilla regular.'},
+  ],
+
+  grasas: [
+    {emo:'🫒',name:'Aceite de oliva extra virgen',brand:'Castañer y Ferró · Alta calidad',status:'rec',kcal:'~120 kcal/cda',freq:'Diaria',
+     benefit:'La grasa más saludable. Antiinflamatorio, cuida el corazón, ayuda a absorber vitaminas.',how:'1 cda para cocinar o aderezar ensaladas. No lo calientes demasiado.'},
+    {emo:'🥑',name:'Aguacate / Guacamole Pietràn',brand:'Sin aditivos · Buena fuente de fibra',status:'rec',kcal:'~160 kcal/½ und',freq:'Diaria',
+     benefit:'El superalimento colombiano. Grasas monoinsaturadas, fibra y potasio. El Guacamole Pietràn es sin aditivos.',how:'½ aguacate en el almuerzo. El guacamole va perfecto con arepa o wrap.'},
+    {emo:'🥜',name:'WakeUp Crema de Maní Natural',brand:'Sin azúcar · 360g',status:'rec',kcal:'~190 kcal/32g',freq:'Diaria',
+     benefit:'Proteína + grasas saludables sin azúcar añadida. La mejor opción local de mantequilla de maní.',how:'1 cda en el desayuno con pan integral o avena.'},
+    {emo:'🥥',name:'A de Coco Aceite de Coco Virgen',brand:'Sin químicos · Prensado en frío · 420mL',status:'rec',kcal:'~120 kcal/cda',freq:'Moderada',
+     benefit:'TCM para energía rápida. Ideal para cocinar a temperatura alta.',how:'Úsalo ocasionalmente para cocinar. No reemplaza al aceite de oliva a diario.'},
+    {emo:'🧈',name:'Santamaria Mantequilla Clarificada Ghee',brand:'Sin sal · Sin lactosa',status:'rec',kcal:'~130 kcal/cda',freq:'Moderada',
+     benefit:'Ghee sin lactosa, rico en vitaminas liposolubles. Ideal para cocinar a alta temperatura.',how:'1 cucharadita para saltear verduras o proteínas.'},
+    {emo:'🍫',name:'Why Not Crunchy Cocoa Hazelnut',brand:'Esparcible · Almendras y avellanas · 360g',status:'rec',kcal:'~90 kcal/15g',freq:'Moderada',
+     benefit:'Untable saludable sabor chocolate crocante. Para cuando el antojo es real.',how:'15g (1 cda) con galletas sin azúcar o pan integral. No todos los días.'},
+    {emo:'🫙',name:'Alpina Finesse Yogurt',brand:'Proteína + Fibra · 0% grasa, 0% azúcar, 0% lactosa',status:'rec',kcal:'~60 kcal/porción',freq:'Diaria',
+     benefit:'Yogur sin grasa, sin azúcar, sin lactosa. El más limpio del mercado local.',how:'Como merienda o desayuno con fruta.'},
+  ],
+
+  snacks: [
+    {emo:'💪',name:'ONE Protein Bars',brand:'Varios sabores · 20g proteína · 1g azúcar',status:'rec',kcal:'~220 kcal/barra',freq:'Moderada',
+     benefit:'Alto en proteína, bajo en azúcar. La barra proteica más completa. Ideal post-entreno o snack de tarde.',how:'1 barra después de entrenar o media tarde. No todos los días.'},
+    {emo:'🍫',name:'Wild Protein Chocolate Bar',brand:'15g proteína · 5 barritas · Sabor chocolate',status:'rec',kcal:'~180 kcal/barra',freq:'Moderada',
+     benefit:'15g proteína con chocolate real. El snack dulce y funcional para no salirte del plan.',how:'1 barra como postre o snack de tarde.'},
+    {emo:'🍦',name:'Free Zen Helado',brand:'Con fruta · Sin azúcar añadido · 85g',status:'rec',kcal:'~80 kcal/unidad',freq:'Moderada',
+     benefit:'Helado con fruta real sin azúcar. El postre perfecto para el calor colombiano sin culpa.',how:'1 unidad como postre después de la cena.'},
+    {emo:'🍪',name:'Mauka Arrowroot Biscuits',brand:'Sin gluten · Sin azúcar · 150g',status:'rec',kcal:'~110 kcal/porción',freq:'Moderada',
+     benefit:'Achiras sin azúcar. Crujientes y sabrosas. Perfectas para acompañar con crema de maní.',how:'1 porción con 1 cda de crema de maní como snack.'},
+    {emo:'🍬',name:'DOSE BITES',brand:'Sin azúcar añadida · 100g',status:'rec',kcal:'Variable',freq:'Moderada',
+     benefit:'Bolitas de chocolate sin azúcar añadida. Para cuando el antojo de dulce es irresistible.',how:'Un puñado pequeño. Portátil y sin culpa.'},
+    {emo:'🎂',name:'Es Un Balance — Repostería',brand:'Trufas, alfajores, brownies · Sin colorantes',status:'rec',kcal:'~120-140 kcal/und',freq:'Moderada',
+     benefit:'Repostería sin colorantes artificiales. Para ocasiones especiales dentro del plan.',how:'1 unidad máximo cuando el antojo es real. No diario.'},
+    {emo:'🧀',name:'Latti Cheese Stick Light',brand:'6 uds · 30g c/u · Snack proteico portátil',status:'rec',kcal:'~60 kcal/unidad',freq:'Diaria',
+     benefit:'El snack de emergencia perfecto. Portátil, proteico y sin comprometer los objetivos.',how:'Tenlo siempre en el bolso para evitar caer en comida chatarra.'},
+  ],
+
+  suplementos: [
+    {emo:'💪',name:'Creatina Monohidratada',brand:'MuscleTech Platinum o ON Micronized · 300g',status:'rec',kcal:'~0 kcal',freq:'Diaria 3-5g',
+     benefit:'El suplemento más estudiado de la historia. Aumenta la fuerza, mejora la recuperación y hace crecer el músculo. Segura al 100%.',how:'1 cucharadita (5g) al día con agua. No importa la hora ni si estás en ayunas.'},
+    {emo:'🐟',name:'Omega-3 Viva Naturals Triple Strength',brand:'1400mg EPA / 1400mg DHA · Aceite de pescado',status:'rec',kcal:'~15 kcal',freq:'Diaria',
+     benefit:'Cuida el corazón, el cerebro y reduce la inflamación después de entrenar. Esencial si no comes pescado 3 veces por semana.',how:'1-2 cápsulas con el almuerzo para mejor absorción con grasas.'},
+    {emo:'🥛',name:'Proteína ISO post-entreno',brand:'Dymatize ISO100 o ON Gold Standard',status:'rec',kcal:'~120 kcal',freq:'Diaria',
+     benefit:'La ventana anabólica de 30-60 min post-entreno es real. La proteína hidrolizada llega más rápido al músculo.',how:'1 scoop con agua fría justo al terminar de entrenar.'},
+  ],
+
+  reemplazos: [
+    {from:'Proteína ISO',to:'Yogur griego + huevos',note:'Alcanza tus proteínas con comida real'},
+    {from:'Omega-3 cápsulas',to:'Salmón, sardinas, chía 2-3x/sem',note:'Mismos beneficios, más económico'},
+    {from:'Granola sin azúcar',to:'Avena con canela y stevia',note:'Más económico e igual de nutritivo'},
+    {from:'Pan fit',to:'Tortillas de maíz o tostadas',note:'Revisa siempre el contenido de sodio'},
+    {from:'Crema de maní',to:'Aguacate, aceite de oliva',note:'Misma categoría de grasas saludables'},
+    {from:'Barras proteicas',to:'Huevo duro + fruta + cottage',note:'Más económico y menos procesado'},
+    {from:'Ghee',to:'Aceite de oliva extra virgen',note:'Para el día a día, oliva es mejor'},
+  ],
+
+  tips: [
+    {ico:'💧',title:'Bebe 2-3 litros de agua al día',txt:'Muchas veces el cuerpo confunde sed con hambre. Lleva siempre una botella. Toma un vaso antes de cada comida — reduce el hambre.'},
+    {ico:'⏰',title:'Come cada 3-4 horas',txt:'Mantén el metabolismo activo. No dejes pasar más de 4 horas sin proteína. Prepara snacks con anticipación para no improvisar.'},
+    {ico:'📋',title:'Compra con lista — nunca sin ella',txt:'Esta guía es tu lista. Ir sin ella = compras impulsivas, plata mal gastada y comida chatarra en la casa.'},
+    {ico:'🏷️',title:'Lee siempre la etiqueta',txt:'Regla de oro: si el azúcar está entre los primeros 3 ingredientes, déjalo en el estante. Menos ingredientes = mejor producto.'},
+    {ico:'🥦',title:'¿Tienes mucha hambre?',txt:'Come vegetales primero (brócoli, lechuga, pepino). Bajos en calorías, altos en fibra. Luego añade proteína. Nunca empieces por el carbohidrato.'},
+    {ico:'💰',title:'Ahorra comprando saludable',txt:'Avena, arroz integral, huevos y lentejas son los más baratos y nutritivos. Proteína ISO en tarro grande reduce el costo hasta 30%.'},
+    {ico:'📅',title:'Prepara el domingo',txt:'1-2 horas el domingo para preparar tus proteínas y carbos de la semana. Así no improvisas entre semana con lo primero que encuentres.'},
+    {ico:'💚',title:'La constancia es todo',txt:'Un día fuera del plan NO arruina nada. Lo que cuenta es la suma de tus hábitos a largo plazo. Retoma en la siguiente comida.'},
+  ],
+};
+
+let currentSec = 'semaforo';
+let semOpen = {g:false, y:false, r:false};
+
+// ── RENDER ──
+function render(sec) {
+  const b = document.getElementById('guiaBody');
+  b.innerHTML = '';
+  if(sec==='semaforo') renderSemaforo(b);
+  else if(sec==='reemplazos') renderReemplazos(b);
+  else if(sec==='tips') renderTips(b);
+  else renderProducts(b, sec);
+}
+
+function renderSemaforo(b) {
+  b.innerHTML = `
+    <p style="font-size:14px;color:var(--text2);margin-bottom:12px;line-height:1.55">
+      🚦 <strong style="color:var(--text)">Usa esto en el supermercado.</strong> Toca cada color para ver los alimentos.
+    </p>
+    <div class="sem-grid">
+      <div class="sem-card g" onclick="toggleSem('g')">
+        <span class="sem-emo">🟢</span>
+        <div class="sem-ttl">Come siempre</div>
+        <div class="sem-count">${DATA.semaforo.verde.length} alimentos</div>
+      </div>
+      <div class="sem-card y" onclick="toggleSem('y')">
+        <span class="sem-emo">🟡</span>
+        <div class="sem-ttl">Con moderación</div>
+        <div class="sem-count">${DATA.semaforo.amarillo.length} alimentos</div>
+      </div>
+      <div class="sem-card r" onclick="toggleSem('r')">
+        <span class="sem-emo">🔴</span>
+        <div class="sem-ttl">Evitar</div>
+        <div class="sem-count">${DATA.semaforo.rojo.length} alimentos</div>
+      </div>
+    </div>
+    <div class="sem-exp g" id="sem-g">
+      <div class="sem-exp-ttl">✅ COME SIEMPRE — tus aliados</div>
+      ${DATA.semaforo.verde.map(i=>`<div class="sem-item"><div class="sem-dot"></div><span>${i}</span></div>`).join('')}
+    </div>
+    <div class="sem-exp y" id="sem-y">
+      <div class="sem-exp-ttl">⚠️ CON MODERACIÓN — máximo 1 porción al día</div>
+      ${DATA.semaforo.amarillo.map(i=>`<div class="sem-item"><div class="sem-dot"></div><span>${i}</span></div>`).join('')}
+    </div>
+    <div class="sem-exp r" id="sem-r">
+      <div class="sem-exp-ttl">❌ EVITAR — dificultan tu objetivo</div>
+      ${DATA.semaforo.rojo.map(i=>`<div class="sem-item"><div class="sem-dot"></div><span>${i}</span></div>`).join('')}
+    </div>
+    <div style="background:var(--primary-light);border-radius:16px;padding:16px;margin-top:6px">
+      <div style="font-size:14px;font-weight:800;color:var(--primary);margin-bottom:6px">💡 Regla de oro</div>
+      <div style="font-size:14px;color:var(--text2);line-height:1.6">Un día fuera del plan no arruina nada. Lo que cuenta es la <strong style="color:var(--text)">suma de tus hábitos</strong> a largo plazo. Sé amable contigo.</div>
+    </div>
+  `;
+}
+
+window.toggleSem = (k) => {
+  semOpen[k]=!semOpen[k];
+  document.getElementById(`sem-${k}`).classList.toggle('open',semOpen[k]);
+};
+
+function renderProducts(b, sec) {
+  const items = DATA[sec]||[];
+  const titles={proteinas:'🥩 Proteínas',carbos:'🌾 Carbohidratos',grasas:'🥑 Grasas Saludables',snacks:'🍫 Snacks y Dulces',suplementos:'💊 Suplementos'};
+  const subs={
+    proteinas:'Toca cualquier producto para ver por qué es bueno y cómo usarlo.',
+    carbos:'Energía limpia para entrenar fuerte. Sin gluten y sin azúcar añadido.',
+    grasas:'Las grasas buenas son esenciales para tus hormonas y resultados. No las elimines.',
+    snacks:'El antojo existe — aquí tienes opciones que no dañan tu objetivo.',
+    suplementos:'Solo 3 suplementos realmente funcionan. Todo lo demás es marketing.',
+  };
+
+  b.innerHTML = `
+    <div class="sec-title">${titles[sec]}</div>
+    <p class="sec-sub">${subs[sec]||''}</p>
+    ${items.map((item,i)=>`
+      <div class="prod-card ${item.status}" onclick="toggleProd(${i})">
+        <div class="prod-top">
+          <div class="prod-emo">${item.emo}</div>
+          <div class="prod-info">
+            <div class="prod-name">${item.name}</div>
+            <div class="prod-brand">${item.brand}</div>
+            <div class="prod-tags">
+              <span class="ptag ${item.status==='rec'?'ptag-rec':'ptag-mod'}">${item.status==='rec'?'✅ Recomendado':'⚠️ Moderado'}</span>
+              <span class="ptag ptag-kcal">${item.kcal}</span>
+              <span class="ptag" style="background:var(--surface2);color:var(--text3)">${item.freq}</span>
+            </div>
+          </div>
+          <div class="prod-chev" id="pc-${i}">▾</div>
+        </div>
+        <div class="prod-body" id="pb-${i}">
+          <div class="prod-benefit"><strong>¿Por qué comerlo?</strong><br>${item.benefit}</div>
+          <div class="prod-how">💡 <span><strong>¿Cómo usarlo?</strong> ${item.how}</span></div>
+        </div>
+      </div>
+    `).join('')}
+  `;
+}
+
+window.toggleProd = (i) => {
+  const body = document.getElementById(`pb-${i}`);
+  const chev = document.getElementById(`pc-${i}`);
+  const isOpen = body.classList.contains('open');
+  // Close all others first
+  document.querySelectorAll('[id^="pb-"]').forEach(el => el.classList.remove('open'));
+  document.querySelectorAll('[id^="pc-"]').forEach(el => el.classList.remove('up'));
+  // Toggle clicked
+  if(!isOpen) {
+    body.classList.add('open');
+    chev.classList.add('up');
+    body.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+};
+
+function renderReemplazos(b) {
+  b.innerHTML = `
+    <div class="sec-title">🔄 Reemplazos Inteligentes</div>
+    <p class="sec-sub">¿No tienes un ingrediente? Aquí con qué reemplazarlo sin perder resultados.</p>
+    <div class="rep-card">
+      ${DATA.reemplazos.map(r=>`
+        <div class="rep-row">
+          <div><div class="rep-from">❌ ${r.from}</div></div>
+          <div class="rep-arrow">→</div>
+          <div><div class="rep-to">✅ ${r.to}</div><div class="rep-note">${r.note}</div></div>
+        </div>
+      `).join('')}
+    </div>
+    <div style="background:var(--primary-light);border-radius:16px;padding:16px;margin-top:4px">
+      <div style="font-size:14px;color:var(--primary);line-height:1.6">
+        💡 Si quieres integrar algo nuevo, <strong>muéstrale la tabla nutricional a tu entrenador</strong> y te dará su opinión.
+      </div>
+    </div>
+  `;
+}
+
+function renderTips(b) {
+  b.innerHTML = `
+    <div class="sec-title">💡 Consejos Prácticos</div>
+    <p class="sec-sub">Trucos simples para comer bien sin complicarte la vida ni gastar de más.</p>
+    ${DATA.tips.map(t=>`
+      <div class="tip-card">
+        <div class="tip-ico">${t.ico}</div>
+        <div><div class="tip-title">${t.title}</div><div class="tip-txt">${t.txt}</div></div>
+      </div>
+    `).join('')}
+  `;
+}
+
+// ── SEARCH ──
+window.onSearch = (val) => {
+  if(!val.trim()){render(currentSec);return}
+  const q=val.toLowerCase();
+  const b=document.getElementById('guiaBody');
+  const all=[...DATA.proteinas,...DATA.carbos,...DATA.grasas,...DATA.snacks,...DATA.suplementos]
+    .filter(f=>f.name.toLowerCase().includes(q)||f.brand.toLowerCase().includes(q)||f.benefit.toLowerCase().includes(q));
+
+  if(!all.length){
+    b.innerHTML=`<div class="empty"><div class="empty-ico">🔍</div><div style="font-size:16px;font-weight:700">No encontramos "${val}"</div><div style="margin-top:6px;color:var(--text3);font-size:14px">Prueba con otro nombre</div></div>`;
+    return;
+  }
+  b.innerHTML=`<div style="font-size:14px;color:var(--text2);margin-bottom:14px">${all.length} resultado${all.length>1?'s':''} para "<strong>${val}</strong>"</div>`+
+    all.map((item,i)=>`
+      <div class="prod-card ${item.status}" onclick="toggleProd(${i})">
+        <div class="prod-top">
+          <div class="prod-emo">${item.emo}</div>
+          <div class="prod-info">
+            <div class="prod-name">${item.name}</div>
+            <div class="prod-brand">${item.brand}</div>
+            <div class="prod-tags">
+              <span class="ptag ${item.status==='rec'?'ptag-rec':'ptag-mod'}">${item.status==='rec'?'✅ Recomendado':'⚠️ Moderado'}</span>
+              <span class="ptag ptag-kcal">${item.kcal}</span>
+            </div>
+          </div>
+          <div class="prod-chev" id="pc-${i}">▾</div>
+        </div>
+        <div class="prod-body" id="pb-${i}">
+          <div class="prod-benefit"><strong>¿Por qué?</strong><br>${item.benefit}</div>
+          <div class="prod-how">💡 <span>${item.how}</span></div>
+        </div>
+      </div>
+    `).join('');
+};
+
+window.clearSearch = () => { document.getElementById('searchIn').value=''; render(currentSec); };
+
+window.showSec = (sec, el) => {
+  currentSec=sec;
+  document.querySelectorAll('.pill-btn').forEach(p=>p.classList.remove('on'));
+  el.classList.add('on');
+  el.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+  render(sec);
+  document.querySelector('.scroll').scrollTop=0;
+};
+
+render('semaforo');
+</script>
+<script src="../js/chatbubble.js"></script>
+</body>
+</html>

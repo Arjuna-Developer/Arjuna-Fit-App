@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../js/af.js"></script>
+<script src="../js/theme.js"></script>
+<script src="../js/lang.js"></script>
+<title>ArjunaFit — Tu perfil</title>
+<link rel="stylesheet" href="../css/app.css">
+<style>
+.shell { background:var(--surface); }
+
+/* Header */
+.onb-hdr { padding:16px 20px 0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0; }
+.brand { font-size:17px;font-weight:800;color:var(--primary);display:flex;align-items:center;gap:7px; }
+.brand-ico { width:30px;height:30px;background:var(--primary);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px; }
+
+/* Progress */
+.onb-prog { padding:14px 20px 0;flex-shrink:0; }
+.prog-info { display:flex;justify-content:space-between;align-items:center;margin-bottom:6px; }
+.prog-lbl { font-size:14px;font-weight:700;color:var(--text2);letter-spacing:1px;text-transform:uppercase; }
+.prog-pct { font-size:14px;font-weight:800;color:var(--primary); }
+
+/* Body */
+.onb-body { flex:1;overflow-y:auto;padding:20px;-webkit-overflow-scrolling:touch; }
+
+/* Steps */
+.step { display:none;animation:fadeUp .35s ease both; }
+.step.on { display:block; }
+.step-eye { font-size:14px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--primary);margin-bottom:6px; }
+.step-title { font-size:24px;font-weight:900;color:var(--text);line-height:1.15;letter-spacing:-.5px;margin-bottom:6px; }
+.step-sub { font-size:16px;color:var(--text2);margin-bottom:22px;line-height:1.55; }
+
+/* Selectors */
+.sel-2 { display:grid;grid-template-columns:1fr 1fr;gap:11px; }
+.sel-1 { display:grid;gap:10px; }
+.sel {
+  background:var(--surface);border:2.5px solid var(--border);border-radius:16px;
+  padding:18px 12px;cursor:pointer;transition:all .2s;text-align:center;
+  position:relative;user-select:none;
+}
+.sel:active { transform:scale(.97); }
+.sel.on { border-color:var(--primary);background:var(--primary-light); }
+.sel .chk { position:absolute;top:9px;right:9px;width:18px;height:18px;background:var(--primary);border-radius:50%;display:none;align-items:center;justify-content:center;font-size:14px;color:#fff;font-weight:800; }
+.sel.on .chk { display:flex; }
+.sel-emo { font-size:32px;margin-bottom:8px;display:block; }
+.sel-name { font-size:14px;font-weight:700;color:var(--text); }
+.sel-desc { font-size:14px;color:var(--text2);margin-top:3px; }
+
+/* Obj card */
+.obj {
+  background:var(--surface);border:2.5px solid var(--border);border-radius:16px;
+  padding:16px;cursor:pointer;transition:all .2s;
+  display:flex;align-items:center;gap:12px;position:relative;user-select:none;
+}
+.obj:active { transform:scale(.98); }
+.obj.on { border-color:var(--primary);background:var(--primary-light); }
+.obj .chk { position:absolute;top:12px;right:12px;width:18px;height:18px;background:var(--primary);border-radius:50%;display:none;align-items:center;justify-content:center;font-size:14px;color:#fff;font-weight:800; }
+.obj.on .chk { display:flex; }
+.obj-ico { width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0; }
+.obj-name { font-size:14px;font-weight:700;color:var(--text); }
+.obj-desc { font-size:14px;color:var(--text2);margin-top:2px;line-height:1.4; }
+.obj-tag { font-size:14px;font-weight:700;margin-top:4px; }
+
+/* Number inputs */
+.num-fields { display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px; }
+.num-field { display:flex;flex-direction:column;gap:6px; }
+.num-lbl { font-size:15px;font-weight:700;color:var(--text2); }
+.num-wrap { position:relative;display:flex;align-items:center; }
+.num-in {
+  width:100%;padding:14px 44px 14px 16px;
+  border:2px solid var(--border);border-radius:var(--radius-sm);
+  font-family:var(--font);font-size:20px;font-weight:800;
+  color:var(--text);background:var(--surface);text-align:center;
+  transition:border-color .2s;
+  -moz-appearance:textfield;
+}
+.num-in::-webkit-outer-spin-button,.num-in::-webkit-inner-spin-button { -webkit-appearance:none; }
+.num-in:focus { outline:none;border-color:var(--primary); }
+.num-in.err { border-color:var(--accent); }
+.num-unit { position:absolute;right:12px;font-size:15px;font-weight:700;color:var(--text3); }
+
+/* Slider */
+.sl-wrap { margin-bottom:16px; }
+.sl-val { font-size:40px;font-weight:900;color:var(--primary);text-align:center;line-height:1; }
+.sl-unit { text-align:center;font-size:16px;color:var(--text2);margin-bottom:10px;margin-top:2px; }
+input[type=range] {
+  width:100%;height:6px;border-radius:999px;
+  -webkit-appearance:none;appearance:none;
+  background:linear-gradient(90deg,var(--primary) var(--pct,28%),var(--border) var(--pct,28%));
+  cursor:pointer;outline:none;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance:none;width:26px;height:26px;border-radius:50%;
+  background:var(--surface);border:3px solid var(--primary);
+  box-shadow:0 2px 10px rgba(59,108,244,.3);
+}
+
+/* Activity */
+.act-list { display:flex;flex-direction:column;gap:9px; }
+.act {
+  display:flex;align-items:center;gap:13px;
+  padding:13px 14px;border:2px solid var(--border);border-radius:14px;
+  cursor:pointer;transition:all .2s;background:var(--surface);user-select:none;
+}
+.act:active { transform:scale(.98); }
+.act.on { border-color:var(--primary);background:var(--primary-light); }
+.act-radio { width:20px;height:20px;border-radius:50%;border:2.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s; }
+.act.on .act-radio { background:var(--primary);border-color:var(--primary); }
+.act.on .act-radio::after { content:'✓';color:white;font-size:14px;font-weight:800; }
+.act-ico { font-size:22px; }
+.act-name { font-size:14px;font-weight:700;color:var(--text); }
+.act-desc { font-size:14px;color:var(--text2);margin-top:1px; }
+.act-x { font-family:monospace;font-size:14px;font-weight:700;color:var(--primary);background:var(--primary-light);padding:2px 7px;border-radius:999px;margin-left:auto;flex-shrink:0; }
+
+/* Results */
+.res-hero {
+  background:linear-gradient(135deg,#1e40af,#3b6cf4,#5b8af9);
+  border-radius:20px;padding:20px;color:white;margin-bottom:14px;
+}
+.res-label { font-size:14px;font-weight:700;opacity:.8;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px; }
+.res-kcal { font-size:52px;font-weight:900;line-height:1;margin-bottom:2px; }
+.res-sub { font-size:15px;opacity:.75;margin-bottom:16px;line-height:1.4; }
+.res-macros { display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px; }
+.res-mac { background:rgba(255,255,255,.15);border-radius:11px;padding:10px 6px;text-align:center; }
+.res-mac-val { font-size:20px;font-weight:900; }
+.res-mac-lbl { font-size:14px;opacity:.8;font-weight:600;margin-top:2px; }
+.res-div { height:1px;background:rgba(255,255,255,.2);margin-bottom:12px; }
+.res-train { display:flex;align-items:center;gap:10px;flex-wrap:wrap; }
+.res-train-pill { background:rgba(255,255,255,.2);border-radius:999px;padding:5px 12px;font-size:15px;font-weight:700; }
+.res-train-info { font-size:15px;opacity:.8;line-height:1.4; }
+
+/* Metric cards */
+.metric-grid { display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px; }
+.metric-card { background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center; }
+.metric-val { font-size:22px;font-weight:900;line-height:1;margin-bottom:3px; }
+.metric-lbl { font-size:14px;color:var(--text2);font-weight:600; }
+
+/* Bar chart macros */
+.macro-bar-wrap { background:var(--surface2);border-radius:14px;padding:14px 16px;margin-bottom:12px; }
+.mbar-title { font-size:14px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px; }
+.mbar { display:flex;height:10px;border-radius:999px;overflow:hidden;margin-bottom:8px;gap:2px; }
+.mbar-p { background:var(--accent);border-radius:3px; }
+.mbar-c { background:var(--green);border-radius:3px; }
+.mbar-f { background:#60a5fa;border-radius:3px; }
+.mbar-legend { display:flex;gap:14px;flex-wrap:wrap; }
+.mbl { display:flex;align-items:center;gap:5px;font-size:14px;color:var(--text2);font-weight:600; }
+.mbl-dot { width:8px;height:8px;border-radius:50%; }
+
+/* Training table */
+.train-tbl { background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:12px; }
+.ttbl-hdr { padding:12px 16px;border-bottom:1px solid var(--border);font-size:14px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:1px; }
+.ttbl-row { display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--border); }
+.ttbl-row:last-child { border-bottom:none; }
+.ttbl-k { font-size:16px;color:var(--text2); }
+.ttbl-v { font-size:16px;font-weight:800;color:var(--text);text-align:right;max-width:60%; }
+
+/* Meals preview */
+.meals-tbl { background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:12px; }
+.meal-mini { display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border); }
+.meal-mini:last-child { border-bottom:none; }
+.meal-mini-t { font-size:14px;font-weight:800;color:var(--primary);width:40px;flex-shrink:0; }
+.meal-mini-ico { font-size:18px;flex-shrink:0; }
+.meal-mini-name { font-size:16px;font-weight:600;color:var(--text);flex:1; }
+.meal-mini-k { font-size:15px;color:var(--text2);font-weight:700;flex-shrink:0; }
+
+/* Injury chips */
+.injury-chip {
+  background:var(--surface);border:2px solid var(--border);
+  border-radius:16px;padding:14px 16px;
+  display:flex;align-items:center;gap:14px;
+  cursor:pointer;transition:all .18s;user-select:none;
+}
+.injury-chip:active { transform:scale(.97); }
+.injury-chip.inj-on {
+  background:var(--primary-light);border-color:var(--primary);
+}
+.injury-chip.inj-on div:first-of-type { color:var(--primary) !important; }
+
+/* Food chips */
+.food-chip {
+  background:var(--surface);border:2px solid var(--border);
+  border-radius:13px;padding:11px 8px;
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  cursor:pointer;transition:all .18s;user-select:none;position:relative;
+}
+.food-chip:active { transform:scale(.94); }
+.food-chip.off {
+  background:rgba(220,38,38,.07);
+  border-color:rgba(220,38,38,.4);
+}
+.food-chip.off::after {
+  content:'✕';position:absolute;top:-7px;right:-7px;
+  width:18px;height:18px;background:var(--red);
+  border-radius:50%;font-size:14px;font-weight:900;color:white;
+  display:flex;align-items:center;justify-content:center;
+}
+.fc-emo { font-size:26px;line-height:1; }
+.fc-name { font-size:14px;font-weight:700;color:var(--text);text-align:center;line-height:1.2; }
+.food-chip.off .fc-name { color:var(--red); }
+
+/* Photo */
+.photo-box {
+  border:2px dashed var(--border);border-radius:16px;
+  padding:28px 20px;text-align:center;cursor:pointer;
+  transition:all .2s;background:var(--surface2);position:relative;
+}
+.photo-box:hover { border-color:var(--primary);background:var(--primary-light); }
+.photo-box input { position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%; }
+.photo-preview { width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:14px;display:none;margin-bottom:12px; }
+.photo-tips { background:rgba(245,166,35,.07);border:1px solid rgba(245,166,35,.2);border-radius:12px;padding:12px 14px;margin-top:12px; }
+.pt-title { font-size:14px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px; }
+.pt-item { font-size:15px;color:var(--text2);display:flex;gap:7px;padding:4px 0; }
+
+/* Summary */
+.sum-item { display:flex;align-items:center;gap:12px;background:var(--surface2);border-radius:12px;padding:12px 14px;margin-bottom:8px; }
+.sum-lbl { font-size:14px;color:var(--text2); }
+.sum-val { font-size:16px;font-weight:700;color:var(--text); }
+
+/* Celebrate */
+.cel { text-align:center;padding:12px 0 16px; }
+.cel-emo { font-size:64px;display:block;animation:pulse 1s ease infinite;margin-bottom:12px; }
+.cel-title { font-size:24px;font-weight:900;color:var(--text);letter-spacing:-.5px;margin-bottom:6px; }
+.cel-sub { font-size:16px;color:var(--text2);line-height:1.6;margin-bottom:20px; }
+
+/* Bottom */
+.onb-bottom {
+  padding:14px 20px;padding-bottom:calc(14px + env(safe-area-inset-bottom));
+  border-top:1px solid var(--border);background:var(--surface);flex-shrink:0;
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="onb-hdr">
+    <div class="brand"><div class="brand-ico">🏋️</div>ArjunaFit</div>
+    <button style="background:none;border:none;font-size:15px;color:var(--text3);cursor:pointer;font-family:var(--font)" onclick="doLogout()">Salir</button>
+  </div>
+
+  <div class="onb-prog">
+    <div class="prog-info">
+      <div class="prog-lbl" id="progLbl">Paso 1 de 7</div>
+      <div class="prog-pct" id="progPct">0%</div>
+    </div>
+    <div class="pbar"><div class="pbar-fill" id="progBar" style="width:0%"></div></div>
+  </div>
+
+  <div class="onb-body" id="onbBody">
+
+    <!-- S0: NOMBRE — nuevo primer paso -->
+    <div class="step on" id="s0">
+      <div class="step-eye" data-i18n="step_name_eye">Primero lo primero</div>
+      <h2 class="step-title" data-i18n="step_name_title">¿Cómo te<br>llamas? 👋</h2>
+      <p class="step-sub" data-i18n="step_name_sub">Así te llamaré durante todo tu reto. Ponlo como quieras que te llamen.</p>
+
+      <div class="num-field" style="margin-bottom:20px">
+        <div class="num-lbl" data-i18n="step_name_label">✏️ Tu nombre</div>
+        <input
+          type="text" id="inNombre"
+          class="num-in" style="font-size:22px;text-align:left;padding:16px 18px;letter-spacing:-.3px"
+          data-i18n-attr="placeholder" data-i18n="step_name_placeholder"
+          placeholder="Tu nombre o apodo"
+          autocomplete="given-name"
+          oninput="onNombre(this.value)"
+          maxlength="30"
+        >
+      </div>
+
+      <!-- Language toggle -->
+      <div style="margin-top:24px;display:flex;align-items:center;justify-content:center;gap:10px">
+        <span style="font-size:16px;color:var(--text3);font-weight:600">Idioma / Language:</span>
+        <button onclick="toggleLang()" class="lang-toggle" style="background:var(--primary-light);color:var(--primary);border:1.5px solid var(--border);padding:7px 16px;border-radius:999px;font-family:var(--font);font-size:16px;font-weight:700;cursor:pointer">
+          English 🇺🇸
+        </button>
+      </div>
+    </div>
+
+    <!-- S1: Género -->
+    <div class="step" id="s1">
+      <div class="step-eye" data-i18n="step_gender_eye">Tu perfil</div>
+      <h2 class="step-title">¿Cuál es tu<br>sexo biológico? 👤</h2>
+      <p class="step-sub">Lo necesitamos para calcular tu metabolismo con precisión. La fórmula varía entre hombre y mujer.</p>
+      <div class="sel-2">
+        <div class="sel" onclick="pick('genero','mujer',this)">
+          <div class="chk">✓</div><span class="sel-emo">👩</span>
+          <div class="sel-name" data-i18n="gender_female">Mujer</div>
+        </div>
+        <div class="sel" onclick="pick('genero','hombre',this)">
+          <div class="chk">✓</div><span class="sel-emo">👨</span>
+          <div class="sel-name" data-i18n="gender_male">Hombre</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- S2: Datos corporales -->
+    <div class="step" id="s2">
+      <div class="step-eye">Paso 2 — Tu cuerpo</div>
+      <h2 class="step-title">Tu punto<br>de partida 📏</h2>
+      <p class="step-sub">Con estos datos calculamos tu metabolismo exacto. Sé honesta — es solo para ti.</p>
+      <div class="num-fields">
+        <div class="num-field">
+          <div class="num-lbl">⚖️ Peso actual</div>
+          <div class="num-wrap">
+            <input type="number" class="num-in" id="inPeso" placeholder="65" min="30" max="200" oninput="onBodyData()">
+            <span class="num-unit">kg</span>
+          </div>
+        </div>
+        <div class="num-field">
+          <div class="num-lbl">📏 Altura</div>
+          <div class="num-wrap">
+            <input type="number" class="num-in" id="inAltura" placeholder="165" min="120" max="220" oninput="onBodyData()">
+            <span class="num-unit">cm</span>
+          </div>
+        </div>
+      </div>
+      <div class="sl-wrap">
+        <div class="num-lbl" style="margin-bottom:8px">🎂 Edad</div>
+        <div class="sl-val" id="edadVal">25</div>
+        <div class="sl-unit">años</div>
+        <input type="range" id="slEdad" min="15" max="70" value="25" oninput="onEdad(this.value)" style="--pct:19%">
+        <div style="display:flex;justify-content:space-between;font-size:14px;color:var(--text3);margin-top:4px"><span>15</span><span>70</span></div>
+      </div>
+    </div>
+
+    <!-- S2: Actividad -->
+    <div class="step" id="s3">
+      <div class="step-eye">Paso 3 — Actividad</div>
+      <h2 class="step-title">¿Qué tan activa<br>eres? 🏃</h2>
+      <p class="step-sub">Este factor multiplica tu metabolismo basal. La precisión aquí determina tus calorías reales.</p>
+      <div class="act-list">
+        <div class="act" onclick="pickAct('sedentario',this)">
+          <div class="act-radio"></div><div class="act-ico">🛋️</div>
+          <div><div class="act-name">Sedentario</div><div class="act-desc">Sin ejercicio, trabajo de escritorio</div></div>
+          <div class="act-x">×1.2</div>
+        </div>
+        <div class="act" onclick="pickAct('ligero',this)">
+          <div class="act-radio"></div><div class="act-ico">🚶</div>
+          <div><div class="act-name">Ligero</div><div class="act-desc">Ejercicio 1-2 días/semana</div></div>
+          <div class="act-x">×1.375</div>
+        </div>
+        <div class="act" onclick="pickAct('moderado',this)">
+          <div class="act-radio"></div><div class="act-ico">🏋️</div>
+          <div><div class="act-name">Moderado</div><div class="act-desc">Ejercicio 3-5 días/semana</div></div>
+          <div class="act-x">×1.55</div>
+        </div>
+        <div class="act" onclick="pickAct('activo',this)">
+          <div class="act-radio"></div><div class="act-ico">🏃</div>
+          <div><div class="act-name">Activo</div><div class="act-desc">Ejercicio intenso 6-7 días/semana</div></div>
+          <div class="act-x">×1.725</div>
+        </div>
+        <div class="act" onclick="pickAct('muy_activo',this)">
+          <div class="act-radio"></div><div class="act-ico">🔥</div>
+          <div><div class="act-name">Muy Activo</div><div class="act-desc">Atleta o trabajo físico + ejercicio</div></div>
+          <div class="act-x">×1.9</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- S3: Objetivo + Entorno -->
+    <div class="step" id="s4">
+      <div class="step-eye">Paso 4 — Objetivos</div>
+      <h2 class="step-title">¿Qué resultado<br>quieres ver? ✨</h2>
+      <p class="step-sub">Sé honesta contigo. Tu plan completo se personaliza según lo que elijas.</p>
+      <p class="step-sub">Esto ajusta tus calorías con superávit o déficit y personaliza todo el programa.</p>
+      <div class="sel-1" style="margin-bottom:14px">
+        <div class="obj" onclick="pick('objetivo','crecer',this)">
+          <div class="chk">✓</div>
+          <div class="obj-ico" style="background:rgba(34,194,122,.12)">🍑</div>
+          <div><div class="obj-name">Crecer y Tonificar</div><div class="obj-desc">Aumentar volumen en glúteos y piernas.</div><div class="obj-tag" style="color:var(--green)">Superávit +300 kcal · Proteína 2.0g/kg</div></div>
+        </div>
+        <div class="obj" onclick="pick('objetivo','bajar',this)">
+          <div class="chk">✓</div>
+          <div class="obj-ico" style="background:rgba(244,59,108,.1)">🔥</div>
+          <div><div class="obj-name">Bajar Grasa y Tonificar</div><div class="obj-desc">Perder grasa manteniendo el músculo.</div><div class="obj-tag" style="color:var(--accent)">Déficit -400 kcal · Proteína 2.2g/kg</div></div>
+        </div>
+      </div>
+      <div style="font-size:15px;font-weight:700;color:var(--text2);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">🏋️ ¿Dónde entrenas?</div>
+      <div class="sel-2">
+        <div class="sel" onclick="pick('entorno','gym',this)">
+          <div class="chk">✓</div><span class="sel-emo">🏋️</span>
+          <div class="sel-name">Gimnasio</div><div class="sel-desc">Barra, máquinas</div>
+        </div>
+        <div class="sel" onclick="pick('entorno','casa',this)">
+          <div class="chk">✓</div><span class="sel-emo">🏠</span>
+          <div class="sel-name">Casa</div><div class="sel-desc">Bandas, mancuernas</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- S4: Resultados -->
+    <div class="step" id="s5">
+      <div class="step-eye">Paso 5 — Tu cálculo</div>
+      <h2 class="step-title">Tus calorías<br>exactas 🔬</h2>
+      <p class="step-sub">Calculado con Mifflin-St Jeor — la fórmula más precisa según el NIH y recomendada por nutricionistas.</p>
+      <div id="resultsBox"></div>
+    </div>
+
+    <!-- S5: Foto inicial -->
+    <div class="step" id="s6">
+      <div class="step-eye">Foto de inicio</div>
+      <h2 class="step-title">Tu foto<br>de inicio 📸</h2>
+      <p class="step-sub">Esta foto es tu punto de partida. Cada lunes subirás una nueva y veremos tu transformación real.</p>
+      <img id="photoPreview" class="photo-preview" alt="Foto inicial">
+      <div class="photo-box" id="photoBox">
+        <input type="file" accept="image/*" capture="environment" id="photoInput" onchange="handlePhoto(this)">
+        <div style="font-size:48px;margin-bottom:10px">📸</div>
+        <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px">Toca para tomar o subir foto</div>
+        <div style="font-size:15px;color:var(--text2)">JPG o PNG · Máx 10MB</div>
+      </div>
+
+      <!-- Instrucciones claras de postura -->
+      <div style="background:var(--primary-light);border:1.5px solid var(--border);border-radius:16px;padding:16px;margin-top:14px">
+        <div style="font-size:15px;font-weight:800;color:var(--primary);margin-bottom:10px">📋 Cómo debe ser la foto</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;gap:10px;font-size:15px;color:var(--text2)"><span>👙</span>Vestido de baño o ropa deportiva ajustada</div>
+          <div style="display:flex;gap:10px;font-size:15px;color:var(--text2)"><span>🦵</span>Desde la rodilla hacia arriba como mínimo</div>
+          <div style="display:flex;gap:10px;font-size:15px;color:var(--text2)"><span>🧍</span>De frente, brazos a los lados</div>
+          <div style="display:flex;gap:10px;font-size:15px;color:var(--text2)"><span>💡</span>Buena iluminación, fondo claro</div>
+          <div style="display:flex;gap:10px;font-size:15px;color:var(--primary)"><span>🔒</span><strong>Solo tu entrenador y tú pueden ver estas fotos</strong></div>
+        </div>
+      </div>
+
+      <div style="margin-top:10px;text-align:center">
+        <button style="background:none;border:none;font-size:16px;color:var(--text3);cursor:pointer;font-family:var(--font);text-decoration:underline;padding:8px" onclick="skipPhoto()">Saltar por ahora →</button>
+      </div>
+    </div>
+
+    <!-- S6: Preferencias alimentarias — NUEVO -->
+    <div class="step" id="s7">
+      <div class="step-eye">Casi listo 🎯</div>
+      <h2 class="step-title">¿Qué comes y<br>qué no comes? 🥗</h2>
+      <p class="step-sub">Toca los alimentos que <strong>NO</strong> consumes. Tu plan se ajustará automáticamente con reemplazos.</p>
+
+      <!-- Restricciones especiales -->
+      <div style="margin-bottom:18px">
+        <div style="font-size:14px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px">🌍 Dieta / Restricción</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px" id="dietGrid">
+          <div class="food-chip" data-key="vegetariano" onclick="toggleFood('vegetariano',this)">
+            <span class="fc-emo">🥦</span><span class="fc-name">Vegetariano</span>
+          </div>
+          <div class="food-chip" data-key="vegano" onclick="toggleFood('vegano',this)">
+            <span class="fc-emo">🌱</span><span class="fc-name">Vegano</span>
+          </div>
+          <div class="food-chip" data-key="halal" onclick="toggleFood('halal',this)">
+            <span class="fc-emo">☪️</span><span class="fc-name">Halal</span>
+          </div>
+          <div class="food-chip" data-key="sin_gluten" onclick="toggleFood('sin_gluten',this)">
+            <span class="fc-emo">🌾</span><span class="fc-name">Sin Gluten</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alimentos que no come -->
+      <div style="margin-bottom:18px">
+        <div style="font-size:14px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px">❌ No me gustan o no los como</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+          <div class="food-chip" data-key="huevo" onclick="toggleFood('huevo',this)">
+            <span class="fc-emo">🥚</span><span class="fc-name">Huevo</span>
+          </div>
+          <div class="food-chip" data-key="pollo" onclick="toggleFood('pollo',this)">
+            <span class="fc-emo">🍗</span><span class="fc-name">Pollo</span>
+          </div>
+          <div class="food-chip" data-key="res" onclick="toggleFood('res',this)">
+            <span class="fc-emo">🥩</span><span class="fc-name">Res</span>
+          </div>
+          <div class="food-chip" data-key="pescado" onclick="toggleFood('pescado',this)">
+            <span class="fc-emo">🐟</span><span class="fc-name">Pescado</span>
+          </div>
+          <div class="food-chip" data-key="cerdo" onclick="toggleFood('cerdo',this)">
+            <span class="fc-emo">🐷</span><span class="fc-name">Cerdo</span>
+          </div>
+          <div class="food-chip" data-key="lacteos" onclick="toggleFood('lacteos',this)">
+            <span class="fc-emo">🥛</span><span class="fc-name">Lácteos</span>
+          </div>
+          <div class="food-chip" data-key="mani" onclick="toggleFood('mani',this)">
+            <span class="fc-emo">🥜</span><span class="fc-name">Maní</span>
+          </div>
+          <div class="food-chip" data-key="aguacate" onclick="toggleFood('aguacate',this)">
+            <span class="fc-emo">🥑</span><span class="fc-name">Aguacate</span>
+          </div>
+          <div class="food-chip" data-key="arroz" onclick="toggleFood('arroz',this)">
+            <span class="fc-emo">🍚</span><span class="fc-name">Arroz</span>
+          </div>
+          <div class="food-chip" data-key="platano" onclick="toggleFood('platano',this)">
+            <span class="fc-emo">🍌</span><span class="fc-name">Plátano</span>
+          </div>
+          <div class="food-chip" data-key="atun" onclick="toggleFood('atun',this)">
+            <span class="fc-emo">🐟</span><span class="fc-name">Atún</span>
+          </div>
+          <div class="food-chip" data-key="avena" onclick="toggleFood('avena',this)">
+            <span class="fc-emo">🥣</span><span class="fc-name">Avena</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--primary-light);border-radius:14px;padding:13px 15px;font-size:16px;color:var(--primary);line-height:1.55">
+        💡 Si no marcas nada, tu plan incluye todos los alimentos. Puedes cambiar esto después en tu perfil.
+      </div>
+    </div>
+
+    <!-- S8: Lesiones -->
+    <div class="step" id="s8">
+      <div class="step-eye">Tu seguridad primero 🛡️</div>
+      <h2 class="step-title">¿Tienes alguna<br>lesión activa? 🩹</h2>
+      <p class="step-sub">Adaptamos los ejercicios para que entrenes segura y sin riesgo. Sé honesta — esto es para cuidarte.</p>
+
+      <!-- Sin lesiones -->
+      <div class="injury-chip" id="inj-none" onclick="toggleInjury('ninguna', this)" style="margin-bottom:16px">
+        <span style="font-size:28px">✅</span>
+        <div>
+          <div style="font-size:16px;font-weight:800;color:var(--text)">No tengo lesiones</div>
+          <div style="font-size:14px;color:var(--text2)">Estoy lista para entrenar al 100%</div>
+        </div>
+      </div>
+
+      <!-- Lesiones comunes -->
+      <div style="font-size:14px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">🩺 Tengo molestias en...</div>
+
+      <div style="display:flex;flex-direction:column;gap:8px" id="injuryList">
+        <div class="injury-chip" id="inj-rodilla" onclick="toggleInjury('rodilla',this)">
+          <span style="font-size:26px">🦵</span>
+          <div>
+            <div style="font-size:15px;font-weight:700;color:var(--text)">Rodilla</div>
+            <div style="font-size:13px;color:var(--text2)">Dolor, crujido, hinchazón o inestabilidad</div>
+          </div>
+        </div>
+        <div class="injury-chip" id="inj-lumbar" onclick="toggleInjury('lumbar',this)">
+          <span style="font-size:26px">🔙</span>
+          <div>
+            <div style="font-size:15px;font-weight:700;color:var(--text)">Espalda baja / Lumbar</div>
+            <div style="font-size:13px;color:var(--text2)">Dolor lumbar, ciática o hernia discal</div>
+          </div>
+        </div>
+        <div class="injury-chip" id="inj-cadera" onclick="toggleInjury('cadera',this)">
+          <span style="font-size:26px">🍑</span>
+          <div>
+            <div style="font-size:15px;font-weight:700;color:var(--text)">Cadera / Glúteo</div>
+            <div style="font-size:13px;color:var(--text2)">Dolor en la cadera, piriforme o bursitis</div>
+          </div>
+        </div>
+        <div class="injury-chip" id="inj-tobillo" onclick="toggleInjury('tobillo',this)">
+          <span style="font-size:26px">🦶</span>
+          <div>
+            <div style="font-size:15px;font-weight:700;color:var(--text)">Tobillo / Pie</div>
+            <div style="font-size:13px;color:var(--text2)">Esguince, fascitis plantar o tendón de Aquiles</div>
+          </div>
+        </div>
+        <div class="injury-chip" id="inj-hombro" onclick="toggleInjury('hombro',this)">
+          <span style="font-size:26px">💪</span>
+          <div>
+            <div style="font-size:15px;font-weight:700;color:var(--text)">Hombro / Cuello</div>
+            <div style="font-size:13px;color:var(--text2)">Tendinitis, contractura o cervicalgia</div>
+          </div>
+        </div>
+        <div class="injury-chip" id="inj-embarazo" onclick="toggleInjury('postparto',this)">
+          <span style="font-size:26px">🤱</span>
+          <div>
+            <div style="font-size:15px;font-weight:700;color:var(--text)">Postparto reciente</div>
+            <div style="font-size:13px;color:var(--text2)">Menos de 6 meses desde el parto</div>
+          </div>
+        </div>
+        <div class="injury-chip" id="inj-otra" onclick="toggleInjury('otra',this)">
+          <span style="font-size:26px">🩹</span>
+          <div>
+            <div style="font-size:15px;font-weight:700;color:var(--text)">Otra lesión</div>
+            <div style="font-size:13px;color:var(--text2)">Me la puedes contar al entrenador en el chat</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px;background:var(--gold-light);border:1.5px solid rgba(146,64,14,.15);border-radius:14px;padding:14px;font-size:14px;color:var(--gold);line-height:1.6">
+        ⚠️ Si tienes una lesión grave o postoperatoria, consulta primero con tu médico o fisioterapeuta antes de iniciar el reto.
+      </div>
+    </div>
+
+    <!-- S9: Resumen final -->
+    <div class="step" id="s9">
+      <div class="cel">
+        <span class="cel-emo">🎉</span>
+        <div class="cel-title">¡Todo listo!</div>
+        <div class="cel-sub">Tu programa personalizado de 8 semanas está listo con tus datos exactos.</div>
+      </div>
+      <div id="finalSummary"></div>
+    </div>
+
+  </div>
+
+  <div class="onb-bottom">
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-outline" id="backBtn" onclick="prevStep()" style="width:auto;display:none;padding:15px 18px">←</button>
+      <button class="btn btn-primary" id="nextBtn" onclick="nextStep()" disabled>
+        <span id="nextTxt">Continuar →</span>
+        <div class="spinner" id="nextSpinner"></div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+// ── Calculator inline (no import issues) ──
+const ACT = { sedentario:1.2, ligero:1.375, moderado:1.55, activo:1.725, muy_activo:1.9 };
+const ACT_LABELS = { sedentario:'🛋️ Sedentario', ligero:'🚶 Ligero', moderado:'🏋️ Moderado', activo:'🏃 Activo', muy_activo:'🔥 Muy Activo' };
+const OBJ_ADJ = {
+  crecer: { kcal:+300, prot:2.0, carbPct:0.45, fatPct:0.25 },
+  bajar:  { kcal:-400, prot:2.2, carbPct:0.35, fatPct:0.25 },
+};
+const TRAIN_LEVELS = {
+  base:       { series:4, reps:'10-12', rest:90,  label:'Base' },
+  intermedio: { series:4, reps:'8-10',  rest:90,  label:'Intermedio' },
+  avanzado:   { series:5, reps:'6-8',   rest:120, label:'Avanzado' },
+};
+
+function calcAll(peso, altura, edad, genero, actividad, objetivo) {
+  // Mifflin-St Jeor TMB
+  const base = (10*peso) + (6.25*altura) - (5*edad);
+  const tmb = Math.round(genero === 'hombre' ? base+5 : base-161);
+  const tdee = Math.round(tmb * ACT[actividad]);
+  const adj = OBJ_ADJ[objetivo];
+  const kcalObj = Math.max(1200, Math.round(tdee + adj.kcal));
+
+  // Macros
+  const protG = Math.round(peso * adj.prot);
+  const fatG = Math.round((kcalObj * adj.fatPct) / 9);
+  const carbG = Math.round(Math.max(50, (kcalObj - protG*4 - fatG*9) / 4));
+
+  const pctP = Math.round(protG*4/kcalObj*100);
+  const pctC = Math.round(carbG*4/kcalObj*100);
+  const pctF = Math.round(fatG*9/kcalObj*100);
+
+  // IMC
+  const altM = altura/100;
+  const imc = Math.round((peso/(altM*altM))*10)/10;
+  const imcLabel = imc<18.5?['Bajo peso','#60a5fa']:imc<25?['Peso normal','#22c27a']:imc<30?['Sobrepeso','#f5a623']:['Obesidad','#f43b6c'];
+
+  // Training level based on TDEE
+  const nivel = tdee < 1800 ? 'base' : tdee < 2400 ? 'intermedio' : 'avanzado';
+  const train = TRAIN_LEVELS[nivel];
+
+  // Peso ideal (Devine)
+  const pi = genero==='hombre' ? Math.round(50+2.3*((altura-152.4)/2.54)) : Math.round(45.5+2.3*((altura-152.4)/2.54));
+
+  // Meals (5 comidas)
+  const mDist = objetivo==='crecer' ? [.22,.15,.28,.14,.21] : [.20,.12,.29,.14,.25];
+  const mNames = ['Desayuno','Merienda','Almuerzo','Post-entreno','Cena'];
+  const mIcos  = ['🥚','🥣','🍗','🥤','🐟'];
+  const mTimes = ['07:00','10:00','13:00','16:00','19:00'];
+  const meals = mNames.map((n,i)=>({
+    name:n, ico:mIcos[i], time:mTimes[i],
+    kcal:Math.round(kcalObj*mDist[i]),
+    prot:Math.round(protG*mDist[i]),
+    carbs:Math.round(carbG*mDist[i]),
+    fat:Math.round(fatG*mDist[i]),
+  }));
+
+  return { tmb, tdee, kcalObj, protG, carbG, fatG, pctP, pctC, pctF, imc, imcLabel, nivel, train, pi, meals };
+}
+
+// ── State ──
+const P = { genero:null, objetivo:null, entorno:null, actividad:null };
+let nombre='', edad=25, peso=null, altura=null, calc=null, photoFile=null, userId=null, step=0;
+let foodRestrictions = new Set();
+let injuries = new Set();
+const TOTAL_STEPS = 9; // 0-8 + resumen en 9
+
+// ── Nombre input ──
+window.onNombre = (val) => { nombre = val.trim(); validate(); };
+
+// ── Food restrictions ──
+window.toggleFood = (key, el) => {
+  if(foodRestrictions.has(key)){ foodRestrictions.delete(key); el.classList.remove('off'); }
+  else { foodRestrictions.add(key); el.classList.add('off'); }
+};
+
+// ── Injuries ──
+window.toggleInjury = (key, el) => {
+  if(key === 'ninguna') {
+    injuries.clear(); injuries.add('ninguna');
+    document.querySelectorAll('.injury-chip').forEach(c => c.classList.remove('inj-on'));
+    el.classList.add('inj-on');
+    return;
+  }
+  injuries.delete('ninguna');
+  document.getElementById('inj-none')?.classList.remove('inj-on');
+  if(injuries.has(key)){ injuries.delete(key); el.classList.remove('inj-on'); }
+  else { injuries.add(key); el.classList.add('inj-on'); }
+};
+
+// ── Auth ──
+// isEdit = came from dashboard "Cambiar perfil" link
+const isEdit = new URLSearchParams(window.location.search).get('edit') === '1';
+
+(async()=>{
+  const u = await AF.requireAuth('../index.html');
+  if(!u) return;
+  userId = u.id;
+  const existing = await AF.getProfile(userId);
+
+  // Only auto-redirect if NOT editing and profile is complete
+  if(existing?.peso && !isEdit){
+    window.location.href='dashboard.html';
+    return;
+  }
+
+  // Pre-fill existing data if editing
+  if(existing && isEdit){
+    // Pre-select saved values
+    if(existing.genero) {
+      P.genero = existing.genero;
+      const el = document.querySelector(`.sel[onclick*="'genero','${existing.genero}'"]`);
+      if(el) el.classList.add('on');
+    }
+    if(existing.actividad) {
+      P.actividad = existing.actividad;
+      const el = document.querySelector(`.act[onclick*="'${existing.actividad}'"]`);
+      if(el) el.classList.add('on');
+    }
+    if(existing.objetivo) {
+      P.objetivo = existing.objetivo;
+      const el = document.querySelector(`.obj[onclick*="'objetivo','${existing.objetivo}'"]`);
+      if(el) el.classList.add('on');
+    }
+    if(existing.entorno) {
+      P.entorno = existing.entorno;
+      const el = document.querySelector(`.sel[onclick*="'entorno','${existing.entorno}'"]`);
+      if(el) el.classList.add('on');
+    }
+    if(existing.peso) {
+      peso = existing.peso;
+      const inp = document.getElementById('inPeso');
+      if(inp) inp.value = existing.peso;
+    }
+    if(existing.altura) {
+      altura = existing.altura;
+      const inp = document.getElementById('inAltura');
+      if(inp) inp.value = existing.altura;
+    }
+    if(existing.edad) {
+      edad = existing.edad;
+      const sl = document.getElementById('slEdad');
+      if(sl) { sl.value = existing.edad; onEdad(existing.edad); }
+    }
+    validate();
+  }
+})();
+
+// ── Inputs ──
+window.pick = (key, val, el) => {
+  const parent = el.closest('.sel-2,.sel-1');
+  if(parent) parent.querySelectorAll('.sel,.obj').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  P[key]=val; validate();
+};
+window.pickAct = (val, el) => {
+  document.querySelectorAll('.act').forEach(a=>a.classList.remove('on'));
+  el.classList.add('on'); P.actividad=val; validate();
+};
+window.onBodyData = () => {
+  peso = parseFloat(document.getElementById('inPeso').value)||null;
+  altura = parseFloat(document.getElementById('inAltura').value)||null;
+  validate();
+};
+window.onEdad = (v) => {
+  edad=parseInt(v);
+  document.getElementById('edadVal').textContent=v;
+  const pct=((v-15)/(70-15))*100;
+  document.getElementById('slEdad').style.setProperty('--pct',pct+'%');
+  validate();
+};
+
+// ── Validation ──
+function validate() {
+  const rules = {
+    0:()=>nombre.length >= 2,           // nombre
+    1:()=>!!P.genero,                    // sexo
+    2:()=>peso>=30&&peso<=200&&altura>=120&&altura<=220, // cuerpo
+    3:()=>!!P.actividad,                 // actividad
+    4:()=>!!P.objetivo&&!!P.entorno,     // objetivo
+    5:()=>true,                          // resultados
+    6:()=>true,                          // foto
+    7:()=>true,                          // comidas
+    8:()=>true,                          // lesiones
+    9:()=>true,                          // resumen
+  };
+  document.getElementById('nextBtn').disabled = !(rules[step]?.()??true);
+}
+
+// ── Nav ──
+window.nextStep = async () => {
+  if(step===4){
+    if(!P.genero||!peso||!altura||!P.actividad||!P.objetivo||!P.entorno){
+      showToast('⚠️ Completa todos los pasos anteriores primero.');
+      return;
+    }
+    calc = calcAll(peso,altura,edad,P.genero,P.actividad,P.objetivo);
+  }
+  if(step===9){ await saveAll(); return; }
+  step++; showStep(step);
+};
+
+window.prevStep = () => {
+  if(step===0){ if(isEdit) window.location.href='dashboard.html'; return; }
+  step--; showStep(step);
+};
+
+window.skipPhoto = () => { step++; showStep(step); };
+
+function showStep(n) {
+  document.querySelectorAll('.step').forEach((s,i)=>s.classList.toggle('on',i===n));
+  const pct = Math.round((n/9)*100);
+  document.getElementById('progBar').style.width = pct+'%';
+  document.getElementById('progPct').textContent = pct+'%';
+  document.getElementById('progLbl').textContent = `Paso ${n+1} de 10`;
+  const isLast = n===9;
+  document.getElementById('nextTxt').textContent = isLast
+    ? (isEdit ? '✅ Guardar cambios' : '🚀 ¡Empezar mi reto!')
+    : 'Continuar →';
+  if(n===5) renderResults();
+  if(n===9) renderSummary();
+  document.getElementById('onbBody').scrollTop = 0;
+  validate();
+}
+
+// ── Render Results — SIMPLE Y EMOCIONAL ──
+function renderResults() {
+  if(!calc) return;
+  const r = calc;
+  const isCrecer = P.objetivo === 'crecer';
+  const objEmoji = isCrecer ? '🍑' : '🔥';
+  const objColor = isCrecer ? '#16a34a' : '#dc2626';
+  const objMsg   = isCrecer
+    ? 'Para crecer músculo y tonificar tus glúteos y piernas'
+    : 'Para quemar grasa y definir tu cuerpo';
+
+  document.getElementById('resultsBox').innerHTML = `
+
+    <!-- Card principal — solo lo que le importa -->
+    <div style="background:linear-gradient(135deg,#3d1a8c,#6c3fc5,#f43b8a);border-radius:22px;padding:22px;color:white;text-align:center;margin-bottom:14px">
+      <div style="font-size:42px;margin-bottom:8px">${objEmoji}</div>
+      <div style="font-size:16px;opacity:.8;font-weight:600;margin-bottom:6px;text-transform:uppercase;letter-spacing:1px">Tu plan personalizado</div>
+      <div style="font-size:52px;font-weight:900;line-height:1;margin-bottom:4px">${r.kcalObj.toLocaleString()}</div>
+      <div style="font-size:15px;opacity:.85;font-weight:600;margin-bottom:14px">calorías al día</div>
+      <div style="font-size:16px;opacity:.75;line-height:1.5">${objMsg}</div>
+    </div>
+
+    <!-- 3 datos clave — nada más -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px">
+      <div style="background:var(--surface);border:1.5px solid #ede8f8;border-radius:16px;padding:16px 8px;text-align:center">
+        <div style="font-size:26px;font-weight:900;color:#dc2626;line-height:1">${r.protG}g</div>
+        <div style="font-size:14px;color:var(--text2);font-weight:700;margin-top:4px">Proteína</div>
+        <div style="font-size:14px;color:var(--text3);margin-top:2px">al día</div>
+      </div>
+      <div style="background:var(--surface);border:1.5px solid #ede8f8;border-radius:16px;padding:16px 8px;text-align:center">
+        <div style="font-size:26px;font-weight:900;color:#16a34a;line-height:1">${r.carbG}g</div>
+        <div style="font-size:14px;color:var(--text2);font-weight:700;margin-top:4px">Carbos</div>
+        <div style="font-size:14px;color:var(--text3);margin-top:2px">al día</div>
+      </div>
+      <div style="background:var(--surface);border:1.5px solid #ede8f8;border-radius:16px;padding:16px 8px;text-align:center">
+        <div style="font-size:26px;font-weight:900;color:#2563eb;line-height:1">${r.fatG}g</div>
+        <div style="font-size:14px;color:var(--text2);font-weight:700;margin-top:4px">Grasas</div>
+        <div style="font-size:14px;color:var(--text3);margin-top:2px">al día</div>
+      </div>
+    </div>
+
+    <!-- Mensaje motivacional simple -->
+    <div style="background:#f3eeff;border:1.5px solid #ede8f8;border-radius:18px;padding:18px;margin-bottom:14px">
+      <div style="font-size:14px;font-weight:800;color:#6c3fc5;margin-bottom:10px">💡 ¿Qué significa esto para ti?</div>
+      <div style="font-size:14px;color:var(--text2);line-height:1.7">
+        ${isCrecer
+          ? `Tu cuerpo necesita <strong style="color:#6c3fc5">${r.kcalObj.toLocaleString()} calorías</strong> para crecer músculo. No comas menos — eso destruiría tu progreso. Come las ${r.protG}g de proteína todos los días y tus glúteos van a responder.`
+          : `Tu cuerpo quemará grasa con <strong style="color:#6c3fc5">${r.kcalObj.toLocaleString()} calorías</strong>. No menos — eso solo daña el músculo que queremos conservar. Come las ${r.protG}g de proteína y el cuerpo hará el resto.`
+        }
+      </div>
+    </div>
+
+    <!-- IMC simple y claro -->
+    <div style="background:var(--surface);border:1.5px solid #ede8f8;border-radius:18px;padding:16px;display:flex;align-items:center;gap:14px;margin-bottom:4px">
+      <div style="font-size:40px;font-weight:900;color:${r.imcLabel[1]};line-height:1">${r.imc}</div>
+      <div>
+        <div style="font-size:15px;font-weight:800;color:${r.imcLabel[1]}">${r.imcLabel[0]}</div>
+        <div style="font-size:16px;color:var(--text2);margin-top:3px">Índice de masa corporal</div>
+        <div style="font-size:15px;color:var(--text2);margin-top:2px">Peso ideal aprox: <strong style="color:#6c3fc5">${r.pi} kg</strong></div>
+      </div>
+    </div>
+  `;
+}
+
+// ── Photo ──
+window.handlePhoto = (input) => {
+  const f = input.files[0]; if(!f) return;
+  photoFile=f;
+  const url=URL.createObjectURL(f);
+  const prev=document.getElementById('photoPreview');
+  prev.src=url; prev.style.display='block';
+  document.getElementById('photoBox').style.display='none';
+  showToast('📸 Foto lista');
+};
+
+// ── Summary final ──
+function renderSummary() {
+  const r = calc;
+  const oM = { crecer:'🍑 Crecer y Tonificar', bajar:'🔥 Bajar y Tonificar' };
+  const eM = { gym:'🏋️ Gimnasio', casa:'🏠 Casa' };
+  const restrictions = Array.from(foodRestrictions);
+  const FOOD_NAMES = {
+    vegetariano:'🥦 Vegetariano', vegano:'🌱 Vegano', halal:'☪️ Halal',
+    sin_gluten:'🌾 Sin Gluten', huevo:'🥚 Huevo', pollo:'🍗 Pollo',
+    res:'🥩 Res', pescado:'🐟 Pescado', cerdo:'🐷 Cerdo',
+    lacteos:'🥛 Lácteos', mani:'🥜 Maní', aguacate:'🥑 Aguacate',
+    arroz:'🍚 Arroz', platano:'🍌 Plátano', atun:'🐟 Atún', avena:'🥣 Avena',
+  };
+
+  document.getElementById('finalSummary').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+      <div style="background:var(--primary-light);border:1.5px solid var(--border);border-radius:16px;padding:16px;text-align:center">
+        <div style="font-size:28px;font-weight:900;color:var(--primary)">${r?.kcalObj?.toLocaleString()}</div>
+        <div style="font-size:15px;color:var(--text3);font-weight:700;margin-top:4px">kcal por día</div>
+      </div>
+      <div style="background:var(--green-light);border:1.5px solid rgba(5,150,105,.15);border-radius:16px;padding:16px;text-align:center">
+        <div style="font-size:28px;font-weight:900;color:var(--green)">${r?.protG}g</div>
+        <div style="font-size:15px;color:var(--text3);font-weight:700;margin-top:4px">proteína al día</div>
+      </div>
+    </div>
+
+    <div style="background:linear-gradient(135deg,#3b1fa8,#7c3aed);border-radius:16px;padding:16px;color:white;text-align:center;margin-bottom:12px">
+      <div style="font-size:14px;font-weight:700;opacity:.8;margin-bottom:4px">Tu objetivo</div>
+      <div style="font-size:18px;font-weight:900">${oM[P.objetivo]}</div>
+      <div style="font-size:16px;opacity:.9;margin-top:4px">${eM[P.entorno]}</div>
+    </div>
+
+    ${restrictions.length > 0 ? `
+      <div style="background:var(--red-light);border:1.5px solid rgba(220,38,38,.15);border-radius:16px;padding:14px 16px;margin-bottom:12px">
+        <div style="font-size:15px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">❌ No incluido en tu plan</div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px">
+          ${restrictions.map(k=>`<span style="background:rgba(220,38,38,.1);color:var(--red);padding:4px 10px;border-radius:999px;font-size:15px;font-weight:700">${FOOD_NAMES[k]||k}</span>`).join('')}
+        </div>
+        <div style="font-size:15px;color:var(--text2);margin-top:10px">Tu plan de nutrición usará reemplazos para estos alimentos.</div>
+      </div>
+    ` : `
+      <div style="background:var(--green-light);border:1.5px solid rgba(5,150,105,.15);border-radius:16px;padding:12px 14px;margin-bottom:12px;font-size:16px;color:var(--green)">
+        ✅ Come de todo — plan completo sin restricciones.
+      </div>
+    `}
+
+    <div style="background:var(--primary-light);border-radius:16px;padding:14px;font-size:16px;color:var(--primary);line-height:1.65;text-align:center">
+      📸 <strong>Recuerda subir tu foto cada lunes</strong> para ver tu transformación semana a semana.
+    </div>
+  `;
+}
+
+// ── Save ──
+async function saveAll() {
+  const btn=document.getElementById('nextBtn');
+  const sp=document.getElementById('nextSpinner');
+  const txt=document.getElementById('nextTxt');
+  btn.disabled=true; sp.style.display='block'; txt.textContent='Guardando...';
+
+  if(!calc && peso && altura && P.genero && P.actividad && P.objetivo){
+    calc = calcAll(peso,altura,edad,P.genero,P.actividad,P.objetivo);
+  }
+
+  const r = calc;
+
+  // Perfil base — sin food_restrictions primero
+  const profileBase = {
+    nombre: nombre || null,
+    genero: P.genero,
+    entorno: P.entorno,
+    objetivo: P.objetivo,
+    peso, altura, edad,
+    actividad: P.actividad,
+    ...(r ? {
+      tmb: r.tmb, tdee: r.tdee,
+      calorias_objetivo: r.kcalObj,
+      proteina_g: r.protG, carbs_g: r.carbG, grasas_g: r.fatG,
+      imc: r.imc, nivel_entrenamiento: r.nivel,
+      series_efectivas: r.train.series, descanso_segundos: r.train.rest,
+    } : {})
+  };
+
+  // Limpiar nulos
+  Object.keys(profileBase).forEach(k=>{
+    if(profileBase[k]===null||profileBase[k]===undefined) delete profileBase[k];
+  });
+
+  // Intentar guardar CON food_restrictions
+  let error = null;
+  const restrictions = Array.from(foodRestrictions);
+  if(restrictions.length > 0) {
+    const res1 = await _sb.from('profiles').upsert({id:userId,...profileBase, food_restrictions: restrictions, injuries: Array.from(injuries)});
+    error = res1.error;
+    // Si falla por columna inexistente, guardar sin ella
+    if(error && (error.message?.includes('food_restrictions')||error.code==='42703')){
+      console.warn('food_restrictions column not found — saving without it. Run schema_v2.sql in Supabase.');
+      const res2 = await _sb.from('profiles').upsert({id:userId,...profileBase});
+      error = res2.error;
+    }
+  } else {
+    const res = await _sb.from('profiles').upsert({id:userId,...profileBase});
+    error = res.error;
+  }
+
+  if(error){
+    console.error('Save error:', error);
+    let msg = '❌ Error guardando perfil.';
+    if(error.message?.includes('genero')) msg = '❌ Selecciona tu género.';
+    else if(error.message?.includes('actividad')) msg = '❌ Selecciona tu nivel de actividad.';
+    else if(error.code === 'PGRST204') msg = '❌ Error de conexión. Revisa tu internet.';
+    showToast(msg);
+    btn.disabled=false; sp.style.display='none';
+    txt.textContent = isEdit ? '✅ Guardar cambios' : '🚀 ¡Empezar mi reto!';
+    return;
+  }
+  // Upload photo (only on first setup, not edit)
+  if(photoFile && !isEdit){
+    try{
+      const ext=photoFile.name.split('.').pop();
+      const path=`${userId}/week-1-${Date.now()}.${ext}`;
+      const {data:up}=await _sb.storage.from('progress-photos').upload(path,photoFile,{upsert:true});
+      if(up){
+        const {data:pu}=_sb.storage.from('progress-photos').getPublicUrl(path);
+        await _sb.from('progress_photos').upsert({
+          user_id:userId, week_num:1,
+          photo_url:pu?.publicUrl||path, peso_semana:peso,
+        });
+      }
+    }catch(e){ console.warn('photo upload err',e); }
+  }
+
+  txt.textContent = isEdit ? '✅ ¡Cambios guardados!' : '✅ ¡Perfil creado!';
+  showToast(isEdit ? '✅ Perfil actualizado correctamente' : '🎉 ¡Bienvenida al reto!');
+  setTimeout(()=>window.location.href='dashboard.html', 800);
+}
+
+function showToast(msg){
+  const t=document.createElement('div');
+  t.className='toast'; t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),3500);
+}
+
+window.doLogout=async()=>{
+  AF.logout();
+  await A.logout();
+};
+
+validate();
+</script>
+</body>
+</html>

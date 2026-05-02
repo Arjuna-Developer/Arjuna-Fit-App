@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#7c3aed">
+<title>ArjunaFit — Inicio</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../js/af.js"></script>
+<script src="../js/theme.js"></script>
+<script src="../js/lang.js"></script>
+<link rel="stylesheet" href="../css/app.css">
+<style>
+body{background:var(--bg)}
+
+/* Header */
+.dash-hdr{
+  background:var(--surface);padding:14px 18px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1.5px solid var(--border);
+  position:sticky;top:0;z-index:50;transition:background .25s,border-color .25s;
+}
+.greeting{font-size:15px;color:var(--text2);font-weight:600}
+.user-name{font-size:20px;font-weight:900;color:var(--text);letter-spacing:-.3px}
+.hdr-right{display:flex;align-items:center;gap:10px}
+.avatar-btn{
+  width:42px;height:42px;border-radius:50%;
+  background:linear-gradient(135deg,var(--primary),var(--pink));
+  display:flex;align-items:center;justify-content:center;
+  font-size:19px;cursor:pointer;border:none;
+  box-shadow:0 3px 12px rgba(124,58,237,.3);flex-shrink:0;
+}
+
+/* Hero card */
+.hero-card{
+  margin:14px 14px 0;
+  background:linear-gradient(135deg,#3b1fa8 0%,#7c3aed 50%,#ec4899 100%);
+  border-radius:22px;padding:20px;
+  color:white;position:relative;overflow:hidden;
+}
+.hero-card::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:rgba(255,255,255,.07);border-radius:50%}
+.hero-card::after{content:'🏆';position:absolute;right:10px;bottom:-8px;font-size:80px;opacity:.1;transform:rotate(-8deg)}
+.hero-week{font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;opacity:.8;margin-bottom:4px}
+.hero-title{font-size:19px;font-weight:900;margin-bottom:12px;line-height:1.2;max-width:270px;position:relative;z-index:1}
+.hero-sub{font-size:16px;opacity:.8;margin-bottom:12px;line-height:1.5;position:relative;z-index:1}
+.hero-pbar{height:8px;background:rgba(255,255,255,.22);border-radius:999px;overflow:hidden;margin-bottom:6px}
+.hero-pbar-fill{height:100%;background:var(--surface);border-radius:999px;transition:width 1s cubic-bezier(.22,.68,0,1.2)}
+.hero-pct{font-size:15px;opacity:.75;margin-bottom:14px}
+.hero-stats{display:flex;gap:16px;position:relative;z-index:1}
+.hstat{font-size:15px;opacity:.85}
+.hstat strong{font-weight:900;font-size:15px;display:block;margin-bottom:1px}
+
+/* Profile pill */
+.profile-pill{
+  margin:10px 14px 0;
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:14px;padding:12px 14px;
+  display:flex;align-items:center;gap:10px;
+  cursor:pointer;transition:all .2s;text-decoration:none;
+}
+.profile-pill:active{background:var(--surface2)}
+.pp-icon{font-size:22px}
+.pp-text{flex:1}
+.pp-label{font-size:14px;color:var(--text2);font-weight:600}
+.pp-val{font-size:16px;font-weight:800;color:var(--text)}
+.pp-arr{font-size:16px;color:var(--text3)}
+
+/* Week selector */
+.week-sec{padding:16px 14px 6px}
+.week-sec-label{font-size:14px;font-weight:700;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+.week-scroll{display:flex;gap:7px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.week-scroll::-webkit-scrollbar{display:none}
+.week-pill{
+  flex-shrink:0;padding:8px 16px;border-radius:999px;font-size:16px;font-weight:700;
+  background:var(--surface);border:2px solid var(--border);color:var(--text2);
+  cursor:pointer;transition:all .2s;white-space:nowrap;
+}
+.week-pill:hover{border-color:var(--primary);color:var(--primary)}
+.week-pill.on{background:var(--primary);border-color:var(--primary);color:white}
+.week-pill.p2.on{background:var(--gold);border-color:var(--gold)}
+
+/* Week note */
+.week-note{
+  margin:8px 14px;
+  background:var(--primary-light);border:1.5px solid var(--border);
+  border-radius:14px;padding:13px 15px;
+  font-size:16px;color:var(--primary);line-height:1.55;display:flex;gap:8px;
+}
+
+/* Days section */
+.days-sec{padding:0 14px;margin-bottom:16px}
+.days-title{font-size:17px;font-weight:900;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:6px;letter-spacing:-.2px}
+.days-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+
+/* Day card */
+.day-card{
+  border-radius:14px;padding:11px 6px;text-align:center;position:relative;
+  border:2px solid var(--border);background:var(--surface);
+  transition:all .2s;cursor:pointer;user-select:none;
+}
+.day-card:active{transform:scale(.95)}
+.day-card.rest{background:var(--surface2);cursor:default;border-color:transparent}
+.day-card.done{background:var(--primary-light);border-color:rgba(124,58,237,.25)}
+.day-card.today{border-color:var(--primary);box-shadow:0 0 0 3px rgba(124,58,237,.15)}
+.day-card.locked{opacity:.35;cursor:not-allowed}
+.day-card.locked:active{transform:none}
+.day-num{font-size:14px;font-weight:600;color:var(--text3);margin-bottom:3px}
+.day-icon{font-size:20px;margin-bottom:3px;line-height:1}
+.day-label{font-size:14px;font-weight:700;color:var(--text);line-height:1.2}
+.day-card.done .day-label{color:var(--primary)}
+.day-card.rest .day-label{color:var(--text3)}
+.day-badge{position:absolute;top:5px;right:5px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800}
+.done-badge{background:var(--primary);color:white}
+.today-badge{background:var(--pink);color:white;font-size:7px;letter-spacing:-.3px}
+
+/* Shortcuts 2x2 */
+.shortcuts{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 14px;margin-bottom:20px}
+.sc{border-radius:18px;padding:18px 14px;text-decoration:none;display:block;transition:all .2s;border:1.5px solid transparent}
+.sc:active{transform:scale(.97)}
+.sc-purple{background:var(--primary-light);border-color:rgba(124,58,237,.15)}
+.sc-pink{background:var(--pink-light);border-color:rgba(236,72,153,.15)}
+.sc-green{background:var(--green-light);border-color:rgba(5,150,105,.15)}
+.sc-gold{background:var(--gold-light);border-color:rgba(217,119,6,.15)}
+.sc-icon{font-size:28px;margin-bottom:8px}
+.sc-title{font-size:14px;font-weight:800;color:var(--text)}
+.sc-sub{font-size:15px;color:var(--text2);margin-top:2px}
+
+/* Skel */
+.skel{background:linear-gradient(90deg,var(--border) 0%,var(--surface2) 50%,var(--border) 100%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:10px}
+@keyframes shimmer{to{background-position:-200% 0}}
+
+/* Menu */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px)}
+.overlay.show{display:flex}
+.sheet{background:var(--surface);border-radius:24px 24px 0 0;padding:16px 20px;padding-bottom:calc(20px + env(safe-area-inset-bottom));width:100%;max-width:var(--max-w);animation:slideUp .3s ease both;transition:background .25s}
+.sheet-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px}
+.sheet-user{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);margin-bottom:8px}
+.sheet-avatar{width:46px;height:46px;background:linear-gradient(135deg,var(--primary),var(--pink));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px}
+.sheet-name{font-size:16px;font-weight:800;color:var(--text)}
+.sheet-email{font-size:15px;color:var(--text2)}
+.menu-item{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer;font-size:15px;font-weight:600;color:var(--text);background:none;border-left:none;border-right:none;border-top:none;width:100%;font-family:var(--font);text-align:left;transition:color .2s}
+.menu-item:last-child{border-bottom:none}
+.menu-item.danger{color:var(--red)}
+.mi-ico{font-size:20px;width:28px;text-align:center}
+
+/* Dark mode toggle in menu */
+.theme-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border)}
+.theme-label{font-size:15px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:12px}
+</style>
+</head>
+<body>
+<div class="shell" id="shell">
+
+  <!-- Header -->
+  <div class="dash-hdr">
+    <div>
+      <div class="greeting" id="greeting">Cargando...</div>
+      <div class="user-name" id="userName">...</div>
+    </div>
+    <div class="hdr-right">
+      <button class="theme-toggle" onclick="toggleTheme()" title="Cambiar tema">🌙</button>
+      <button class="avatar-btn" onclick="toggleMenu()">😊</button>
+    </div>
+  </div>
+
+  <div class="scroll" id="mainScroll">
+
+    <!-- Hero -->
+    <div class="hero-card fade-in" id="heroCard">
+      <div class="hero-week" id="heroWeek">Semana 1 · Base</div>
+      <div class="hero-title" id="heroTitle">¡Hoy empieza tu historia! 🔥</div>
+      <div class="hero-sub" id="heroSub">El primer día siempre es el más importante.</div>
+      <div class="hero-pbar"><div class="hero-pbar-fill" id="heroPbar" style="width:0%"></div></div>
+      <div class="hero-pct" id="heroPct">0 de 56 días completados</div>
+      <div class="hero-stats">
+        <div class="hstat"><strong id="statDone">0</strong>días hechos</div>
+        <div class="hstat"><strong id="statStreak">0</strong>en racha 🔥</div>
+        <div class="hstat"><strong id="statLeft">56</strong>restantes</div>
+      </div>
+    </div>
+
+    <!-- Motivational banner — aparece en momentos clave -->
+    <div class="moti-banner" id="motiBanner" style="display:none" onclick="dismissMoti()">
+      <div class="moti-ico" id="motiIco">💪</div>
+      <div style="flex:1">
+        <div class="moti-title" id="motiTitle">Mensaje de tu entrenador</div>
+        <div class="moti-txt" id="motiTxt">...</div>
+      </div>
+      <button class="moti-close" onclick="event.stopPropagation();dismissMoti()">✕</button>
+    </div>
+
+    <!-- Profile pill -->
+    <a class="profile-pill fade-in" href="onboarding.html?edit=1" id="profilePill">
+      <div class="pp-icon">⚙️</div>
+      <div class="pp-text">
+        <div class="pp-label">Tu perfil</div>
+        <div class="pp-val" id="profileVal">Cargando...</div>
+      </div>
+      <div class="pp-arr">›</div>
+    </a>
+
+    <!-- Week selector -->
+    <div class="week-sec">
+      <div class="week-sec-label">Semanas del reto</div>
+      <div class="week-scroll" id="weekScroll"></div>
+    </div>
+
+    <!-- Week note -->
+    <div class="week-note" id="weekNote">
+      <span>💡</span><span id="weekNoteText">Cargando...</span>
+    </div>
+
+    <!-- Days -->
+    <div class="days-sec">
+      <div class="days-title" id="daysTitle">📅 Esta semana</div>
+      <div class="days-grid" id="daysGrid">
+        ${Array(7).fill(`<div class="day-card"><div class="skel" style="height:64px"></div></div>`).join('')}
+      </div>
+    </div>
+
+    <!-- Shortcuts -->
+    <div class="shortcuts">
+      <a href="nutrition.html" class="sc sc-purple">
+        <div class="sc-icon">🍽️</div>
+        <div class="sc-title">Mi Nutrición</div>
+        <div class="sc-sub">Plan del día</div>
+      </a>
+      <a href="guia.html" class="sc sc-green">
+        <div class="sc-icon">🥗</div>
+        <div class="sc-title">Guía Alimentos</div>
+        <div class="sc-sub">Qué comprar</div>
+      </a>
+      <a href="mercado.html" class="sc sc-gold">
+        <div class="sc-icon">🛒</div>
+        <div class="sc-title">Lista Mercado</div>
+        <div class="sc-sub">Compras semana</div>
+      </a>
+      <a href="progreso.html" class="sc sc-pink">
+        <div class="sc-icon">📊</div>
+        <div class="sc-title">Mi Progreso</div>
+        <div class="sc-sub">Cargas · Records · Actividad</div>
+      </a>
+      <a href="calorias.html" class="sc" style="background:var(--green-light);border:1.5px solid rgba(5,150,105,.15)">
+        <div class="sc-icon">🔥</div>
+        <div class="sc-title">Contador Calorías</div>
+        <div class="sc-sub">Registra lo que comes hoy</div>
+      </a>
+      <a href="chat.html" class="sc sc-purple" style="background:var(--primary-light);border:1.5px solid var(--border)">
+        <div class="sc-icon">🤖</div>
+        <div class="sc-title">Entrenador IA</div>
+        <div class="sc-sub">GPT · Siempre disponible</div>
+      </a>
+    </div>
+
+    <div style="height:16px"></div>
+  </div>
+
+  <!-- Bottom nav — 4 items max -->
+    <div class="bottom-nav">
+    <div class="nav-item on"><span class="ni">🏠</span>Inicio</div>
+    <a href="nutrition.html" class="nav-item"><span class="ni">🍽️</span>Nutrición</a>
+    <a href="guia.html" class="nav-item"><span class="ni">🥗</span>Guía</a>
+    <a href="chat.html" class="nav-item"><span class="ni">🤖</span>Entrenador</a>
+  </div>
+</div>
+</div>
+
+<!-- Menu overlay -->
+<div class="overlay" id="menuOverlay" onclick="closeMenu(event)">
+  <div class="sheet" onclick="event.stopPropagation()">
+    <div class="sheet-handle"></div>
+    <div class="sheet-user">
+      <div class="sheet-avatar">😊</div>
+      <div>
+        <div class="sheet-name" id="sheetName">...</div>
+        <div class="sheet-email" id="sheetEmail">...</div>
+      </div>
+    </div>
+
+    <!-- Dark mode toggle prominente -->
+    <div class="theme-row">
+      <div class="theme-label">
+        <span style="font-size:20px">🌙</span>
+        Modo oscuro
+      </div>
+      <div class="theme-toggle" onclick="toggleTheme()" style="width:52px;height:30px;border-radius:999px;padding:3px;display:flex;align-items:center;cursor:pointer;background:var(--border);border:none;position:relative;transition:background .3s" id="themeSwitch">
+        <div id="themeBall" style="width:24px;height:24px;border-radius:50%;background:var(--surface);box-shadow:0 2px 6px rgba(0,0,0,.2);transition:transform .3s;font-size:14px;display:flex;align-items:center;justify-content:center">🌙</div>
+      </div>
+    </div>
+
+    <button class="menu-item" onclick="window.location.href='onboarding.html?edit=1'">
+      <span class="mi-ico">⚙️</span> Cambiar mi perfil
+    </button>
+    <button class="menu-item" onclick="window.location.href='mercado.html'">
+      <span class="mi-ico">🛒</span> <span data-i18n="menu_market">Lista de mercado</span>
+    </button>
+    <button class="menu-item" onclick="toggleLang()">
+      <span class="mi-ico">🌍</span> <span class="lang-toggle">English 🇺🇸</span>
+    </button>
+    <button class="menu-item danger" onclick="doLogout()">
+      <span class="mi-ico">🚪</span> Cerrar sesión
+    </button>
+  </div>
+</div>
+
+<script>
+
+// Data
+const WEEK_NOTES = {
+  1:'🌱 Esta semana aprendes el movimiento. No busques el peso máximo — busca sentir el músculo. La técnica perfecta ahora = resultados en semana 3.',
+  2:'📈 Tu cuerpo ya se adaptó. Esta semana sube un poco el peso. Si lo ejecutas bien, tu músculo está creciendo aunque no lo notes todavía.',
+  3:'💪 ¡3 semanas! Estás en el grupo que no se rinde. Sube la carga — la incomodidad es músculo que se está formando.',
+  4:'✨ Pausa isométrica: aprieta el glúteo 2 segundos en cada rep. Simple, pero es lo que diferencia un glúteo activo de uno dormido.',
+  5:'🔥 ¡FASE 2! Ya no eres principiante. Drop Set al último ejercicio. Vas a sentirlo — y ahí es exactamente donde crece el músculo.',
+  6:'⚡ Rest-Pause esta semana. 15 segundos de pausa y 3-4 reps más. Tu músculo va a odiar esto. Tu cuerpo te lo va a agradecer.',
+  7:'🎯 Cluster Sets. Pausas de 10 segundos entre reps. Más carga, más resultado. Ya casi llegas.',
+  8:'🏆 ¡ÚLTIMA SEMANA! Dalo todo. Cuando te mires en el espejo después de esto vas a ver a otra persona. Una más fuerte. Una que terminó lo que empezó.',
+};
+const WEEK_PHASE = {1:'Base',2:'Base',3:'Consolidación',4:'Consolidación',5:'Intensidad',6:'Intensidad',7:'Peak',8:'Peak'};
+const PATTERN = ['train','rest','train','rest','train','rest','rest'];
+const TRAIN_TYPES = ['glutes','posterior','anterior'];
+const TRAIN_NAMES = {glutes:'Glúteos 🍑',posterior:'Posterior 💪',anterior:'Anterior 🦵'};
+const TRAIN_ICONS = {glutes:'🍑',posterior:'💪',anterior:'🦵'};
+
+function getDayInfo(d) {
+  const weekIdx=Math.floor((d-1)/7),dayInWeek=(d-1)%7;
+  const weekNum=weekIdx+1,type=PATTERN[dayInWeek];
+  if(type==='rest') return {type:'rest',weekNum,dayNum:d};
+  const ti=[0,2,4].indexOf(dayInWeek);
+  const tt=TRAIN_TYPES[ti];
+  return {type:'train',trainType:tt,weekNum,dayNum:d,title:TRAIN_NAMES[tt],icon:TRAIN_ICONS[tt]};
+}
+
+function getGreeting() {
+  const h=new Date().getHours();
+  if(h<12) return '☀️ Buenos días';
+  if(h<18) return '🌤️ Buenas tardes';
+  return '🌙 Buenas noches';
+}
+
+let user=null,profile=null,completedDays=[],activeWeek=1;
+
+async function init() {
+  try {
+    user = await AF.requireAuth('../index.html');
+    if(!user) return;
+    profile = await AF.getProfile(user.id);
+    if(!profile){window.location.href='onboarding.html';return}
+    completedDays = await AF.getCompleted(user.id);
+
+    renderHeader();
+    renderHero();
+    renderProfile();
+    buildWeekPills();
+    const cw = Math.min(8,Math.floor(completedDays.length/3)+1);
+    renderWeek(cw);
+    renderMotivation(cw);
+    updateThemeSwitch();
+
+    setTimeout(()=>{
+      document.querySelector('.week-pill.on')?.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+    },300);
+  } catch(e) {
+    console.error('Dashboard error:', e);
+    showToast('❌ Error cargando. Recarga la página.');
+  }
+}
+
+function renderHeader() {
+  document.getElementById('greeting').textContent = t('greet_' + (new Date().getHours()<12?'morning':new Date().getHours()<18?'afternoon':'night'));
+  const name = profile?.nombre || user.email.split('@')[0];
+  document.getElementById('userName').textContent = name;
+  document.getElementById('sheetName').textContent = name;
+  document.getElementById('sheetEmail').textContent = user.email;
+}
+
+function calcStreak() {
+  let s=0;
+  const td=[...Array(56).keys()].map(i=>i+1).filter(d=>getDayInfo(d).type==='train');
+  for(let i=td.length-1;i>=0;i--){if(completedDays.includes(td[i]))s++;else break}
+  return s;
+}
+
+function renderHero() {
+  const done=completedDays.length;
+  const pct=Math.round((done/56)*100);
+  const weekNum=Math.min(8,Math.floor(done/3)+1);
+  const streak=calcStreak();
+
+  let title='',sub='';
+  if(done===0){title='¡Hoy empieza tu historia! 🔥';sub='Tu primera sesión te está esperando. El primer paso es el más importante.'}
+  else if(done>=56){title='¡Lo lograste! Eres increíble 🏆';sub='Completaste las 8 semanas. Eres de las pocas que llegan al final.'}
+  else if(streak>=5){title=`¡${streak} entrenamientos seguidos! 🔥`;sub='Eso es disciplina real. No pares ahora.'}
+  else if(done<7){title='¡Vas muy bien, sigue! 💪';sub='Las primeras semanas son las más difíciles — ya las estás ganando.'}
+  else if(done>=21){title='Ya eres otra — ¡continúa! 🍑';sub='Tu cuerpo ya está respondiendo. No te detengas.'}
+  else{title=`Día ${done+1} de 56 — ¡tú puedes! ✨`;sub=`${56-done} días restantes para tu transformación.`}
+
+  document.getElementById('heroWeek').textContent=`Semana ${weekNum} de 8 · ${WEEK_PHASE[weekNum]}`;
+  document.getElementById('heroTitle').textContent=title;
+  document.getElementById('heroSub').textContent=sub;
+  document.getElementById('heroPbar').style.width=pct+'%';
+  document.getElementById('heroPct').textContent=`${done} de 56 días completados (${pct}%)`;
+  document.getElementById('statDone').textContent=done;
+  document.getElementById('statStreak').textContent=streak;
+  document.getElementById('statLeft').textContent=56-done;
+}
+
+function renderProfile() {
+  const gM={mujer:'👩 Mujer',hombre:'👨 Hombre'};
+  const eM={gym:'🏋️ Gym',casa:'🏠 Casa'};
+  const oM={crecer:'🍑 Crecer y Tonificar',bajar:'🔥 Bajar y Tonificar'};
+  document.getElementById('profileVal').textContent=
+    `${gM[profile.genero]||''} · ${eM[profile.entorno]||''} · ${oM[profile.objetivo]||''}`;
+}
+
+function buildWeekPills() {
+  const c=document.getElementById('weekScroll');c.innerHTML='';
+  for(let w=1;w<=8;w++){
+    const p=document.createElement('div');
+    p.className=`week-pill${w>4?' p2':''}`;
+    p.textContent=`Sem ${w}${w>4?' ⚡':''}`;
+    p.dataset.week=w;p.onclick=()=>renderWeek(w);
+    c.appendChild(p);
+  }
+}
+
+function renderWeek(weekNum) {
+  activeWeek=weekNum;
+  document.querySelectorAll('.week-pill').forEach(p=>p.classList.toggle('on',+p.dataset.week===weekNum));
+  document.getElementById('weekNoteText').textContent=WEEK_NOTES[weekNum];
+  document.getElementById('daysTitle').textContent=`📅 Semana ${weekNum} — ${WEEK_PHASE[weekNum]}`;
+
+  const start=(weekNum-1)*7+1;
+  const grid=document.getElementById('daysGrid');grid.innerHTML='';
+
+  // Next unlocked training day
+  const nextTrain=[...Array(56).keys()].map(i=>i+1).find(d=>getDayInfo(d).type==='train'&&!completedDays.includes(d));
+
+  for(let d=start;d<start+7;d++){
+    const info=getDayInfo(d);
+    const isDone=completedDays.includes(d);
+    const isRest=info.type==='rest';
+
+    // Unlock logic — más generoso:
+    // Un día de entrenamiento está desbloqueado si TODOS los entrenamientos
+    // anteriores están completados. Días de descanso siempre accesibles.
+    let isUnlocked = false;
+    if(isRest) {
+      isUnlocked = true;
+    } else {
+      // Get all train days before this one
+      const prevTrainDays = [...Array(d-1).keys()]
+        .map(i=>i+1)
+        .filter(x => getDayInfo(x).type==='train');
+      // Unlocked if all previous train days are done, or there are none
+      isUnlocked = prevTrainDays.every(x => completedDays.includes(x));
+    }
+
+    const isToday=d===nextTrain;
+
+    const card=document.createElement('div');
+    let cls='day-card';
+    if(isRest)cls+=' rest';
+    else if(isDone)cls+=' done';
+    else if(!isUnlocked)cls+=' locked';
+    if(isToday)cls+=' today';
+    card.className=cls;
+
+    let badge='';
+    if(isDone)badge=`<div class="day-badge done-badge">✓</div>`;
+    else if(isToday)badge=`<div class="day-badge today-badge">HOY</div>`;
+    else if(!isUnlocked&&!isRest)badge=`<div class="day-badge" style="font-size:14px">🔒</div>`;
+
+    card.innerHTML=`${badge}<div class="day-num">Día ${d}</div><div class="day-icon">${isRest?'😴':info.icon}</div><div class="day-label">${isRest?'Descanso':info.title}</div>`;
+
+    if(!isRest&&isUnlocked){
+      card.onclick=()=>{sessionStorage.setItem('af_day',d);window.location.href=`day.html?day=${d}`};
+    }else if(!isRest&&!isUnlocked){
+      card.onclick=()=>showToast('🔒 Completa el día anterior primero');
+    }
+    grid.appendChild(card);
+  }
+
+  grid.querySelectorAll('.day-card').forEach((c,i)=>{c.style.animation=`fadeUp .3s ease ${i*.04}s both`});
+}
+
+// ── MOTIVACIÓN — el entrenador aparece en momentos exactos ──
+function renderMotivation(weekNum) {
+  const done=completedDays.length;
+  const streak=calcStreak();
+
+  // Detectar el momento crítico actual
+  const SEEN_KEY='af_moti_seen';
+  let seen=[];
+  try{seen=JSON.parse(localStorage.getItem(SEEN_KEY)||'[]')}catch{}
+
+  const moments=[
+    {id:'day0',test:()=>done===0,ico:'🏋️',title:'¡Tu entrenador está aquí!',msg:'Sé que da un poco de nervios empezar. Diseñé cada ejercicio pensando en ti. El primer día es el más difícil — y también el más importante.'},
+    {id:'week1_done',test:()=>done>=3&&done<=4&&weekNum===2,ico:'🎉',title:'¡Completaste tu primera semana!',msg:'Eso que sientes en piernas y glúteos es músculo que se forma. Muy pocas llegan a donde tú llegaste. La semana 2 es donde empieza la magia.'},
+    {id:'valley_w2',test:()=>weekNum===2&&done>=5,ico:'💪',title:'Normal que aún no notes cambios',msg:'En semana 2 el músculo crece POR DENTRO. Los cambios visibles llegan en semana 3-4. Estás donde la mayoría abandona. Tú no eres la mayoría.'},
+    {id:'halfway',test:()=>weekNum===4&&done>=12,ico:'🔥',title:'¡Estás a la MITAD!',msg:'4 semanas completas. Tómate una foto HOY y compárala con la del inicio. La segunda mitad es donde el cuerpo explota en resultados.'},
+    {id:'valley_w6',test:()=>weekNum===6,ico:'⚡',title:'El momento más difícil y más poderoso',msg:'La semana 6 es donde el 70% abandona. Las últimas 2 semanas son las que transforman un cuerpo trabajado en uno definido. No regalas tu esfuerzo ahora.'},
+    {id:'final',test:()=>weekNum===8,ico:'🏆',title:'¡LA SEMANA FINAL! Dalo todo.',msg:'Llegaste donde muy pocas llegan. Esta semana es tuya. Cada repetición es el cierre de 8 semanas de trabajo. Tu cuerpo, tu historia, tu transformación.'},
+    {id:'streak5',test:()=>streak>=5&&streak<10,ico:'🔥',title:`¡${streak} días seguidos!`,msg:'Eso es disciplina real. Ese hábito vale más que cualquier resultado físico. El cuerpo sigue al hábito.'},
+  ];
+
+  const match=moments.find(m=>m.test()&&!seen.includes(m.id));
+  if(!match) return;
+
+  document.getElementById('motiIco').textContent=match.ico;
+  document.getElementById('motiTitle').textContent=match.title;
+  document.getElementById('motiTxt').textContent=match.msg;
+  document.getElementById('motiBanner').style.display='flex';
+  document.getElementById('motiBanner').dataset.id=match.id;
+}
+
+window.dismissMoti=()=>{
+  const banner=document.getElementById('motiBanner');
+  const id=banner.dataset.id;
+  let seen=[];try{seen=JSON.parse(localStorage.getItem('af_moti_seen')||'[]')}catch{}
+  if(!seen.includes(id)){seen.push(id);localStorage.setItem('af_moti_seen',JSON.stringify(seen));}
+  banner.style.animation='fadeUp .3s ease reverse';
+  setTimeout(()=>banner.style.display='none',300);
+};
+
+// ── Theme switch visual ──
+function updateThemeSwitch() {
+  const isDark=Theme.get()==='dark';
+  const ball=document.getElementById('themeBall');
+  const sw=document.getElementById('themeSwitch');
+  if(!ball||!sw)return;
+  ball.textContent=isDark?'☀️':'🌙';
+  ball.style.transform=isDark?'translateX(22px)':'translateX(0)';
+  sw.style.background=isDark?'var(--primary)':'var(--border)';
+}
+
+// Override toggleTheme to also update switch
+const origToggle=window.toggleTheme;
+window.toggleTheme=()=>{Theme.toggle();setTimeout(updateThemeSwitch,50)};
+
+function toggleMenu(){document.getElementById('menuOverlay').classList.toggle('show')}
+function closeMenu(e){if(e.target===document.getElementById('menuOverlay'))toggleMenu()}
+window.toggleMenu=toggleMenu;
+window.doLogout = () => AF.logout();
+
+function showToast(msg){const t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),3200)}
+window.showToast=showToast;
+
+init();
+</script>
+<script src="../js/chatbubble.js"></script>
+</body>
+</html>
