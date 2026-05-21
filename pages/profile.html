@@ -391,7 +391,7 @@ async function doLogout(){
 }
 
 async function init(){
-  setTimeout(()=>document.getElementById('ldr').classList.add('off');window.scrollTo({top:0,behavior:'instant'}),5000);
+  setTimeout(function(){document.getElementById('ldr').classList.add('off');window.scrollTo({top:0,behavior:'instant'});},5000);
   if(!_sb){document.getElementById('ldr').classList.add('off');return;}
   try{
     const{data:{session}}=await _sb.auth.getSession();
