@@ -1156,71 +1156,82 @@ html, body {
       <!-- ══ TU DÍA DE HOY — Flujo diario integrado ══ -->
 
       <!-- 🍳 RECETA DEL DÍA -->
-      <div id="recipeOfDay" onclick="goToRecipe()" style="
+<div id="recipeOfDay" onclick="goToRecipe()" style="
         border-radius:22px;overflow:hidden;cursor:pointer;
         -webkit-tap-highlight-color:transparent;position:relative;
-        border:1px solid rgba(124,58,237,.2);
-        box-shadow:0 4px 24px rgba(99,102,241,.1),inset 0 1px 0 rgba(255,255,255,.06)">
+        background:linear-gradient(145deg,rgba(20,8,45,.97),rgba(14,5,32,.98));
+        border:1px solid rgba(124,58,237,.35);
+        box-shadow:0 0 0 1px rgba(124,58,237,.1),0 8px 32px rgba(50,10,140,.25),inset 0 1px 0 rgba(255,255,255,.06)">
 
-        <!-- Warm gradient background -->
-        <div style="
-          background:linear-gradient(145deg,rgba(19,14,52,.98),rgba(12,8,36,.98));
-          padding:18px 18px 16px;position:relative">
+        <!-- Header row -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px">
+          <div style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+            color:rgba(255,220,80,.85);display:flex;align-items:center;gap:6px">
+            IDEA PARA HOY <span>✨</span>
+          </div>
+          <div style="font-size:12px;font-weight:600;color:rgba(167,139,250,.7)">Ver más recetas →</div>
+        </div>
 
-          <!-- Warm glow -->
-          <div style="position:absolute;top:-20px;right:-20px;width:120px;height:120px;
-            border-radius:50%;background:rgba(99,102,241,.25);filter:blur(50px);
-            pointer-events:none"></div>
-<a href="/pages/nutrition.html" onclick="if(window.sw)sw('recetas')" style="font-size:11px;color:rgba(196,181,253,.5);text-decoration:none;display:block;text-align:right;margin-top:4px;padding-right:18px">Ver más recetas →</a>
-          <div style="position:absolute;bottom:-20px;left:-20px;width:80px;height:80px;
-            border-radius:50%;background:rgba(139,92,246,.15);filter:blur(30px);
-            pointer-events:none"></div>
+        <!-- Main content -->
+        <div style="display:flex;align-items:center;gap:14px;padding:4px 16px 16px">
+          <!-- Food image -->
+          <div id="recipeEmoji" style="
+            font-size:64px;line-height:1;flex-shrink:0;
+            filter:drop-shadow(0 8px 16px rgba(0,0,0,.5));
+            width:90px;text-align:center">🥘</div>
 
-          <!-- Label -->
-          <div style="font-size:10px;font-weight:700;letter-spacing:.1em;
-            text-transform:uppercase;color:rgba(199,210,254,.55);margin-bottom:10px">
-            Idea para hoy ✨</div>
-
-          <!-- Recipe content -->
-          <div style="display:flex;align-items:flex-start;gap:14px;position:relative;z-index:1">
-            <!-- Emoji visual -->
-            <div id="rotdEmoji" style="
-              font-size:44px;line-height:1;flex-shrink:0;
-              filter:drop-shadow(0 4px 12px rgba(245,158,11,.3))">🍗</div>
-
-            <div style="flex:1;min-width:0">
-              <div id="rotdName" style="
-                font-size:16px;font-weight:800;color:#f1f0f4;
-                letter-spacing:-.02em;margin-bottom:5px;line-height:1.2">
-                Pechuga con arroz y brócoli</div>
-              <div id="rotdSub" style="
-                font-size:12px;color:rgba(199,210,254,.65);
-                margin-bottom:10px;line-height:1.5">
-                Simple, rico y alto en proteína.</div>
-              <div style="display:flex;gap:8px;flex-wrap:wrap">
-                <span id="rotdTime" style="
-                  font-size:10px;font-weight:600;padding:3px 9px;border-radius:12px;
-                  background:rgba(99,102,241,.18);color:rgba(199,210,254,.8);
-                  border:1px solid rgba(129,140,248,.25)">⏱️ 20 min</span>
-                <span id="rotdProt" style="
-                  font-size:10px;font-weight:600;padding:3px 9px;border-radius:12px;
-                  background:rgba(124,58,237,.12);color:rgba(196,181,253,.7);
-                  border:1px solid rgba(124,58,237,.2)">💪 45g prot</span>
-                <span id="rotdDiff" style="
-                  font-size:10px;font-weight:600;padding:3px 9px;border-radius:12px;
-                  background:rgba(255,255,255,.06);color:rgba(240,238,248,.4)">Fácil</span>
+          <!-- Info -->
+          <div style="flex:1;min-width:0">
+            <div id="recipeName" style="
+              font-size:22px;font-weight:900;color:#fff;
+              letter-spacing:-.03em;line-height:1.15;margin-bottom:5px">
+              Sopa de lentejas</div>
+            <div id="recipeDesc" style="
+              font-size:13px;color:rgba(255,255,255,.5);
+              line-height:1.4;margin-bottom:12px">
+              Caliente, económica y saciante.</div>
+            <!-- Badges -->
+            <div style="display:flex;flex-wrap:wrap;gap:7px">
+              <div id="recipeTime" style="
+                display:inline-flex;align-items:center;gap:6px;
+                padding:6px 12px;border-radius:20px;
+                background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.3);
+                font-size:12px;font-weight:700;color:rgba(220,210,255,.9)">
+                ⏱ <span id="recipeTimeVal">30 min</span>
+              </div>
+              <div id="recipeProtein" style="
+                display:inline-flex;align-items:center;gap:6px;
+                padding:6px 12px;border-radius:20px;
+                background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.25);
+                font-size:12px;font-weight:700;color:rgba(253,211,77,.9)">
+                💪 <span id="recipeProteinVal">22g prot</span>
+              </div>
+              <div id="recipeDiff" style="
+                display:inline-flex;align-items:center;gap:6px;
+                padding:6px 12px;border-radius:20px;
+                background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+                font-size:12px;font-weight:700;color:rgba(255,255,255,.55)">
+                🍳 <span id="recipeDiffVal">Fácil</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- CTA bar -->
+        <!-- Footer strip -->
         <div style="
-          background:rgba(99,102,241,.08);border-top:1px solid rgba(129,140,248,.15);
-          padding:10px 18px;display:flex;align-items:center;justify-content:space-between">
-          <div style="font-size:12px;color:rgba(199,210,254,.55);font-weight:500">
-            Comer bien no tiene que complicarse.</div>
-          <div style="font-size:12px;color:rgba(165,180,252,.8);font-weight:700">
+          display:flex;align-items:center;justify-content:space-between;
+          padding:11px 16px;
+          background:rgba(255,255,255,.04);
+          border-top:1px solid rgba(255,255,255,.06)">
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="
+              width:28px;height:28px;border-radius:50%;
+              background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.2);
+              display:flex;align-items:center;justify-content:center;font-size:13px">🌿</div>
+            <span id="recipeTagline" style="font-size:12px;color:rgba(255,255,255,.4);font-weight:500">
+              Comer bien no tiene que complicarse.</span>
+          </div>
+          <div style="font-size:13px;font-weight:800;color:#a78bfa;letter-spacing:-.01em">
             Ver receta →</div>
         </div>
       </div>
