@@ -4508,6 +4508,112 @@ function addToLog(rid) {
     if (modal) modal.remove();
   }
 }
+
+// ── openMealDetail ─────────────────────────────────
+function openMealDetail(meal) {
+  window._quickLogMeal = meal;
+  if (typeof openQuickLog === 'function') openQuickLog();
+}
+
+// ── filterByMeal ────────────────────────────────────
+window._activeRecipeFilter = 'todo';
+function filterByMeal(meal) {
+  window._activeRecipeFilter = meal || 'todo';
+  ['todo','desayuno','almuerzo','cena','snack'].forEach(function(k) {
+    var btn = document.getElementById('rf-' + k);
+    if (!btn) return;
+    var active = (k === window._activeRecipeFilter);
+    btn.style.background = active ? 'linear-gradient(135deg,#7c3aed,#a855f7)' : 'rgba(255,255,255,.05)';
+    btn.style.color      = active ? '#fff' : 'rgba(255,255,255,.6)';
+    btn.style.border     = active ? 'none' : '1px solid rgba(255,255,255,.1)';
+    btn.style.boxShadow  = active ? '0 3px 10px rgba(124,58,237,.35)' : 'none';
+  });
+  ['recipeListFallback'].forEach(function(lid) {
+    var list = document.getElementById(lid);
+    if (!list) return;
+    list.querySelectorAll('[data-meal]').forEach(function(card) {
+      card.style.display = (window._activeRecipeFilter === 'todo' || card.dataset.meal === window._activeRecipeFilter) ? '' : 'none';
+    });
+  });
+}
+
+// ── Market data & functions ──────────────────────────
+function getMarketChecked() {
+  try { return JSON.parse(localStorage.getItem('af-market-checked') || '{}'); } catch(e) { return {}; }
+}
+function saveMarketChecked(obj) {
+  localStorage.setItem('af-market-checked', JSON.stringify(obj));
+}
+
+var MARKET_DATA = {
+  proteinas:     { label:'PROTEÍNAS',     icon:'🥩', color:'#f87171',
+    items: [{id:'p1',name:'Pechuga de pollo',qty:'500g',emoji:'🍗'},{id:'p2',name:'Huevos',qty:'12 uds',emoji:'🥚'},{id:'p3',name:'Atún en agua',qty:'4 latas',emoji:'🐟'},{id:'p4',name:'Yogur griego',qty:'500g',emoji:'🫙'},{id:'p5',name:'Fríjoles negros',qty:'1 libra',emoji:'🫘'},{id:'p6',name:'Carne molida',qty:'400g',emoji:'🥩'}]},
+  carbohidratos: { label:'CARBOHIDRATOS', icon:'🌾', color:'#fcd34d',
+    items: [{id:'c1',name:'Arroz blanco',qty:'1 kg',emoji:'🍚'},{id:'c2',name:'Avena en hojuelas',qty:'500g',emoji:'🥣'},{id:'c3',name:'Papa criolla',qty:'1 kg',emoji:'🥔'},{id:'c4',name:'Pan integral',qty:'1 und',emoji:'🍞'}]},
+  grasas:        { label:'GRASAS BUENAS', icon:'🥑', color:'#6ee7b7',
+    items: [{id:'g1',name:'Aguacate',qty:'4 uds',emoji:'🥑'},{id:'g2',name:'Aceite de oliva',qty:'250ml',emoji:'🫙'},{id:'g3',name:'Almendras',qty:'200g',emoji:'🥜'}]},
+  vegetales:     { label:'VEGETALES',     icon:'🥦', color:'#34d399',
+    items: [{id:'v1',name:'Brócoli',qty:'500g',emoji:'🥦'},{id:'v2',name:'Espinaca',qty:'250g',emoji:'🥬'},{id:'v3',name:'Tomate',qty:'500g',emoji:'🍅'},{id:'v4',name:'Zanahoria',qty:'500g',emoji:'🥕'}]},
+  lacteos:       { label:'LÁCTEOS',       icon:'🥛', color:'#93c5fd',
+    items: [{id:'l1',name:'Leche descremada',qty:'1 litro',emoji:'🥛'},{id:'l2',name:'Queso cottage',qty:'250g',emoji:'🧀'}]},
+  extras:        { label:'EXTRAS FIT',    icon:'✨', color:'#c4b5fd',
+    items: [{id:'e1',name:'Proteína en polvo',qty:'1 kg',emoji:'💪'},{id:'e2',name:'Limones',qty:'6 uds',emoji:'🍋'},{id:'e3',name:'Sal rosa',qty:'250g',emoji:'🧂'}]}
+};
+
+function renderMarket() {
+  var list = document.getElementById('marketList');
+  if (!list) return;
+  var checked = getMarketChecked();
+  var html = '';
+  Object.keys(MARKET_DATA).forEach(function(catKey) {
+    var cat = MARKET_DATA[catKey];
+    var doneCount = cat.items.filter(function(it){ return !!checked[it.id]; }).length;
+    html += '<div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:20px;overflow:hidden;margin-bottom:10px">';
+    html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px">';
+    html += '<div style="display:flex;align-items:center;gap:8px"><span>' + cat.icon + '</span>';
+    html += '<span style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:' + cat.color + '">' + cat.label + '</span></div>';
+    html += '<span style="font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.07);color:rgba(255,255,255,.4);font-weight:600">';
+    html += (doneCount > 0 ? doneCount + '/' : '') + cat.items.length + ' productos</span></div>';
+    cat.items.forEach(function(item) {
+      var isDone = !!checked[item.id];
+      html += '<div data-mid="' + item.id + '" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent;' + (isDone ? 'opacity:.45;' : '') + '">';
+      html += '<div style="width:22px;height:22px;border-radius:7px;border:1.5px solid ' + (isDone ? cat.color : 'rgba(124,58,237,.4)') + ';display:flex;align-items:center;justify-content:center;font-size:11px;color:white">' + (isDone ? '✓' : '') + '</div>';
+      html += '<div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">' + item.emoji + '</div>';
+      html += '<div style="flex:1;font-size:14px;font-weight:700;color:' + (isDone ? 'rgba(255,255,255,.4)' : '#fff') + ';text-decoration:' + (isDone ? 'line-through' : 'none') + '">' + item.name + '</div>';
+      html += '<span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">' + item.qty + '</span>';
+      html += '</div>';
+    });
+    html += '</div>';
+  });
+  list.innerHTML = html;
+  list.onclick = function(e) {
+    var el = e.target;
+    while (el && el !== list) {
+      if (el.getAttribute && el.getAttribute('data-mid')) {
+        toggleMarketItem(el.getAttribute('data-mid'));
+        return;
+      }
+      el = el.parentElement;
+    }
+  };
+}
+
+function toggleMarketItem(id) {
+  var c = getMarketChecked();
+  c[id] = !c[id];
+  saveMarketChecked(c);
+  renderMarket();
+}
+
+function resetMarket() { saveMarketChecked({}); renderMarket(); }
+
+function addMarketItem() {
+  var name = prompt('Nombre del producto:');
+  if (!name) return;
+  var qty = prompt('Cantidad:') || '—';
+  MARKET_DATA.extras.items.push({ id: 'cx' + Date.now(), name: name, qty: qty, emoji: '🛒' });
+  renderMarket();
+}
 </script>
 </body>
 </html>
