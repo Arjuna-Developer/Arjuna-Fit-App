@@ -3912,7 +3912,7 @@ var _arjuCitySync = setInterval(function(){
       // Secondary actions
       + '<div style="display:flex;gap:8px">'
 
-      + '<button onclick="openMealSheet('' + next.key + '')" style="'
+      + '<button onclick="openMealSheet(\'' + next.key + '\')" style="'
       + 'flex:1;padding:11px;border-radius:14px;border:1px solid rgba(255,255,255,.09);'
       + 'background:rgba(255,255,255,.05);color:rgba(255,255,255,.7);'
       + 'font-family:Outfit,sans-serif;font-size:12px;font-weight:700;cursor:pointer;'
@@ -3920,7 +3920,7 @@ var _arjuCitySync = setInterval(function(){
       + '🍽️ Recetas'
       + '</button>'
 
-      + '<button onclick="openManualLog('' + next.key + '')" style="'
+      + '<button onclick="openManualLog(\'' + next.key + '\')" style="'
       + 'flex:1;padding:11px;border-radius:14px;border:1px solid rgba(255,255,255,.09);'
       + 'background:rgba(255,255,255,.05);color:rgba(255,255,255,.7);'
       + 'font-family:Outfit,sans-serif;font-size:12px;font-weight:700;cursor:pointer;'
@@ -3928,7 +3928,7 @@ var _arjuCitySync = setInterval(function(){
       + '✏️ Manual'
       + '</button>'
 
-      + '<button onclick="window.location.href='/pages/nutrition.html?tab=hoy'" style="'
+      + '<button onclick="window.location.href=\'/pages/nutrition.html?tab=hoy\'" style="'
       + 'flex:1;padding:11px;border-radius:14px;border:1px solid rgba(255,255,255,.09);'
       + 'background:rgba(255,255,255,.05);color:rgba(255,255,255,.7);'
       + 'font-family:Outfit,sans-serif;font-size:12px;font-weight:700;cursor:pointer;'
@@ -4196,8 +4196,8 @@ function handlePhotoFallback(error, code) {
   
   t.innerHTML = '<div style="font-size:13px;color:rgba(255,255,255,.8);margin-bottom:10px">' + msg + '</div>' +
     '<div style="display:flex;gap:8px">' +
-    '<button onclick="if(typeof openQuickLog==='function')openQuickLog();this.closest('[style*=fixed]').remove()" style="flex:1;padding:9px;border-radius:10px;border:none;background:rgba(124,58,237,.2);color:#c4b5fd;font-family:Outfit,sans-serif;font-size:12px;font-weight:700;cursor:pointer">✏️ Manual</button>' +
-    '<button onclick="this.closest('[style*=fixed]').remove()" style="padding:9px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.4);font-family:Outfit,sans-serif;font-size:12px;cursor:pointer">Cerrar</button>' +
+    '<button onclick="if(typeof openQuickLog==="function")openQuickLog();this.closest("[style*=fixed]").remove()" style="flex:1;padding:9px;border-radius:10px;border:none;background:rgba(124,58,237,.2);color:#c4b5fd;font-family:Outfit,sans-serif;font-size:12px;font-weight:700;cursor:pointer">✏️ Manual</button>' +
+    '<button onclick="this.closest("[style*=fixed]").remove()" style="padding:9px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.4);font-family:Outfit,sans-serif;font-size:12px;cursor:pointer">Cerrar</button>' +
     '</div>';
   
   document.body.appendChild(t);
