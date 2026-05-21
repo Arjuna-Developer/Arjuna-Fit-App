@@ -2101,19 +2101,19 @@ window.sw = window.sw || function(id) {
 
 // ── Dynamic photo CTA label by hour ─────────────
 (function() {
-  const h = new Date().getHours();
-  const lbl = h<11?'Registrar desayuno con foto':
+  var h = new Date().getHours();
+  var lbl = h<11?'Registrar desayuno con foto':
               h<15?'Registrar almuerzo con foto':
               h<19?'Registrar cena con foto':
               h<21?'Registrar snack con foto':'Registrar comida con foto';
-  const el = document.getElementById('photoMainLabel');
+  var el = document.getElementById('photoMainLabel');
   if (el) el.textContent = lbl;
 })();
 
 // ── Date header ──────────────────────────────────
-const days  = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
-const months= ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
-const now   = new Date();
+var days  = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+var months= ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+var now   = new Date();
 var _hdrDate = document.getElementById('hdrDate');
 if (_hdrDate) _hdrDate.textContent = `${days[now.getDay()]}, ${now.getDate()} de ${months[now.getMonth()]}`;
 
@@ -2128,7 +2128,7 @@ try {
 } catch(e) {}
 
 // ── Rotating tips ─────────────────────────────────
-const TIPS = [
+var TIPS = [
   'Prioriza proteína en cada comida. Es lo más importante para el reto.',
   'Agua primero. El hambre entre comidas a veces es sed disfrazada.',
   'El arroz, fríjoles y aguacate son tus aliados sin exagerar.',
@@ -2141,7 +2141,7 @@ var _tip = document.getElementById('nutriTip'); if (_tip) _tip.textContent = TIP
 
 // ── Tab switching ─────────────────────────────────
 // ── Dynamic recipe recommendation by time ────────
-const REC_BY_TIME = {
+var REC_BY_TIME = {
   desayuno: [
     { id:'huevos-aguacate', emoji:'🍳', name:'Desayuno que sí llena', desc:'Rápido, proteína real, sin complicarse.' },
     { id:'avena-banano',    emoji:'🥣', name:'Avena que te sostiene',  desc:'La energía que necesitas para empezar.' },
@@ -2167,24 +2167,24 @@ const REC_BY_TIME = {
 let _currentRecId = 'pechuga-arroz';
 
 function initRecipeRec() {
-  const h = new Date().getHours();
-  const meal = h < 11 ? 'desayuno' : h < 15 ? 'almuerzo' : h < 19 ? 'cena' : 'snack';
-  const labels = { desayuno:'¿Qué desayunar hoy?', almuerzo:'¿Qué almorzar hoy?',
+  var h = new Date().getHours();
+  var meal = h < 11 ? 'desayuno' : h < 15 ? 'almuerzo' : h < 19 ? 'cena' : 'snack';
+  var labels = { desayuno:'¿Qué desayunar hoy?', almuerzo:'¿Qué almorzar hoy?',
                    cena:'¿Qué cenar hoy?', snack:'¿Qué comer ahora?' };
-  const pool = REC_BY_TIME[meal] || REC_BY_TIME.almuerzo;
-  const rec  = pool[new Date().getDay() % pool.length];
+  var pool = REC_BY_TIME[meal] || REC_BY_TIME.almuerzo;
+  var rec  = pool[new Date().getDay() % pool.length];
 
   _currentRecId = rec.id;
 
-  const el = id => document.getElementById(id);
+  var el = id => document.getElementById(id);
   if (el('recTimeLabel')) el('recTimeLabel').textContent = labels[meal];
   if (el('recEmoji'))     el('recEmoji').textContent = rec.emoji;
   if (el('recName'))      el('recName').textContent  = rec.name;
   if (el('recDesc'))      el('recDesc').textContent  = rec.desc;
 
   // Pills from RECIPES data
-  const r = RECIPES[rec.id];
-  const pills = el('recPills');
+  var r = RECIPES[rec.id];
+  var pills = el('recPills');
   if (pills && r) {
     pills.innerHTML = `
       <span style="font-size:10px;background:rgba(124,58,237,.15);color:#c4b5fd;
@@ -2206,13 +2206,13 @@ function openRecipeFromRec() {
 
 // Meal type selector before saving recipe
 function saveRecipeAsMeal(presetMeal) {
-  const r = RECIPES[_currentRecId || _currentDetailId];
+  var r = RECIPES[_currentRecId || _currentDetailId];
   if (!r) return;
   if (presetMeal) { _doSaveRecipe(r, presetMeal); return; }
-  const h = new Date().getHours();
-  const suggested = h<11?'desayuno':h<15?'almuerzo':h<19?'snack':'cena';
-  const MEAL_LABELS = { desayuno:'🌅 Desayuno', almuerzo:'🌞 Almuerzo', snack:'🍎 Snack', cena:'🌙 Cena' };
-  const ov = document.createElement('div');
+  var h = new Date().getHours();
+  var suggested = h<11?'desayuno':h<15?'almuerzo':h<19?'snack':'cena';
+  var MEAL_LABELS = { desayuno:'🌅 Desayuno', almuerzo:'🌞 Almuerzo', snack:'🍎 Snack', cena:'🌙 Cena' };
+  var ov = document.createElement('div');
   ov.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(8,5,17,.92);display:flex;align-items:flex-end;justify-content:center;padding:0 0 env(safe-area-inset-bottom)';
   ov.innerHTML = '<div style="width:100%;max-width:430px;background:#130d22;border:1px solid rgba(255,255,255,.08);border-radius:24px 24px 0 0;padding:24px 20px">' +
     '<div style="font-size:15px;font-weight:700;color:#f1f0f4;margin-bottom:16px;text-align:center">¿A qué comida vas a agregar?</div>' +
@@ -2227,11 +2227,11 @@ function saveRecipeAsMeal(presetMeal) {
 }
 
 function _doSaveRecipe(r, meal) {
-  const portions = parseFloat(localStorage.getItem('af-recipe-portions') || '1');
-  const pCal  = Math.round((r.cal  || 0) * portions);
-  const pProt = Math.round((r.prot || 0) * portions);
-  const pCarb = Math.round((r.carb || 0) * portions);
-  const pFat  = Math.round((r.fat  || 0) * portions);
+  var portions = parseFloat(localStorage.getItem('af-recipe-portions') || '1');
+  var pCal  = Math.round((r.cal  || 0) * portions);
+  var pProt = Math.round((r.prot || 0) * portions);
+  var pCarb = Math.round((r.carb || 0) * portions);
+  var pFat  = Math.round((r.fat  || 0) * portions);
   saveFood(r.name, pCal, pProt, pFat, meal);
   if (window.AF) AF.track('recipe_added_to_day', { recipe_id: _currentRecId || _currentDetailId, meal, cal: pCal, protein: pProt, product: localStorage.getItem('af-product-type') || '' });
   if (window.MV) window.MV.show('Ya tienes una decisión menos que pensar hoy.',
@@ -2313,7 +2313,7 @@ function sw(id) {
   if (id === 'mercado') setTimeout(buildShop, 50);
   if (id === 'hoy')     loadToday();
   // Scroll tab content to top
-  const tc = document.getElementById(`tc-${id}`);
+  var tc = document.getElementById(`tc-${id}`);
   if (tc) tc.scrollTop = 0;
   // Render dynamic tabs
   if (id === 'mercado') setTimeout(renderMarket, 60);
@@ -2351,7 +2351,7 @@ function filterRecipes(cat, btn) {
   btn.classList.add('on');
   // Show/hide recipe cards
   document.querySelectorAll('.rc').forEach(card => {
-    const tags = card.dataset.tags || '';
+    var tags = card.dataset.tags || '';
     if (cat === 'all' || tags.includes(cat)) {
       card.classList.remove('hidden');
     } else {
@@ -2361,7 +2361,7 @@ function filterRecipes(cat, btn) {
 }
 
 // ── Recipe detail overlay ─────────────────────────
-const RECIPES = {
+var RECIPES = {
   'pechuga-arroz': {
     emoji:'🍗', name:'Pechuga con arroz y brócoli',
     prot:45, cal:420, time:20, dif:'Fácil',
@@ -2561,13 +2561,13 @@ const RECIPES = {
 };
 
 function openRecipeDetail(id) {
-  const r = RECIPES[id];
+  var r = RECIPES[id];
   if (!r) return;
 
   // Remove any existing overlay
   document.getElementById('recipe-detail-ov')?.remove();
 
-  const ov = document.createElement('div');
+  var ov = document.createElement('div');
   ov.id = 'recipe-detail-ov';
   ov.style.cssText = `
     position:fixed;inset:0;z-index:300;
@@ -2684,9 +2684,9 @@ function openRecipeDetail(id) {
 
 // ── Guide accordion ───────────────────────────────
 function toggleGuide(card) {
-  const body = card.querySelector('.gc-body');
-  const arrow = card.querySelector('.gc-title span');
-  const isOpen = body.classList.contains('open');
+  var body = card.querySelector('.gc-body');
+  var arrow = card.querySelector('.gc-title span');
+  var isOpen = body.classList.contains('open');
   body.classList.toggle('open', !isOpen);
   if (arrow) arrow.textContent = isOpen ? '›' : '‹';
 }
@@ -2704,12 +2704,12 @@ function resetShop() {
 }
 // Restore checkmarks from localStorage on load
 document.querySelectorAll('.shop-item').forEach(el => {
-  const key = el.getAttribute('onclick')?.match(/'(sh-[^']+)'/)?.[1];
+  var key = el.getAttribute('onclick')?.match(/'(sh-[^']+)'/)?.[1];
   if (key && localStorage.getItem(key) === '1') el.classList.add('ck');
 });
 
 // ── Registro del díaging ──────────────────────────────────
-const QUICK_FOODS = {
+var QUICK_FOODS = {
   'Desayuno': [
     {name:'Bowl de huevos y aguacate',     cal:380, prot:28, id:'huevos-aguacate',   emoji:'🍳'},
     {name:'Avena con banano y canela',      cal:310, prot:12, id:'avena-banano',      emoji:'🥣'},
@@ -2740,12 +2740,12 @@ const QUICK_FOODS = {
 };
 
 function openQuickLog(meal) {
-  const h = new Date().getHours();
+  var h = new Date().getHours();
   if (!meal) meal = h < 11 ? 'Desayuno' : h < 15 ? 'Almuerzo' : h < 19 ? 'Cena' : 'Snack';
-  const icon = {Desayuno:'🌅',Almuerzo:'🌞',Cena:'🌙',Snack:'🍎'}[meal] || '🍽️';
-  const options = QUICK_FOODS[meal] || [];
+  var icon = {Desayuno:'🌅',Almuerzo:'🌞',Cena:'🌙',Snack:'🍎'}[meal] || '🍽️';
+  var options = QUICK_FOODS[meal] || [];
 
-  const ov = document.createElement('div');
+  var ov = document.createElement('div');
   ov.style.cssText = `position:fixed;inset:0;z-index:300;
     background:rgba(8,5,17,.88);backdrop-filter:blur(16px);
     display:flex;align-items:flex-end;font-family:var(--font);`;
@@ -2786,21 +2786,21 @@ function openQuickLog(meal) {
 }
 
 function logThisRecipe(id) {
-  const entry = Object.values(QUICK_FOODS).flat().find(f => f.id === id);
+  var entry = Object.values(QUICK_FOODS).flat().find(f => f.id === id);
   if (!entry) return;
-  const h = new Date().getHours();
-  const meal = h < 11 ? 'desayuno' : h < 15 ? 'almuerzo' : h < 19 ? 'cena' : 'snack';
+  var h = new Date().getHours();
+  var meal = h < 11 ? 'desayuno' : h < 15 ? 'almuerzo' : h < 19 ? 'cena' : 'snack';
   saveFood(entry.name, entry.cal, entry.prot, 0, meal);
 }
 
 // ── Default macro goals (overridden by Supabase profile) ─
 // ── Local date (not UTC — fixes timezone bug) ─────
 function localDateKey() {
-  const d = new Date();
+  var d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
 
-const GOALS = { cal: 2000, prot: 120, carbs: 200, fat: 55 };
+var GOALS = { cal: 2000, prot: 120, carbs: 200, fat: 55 };
 
 // ── Macro status messages (human, not obsessive) ──────────
 function macroMessage(protPct) {
@@ -2812,7 +2812,7 @@ function macroMessage(protPct) {
 
 // ── Render macros from today's log ───────────────────────
 // ── Meal rhythm visualization ──────────────────────
-const MEAL_CONFIG = [
+var MEAL_CONFIG = [
   { key:'desayuno', icon:'🌅', name:'Desayuno',  start:6,  end:11 },
   { key:'almuerzo', icon:'🌞', name:'Almuerzo',  start:11, end:15 },
   { key:'cena',     icon:'🌙', name:'Cena',      start:15, end:21 },
@@ -2820,7 +2820,7 @@ const MEAL_CONFIG = [
 ];
 
 // Microcopy by state
-const EMPTY_COPIES = [
+var EMPTY_COPIES = [
   'Hoy todavía no hay comidas registradas. Empecemos.',
   'Tu progreso también necesita energía. Registra tu primera comida.',
   'La constancia empieza por una primera decisión simple.',
@@ -2828,21 +2828,21 @@ const EMPTY_COPIES = [
 ];
 
 function renderMealRhythm(entries) {
-  const el = document.getElementById('mealRhythm');
+  var el = document.getElementById('mealRhythm');
   if (!el) return;
-  const h = new Date().getHours();
-  const loggedMeals = new Set(entries.map(e => e.meal));
+  var h = new Date().getHours();
+  var loggedMeals = new Set(entries.map(e => e.meal));
 
   el.innerHTML = `
     <div style="display:flex;flex-direction:column;gap:7px">
       ${MEAL_CONFIG.map(m => {
-        const done = loggedMeals.has(m.key);
-        const current = !done && h >= m.start && h < m.end;
-        const foods = entries.filter(e=>e.meal===m.key);
-        const totProt = foods.reduce((s,f)=>s+(f.prot||0),0);
-        const totCal  = foods.reduce((s,f)=>s+(f.cal||0),0);
-        const cls = done?'done':current?'current':'empty';
-        const sub = done
+        var done = loggedMeals.has(m.key);
+        var current = !done && h >= m.start && h < m.end;
+        var foods = entries.filter(e=>e.meal===m.key);
+        var totProt = foods.reduce((s,f)=>s+(f.prot||0),0);
+        var totCal  = foods.reduce((s,f)=>s+(f.cal||0),0);
+        var cls = done?'done':current?'current':'empty';
+        var sub = done
           ? `${Math.round(totProt)}g prot · ${Math.round(totCal)} kcal`
           : current
           ? 'Momento ideal para comer'
@@ -2863,10 +2863,10 @@ function renderMealRhythm(entries) {
 
 // ── Update card visual state ──────────────────────
 function updateCardState(calPct, proteinPct, mealsCount) {
-  const card = document.getElementById('macroCard');
-  const label = document.getElementById('dayStateLabel');
-  const calPctEl = document.getElementById('calPct');
-  const tip = document.getElementById('nutriTip');
+  var card = document.getElementById('macroCard');
+  var label = document.getElementById('dayStateLabel');
+  var calPctEl = document.getElementById('calPct');
+  var tip = document.getElementById('nutriTip');
 
   let state, stateText, tipText;
 
@@ -2875,7 +2875,7 @@ function updateCardState(calPct, proteinPct, mealsCount) {
     stateText = 'Tu nutrición aún no empieza';
     tipText = EMPTY_COPIES[new Date().getDay() % EMPTY_COPIES.length];
     // Show empty state illustration
-    const emptyIll = document.getElementById('emptyStateIll');
+    var emptyIll = document.getElementById('emptyStateIll');
     if (emptyIll) emptyIll.style.display = 'block';
   } else if (calPct < 30) {
     state = 'state-partial';
@@ -2907,8 +2907,8 @@ function updateCardState(calPct, proteinPct, mealsCount) {
   }
 
   // Streak pill
-  const streak = parseInt(localStorage.getItem('af-streak')||'0');
-  const streakEl = document.getElementById('dayStreakPill');
+  var streak = parseInt(localStorage.getItem('af-streak')||'0');
+  var streakEl = document.getElementById('dayStreakPill');
   if (streakEl && streak >= 3) {
     streakEl.style.display = 'block';
     streakEl.textContent = streak + ' días seguidos';
@@ -2916,21 +2916,21 @@ function updateCardState(calPct, proteinPct, mealsCount) {
 }
 
 function updateMacroUI(entries) {
-  const totCal  = entries.reduce((s,e) => {
+  var totCal  = entries.reduce((s,e) => {
     // Use stored cal, or estimate from macros if cal is 0/missing
-    const cal = e.cal || Math.round((e.prot||0)*4 + (e.carb||0)*4 + (e.fat||0)*9);
+    var cal = e.cal || Math.round((e.prot||0)*4 + (e.carb||0)*4 + (e.fat||0)*9);
     return s + cal;
   }, 0);
-  const totProt = entries.reduce((s,e) => s + (e.prot||0), 0);
-  const totCarb = entries.reduce((s,e) => s + (e.carb||0), 0);
-  const totFat  = entries.reduce((s,e) => s + (e.fat||0), 0);
-  const calPct  = GOALS.cal > 0 ? Math.min(100, Math.round((totCal / GOALS.cal) * 100)) : 0;
-  const calDescEl = document.getElementById('calDesc');
+  var totProt = entries.reduce((s,e) => s + (e.prot||0), 0);
+  var totCarb = entries.reduce((s,e) => s + (e.carb||0), 0);
+  var totFat  = entries.reduce((s,e) => s + (e.fat||0), 0);
+  var calPct  = GOALS.cal > 0 ? Math.min(100, Math.round((totCal / GOALS.cal) * 100)) : 0;
+  var calDescEl = document.getElementById('calDesc');
   if (calDescEl) calDescEl.textContent = GOALS.cal > 0 ? `de ${GOALS.cal} kcal meta` : 'Completa tu perfil';
 
   // Ring
   // Update ring
-  const crNumEl = document.getElementById('crNum');
+  var crNumEl = document.getElementById('crNum');
   if (crNumEl) crNumEl.textContent = Math.round(totCal) || '0';
   document.getElementById('calPct').textContent  = calPct + '%';
   document.getElementById('calDesc').textContent = `de ${GOALS.cal} kcal meta`;
@@ -2951,10 +2951,10 @@ function updateMacroUI(entries) {
   document.getElementById('vFat').textContent  = Math.round(totFat)  + 'g';
 
   // Coach tip based on progress
-  const tip = document.getElementById('nutriTip');
+  var tip = document.getElementById('nutriTip');
   if (tip) {
-    const h = new Date().getHours();
-    const mealLabel = h<11?'desayuno':h<15?'almuerzo':h<19?'cena':'snack';
+    var h = new Date().getHours();
+    var mealLabel = h<11?'desayuno':h<15?'almuerzo':h<19?'cena':'snack';
     
     let msg, showBtns;
     if (entries.length === 0) {
@@ -2997,16 +2997,16 @@ function updateMacroUI(entries) {
 
 // ── Smart recipe suggestions ──────────────────────────────
 function showSmartSuggestions(remProt, remCal) {
-  const el = document.getElementById('smartSuggestions');
+  var el = document.getElementById('smartSuggestions');
   if (!el) return;
   if (remProt < 10 && remCal < 100) {
     el.innerHTML = `<div style="font-size:12px;color:rgba(196,181,253,.4);
       text-align:center;padding:8px">✓ Nutrición del día cubiertos para hoy.</div>`;
     return;
   }
-  const h = new Date().getHours();
-  const timeHint = h < 11 ? 'desayuno' : h < 15 ? 'almuerzo' : 'cena';
-  const suggestions = Object.values(QUICK_FOODS).flat()
+  var h = new Date().getHours();
+  var timeHint = h < 11 ? 'desayuno' : h < 15 ? 'almuerzo' : 'cena';
+  var suggestions = Object.values(QUICK_FOODS).flat()
     .filter(r => r.prot <= remProt + 15)
     .sort((a,b) => b.prot - a.prot)
     .slice(0, 2);
@@ -3040,12 +3040,12 @@ function showSmartSuggestions(remProt, remCal) {
 
 // ── Render today's food log ───────────────────────────────
 function renderLogList(entries) {
-  const el = document.getElementById('logList');
+  var el = document.getElementById('logList');
   if (!el) return;
   if (!entries.length) { el.style.display = 'none'; return; }
   el.style.display = 'flex';
 
-  const MEAL_ICONS = { desayuno:'🌅', almuerzo:'🌞', cena:'🌙', snack:'🍎' };
+  var MEAL_ICONS = { desayuno:'🌅', almuerzo:'🌞', cena:'🌙', snack:'🍎' };
   el.innerHTML = `
     <div style="font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
       color:var(--t3);margin-bottom:4px">Registrado hoy</div>
@@ -3085,13 +3085,13 @@ async function saveFood(name, cal, prot, fat = 0, meal, carb = 0) {
     if (window.AF) AF.track('meal_confirmed', { name: name, meal: meal });
   } catch(e) {}
   // Ensure calories are never 0 — estimate from macros if missing
-  const safeCal  = cal > 0 ? Math.round(cal) : Math.round((prot||0)*4 + (fat||0)*9 + 50); // 50 baseline for carbs
-  const safeProt = Math.round(prot || 0);
-  const safeFat  = Math.round(fat  || 0);
-  const carb     = Math.max(0, Math.round((safeCal - safeProt*4 - safeFat*9) / 4));
+  var safeCal  = cal > 0 ? Math.round(cal) : Math.round((prot||0)*4 + (fat||0)*9 + 50); // 50 baseline for carbs
+  var safeProt = Math.round(prot || 0);
+  var safeFat  = Math.round(fat  || 0);
+  var carb     = Math.max(0, Math.round((safeCal - safeProt*4 - safeFat*9) / 4));
 
-  const key  = `af-food-${localDateKey()}`;
-  const local = JSON.parse(localStorage.getItem(key) || '[]');
+  var key  = `af-food-${localDateKey()}`;
+  var local = JSON.parse(localStorage.getItem(key) || '[]');
   local.push({ name, cal:safeCal, prot:safeProt, carb, fat:safeFat, meal, ts:Date.now() });
   localStorage.setItem(key, JSON.stringify(local));
 
@@ -3158,27 +3158,27 @@ async function saveFood(name, cal, prot, fat = 0, meal, carb = 0) {
 
 // ── Delete food ───────────────────────────────────────────
 function deleteFood(idx) {
-  const today = localDateKey();
-  const key   = `af-food-${today}`;
-  const local = JSON.parse(localStorage.getItem(key) || '[]');
+  var today = localDateKey();
+  var key   = `af-food-${today}`;
+  var local = JSON.parse(localStorage.getItem(key) || '[]');
   local.splice(idx, 1);
   localStorage.setItem(key, JSON.stringify(local));
   updateMacroUI(local);
 }
 
 // ── USDA FoodData Central Search ─────────────────
-const USDA_KEY = 'DEMO_KEY'; // Replace with real key from api.nal.usda.gov
+var USDA_KEY = 'DEMO_KEY'; // Replace with real key from api.nal.usda.gov
 
 function openUSDASearch() {
   // Upgrade: show local LATAM search first, USDA as fallback
-  const ov = document.createElement('div');
+  var ov = document.createElement('div');
   ov.id = 'usda-ov';
   ov.style.cssText = `position:fixed;inset:0;z-index:400;
     background:rgba(8,5,17,.9);backdrop-filter:blur(20px);
     display:flex;align-items:flex-end;font-family:var(--font)`;
 
-  const h = new Date().getHours();
-  const meal = h<11?'desayuno':h<15?'almuerzo':h<19?'cena':'snack';
+  var h = new Date().getHours();
+  var meal = h<11?'desayuno':h<15?'almuerzo':h<19?'cena':'snack';
 
   ov.innerHTML = `
     <div style="width:100%;max-width:430px;margin:0 auto;
@@ -3213,13 +3213,13 @@ function openUSDASearch() {
 }
 
 function searchFoodInput(query, meal) {
-  const res = document.getElementById('foodSearchResults');
+  var res = document.getElementById('foodSearchResults');
   if (!res) return;
 
   if (!query.trim()) { res.innerHTML = ''; return; }
 
   // Local DB first
-  const local = window.FoodDB ? window.FoodDB.searchLocal(query, 8) : [];
+  var local = window.FoodDB ? window.FoodDB.searchLocal(query, 8) : [];
 
   if (!local.length) {
     res.innerHTML = `<div style="font-size:13px;color:rgba(255,255,255,.3);text-align:center;padding:20px 0">
@@ -3246,16 +3246,16 @@ function searchFoodInput(query, meal) {
 
 function addFoodFromDB(id, qty, meal) {
   if (!window.FoodDB) return;
-  const food = window.FoodDB.LOCAL_DB.find(f => f.id === id);
+  var food = window.FoodDB.LOCAL_DB.find(f => f.id === id);
   if (!food) return;
-  const macros = window.FoodDB.calcMacros(food, qty);
+  var macros = window.FoodDB.calcMacros(food, qty);
   document.getElementById('usda-ov')?.remove();
   saveFood(food.name, macros.cal, macros.prot, macros.fat, meal);
 }
 
 function openUSDAItem(nameEnc, cal100, prot100, carb100, fat100) {
-  const name = decodeURIComponent(nameEnc);
-  const ov = mkOverlay('usda-item-ov');
+  var name = decodeURIComponent(nameEnc);
+  var ov = mkOverlay('usda-item-ov');
   ov.innerHTML = `
     ${stickyBack('usda-item-ov', name.slice(0,30) + '...')}
     <div style="padding:20px 16px;max-width:430px;margin:0 auto">
@@ -3313,16 +3313,16 @@ function openUSDAItem(nameEnc, cal100, prot100, carb100, fat100) {
 }
 
 function updateUSDACalc(cal100, prot100, carb100, fat100) {
-  const g = parseFloat(document.getElementById('usda-grams')?.value) || 100;
-  const f = g / 100;
-  const el = document.getElementById('usda-calc-text');
+  var g = parseFloat(document.getElementById('usda-grams')?.value) || 100;
+  var f = g / 100;
+  var el = document.getElementById('usda-calc-text');
   if (el) el.textContent = `${g}g = ${Math.round(cal100*f)} cal · ${Math.round(prot100*f)}g prot`;
 }
 
 function addUSDAFood(nameEnc, cal100, prot100, carb100, fat100, meal) {
-  const name = decodeURIComponent(nameEnc);
-  const g = parseFloat(document.getElementById('usda-grams')?.value) || 100;
-  const f = g / 100;
+  var name = decodeURIComponent(nameEnc);
+  var g = parseFloat(document.getElementById('usda-grams')?.value) || 100;
+  var f = g / 100;
   saveFood(name + ` (${g}g)`, Math.round(cal100*f), Math.round(prot100*f),
            Math.round(fat100*f), meal);
   document.getElementById('usda-item-ov')?.remove();
@@ -3331,8 +3331,8 @@ function addUSDAFood(nameEnc, cal100, prot100, carb100, fat100, meal) {
 }
 
 function usda_localFallback(q) {
-  const lower = q.toLowerCase();
-  const matches = Object.values(QUICK_FOODS).flat()
+  var lower = q.toLowerCase();
+  var matches = Object.values(QUICK_FOODS).flat()
     .filter(f => f.name.toLowerCase().includes(lower))
     .slice(0, 3);
   if (!matches.length) return '<div style="color:var(--t3);font-size:12px">Sin coincidencias locales</div>';
@@ -3347,7 +3347,7 @@ function usda_localFallback(q) {
 
 // ── Photo food logging ────────────────────────────
 function openPhotoLog() {
-  const ov = mkOverlay('photo-ov');
+  var ov = mkOverlay('photo-ov');
   ov.innerHTML = `
     ${stickyBack('photo-ov', 'Foto de Comida')}
     <div style="padding:20px 16px;max-width:430px;margin:0 auto">
@@ -3386,29 +3386,29 @@ function openPhotoLog() {
 }
 
 async function handleFoodPhoto(input) {
-  const file = input.files?.[0];
+  var file = input.files?.[0];
   if (!file) return;
 
   // Preview
-  const reader = new FileReader();
+  var reader = new FileReader();
   reader.onload = async (e) => {
-    const base64 = e.target.result.split(',')[1];
-    const mimeType = file.type || 'image/jpeg';
+    var base64 = e.target.result.split(',')[1];
+    var mimeType = file.type || 'image/jpeg';
 
     // Show preview
-    const preview = document.getElementById('photo-preview');
-    const label   = document.getElementById('photo-label');
+    var preview = document.getElementById('photo-preview');
+    var label   = document.getElementById('photo-label');
     if(label) label.style.transition = 'opacity .15s';
-    const result  = document.getElementById('photo-result');
+    var result  = document.getElementById('photo-result');
     if (preview) {
       preview.innerHTML = `<img src="${e.target.result}" style="
         width:140px;height:140px;object-fit:cover;border-radius:16px">`;
     }
     if (label) {
       label.textContent = 'Arju está revisando tu comida…';
-      const msgs = ['Detectando alimentos…','Estimando porciones…','Calculando proteína y energía…','Preparando recomendación…'];
+      var msgs = ['Detectando alimentos…','Estimando porciones…','Calculando proteína y energía…','Preparando recomendación…'];
       let mi = 0;
-      const _mt = setInterval(() => {
+      var _mt = setInterval(() => {
         mi = (mi+1) % msgs.length;
         if(label) { label.style.opacity='0'; setTimeout(()=>{if(label){label.textContent=msgs[mi];label.style.opacity='1';}},150); }
         else clearInterval(_mt);
@@ -3419,11 +3419,11 @@ async function handleFoodPhoto(input) {
 
     try {
       // 5s slow warning
-      const _slowTimer = setTimeout(() => {
+      var _slowTimer = setTimeout(() => {
         if(label) label.textContent = 'Tardando un poco más de lo normal…';
       }, 5000);
 
-      const res = await fetch('/.netlify/functions/food-photo', {
+      var res = await fetch('/.netlify/functions/food-photo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ image: base64, mimeType }),
@@ -3431,7 +3431,7 @@ async function handleFoodPhoto(input) {
       });
       if (!res.ok) throw new Error('Error ' + res.status);
       clearTimeout(_slowTimer);
-      const data = await res.json();
+      var data = await res.json();
 
       if (data.error && data.fallback) {
         if (label) label.textContent = 'No pude analizar bien. Ingresa manualmente.';
@@ -3463,17 +3463,17 @@ async function handleFoodPhoto(input) {
 }
 
 function renderPhotoResult(data) {
-  const el = document.getElementById('photo-result');
+  var el = document.getElementById('photo-result');
   if (!el) return;
   el.style.display = 'flex';
 
-  const foods = data.foods || [];
-  const total = data.total || { cal: 0, prot: 0, carb: 0, fat: 0 };
-  const h = new Date().getHours();
-  const defaultMeal = h<11?'desayuno':h<15?'almuerzo':h<19?'cena':'snack';
+  var foods = data.foods || [];
+  var total = data.total || { cal: 0, prot: 0, carb: 0, fat: 0 };
+  var h = new Date().getHours();
+  var defaultMeal = h<11?'desayuno':h<15?'almuerzo':h<19?'cena':'snack';
 
   // Human feedback first
-  const humanMsg = (total.prot||0) >= 25
+  var humanMsg = (total.prot||0) >= 25
     ? 'Buen aporte de proteína. Esta comida sostiene tu energía.'
     : (total.prot||0) >= 12
     ? 'En la próxima agrega un poco más de proteína si puedes.'
@@ -3549,9 +3549,9 @@ function renderPhotoResult(data) {
 function selectPhotoMeal(meal) {
   window._photoMeal = meal;
   ['desayuno','almuerzo','cena','snack'].forEach(m => {
-    const btn = document.getElementById(`pfm-${m}`);
+    var btn = document.getElementById(`pfm-${m}`);
     if (!btn) return;
-    const active = m === meal;
+    var active = m === meal;
     btn.style.borderColor = active ? 'rgba(139,92,246,.5)' : 'rgba(255,255,255,.1)';
     btn.style.background  = active ? 'rgba(139,92,246,.2)' : 'rgba(255,255,255,.04)';
     btn.style.color       = active ? '#c4b5fd' : 'rgba(240,238,248,.5)';
@@ -3559,23 +3559,23 @@ function selectPhotoMeal(meal) {
 }
 
 function confirmPhotoGuardar(foodCount) {
-  const meal = window._photoMeal || 'almuerzo';
+  var meal = window._photoMeal || 'almuerzo';
   let totCal = 0, totProt = 0;
-  const names = [];
+  var names = [];
   for (let i = 0; i < foodCount; i++) {
     totCal  += parseFloat(document.getElementById(`fp-cal-${i}`)?.value  || 0);
     totProt += parseFloat(document.getElementById(`fp-prot-${i}`)?.value || 0);
-    const item = document.querySelectorAll('[id^="fp-cal-"]')[i];
+    var item = document.querySelectorAll('[id^="fp-cal-"]')[i];
     if (item) names.push(item.closest('div')?.querySelector('.food-name')?.textContent || '');
   }
-  const name = `Foto IA · ${meal}`;
+  var name = `Foto IA · ${meal}`;
   document.getElementById('photo-ov')?.remove();
   document.body.style.overflow = '';
   saveFood(name, totCal, totProt, 0, meal);
 }
 
 function showManualAfterPhotoFail() {
-  const el = document.getElementById('photo-result');
+  var el = document.getElementById('photo-result');
   if (!el) return;
   el.style.display = 'flex';
   el.innerHTML = `
@@ -3594,9 +3594,9 @@ function showManualAfterPhotoFail() {
 
 // ── Manual log ────────────────────────────────────
 function openManualLog() {
-  const ov = mkOverlay('manual-ov');
-  const h = new Date().getHours();
-  const defaultMeal = h<11?'desayuno':h<15?'almuerzo':h<19?'cena':'snack';
+  var ov = mkOverlay('manual-ov');
+  var h = new Date().getHours();
+  var defaultMeal = h<11?'desayuno':h<15?'almuerzo':h<19?'cena':'snack';
   ov.innerHTML = `
     ${stickyBack('manual-ov', 'Registrar comida')}
     <div style="padding:20px 16px;max-width:430px;margin:0 auto;
@@ -3687,7 +3687,7 @@ function openManualLog() {
 function selectMeal(meal) {
   window._selectedMeal = meal;
   ['desayuno','almuerzo','cena','snack'].forEach(m => {
-    const btn = document.getElementById(`mb-${m}`);
+    var btn = document.getElementById(`mb-${m}`);
     if (!btn) return;
     btn.style.borderColor = m===meal ? 'rgba(124,58,237,.5)' : 'rgba(255,255,255,.1)';
     btn.style.background  = m===meal ? 'rgba(124,58,237,.2)' : 'rgba(255,255,255,.04)';
@@ -3697,11 +3697,11 @@ function selectMeal(meal) {
 
 // Live food text parser
 function liveParseFood(text) {
-  const preview = document.getElementById('parse-preview');
+  var preview = document.getElementById('parse-preview');
   if (!preview || !window.FoodDB) return;
   if (!text.trim()) { preview.innerHTML = ''; return; }
 
-  const results = window.FoodDB.parseText(text);
+  var results = window.FoodDB.parseText(text);
   if (!results.length) {
     preview.innerHTML = `<div style="font-size:12px;color:rgba(255,255,255,.3);padding:8px 0">
       No reconocí ese alimento. Puedes ingresar los datos manualmente.</div>`;
@@ -3709,14 +3709,14 @@ function liveParseFood(text) {
   }
 
   // Show parsed items and fill form
-  const totals = results.reduce((acc, r) => {
-    const m = window.FoodDB.calcMacros(r.food, r.qty);
+  var totals = results.reduce((acc, r) => {
+    var m = window.FoodDB.calcMacros(r.food, r.qty);
     acc.cal += m.cal; acc.prot += m.prot; acc.carb += m.carb; acc.fat += m.fat;
     return acc;
   }, { cal:0, prot:0, carb:0, fat:0 });
 
   preview.innerHTML = results.map(r => {
-    const m = window.FoodDB.calcMacros(r.food, r.qty);
+    var m = window.FoodDB.calcMacros(r.food, r.qty);
     return `<div style="display:flex;justify-content:space-between;align-items:center;
       padding:8px 12px;border-radius:11px;background:rgba(34,197,94,.07);
       border:1px solid rgba(34,197,94,.15)">
@@ -3738,9 +3738,9 @@ function liveParseFood(text) {
   </button>`;
 
   // Fill numeric fields
-  const calEl = document.getElementById('m-cal');
-  const protEl = document.getElementById('m-prot');
-  const nameEl = document.getElementById('m-name');
+  var calEl = document.getElementById('m-cal');
+  var protEl = document.getElementById('m-prot');
+  var nameEl = document.getElementById('m-name');
   if (calEl)  calEl.value  = totals.cal;
   if (protEl) protEl.value = totals.prot;
   if (nameEl) nameEl.value = results.map(r=>`${r.qty>1?r.qty+'× ':''}${r.food.name}`).join(', ');
@@ -3748,22 +3748,22 @@ function liveParseFood(text) {
 }
 
 function saveFromParser() {
-  const h = new Date().getHours();
-  const meal = document.querySelector('[id^="mb-"][style*="rgba(124"]')?.id.replace('mb-','')
+  var h = new Date().getHours();
+  var meal = document.querySelector('[id^="mb-"][style*="rgba(124"]')?.id.replace('mb-','')
     || (h<11?'desayuno':h<15?'almuerzo':h<19?'cena':'snack');
-  const name = document.getElementById('m-name')?.value;
-  const cal  = parseFloat(document.getElementById('m-cal')?.value) || 0;
-  const prot = parseFloat(document.getElementById('m-prot')?.value) || 0;
-  const fat  = window._parsedFoodFat || 0;
+  var name = document.getElementById('m-name')?.value;
+  var cal  = parseFloat(document.getElementById('m-cal')?.value) || 0;
+  var prot = parseFloat(document.getElementById('m-prot')?.value) || 0;
+  var fat  = window._parsedFoodFat || 0;
   if (!name) return;
   document.getElementById('manual-ov')?.remove();
   saveFood(name, cal, prot, fat, meal);
 }
 
 function submitManual() {
-  const name = document.getElementById('m-name')?.value?.trim();
-  const cal  = parseFloat(document.getElementById('m-cal')?.value)  || 0;
-  const prot = parseFloat(document.getElementById('m-prot')?.value) || 0;
+  var name = document.getElementById('m-name')?.value?.trim();
+  var cal  = parseFloat(document.getElementById('m-cal')?.value)  || 0;
+  var prot = parseFloat(document.getElementById('m-prot')?.value) || 0;
   if (!name) { document.getElementById('m-name').focus(); return; }
   saveFood(name, cal, prot, 0, window._selectedMeal || 'snack');
   document.getElementById('manual-ov')?.remove();
@@ -3773,7 +3773,7 @@ function submitManual() {
 // ── Overlay helpers ───────────────────────────────
 function mkOverlay(id) {
   document.getElementById(id)?.remove();
-  const ov = document.createElement('div');
+  var ov = document.createElement('div');
   ov.id = id;
   ov.style.cssText = `position:fixed;inset:0;z-index:300;background:var(--bg);
     overflow-y:auto;-webkit-overflow-scrolling:touch;font-family:var(--font);`;
@@ -3800,8 +3800,8 @@ function stickyBack(ovId, title) {
 }
 // ── Load today's data ────────────────────────────
 function loadToday() {
-  const localKey = `af-food-${localDateKey()}`;
-  const utcKey   = `af-food-${new Date().toISOString().split('T')[0]}`;
+  var localKey = `af-food-${localDateKey()}`;
+  var utcKey   = `af-food-${new Date().toISOString().split('T')[0]}`;
   // Try local date first, fall back to UTC key (handles old saved data)
   let local = JSON.parse(localStorage.getItem(localKey) || '[]');
   if (!local.length && localKey !== utcKey) {
@@ -3811,8 +3811,8 @@ function loadToday() {
 }
 
 function showGuardardToast(name, meal) {
-  const MEAL_LABELS = { desayuno:'desayuno', almuerzo:'almuerzo', cena:'cena', snack:'snack' };
-  const t = document.createElement('div');
+  var MEAL_LABELS = { desayuno:'desayuno', almuerzo:'almuerzo', cena:'cena', snack:'snack' };
+  var t = document.createElement('div');
   t.style.cssText = `position:fixed;bottom:calc(84px + env(safe-area-inset-bottom));
     left:50%;transform:translateX(-50%);z-index:400;
     background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);
@@ -3826,7 +3826,7 @@ function showGuardardToast(name, meal) {
 
 // ── Init — loader hides immediately ───────────────────────
 // 1. Hide spinner RIGHT NOW, no waiting
-const _ldr = document.getElementById('ldr');
+var _ldr = document.getElementById('ldr');
 if (_ldr) _ldr.classList.add('off');
 
 // Init recipe recommendation on load
@@ -3834,12 +3834,12 @@ initRecipeRec();
 
 // Dynamic photo CTA on load
 (function(){
-  const h = new Date().getHours();
-  const lbl = h<11?'Registrar desayuno con foto':
+  var h = new Date().getHours();
+  var lbl = h<11?'Registrar desayuno con foto':
               h<15?'Registrar almuerzo con foto':
               h<19?'Registrar cena con foto':
               h<21?'Registrar snack con foto':'Registrar comida con foto';
-  const el = document.getElementById('photoMainLabel');
+  var el = document.getElementById('photoMainLabel');
   if (el) el.textContent = lbl;
 })();
 
@@ -3850,7 +3850,7 @@ if (location.search.includes('camera=1')) {
 }
 
 // Auto-open recipe if navigated from home with ?recipe=id
-const _recipeParam = new URLSearchParams(location.search).get('recipe');
+var _recipeParam = new URLSearchParams(location.search).get('recipe');
 if (_recipeParam) {
   setTimeout(() => { if(typeof openRecipeDetail==='function') openRecipeDetail(_recipeParam); }, 500);
   history.replaceState({}, '', location.pathname);
@@ -3862,33 +3862,33 @@ loadToday();
 // 3. Supabase loads in background — never blocks UI
 (async () => {
   try {
-    const authRes = await Promise.race([
+    var authRes = await Promise.race([
       _sb?.auth.getSession(),
       new Promise(r => setTimeout(() => r({ data:{ session:null } }), 3000))
     ]) || { data:{ session:null } };
-    const session = authRes?.data?.session;
+    var session = authRes?.data?.session;
     if (!session?.user) return;
     _uid = session.user.id;
 
-    const profileRes = await Promise.race([
+    var profileRes = await Promise.race([
       _sb.from('profiles').select('*').eq('id',_uid).single(),
       new Promise(r => setTimeout(() => r({ data: null }), 2000))
     ]);
     if (profileRes?.data) {
-      const p = profileRes.data;
+      var p = profileRes.data;
       if (p.calorias_objetivo) GOALS.cal   = p.calorias_objetivo;
       if (p.proteina_g)        GOALS.prot  = p.proteina_g;
       if (p.carbs_g)           GOALS.carbs = p.carbs_g;
       if (p.grasas_g)          GOALS.fat   = p.grasas_g;
     }
-    const today = localDateKey();
+    var today = localDateKey();
     // Use created_at range (works even if 'date' column doesn't exist)
     // Colombia is UTC-5, so today starts at 05:00 UTC
     let logsRes = { data: [] };
     try {
-      const startUTC = `${today}T00:00:00`;
-      const endUTC   = `${today}T23:59:59`;
-      const r = await Promise.race([
+      var startUTC = `${today}T00:00:00`;
+      var endUTC   = `${today}T23:59:59`;
+      var r = await Promise.race([
         _sb.from('day_logs').select('*')
           .eq('user_id', _uid)
           .gte('created_at', startUTC)
@@ -3900,7 +3900,7 @@ loadToday();
       console.warn('[Nutrition] day_logs query skipped:', e.message);
     }
     if (logsRes?.data?.length) {
-      const entries = logsRes.data.map(r => ({
+      var entries = logsRes.data.map(r => ({
         name: r.food_name, cal: r.calories||0, prot: r.protein_g||0,
         carb: 0, fat: 0, meal: r.meal_type, ts: new Date(r.created_at).getTime()
       }));
