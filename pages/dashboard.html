@@ -1424,13 +1424,29 @@ html, body {
 }
 </style>
 
+<style>
+@keyframes nav-ripple {
+  0%   { transform:translate(-50%,-50%) scale(0); opacity:.6; }
+  100% { transform:translate(-50%,-50%) scale(4); opacity:0; }
+}
+@keyframes nav-pulse {
+  0%,100% { box-shadow:0 0 0 0 rgba(168,85,247,.5),0 8px 24px rgba(124,58,237,.5); }
+  50%      { box-shadow:0 0 0 8px rgba(168,85,247,.12),0 8px 24px rgba(124,58,237,.5); }
+}
+@keyframes nav-shutter {
+  0%   { transform:scale(1) rotate(0deg); }
+  20%  { transform:scale(.88) rotate(-8deg); }
+  50%  { transform:scale(1.08) rotate(4deg); }
+  100% { transform:scale(1) rotate(0deg); }
+}
+</style>
+
 <nav id="af-nav" style="
   position:fixed;
   bottom:calc(10px + env(safe-area-inset-bottom));
   left:50%;transform:translateX(-50%);
-  width:calc(100vw - 24px);max-width:430px;
-  z-index:1000;
-  pointer-events:none;
+  width:calc(100vw - 32px);max-width:420px;
+  z-index:1000;pointer-events:none;
 ">
   <div style="
     pointer-events:all;
@@ -1442,179 +1458,123 @@ html, body {
     padding:0 8px;
     height:68px;
     display:flex;align-items:center;justify-content:space-between;
-    box-shadow:0 8px 32px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06),0 0 0 1px rgba(124,58,237,.08);
+    box-shadow:0 8px 32px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06);
     position:relative;overflow:visible;
   ">
 
     <!-- Inicio -->
-    <a href="/pages/dashboard.html" class="af-nav-item" style="
+    <a href="/pages/dashboard.html" class="af-nav-item" id="nav-inicio" style="
       flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-      gap:4px;text-decoration:none;padding:8px 0;position:relative;
-    ">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      gap:4px;text-decoration:none;padding:8px 0;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
         <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
         <path d="M9 21V12h6v9"/>
       </svg>
-      <span style="font-size:10px;font-weight:700;color:#fff;font-family:'Outfit',sans-serif;letter-spacing:.01em">Inicio</span>
-      <div style="width:4px;height:4px;border-radius:50%;background:#a78bfa;box-shadow:0 0 5px #a78bfa;margin-top:-2px"></div>
+      <span style="font-size:10px;font-weight:600;color:rgba(255,255,255,.35);font-family:'Outfit',sans-serif">Inicio</span>
+      <div style="width:4px;height:4px;border-radius:50%;background:transparent"></div>
     </a>
 
-    <!-- Entreno -->
-    <a href="/pages/workout.html" class="af-nav-item" style="
+    <!-- Entrena -->
+    <a href="/pages/workout.html" class="af-nav-item" id="nav-entrena" style="
       flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-      gap:4px;text-decoration:none;padding:8px 0;
-    ">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.38)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      gap:4px;text-decoration:none;padding:8px 0;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
         <path d="M6.5 6.5h11M6.5 17.5h11"/><path d="M3 10h3M18 10h3M3 14h3M18 14h3"/>
       </svg>
-      <span style="font-size:10px;font-weight:600;color:rgba(255,255,255,.38);font-family:'Outfit',sans-serif">Entreno</span>
-      <div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.0)"></div>
+      <span style="font-size:10px;font-weight:600;color:rgba(255,255,255,.35);font-family:'Outfit',sans-serif">Entrena</span>
+      <div style="width:4px;height:4px;border-radius:50%;background:transparent"></div>
     </a>
 
-    <!-- REGISTRAR (centro elevado) -->
+    <!-- Registrar (centro) -->
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;position:relative;margin-top:-22px;">
       <div style="position:relative;">
-        <!-- Ripple container -->
         <div id="af-ripple" style="position:absolute;inset:0;border-radius:50%;overflow:hidden;pointer-events:none;z-index:0"></div>
-        <!-- Outer glow ring -->
-        <div style="
-          position:absolute;inset:-4px;border-radius:50%;
-          background:linear-gradient(135deg,rgba(168,85,247,.4),rgba(236,72,153,.3));
-          filter:blur(6px);z-index:0;pointer-events:none
-        "></div>
-        <!-- Button -->
+        <div style="position:absolute;inset:-4px;border-radius:50%;background:linear-gradient(135deg,rgba(168,85,247,.4),rgba(236,72,153,.3));filter:blur(6px);z-index:0;pointer-events:none"></div>
         <div id="af-reg-btn" onclick="afNavRegister()" style="
           width:58px;height:58px;border-radius:50%;
           background:linear-gradient(135deg,#7c3aed 0%,#a855f7 45%,#ec4899 100%);
           display:flex;align-items:center;justify-content:center;
           cursor:pointer;position:relative;z-index:1;
           border:2px solid rgba(255,255,255,.15);
+          animation:nav-pulse 3s ease-in-out infinite;
         ">
-          <svg id="af-cam-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round">
             <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
             <circle cx="12" cy="13" r="4"/>
           </svg>
         </div>
       </div>
-      <span style="font-size:10px;font-weight:800;color:#ec4899;font-family:'Outfit',sans-serif;letter-spacing:.01em">Registrar</span>
+      <span style="font-size:10px;font-weight:800;color:#ec4899;font-family:'Outfit',sans-serif">Registrar</span>
     </div>
 
-    <!-- Arju -->
-    <a href="/pages/coach.html?from=nav" class="af-nav-item" style="
-      flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-      gap:4px;text-decoration:none;padding:8px 0;position:relative;
-    ">
-      <div style="width:36px;height:36px;border-radius:50%;
-        background:linear-gradient(135deg,rgba(124,58,237,.3),rgba(236,72,153,.2));
-        border:1px solid rgba(124,58,237,.3);
-        display:flex;align-items:center;justify-content:center;font-size:18px">🤖</div>
-      <span style="font-size:10px;font-weight:700;color:rgba(196,181,253,.7);font-family:'Outfit',sans-serif">Arju</span>
-      <div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.0)"></div>
-    </a>
-
     <!-- Coach -->
-    <a href="/pages/coach.html" class="af-nav-item" style="
+    <a href="/pages/coach.html" class="af-nav-item" id="nav-coach" style="
       flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-      gap:4px;text-decoration:none;padding:8px 0;
-    ">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.38)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      gap:4px;text-decoration:none;padding:8px 0;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.6" stroke-linecap="round">
         <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
       </svg>
-      <span style="font-size:10px;font-weight:600;color:rgba(255,255,255,.38);font-family:'Outfit',sans-serif">Coach</span>
-      <div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.0)"></div>
+      <span style="font-size:10px;font-weight:600;color:rgba(255,255,255,.35);font-family:'Outfit',sans-serif">Coach</span>
+      <div style="width:4px;height:4px;border-radius:50%;background:transparent"></div>
     </a>
 
     <!-- Nutrición -->
-    <a href="/pages/nutrition.html" class="af-nav-item" style="
+    <a href="/pages/nutrition.html" class="af-nav-item" id="nav-nutr" style="
       flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-      gap:4px;text-decoration:none;padding:8px 0;
-    ">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.38)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      gap:4px;text-decoration:none;padding:8px 0;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1.6" stroke-linecap="round">
         <path d="M12 2a7 7 0 017 7c0 5-7 13-7 13S5 14 5 9a7 7 0 017-7z"/><path d="M12 2c1-1 3-1 4 0"/>
       </svg>
-      <span style="font-size:10px;font-weight:600;color:rgba(255,255,255,.38);font-family:'Outfit',sans-serif">Nutrición</span>
-      <div style="width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.0)"></div>
+      <span style="font-size:10px;font-weight:600;color:rgba(255,255,255,.35);font-family:'Outfit',sans-serif">Nutrición</span>
+      <div style="width:4px;height:4px;border-radius:50%;background:transparent"></div>
     </a>
 
   </div>
 </nav>
 
 <script>
-// ── Nav Register Animation ─────────────────────
 function afNavRegister() {
   var btn = document.getElementById('af-reg-btn');
-  var rippleContainer = document.getElementById('af-ripple');
-
-  // 1. Shutter + gradient animation
-  btn.classList.remove('firing');
-  void btn.offsetWidth; // reflow
-  btn.classList.add('firing');
-  setTimeout(function(){ btn.classList.remove('firing'); }, 500);
-
-  // 2. Ripple burst
-  if (rippleContainer) {
-    rippleContainer.innerHTML = '';
-    for (var i = 0; i < 3; i++) {
-      (function(delay){
-        setTimeout(function(){
-          var r = document.createElement('div');
-          r.style.cssText = 'position:absolute;width:20px;height:20px;border-radius:50%;' +
-            'background:rgba(255,255,255,.3);top:50%;left:50%;' +
-            'animation:nav-ripple .6s ease-out forwards;animation-delay:0s;pointer-events:none';
-          rippleContainer.appendChild(r);
-          setTimeout(function(){ r.remove(); }, 700);
-        }, delay);
-      })(i * 80);
+  var ripple = document.getElementById('af-ripple');
+  btn.style.animation = 'none';
+  btn.style.transform = 'scale(.88) rotate(-8deg)';
+  setTimeout(function(){ btn.style.transform='scale(1.08) rotate(4deg)'; }, 120);
+  setTimeout(function(){ btn.style.transform=''; btn.style.animation='nav-pulse 3s ease-in-out infinite'; }, 300);
+  if (ripple) {
+    for (var i=0;i<3;i++) {
+      (function(d){ setTimeout(function(){
+        var r=document.createElement('div');
+        r.style.cssText='position:absolute;width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.3);top:50%;left:50%;animation:nav-ripple .6s ease-out forwards';
+        ripple.appendChild(r); setTimeout(function(){ r.remove(); },700);
+      },d); })(i*80);
     }
   }
-
-  // 3. Call openCamera
   setTimeout(function(){
-    if (typeof openCamera === 'function') openCamera();
-    else window.location.href = '/pages/nutrition.html?camera=1';
-  }, 150);
+    if(typeof openCamera==='function') openCamera();
+    else window.location.href='/pages/nutrition.html?camera=1';
+  },150);
 }
 
-// ── Active page highlight — por href ──────────
+// ── Active page — por ID, limpia todo primero ──────────
 (function(){
   var path = window.location.pathname;
-  var PAGE_MAP = {
-    'dashboard': { color:'#a78bfa', glow:'#a78bfa' },
-    'workout':   { color:'#c4b5fd', glow:'#8b5cf6' },
-    'coach':     { color:'#93c5fd', glow:'#3b82f6' },
-    'nutrition': { color:'#6ee7b7', glow:'#10b981' },
+  var MAP = {
+    'dashboard': { id:'nav-inicio', color:'#a78bfa', glow:'rgba(124,58,237,.5)' },
+    'workout':   { id:'nav-entrena', color:'#c4b5fd', glow:'rgba(139,92,246,.5)' },
+    'coach':     { id:'nav-coach',   color:'#93c5fd', glow:'rgba(59,130,246,.5)' },
+    'nutrition': { id:'nav-nutr',    color:'#6ee7b7', glow:'rgba(16,185,129,.5)' },
   };
-  
-  var activeKey = Object.keys(PAGE_MAP).find(function(k){ return path.includes(k); });
-  if (!activeKey) return;
-  
-  var col = PAGE_MAP[activeKey].color;
-  var glow = PAGE_MAP[activeKey].glow;
-  
-  // Find the matching nav link by href
-  document.querySelectorAll('#af-nav .af-nav-item').forEach(function(el) {
-    var href = el.getAttribute('href') || '';
-    var isActive = href.includes(activeKey);
-    
-    // Skip Arju button when on coach page (it's a duplicate)
-    if (activeKey === 'coach' && href.includes('from=nav')) return;
-    
-    if (isActive) {
-      var svg  = el.querySelector('svg');
-      var lbl  = el.querySelector('span');
-      var dot  = el.querySelectorAll('div');
-      var icon = el.querySelector('div[style*="36px"]') || el.querySelector('div[style*="border-radius:12px"]');
-      
-      if (svg) svg.setAttribute('stroke', col);
-      if (lbl) { lbl.style.color=col; lbl.style.fontWeight='800'; }
-      // Last div = dot indicator
-      var allDivs = el.querySelectorAll('div');
-      var lastDiv = allDivs[allDivs.length-1];
-      if (lastDiv) { lastDiv.style.background=glow; lastDiv.style.boxShadow='0 0 6px '+glow; }
-      // Icon container — add subtle glow
-      if (icon) { icon.style.borderColor='rgba(167,139,250,.4)'; icon.style.background='rgba(124,58,237,.2)'; }
-    }
-  });
+  var match = Object.keys(MAP).find(function(k){ return path.includes(k); });
+  if (!match) return;
+  var cfg = MAP[match];
+  var el = document.getElementById(cfg.id);
+  if (!el) return;
+  var svg = el.querySelector('svg');
+  var lbl = el.querySelector('span');
+  var dot = el.querySelectorAll('div');
+  if (svg) svg.setAttribute('stroke', cfg.color);
+  if (lbl) { lbl.style.color=cfg.color; lbl.style.fontWeight='800'; }
+  if (dot.length) { var d=dot[dot.length-1]; d.style.background=cfg.glow; d.style.boxShadow='0 0 6px '+cfg.glow; }
 })();
 </script>
 
