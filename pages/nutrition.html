@@ -1909,9 +1909,200 @@ setTimeout(function() {
 
       <!-- Market list -->
       
-      <div id="marketList" style="display:flex;flex-direction:column;gap:10px">
-        <!-- Static fallback - renderMarket() will replace this -->
-        <div id="mkt-loading" style="text-align:center;padding:20px;font-size:13px;color:rgba(255,255,255,.25)">Cargando lista...</div>
+            <div id="marketList" style="display:flex;flex-direction:column;gap:10px">
+      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:20px;overflow:hidden">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span>🥩</span>
+            <span style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#f87171">PROTEÍNAS</span>
+          </div>
+          <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.07);color:rgba(255,255,255,.4)">6 productos</span>
+        </div>
+        <div data-mid="p1" onclick="toggleMarketItem('p1')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-p1" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🍗</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Pechuga de pollo</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">500g</span>
+        </div>
+        <div data-mid="p2" onclick="toggleMarketItem('p2')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-p2" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🥚</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Huevos</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">12 uds</span>
+        </div>
+        <div data-mid="p3" onclick="toggleMarketItem('p3')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-p3" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🐟</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Atún en agua</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">4 latas</span>
+        </div>
+        <div data-mid="p4" onclick="toggleMarketItem('p4')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-p4" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🫙</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Yogur griego</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">500g</span>
+        </div>
+        <div data-mid="p5" onclick="toggleMarketItem('p5')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-p5" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🫘</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Fríjoles negros</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">1 libra</span>
+        </div>
+        <div data-mid="p6" onclick="toggleMarketItem('p6')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-p6" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🥩</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Carne molida (res)</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">400g</span>
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:20px;overflow:hidden">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span>🌾</span>
+            <span style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#fcd34d">CARBOHIDRATOS</span>
+          </div>
+          <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.07);color:rgba(255,255,255,.4)">4 productos</span>
+        </div>
+        <div data-mid="c1" onclick="toggleMarketItem('c1')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-c1" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🍚</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Arroz blanco</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">1 kg</span>
+        </div>
+        <div data-mid="c2" onclick="toggleMarketItem('c2')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-c2" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🥣</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Avena en hojuelas</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">500g</span>
+        </div>
+        <div data-mid="c3" onclick="toggleMarketItem('c3')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-c3" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🥔</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Papa criolla</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">1 kg</span>
+        </div>
+        <div data-mid="c4" onclick="toggleMarketItem('c4')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-c4" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🍞</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Pan integral</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">1 und</span>
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:20px;overflow:hidden">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span>🥑</span>
+            <span style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#6ee7b7">GRASAS BUENAS</span>
+          </div>
+          <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.07);color:rgba(255,255,255,.4)">3 productos</span>
+        </div>
+        <div data-mid="g1" onclick="toggleMarketItem('g1')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-g1" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🥑</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Aguacate</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">4 uds</span>
+        </div>
+        <div data-mid="g2" onclick="toggleMarketItem('g2')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-g2" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🫙</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Aceite de oliva</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">250ml</span>
+        </div>
+        <div data-mid="g3" onclick="toggleMarketItem('g3')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-g3" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🥜</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Almendras</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">200g</span>
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:20px;overflow:hidden">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span>🥦</span>
+            <span style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#34d399">VEGETALES</span>
+          </div>
+          <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.07);color:rgba(255,255,255,.4)">5 productos</span>
+        </div>
+        <div data-mid="v1" onclick="toggleMarketItem('v1')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-v1" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🥦</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Brócoli</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">500g</span>
+        </div>
+        <div data-mid="v2" onclick="toggleMarketItem('v2')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-v2" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🥬</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Espinaca</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">250g</span>
+        </div>
+        <div data-mid="v3" onclick="toggleMarketItem('v3')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-v3" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🍅</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Tomate</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">500g</span>
+        </div>
+        <div data-mid="v4" onclick="toggleMarketItem('v4')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-v4" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🥕</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Zanahoria</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">500g</span>
+        </div>
+        <div data-mid="v5" onclick="toggleMarketItem('v5')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-v5" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🥒</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Pepino</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">2 uds</span>
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:20px;overflow:hidden">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span>🥛</span>
+            <span style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#93c5fd">LÁCTEOS</span>
+          </div>
+          <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.07);color:rgba(255,255,255,.4)">2 productos</span>
+        </div>
+        <div data-mid="l1" onclick="toggleMarketItem('l1')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-l1" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🥛</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Leche descremada</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">1 litro</span>
+        </div>
+        <div data-mid="l2" onclick="toggleMarketItem('l2')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-l2" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🧀</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Queso cottage</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">250g</span>
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:20px;overflow:hidden">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span>✨</span>
+            <span style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#c4b5fd">EXTRAS FIT</span>
+          </div>
+          <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.07);color:rgba(255,255,255,.4)">3 productos</span>
+        </div>
+        <div data-mid="e1" onclick="toggleMarketItem('e1')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-e1" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">💪</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Proteína en polvo</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">1 kg</span>
+        </div>
+        <div data-mid="e2" onclick="toggleMarketItem('e2')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-e2" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🍋</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Limones</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">6 uds</span>
+        </div>
+        <div data-mid="e3" onclick="toggleMarketItem('e3')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div id="chk-e3" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;border:1.5px solid rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>
+          <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🧂</div>
+          <div style="flex:1;font-size:14px;font-weight:700;color:#fff">Sal rosa del Himalaya</div>
+          <span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">250g</span>
+        </div>
+      </div>
+      </div>
       </div>
 
       <!-- Add item button -->
@@ -4518,22 +4709,63 @@ window.renderMarket = function renderMarket() {
   };
 }
 
+
+
+
+
 function toggleMarketItem(id) {
-  var c = getMarketChecked();
+  var chk = document.getElementById('chk-' + id);
+  var row = chk ? chk.closest('[data-mid]') : document.querySelector('[data-mid="' + id + '"]');
+  // Persist
+  var c = {};
+  try { c = JSON.parse(localStorage.getItem('af-market-checked') || '{}'); } catch(e){}
   c[id] = !c[id];
-  saveMarketChecked(c);
-  renderMarket();
+  localStorage.setItem('af-market-checked', JSON.stringify(c));
+  var done = c[id];
+  if (chk) {
+    chk.textContent = done ? '✓' : '';
+    chk.style.borderColor = done ? '#7c3aed' : 'rgba(124,58,237,.4)';
+    chk.style.background  = done ? 'rgba(124,58,237,.2)' : 'transparent';
+  }
+  if (row) row.style.opacity = done ? '0.45' : '1';
 }
 
-function resetMarket() { saveMarketChecked({}); renderMarket(); }
+function resetMarket() {
+  localStorage.removeItem('af-market-checked');
+  document.querySelectorAll('[data-mid]').forEach(function(row) {
+    var id = row.getAttribute('data-mid');
+    var chk = document.getElementById('chk-' + id);
+    if (chk) { chk.textContent = ''; chk.style.borderColor = 'rgba(124,58,237,.4)'; chk.style.background = 'transparent'; }
+    row.style.opacity = '1';
+  });
+}
 
 function addMarketItem() {
   var name = prompt('Nombre del producto:');
   if (!name) return;
-  var qty = prompt('Cantidad:') || '—';
-  MARKET_DATA.extras.items.push({ id: 'cx' + Date.now(), name: name, qty: qty, emoji: '🛒' });
-  renderMarket();
+  var qty  = prompt('Cantidad (ej: 500g, 2 uds):') || '—';
+  var list = document.getElementById('marketList');
+  if (!list) return;
+  var id = 'cx' + Date.now();
+  var div = document.createElement('div');
+  div.setAttribute('data-mid', id);
+  div.onclick = function(){ toggleMarketItem(id); };
+  div.style.cssText = 'display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid rgba(255,255,255,.05);cursor:pointer;background:rgba(124,58,237,.06)';
+  div.innerHTML = '<div id="chk-' + id + '" style="width:22px;height:22px;border-radius:7px;border:1.5px solid rgba(124,58,237,.4);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;color:white"></div>'
+    + '<div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">🛒</div>'
+    + '<div style="flex:1;font-size:14px;font-weight:700;color:#fff">' + name + '</div>'
+    + '<span style="font-size:13px;color:rgba(255,255,255,.4)">' + qty + '</span>';
+  list.appendChild(div);
 }
+
+// Restore checked state on load
+document.addEventListener('DOMContentLoaded', function() {
+  var c = {};
+  try { c = JSON.parse(localStorage.getItem('af-market-checked') || '{}'); } catch(e){}
+  Object.keys(c).forEach(function(id) {
+    if (c[id]) toggleMarketItem(id);
+  });
+});
 </script>
 </body>
 </html>
