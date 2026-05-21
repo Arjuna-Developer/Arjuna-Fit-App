@@ -46,7 +46,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
 
 /* ── Tab content ── */
 .tc{display:none;flex-direction:column;gap:12px}
-.tc.on{display:flex;flex-direction:column;animation:fi .2s ease both;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;scrollbar-width:none;flex:1;min-height:0;padding:16px 16px calc(96px + env(safe-area-inset-bottom));gap:12px}
+.tc.on{display:flex;flex-direction:column;animation:fi .2s ease both;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;scrollbar-width:none;padding:16px 16px calc(96px + env(safe-area-inset-bottom));gap:12px;position:fixed;top:var(--hdr-h,108px);left:0;right:0;bottom:0;max-width:430px;margin:0 auto}
 @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
 /* ── Nutrición del día ── */
@@ -4720,6 +4720,19 @@ document.addEventListener('DOMContentLoaded', function() {
   var c = {};
   try { c = JSON.parse(localStorage.getItem('af-market-checked') || '{}'); } catch(e){}
   Object.keys(c).forEach(function(id) { if (c[id]) toggleMarketItem(id); });
+});
+
+// Set header height CSS variable for tab content positioning
+function updateHdrHeight() {
+  var hdr = document.querySelector('.hdr');
+  if (hdr) {
+    document.documentElement.style.setProperty('--hdr-h', hdr.offsetHeight + 'px');
+  }
+}
+updateHdrHeight();
+window.addEventListener('resize', updateHdrHeight);
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(updateHdrHeight, 100);
 });
 </script>
 </body>
