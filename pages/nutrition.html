@@ -2302,6 +2302,9 @@ function sw(id) {
   // Scroll tab content to top
   const tc = document.getElementById(`tc-${id}`);
   if (tc) tc.scrollTop = 0;
+  // Render dynamic tabs
+  if (id === 'mercado') setTimeout(renderMarket, 60);
+  if (id === 'recetas') setTimeout(function(){ filterByMeal(window._activeRecipeFilter||'todo'); }, 60);
 }
 
 
@@ -4542,6 +4545,27 @@ document.addEventListener('DOMContentLoaded', function() {
   var _initTab = (window.location.hash||'').replace('#','') || new URLSearchParams(window.location.search).get('tab');
   if (_initTab === 'mercado') setTimeout(renderMarket, 400);
 });
+
+function filterByMeal(meal) {
+  window._activeRecipeFilter = meal || 'todo';
+  ['todo','desayuno','almuerzo','cena','snack'].forEach(function(k){
+    var btn = document.getElementById('rf-'+k);
+    if (!btn) return;
+    var active = k === window._activeRecipeFilter;
+    btn.style.background = active ? 'linear-gradient(135deg,#7c3aed,#a855f7)' : 'rgba(255,255,255,.05)';
+    btn.style.color = active ? '#fff' : 'rgba(255,255,255,.6)';
+    btn.style.border = active ? 'none' : '1px solid rgba(255,255,255,.1)';
+    btn.style.boxShadow = active ? '0 3px 10px rgba(124,58,237,.35)' : 'none';
+  });
+  ['recipeListFallback','recipeListNew'].forEach(function(lid){
+    var list = document.getElementById(lid);
+    if (!list) return;
+    list.querySelectorAll('[data-meal]').forEach(function(card){
+      card.style.display = (window._activeRecipeFilter==='todo' || card.dataset.meal===window._activeRecipeFilter) ? '' : 'none';
+    });
+  });
+}
+window._activeRecipeFilter = 'todo';
 </script>
 
 
