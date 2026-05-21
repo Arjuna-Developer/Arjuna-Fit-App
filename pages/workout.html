@@ -1043,21 +1043,8 @@ function renderCurrentPhase(){
   }
 
   const pm=PHASE_META[S.phase];
-  const colors=[
-    'linear-gradient(135deg,#f59e0b,#ef4444)',
-    'linear-gradient(135deg,#3b82f6,#7c3aed)',
-    'linear-gradient(135deg,#10b981,#3b82f6)',
-    S.session.color.includes('237')?'linear-gradient(135deg,#7c3aed,#9333ea,#a855f7)':
-      S.session.color.includes('153')?'linear-gradient(135deg,#ec4899,#a855f7)':'linear-gradient(135deg,#f59e0b,#ef4444)',
-    'linear-gradient(135deg,#6366f1,#8b5cf6)',
-  ][S.phase];
-  const shadows=[
-    '0 6px 28px rgba(245,158,11,.4)',
-    '0 6px 28px rgba(59,130,246,.4)',
-    '0 6px 28px rgba(16,185,129,.4)',
-    '0 6px 28px rgba(124,58,237,.5)',
-    '0 6px 28px rgba(99,102,241,.4)',
-  ][S.phase];
+  const colors='linear-gradient(135deg,#7c3aed,#a855f7,#ec4899)';
+  const shadows='0 6px 24px rgba(124,58,237,.45),inset 0 1px 0 rgba(255,255,255,.12)';
   btn.style.background=colors;
   btn.style.boxShadow=shadows;
 
