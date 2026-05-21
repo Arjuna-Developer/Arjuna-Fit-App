@@ -30,11 +30,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
   -webkit-overflow-scrolling:touch;
   overscroll-behavior-y:contain;
   scrollbar-width:none;
-  padding-bottom:calc(96px + env(safe-area-inset-bottom))}
-.page::-webkit-scrollbar{display:none}
-
-/* ── Header ── */
-.hdr{padding:calc(env(safe-area-inset-top,14px) + 14px) 16px 0;
+  padding-bottom:calc(90px + env(safe-area-inset-bottom));
   background:linear-gradient(to bottom,var(--bg) 70%,transparent);
   position:sticky;top:0;z-index:20}
 .hdr-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
@@ -4147,6 +4143,9 @@ async function addRestMeal(restaurantIdx, optIdx) {
 }
 </style>
 
+
+
+
 <style>
 @keyframes nav-ripple {
   0%   { transform:translate(-50%,-50%) scale(0); opacity:.6; }
@@ -4566,8 +4565,18 @@ function filterByMeal(meal) {
   });
 }
 window._activeRecipeFilter = 'todo';
+
+// ── Stub functions for referenced buttons ──────────
+function addFeaturedToLog() {
+  if(typeof addToLog === 'function') addToLog('featured');
+  else if(typeof openQuickLog === 'function') openQuickLog();
+}
+function addSuggestion(id) {
+  if(typeof openQuickLog === 'function') openQuickLog();
+}
+function goToRecipe() {
+  sw('recetas');
+}
 </script>
-
-
 </body>
 </html>
