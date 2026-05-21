@@ -169,6 +169,17 @@ body{background:var(--bg);color:var(--t);font-family:var(--f);
 .scroll::-webkit-scrollbar{display:none}
 </style>
   <link rel="stylesheet" href="/assets/visual-system.css">
+<script>
+// Safety: si el loader sigue visible después de 6s → mostrar página
+setTimeout(function() {
+  var ldr = document.getElementById('ldr');
+  if (ldr && ldr.style.display !== 'none' && !ldr.classList.contains('off')) {
+    ldr.style.display = 'none';
+    ldr.classList.add('off');
+    console.warn('[AF] Safety timeout triggered on', window.location.pathname);
+  }
+}, 6000);
+</script>
 </head>
 <body style="overflow-x:hidden">
 <div class="ldr" id="ldr">
