@@ -2159,40 +2159,6 @@ async function loadRealData() {
 }
 
 // ── buildPhaseBody: generates accordion content per phase ─────────────────
-function buildPhaseBody(pi, sess) {
-  var rows = [];
-  if (pi === 0) {
-    var steps = (sess && sess.warmup && sess.warmup.steps) ? sess.warmup.steps : [{name:'Círculos de cadera',detail:'10 por lado'},{name:'Sentadilla suave',detail:'10 reps'},{name:'Puente de glúteo',detail:'15 reps'},{name:'Abducciones con banda',detail:'20 reps'}];
-    rows = steps.map(function(s,i){ 
-    var typeClass = s.type ? ' type-'+s.type : '';
-    return '<div class="pbe-row'+typeClass+'">'+
-      '<div class="pbe-row-num">'+(i+1)+'</div>'+
-      '<div style="flex:1;min-width:0">'+
-        '<div class="pbe-name">'+s.name+'</div>'+
-        '<div class="pbe-detail">'+(s.detail||'')+'</div>'+
-      '</div></div>';
-  });
-  } else if (pi === 1) {
-    [{name:'Flexión cadera 90/90',d:'8 por lado'},{name:'Estiramiento piriforme',d:'30 seg c/l'},{name:'Hip flexor stretch',d:'30 seg c/l'},{name:'Rotaciones columna',d:'8 por lado'}].forEach(function(e){ var _pi0=rows.length;rows.push('<div class="pbe-row">'+
-      '<div class="pbe-row-num">'+(_pi0+1)+'</div>'+
-      '<div style="flex:1"><div class="pbe-name">'+e.name+'</div>'+
-      '<div class="pbe-detail">'+e.d+'</div></div></div>'); });
-  } else if (pi === 2) {
-    [{name:'Clamshell con banda',d:'15 reps c/l'},{name:'Extensión cadera 4 puntos',d:'12 reps c/l'},{name:'Sentadilla goblet liviana',d:'10 reps'},{name:'Hip thrust sin peso',d:'15 reps'}].forEach(function(e){ var _pi1=rows.length;rows.push('<div class="pbe-row">'+
-      '<div class="pbe-row-num">'+(_pi1+1)+'</div>'+
-      '<div style="flex:1"><div class="pbe-name">'+e.name+'</div>'+
-      '<div class="pbe-detail">'+e.d+'</div></div></div>'); });
-  } else if (pi === 3) {
-    var exs = (sess && sess.exercises) ? sess.exercises : [{name:'Hip Thrust con Barra',sets:4,reps:'10-12',rest:90,tip:'Aprieta arriba'},{name:'Sentadilla Búlgara',sets:3,reps:'10 c/l',rest:75,tip:'Empuja con el talón'},{name:'Peso Muerto Rumano',sets:3,reps:'12',rest:75,tip:'Caderas atrás'},{name:'Abducción Cadera Cable',sets:3,reps:'15 c/l',rest:60,tip:'Controla la vuelta'}];
-    exs.forEach(function(e){ rows.push('<div class="pbe-row pbe-main"><div class="pbe-name">'+e.name+'</div><div class="pbe-detail">'+e.sets+' × '+e.reps+' · '+e.rest+'s</div><div class="pbe-tip">'+(e.tip||'')+'</div></div>'); });
-  } else if (pi === 4) {
-    [{name:'Estiramiento piriforme',d:'45 seg c/l'},{name:'Figura 4 en suelo',d:'45 seg c/l'},{name:'Cat-cow',d:'10 respiraciones'},{name:"Child's pose",d:'60 seg'}].forEach(function(e){ var _pi2=rows.length;rows.push('<div class="pbe-row">'+
-      '<div class="pbe-row-num">'+(_pi2+1)+'</div>'+
-      '<div style="flex:1"><div class="pbe-name">'+e.name+'</div>'+
-      '<div class="pbe-detail">'+e.d+'</div></div></div>'); });
-  }
-  return rows.length ? '<div class="pbe-list">'+rows.join('')+'</div>' : '';
-}
 </script>
 <script src="/js/core/arjuna-voice.js"></script>
 <script src="/js/core/coach-context.js"></script>
@@ -2224,49 +2190,112 @@ function buildPhaseBody(phaseIndex, sess) {
   });
   } else if (idx === 1) {
     rows = [{name:'Flexión cadera 90/90',d:'8 por lado'},{name:'Estiramiento piriforme',d:'30 seg c/lado'},{name:'Hip flexor stretch',d:'30 seg c/lado'},{name:'Rotaciones de columna',d:'8 por lado'}]
-      .map(function(e){ return '<div class="pbe-row"><div class="pbe-name">'+e.name+'</div><div class="pbe-detail">'+e.d+'</div></div>'; });
+      .map(function(e,i){ return '<div class="pbe-row type-movilidad"><div class="pbe-row-num">'+(i+1)+'</div><div style="flex:1"><div class="pbe-name">'+e.name+'</div><div class="pbe-detail">'+e.d+'</div></div></div>'; });
   } else if (idx === 2) {
     rows = [{name:'Clamshell con banda',d:'15 reps c/lado'},{name:'Extensión cadera en 4 puntos',d:'12 reps c/lado'},{name:'Sentadilla goblet liviana',d:'10 reps'},{name:'Hip thrust sin peso',d:'15 reps'}]
-      .map(function(e){ return '<div class="pbe-row"><div class="pbe-name">'+e.name+'</div><div class="pbe-detail">'+e.d+'</div></div>'; });
+      .map(function(e,i){ return '<div class="pbe-row type-movilidad"><div class="pbe-row-num">'+(i+1)+'</div><div style="flex:1"><div class="pbe-name">'+e.name+'</div><div class="pbe-detail">'+e.d+'</div></div></div>'; });
   } else if (idx === 3) {
     var exs = (sess && sess.exercises) ? sess.exercises : [];
-    rows = exs.map(function(e){ return '<div class="pbe-row pbe-main"><div class="pbe-name">'+e.name+'</div><div class="pbe-detail">'+e.sets+' series × '+e.reps+' · '+e.rest+'s descanso</div><div class="pbe-tip">'+(e.tip||'')+'</div></div>'; });
+    rows = exs.map(function(e,_i3){ return '<div class="pbe-row pbe-main" style="border:1px solid rgba(124,58,237,.2);border-left:2px solid rgba(124,58,237,.65);background:rgba(124,58,237,.06)"><div class="pbe-row-num" style="background:rgba(124,58,237,.25);border-color:rgba(124,58,237,.4)">'+((_i3||0)+1)+'</div><div style="flex:1"><div class="pbe-name">'+e.name+'</div><div class="pbe-detail">'+e.sets+' series × '+e.reps+' · '+e.rest+'s descanso</div><div class="pbe-tip">'+(e.tip||'')+'</div></div>'; });
     if (!rows.length) rows = ['<div class="pbe-row"><div class="pbe-name">Hip Thrust con Barra</div><div class="pbe-detail">4 series × 10-12 reps · 90s</div></div>','<div class="pbe-row"><div class="pbe-name">Sentadilla Búlgara</div><div class="pbe-detail">3 series × 10 c/lado · 75s</div></div>','<div class="pbe-row"><div class="pbe-name">Peso Muerto Rumano</div><div class="pbe-detail">3 series × 12 reps · 75s</div></div>','<div class="pbe-row"><div class="pbe-name">Abducción Cadera Cable</div><div class="pbe-detail">3 series × 15 c/lado · 60s</div></div>'];
   } else if (idx === 4) {
     rows = [{name:'Estiramiento piriforme',d:'45 seg c/lado'},{name:'Figura 4 en el suelo',d:'45 seg c/lado'},{name:'Cat-cow',d:'10 respiraciones'},{name:"Child's pose",d:'60 seg'}]
-      .map(function(e){ return '<div class="pbe-row"><div class="pbe-name">'+e.name+'</div><div class="pbe-detail">'+e.d+'</div></div>'; });
+      .map(function(e,i){ return '<div class="pbe-row type-movilidad"><div class="pbe-row-num">'+(i+1)+'</div><div style="flex:1"><div class="pbe-name">'+e.name+'</div><div class="pbe-detail">'+e.d+'</div></div></div>'; });
   }
   return rows.length ? '<div class="pbe-list">'+rows.join('')+'</div>' : '<div class="pbe-empty">Ver ejercicios al empezar la sesión.</div>';
 }
 
 </script>
-<nav style="display:none;position:fixed;bottom:calc(12px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:min(calc(100vw - 24px),406px);height:64px;background:rgba(14,8,26,.96);backdrop-filter:blur(32px) saturate(1.5);-webkit-backdrop-filter:blur(32px) saturate(1.5);border:1px solid rgba(196,181,253,.12);border-radius:22px;box-shadow:0 8px 32px rgba(0,0,0,.5),0 0 0 1px rgba(139,92,246,.08);display:flex;align-items:center;justify-content:space-around;z-index:200;padding:0 6px">
-<a href="/pages/dashboard.html" style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 8px;text-decoration:none;-webkit-tap-highlight-color:transparent;position:relative">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(240,238,248,.4)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
-  <span style="font-family:'Outfit',sans-serif;font-size:10px;font-weight:500;color:rgba(240,238,248,.4)">Inicio</span>
-  
-</a>
-<a href="/pages/workout.html" style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 8px;text-decoration:none;-webkit-tap-highlight-color:transparent;position:relative">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5v14M18 5v14"/><path d="M2 9h4M18 9h4M2 15h4M18 15h4"/><path d="M6 12h12"/></svg>
-  <span style="font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:#c4b5fd">Entrena</span>
-  <div style="position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:#c4b5fd"></div>
-</a>
-<button onclick="openCamera ? openCamera() : location.href="/pages/dashboard.html"" style="background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 6px;-webkit-tap-highlight-color:transparent">
-  <div style="width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,#8b5cf6,#ec4899);display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(139,92,246,.5),0 0 0 8px rgba(139,92,246,.08);margin-top:-16px;animation:cam-breathe 3s ease-in-out infinite">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+<!-- Workout bottom bar — sin nav global -->
+<div id="workoutBar" style="
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(10,5,20,.95);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-top:1px solid rgba(255,255,255,.07);
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+  display:flex;align-items:center;gap:8px;z-index:100;
+  max-width:430px;margin:0 auto;left:50%;transform:translateX(-50%);width:100%;
+">
+  <!-- Volver -->
+  <a href="/pages/dashboard.html" style="
+    width:40px;height:40px;border-radius:13px;flex-shrink:0;
+    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;color:rgba(255,255,255,.6);text-decoration:none">
+    ←
+  </a>
+  <!-- Prev phase -->
+  <button onclick="prevPhase()" id="btnPrev" style="
+    width:40px;height:40px;border-radius:13px;flex-shrink:0;
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;color:rgba(255,255,255,.5);cursor:pointer">
+    ‹
+  </button>
+  <!-- Phase label -->
+  <div id="barPhaseLabel" style="flex:1;text-align:center;font-size:12px;font-weight:700;color:rgba(255,255,255,.5);font-family:'Outfit',sans-serif">
+    Calentamiento
   </div>
-  <span style="font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;color:rgba(196,181,253,.8)">Registrar</span>
-</button>
-<a href="/pages/coach.html" style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 8px;text-decoration:none;-webkit-tap-highlight-color:transparent;position:relative">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(240,238,248,.4)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a8 8 0 018 8c0 3-1.7 5.6-4.2 7L12 22l-3.8-5C5.7 15.6 4 13 4 10a8 8 0 018-8z"/><circle cx="12" cy="10" r="2" fill="currentColor" stroke="none"/></svg>
-  <span style="font-family:'Outfit',sans-serif;font-size:10px;font-weight:500;color:rgba(240,238,248,.4)">Coach</span>
-  
-</a>
-<a href="/pages/nutrition.html" style="display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 8px;text-decoration:none;-webkit-tap-highlight-color:transparent;position:relative">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(240,238,248,.4)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8 2 4 5.5 4 10c0 4 3 7 6 8v4h4v-4c3-1 6-4 6-8 0-4.5-4-8-8-8z"/><path d="M9 10c0-1.7 1.3-3 3-3"/></svg>
-  <span style="font-family:'Outfit',sans-serif;font-size:10px;font-weight:500;color:rgba(240,238,248,.4)">Nutrición</span>
-  
-</a>
-</nav>
+  <!-- Next phase -->
+  <button onclick="nextPhase()" id="btnNext" style="
+    width:40px;height:40px;border-radius:13px;flex-shrink:0;
+    background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.35);
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;color:#c4b5fd;cursor:pointer">
+    ›
+  </button>
+  <!-- Arju chat -->
+  <a href="/pages/coach.html?from=workout" style="
+    width:40px;height:40px;border-radius:13px;flex-shrink:0;
+    background:linear-gradient(135deg,#7c3aed,#ec4899);
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;text-decoration:none;
+    box-shadow:0 0 14px rgba(124,58,237,.35)">
+    🤖
+  </a>
+</div>
+
+<script>
+// Workout bar navigation
+var _phases = document.querySelectorAll('.phase-section');
+var _curPhase = 0;
+var _PHASE_NAMES = ['Calentamiento','Movilidad','Activación','Ejercicios','Enfriamiento'];
+
+function updateBar() {
+  var lbl = document.getElementById('barPhaseLabel');
+  if (lbl) lbl.textContent = _PHASE_NAMES[_curPhase] || '';
+  var prev = document.getElementById('btnPrev');
+  var next = document.getElementById('btnNext');
+  if (prev) prev.style.opacity = _curPhase === 0 ? '.3' : '1';
+  if (next) next.style.opacity = _curPhase >= _PHASE_NAMES.length-1 ? '.3' : '1';
+}
+
+function nextPhase() {
+  if (_curPhase < _PHASE_NAMES.length-1) {
+    // Close current
+    var cur = document.getElementById('ph'+_curPhase);
+    if (cur) { cur.classList.remove('open'); var cb=cur.querySelector('.phase-body'); if(cb) cb.style.display='none'; var cv=cur.querySelector('.ph-chevron'); if(cv) cv.style.transform=''; }
+    _curPhase++;
+    // Open next
+    var next = document.getElementById('ph'+_curPhase);
+    if (next) { next.classList.add('open'); var nb=next.querySelector('.phase-body'); if(nb) nb.style.display='block'; var nv=next.querySelector('.ph-chevron'); if(nv) nv.style.transform='rotate(180deg)'; next.scrollIntoView({behavior:'smooth',block:'start'}); }
+    updateBar();
+  }
+}
+
+function prevPhase() {
+  if (_curPhase > 0) {
+    var cur = document.getElementById('ph'+_curPhase);
+    if (cur) { cur.classList.remove('open'); var cb=cur.querySelector('.phase-body'); if(cb) cb.style.display='none'; }
+    _curPhase--;
+    var prev = document.getElementById('ph'+_curPhase);
+    if (prev) { prev.classList.add('open'); var pb=prev.querySelector('.phase-body'); if(pb) pb.style.display='block'; var pv=prev.querySelector('.ph-chevron'); if(pv) pv.style.transform='rotate(180deg)'; prev.scrollIntoView({behavior:'smooth',block:'start'}); }
+    updateBar();
+  }
+}
+
+// Init bar on load
+document.addEventListener('DOMContentLoaded', function() { updateBar(); });
+setTimeout(updateBar, 500);
+</script>
 </body>
 </html>
