@@ -4124,6 +4124,33 @@ window.addEventListener('beforeinstallprompt', function(e) {
   e.preventDefault();
   window._pwaInstallPrompt = e;
 });
+
+function saveDashPhotoFood(name, cal, prot, fat, carb, meal) {
+  if (typeof saveFood === 'function') {
+    saveFood(name, cal, prot, fat, meal, carb);
+  } else {
+    // Fallback to localStorage directly
+    var today = new Date().toISOString().split('T')[0];
+    var key = 'af-food-' + today;
+    var foods = [];
+    try { foods = JSON.parse(localStorage.getItem(key) || '[]'); } catch(e){}
+    foods.push({
+      name: name, cal: cal, prot: prot, fat: fat, carb: carb,
+      meal: meal, time: new Date().toTimeString().slice(0,5),
+      source: 'photo'
+    });
+    localStorage.setItem(key, JSON.stringify(foods));
+    if (typeof window.refreshMealStrip === 'function') window.refreshMealStrip();
+  }
+  // Close overlay
+  document.getElementById('dash-photo-ov')?.remove();
+  // Show success toast
+  var t = document.createElement('div');
+  t.style.cssText = 'position:fixed;top:calc(20px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:600;background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.35);border-radius:13px;padding:10px 20px;font-family:Outfit,sans-serif;font-size:13px;font-weight:700;color:#34d399;white-space:nowrap;';
+  t.textContent = '✅ ' + name + ' registrado';
+  document.body.appendChild(t);
+  setTimeout(function(){ t.remove(); }, 2500);
+}
 </script>
 </body>
 </html>
