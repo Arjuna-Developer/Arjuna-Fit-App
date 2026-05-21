@@ -1086,7 +1086,7 @@ function renderCurrentPhase(){
     }, 50);
 
     btn.style.background='linear-gradient(135deg,#7c3aed,#9333ea,#a855f7)';
-    btn.style.boxShadow='0 6px 28px rgba(124,58,237,.5)';
+    btn.style.boxShadow='0 6px 28px rgba(124,58,237,.5),inset 0 1px 0 rgba(255,255,255,.15)';
     lbl.textContent='🔥 Empezar calentamiento';
     sub.textContent='5 fases · ~60 minutos en total';
     btn.disabled=false;
@@ -1094,10 +1094,42 @@ function renderCurrentPhase(){
   }
 
   const pm=PHASE_META[S.phase];
-  const colors='linear-gradient(135deg,#7c3aed,#a855f7,#ec4899)';
-  const shadows='0 6px 24px rgba(124,58,237,.45),inset 0 1px 0 rgba(255,255,255,.12)';
-  btn.style.background=colors;
-  btn.style.boxShadow=shadows;
+  // Colores y marketing por fase
+  const PHASE_STYLES = [
+    { // 0 Calentamiento
+      bg:'linear-gradient(135deg,#f59e0b,#ef4444)',
+      shadow:'0 6px 22px rgba(245,158,11,.5),inset 0 1px 0 rgba(255,255,255,.15)',
+      label:'🔥 Iniciar calentamiento',
+      sub:'Despierta el cuerpo — 5 minutos'
+    },
+    { // 1 Movilidad
+      bg:'linear-gradient(135deg,#3b82f6,#6366f1)',
+      shadow:'0 6px 22px rgba(59,130,246,.5),inset 0 1px 0 rgba(255,255,255,.15)',
+      label:'🦵 Movilidad completa ✓',
+      sub:'Libera cadera y columna'
+    },
+    { // 2 Activación
+      bg:'linear-gradient(135deg,#10b981,#059669)',
+      shadow:'0 6px 22px rgba(16,185,129,.5),inset 0 1px 0 rgba(255,255,255,.15)',
+      label:'⚡ Activación completa ✓',
+      sub:'Glúteos despiertos — a por ello'
+    },
+    { // 3 Ejercicios
+      bg:'linear-gradient(135deg,#7c3aed,#a855f7,#ec4899)',
+      shadow:'0 6px 22px rgba(124,58,237,.55),inset 0 1px 0 rgba(255,255,255,.15)',
+      label:'💪 Completar entrenamiento ✓',
+      sub:'Aquí es donde crece el músculo'
+    },
+    { // 4 Enfriamiento
+      bg:'linear-gradient(135deg,#6366f1,#8b5cf6)',
+      shadow:'0 6px 22px rgba(99,102,241,.5),inset 0 1px 0 rgba(255,255,255,.15)',
+      label:'🏆 Terminar y guardar',
+      sub:'Lo lograste. Recupera bien.'
+    },
+  ];
+  const ps = PHASE_STYLES[Math.max(0, Math.min(S.phase, 4))];
+  btn.style.background = ps.bg;
+  btn.style.boxShadow  = ps.shadow;
 
   if(S.phase===0) renderSimplePhase('warmup',WARMUP,'Calentamiento — Sube la temperatura',
     '🔥 Calentamiento completo',sub,'Toca cada ejercicio cuando lo termines');
@@ -1109,9 +1141,10 @@ function renderCurrentPhase(){
   else if(S.phase===4) renderSimplePhase('cooldown',COOLDOWN,'Enfriamiento — Recuperación activa',
     '✓ Completar entrenamiento',sub,'Respira profundo. Lo lograste.');
 
-  lbl.textContent = S.phase===3 ? 'Completar entrenamiento ✓' :
-                    S.phase===4 ? 'Terminar y guardar 🏆' :
-                    `Siguiente: ${PHASE_SHORT[S.phase+1]||'Siguiente'} →`;
+  // Label y sub por fase
+  lbl.textContent = ps.label || `Siguiente: ${PHASE_SHORT[S.phase+1]||''} →`;
+  const subEl = document.getElementById('nextSub');
+  if (subEl) subEl.textContent = ps.sub || '';
   if(S.phase===3) btn.disabled=true;
   else btn.disabled=false;
 }
