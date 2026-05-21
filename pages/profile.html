@@ -675,6 +675,108 @@ function editarMiPlan() {
   // Navigate to onboarding
   window.location.href = '/pages/onboarding.html';
 }
+
+// ══ Supabase-first profile save/load ══════════════════════════════
+async function saveProfileToSupabase(data) {
+  var sb = window.sb;
+  if (!sb) return false;
+  try {
+    var sess = await sb.auth.getSession();
+    var uid  = sess?.data?.session?.user?.id;
+    if (!uid) return false;
+    var payload = {
+      id:                   uid,
+      full_name:            data.name            || null,
+      weight_kg:            parseFloat(data.weight) || null,
+      height_cm:            parseFloat(data.height) || null,
+      calorie_goal:         parseInt(data.kcal)   || null,
+      notifications_enabled: data.notifications !== false,
+      updated_at:           new Date().toISOString()
+    };
+    var { error } = await sb.from('profiles').upsert(payload, { onConflict: 'id' });
+    if (error) { console.warn('[Profile] Supabase save error:', error.message); return false; }
+    // Sync localStorage as fallback cache
+    Object.entries({
+      'af-user-name':  data.name,
+      'af-weight':     data.weight,
+      'af-height':     data.height,
+      'af-kcal-goal':  data.kcal,
+      'af-notif':      data.notifications
+    }).forEach(function([k,v]) { if (v !== undefined) localStorage.setItem(k, String(v)); });
+    return true;
+  } catch(e) { console.warn('[Profile] save error:', e.message); return false; }
+}
+
+async function loadProfileFromSupabase() {
+  var sb = window.sb;
+  if (!sb) return loadProfileFromLocal();
+  try {
+    var sess = await sb.auth.getSession();
+    var uid  = sess?.data?.session?.user?.id;
+    if (!uid) return loadProfileFromLocal();
+    var { data, error } = await sb.from('profiles')
+      .select('full_name,weight_kg,height_cm,calorie_goal,notifications_enabled,avatar_url')
+      .eq('id', uid).single();
+    if (error || !data) return loadProfileFromLocal();
+    // Update localStorage cache
+    if (data.full_name)            localStorage.setItem('af-user-name',  data.full_name);
+    if (data.weight_kg)            localStorage.setItem('af-weight',      data.weight_kg);
+    if (data.height_cm)            localStorage.setItem('af-height',      data.height_cm);
+    if (data.calorie_goal)         localStorage.setItem('af-kcal-goal',   data.calorie_goal);
+    if (data.notifications_enabled !== undefined) localStorage.setItem('af-notif', data.notifications_enabled);
+    return {
+      name:          data.full_name  || localStorage.getItem('af-user-name')  || '',
+      weight:        data.weight_kg  || localStorage.getItem('af-weight')      || '',
+      height:        data.height_cm  || localStorage.getItem('af-height')      || '',
+      kcal:          data.calorie_goal || localStorage.getItem('af-kcal-goal') || 2000,
+      notifications: data.notifications_enabled !== false,
+      avatar:        data.avatar_url || null
+    };
+  } catch(e) {
+    console.warn('[Profile] Supabase load error:', e.message);
+    return loadProfileFromLocal();
+  }
+}
+
+function loadProfileFromLocal() {
+  return {
+    name:          localStorage.getItem('af-user-name')  || '',
+    weight:        localStorage.getItem('af-weight')     || '',
+    height:        localStorage.getItem('af-height')     || '',
+    kcal:          localStorage.getItem('af-kcal-goal')  || 2000,
+    notifications: localStorage.getItem('af-notif') !== 'false',
+    avatar:        null
+  };
+}
+
+// Patch saveBodyData to use Supabase
+var _origSaveBodyData = window.saveBodyData;
+window.saveBodyData = async function() {
+  if (_origSaveBodyData) _origSaveBodyData();
+  var data = {
+    weight: localStorage.getItem('af-weight'),
+    height: localStorage.getItem('af-height'),
+    kcal:   localStorage.getItem('af-kcal-goal')
+  };
+  var ok = await saveProfileToSupabase(data);
+  if (ok) showToast && showToast('Guardado en tu cuenta ✓');
+};
+
+// Patch editName to use Supabase
+var _origEditName = window.editName;
+window.editName = _origEditName; // keep existing, but add Supabase save hook
+document.addEventListener('DOMContentLoaded', async function() {
+  // Load Supabase profile on init
+  if (typeof init === 'function') {
+    // Enhance init to use Supabase data
+    var profile = await loadProfileFromSupabase();
+    if (profile.name) {
+      localStorage.setItem('af-user-name', profile.name);
+      var el = document.getElementById('avatarName');
+      if (el && profile.name) el.textContent = profile.name;
+    }
+  }
+});
 </script>
 </body>
 </html>
