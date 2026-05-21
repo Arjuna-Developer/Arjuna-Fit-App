@@ -26,7 +26,7 @@
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
   font-family:var(--font);-webkit-font-smoothing:antialiased}
 .page{max-width:var(--max);margin:0 auto;height:100dvh;display:flex;flex-direction:column;overflow:hidden;background:var(--bg);position:relative}
-.hdr{flex-shrink:0;background:var(--bg);padding:16px 16px 0;z-index:10}.hdr-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.hdr{flex-shrink:0;background:var(--bg);padding:12px 16px 0;z-index:10}.hdr-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .hdr-title{font-size:22px;font-weight:800;letter-spacing:-.03em}
 .hdr-sub{font-size:12px;color:var(--t3);margin-top:1px}
 .log-btn{padding:8px 16px;border-radius:11px;border:none;
@@ -251,7 +251,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
 .meal-slot.current .meal-slot-check{border:1.5px solid rgba(124,58,237,.4);
   background:rgba(124,58,237,.1);color:rgba(196,181,253,.5)}
 
-.tc.on::-webkit-scrollbar{display:none}</style>
+.tc.on::-webkit-scrollbar{display:none}
+.tab-scroll::-webkit-scrollbar{display:none}</style>
   <link rel="stylesheet" href="/assets/visual-system.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="/js/core/auth-bootstrap.js"></script>
@@ -290,7 +291,7 @@ setTimeout(function() {
       <button class="log-btn" onclick="openQuickLog()">+ Registrar</button>
     </div>
     <!-- Premium tab bar -->
-    <div style="display:flex;align-items:center;gap:8px;padding:12px 16px 4px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch">
+    <div style="display:flex;align-items:center;gap:8px;padding:12px 16px 4px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:8px;scrollbar-width:none;-webkit-overflow-scrolling:touch">
       <button onclick="sw('hoy')" id="t-hoy" style="
         display:flex;align-items:center;gap:6px;padding:8px 16px;
         border-radius:12px;border:none;cursor:pointer;font-family:'Outfit',sans-serif;
@@ -324,6 +325,7 @@ setTimeout(function() {
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2M7 2v20M21 15V2a5 5 0 00-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg>
         Fuera
       </button>
+      <div style="width:16px;flex-shrink:0"></div>
     </div>
   </div>
 
