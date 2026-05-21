@@ -2,6 +2,13 @@
 <!-- AF v2.5 GREET -->
 <html lang="es">
 <head>
+<script>
+// Apply saved theme immediately (before render)
+(function(){
+  if(localStorage.getItem('af-theme')==='light')
+    document.documentElement.classList.add('light');
+})();
+</script>
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32-v2.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
