@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 240">
+  <defs>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e9d5ff"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Icon circle -->
+  <circle cx="90" cy="120" r="72" fill="none" stroke="url(#textGrad)" stroke-width="5" opacity="0.8" filter="url(#glow)"/>
+  <text x="90" y="138" font-family="Georgia,serif" font-weight="700" font-size="72" text-anchor="middle"
+    fill="url(#textGrad)" letter-spacing="-3">AF</text>
+
+  <!-- Brand name -->
+  <text x="185" y="104" font-family="Outfit,Arial,sans-serif" font-weight="800" font-size="52" fill="#f5f3ff"
+    letter-spacing="2">ARJUNA</text>
+  <text x="185" y="158" font-family="Outfit,Arial,sans-serif" font-weight="300" font-size="52" fill="#c4b5fd"
+    letter-spacing="8">FIT</text>
+
+  <!-- Tagline -->
+  <text x="185" y="192" font-family="Outfit,Arial,sans-serif" font-size="16" fill="rgba(196,181,253,0.6)"
+    letter-spacing="1">Entrena · Come · Avanza</text>
+</svg>

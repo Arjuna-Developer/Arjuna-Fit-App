@@ -1,0 +1,21 @@
+<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="64" height="64" rx="20" fill="url(#at)"/>
+  <rect x="6" y="6" width="52" height="52" rx="18" fill="rgba(255,255,255,.05)"/>
+  <!-- Eyes looking up-left (thinking) -->
+  <circle cx="22" cy="28" r="3.5" fill="white"/>
+  <circle cx="42" cy="28" r="3.5" fill="white"/>
+  <circle cx="21" cy="27" r="1.5" fill="#0c0714"/>
+  <circle cx="41" cy="27" r="1.5" fill="#0c0714"/>
+  <!-- Thinking dots -->
+  <circle cx="48" cy="18" r="2.5" fill="rgba(255,255,255,.6)"/>
+  <circle cx="54" cy="14" r="2" fill="rgba(255,255,255,.4)"/>
+  <circle cx="58" cy="10" r="1.5" fill="rgba(255,255,255,.2)"/>
+  <!-- Neutral mouth -->
+  <path d="M22 40h20" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Antenna -->
+  <path d="M28 13h8M32 13v5" stroke="rgba(255,255,255,.6)" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="32" cy="11" r="2.5" fill="rgba(255,255,255,.5)"/>
+  <defs><linearGradient id="at" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#4f46e5"/><stop offset="1" stop-color="#7c3aed"/>
+  </linearGradient></defs>
+</svg>

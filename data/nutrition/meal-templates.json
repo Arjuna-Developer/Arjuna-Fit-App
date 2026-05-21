@@ -1,0 +1,95 @@
+{
+  "version": "1.0",
+  "note": "Plantillas de comidas por objetivo. Macros son estimaciones.",
+  "templates": {
+    "glutes_pre_workout": {
+      "name": "Pre-entreno glúteos",
+      "foods": [
+        "arepa",
+        "huevo",
+        "aguacate"
+      ],
+      "protein_g_approx": 24,
+      "cal_approx": 450,
+      "timing": "1-2h antes de entrenar"
+    },
+    "glutes_post_workout": {
+      "name": "Post-entreno glúteos",
+      "foods": [
+        "arroz",
+        "pollo",
+        "aguacate"
+      ],
+      "protein_g_approx": 40,
+      "cal_approx": 550,
+      "timing": "dentro de 1h post-entreno"
+    },
+    "fat_loss_breakfast": {
+      "name": "Desayuno reducción grasa",
+      "foods": [
+        "yogur griego",
+        "fresas",
+        "avena"
+      ],
+      "protein_g_approx": 20,
+      "cal_approx": 350,
+      "timing": "mañana"
+    },
+    "fat_loss_lunch": {
+      "name": "Almuerzo reducción grasa",
+      "foods": [
+        "pollo",
+        "ensalada",
+        "aguacate"
+      ],
+      "protein_g_approx": 35,
+      "cal_approx": 420,
+      "timing": "mediodía"
+    },
+    "fat_loss_dinner": {
+      "name": "Cena reducción grasa",
+      "foods": [
+        "huevos",
+        "vegetales salteados"
+      ],
+      "protein_g_approx": 24,
+      "cal_approx": 300,
+      "timing": "noche"
+    },
+    "muscle_gain_lunch": {
+      "name": "Almuerzo masa muscular",
+      "foods": [
+        "arroz",
+        "carne",
+        "frijoles",
+        "aguacate"
+      ],
+      "protein_g_approx": 45,
+      "cal_approx": 650,
+      "timing": "mediodía"
+    },
+    "quick_high_protein": {
+      "name": "Comida rápida alta proteína",
+      "foods": [
+        "atún",
+        "arepa",
+        "tomate"
+      ],
+      "protein_g_approx": 34,
+      "cal_approx": 380,
+      "timing": "cualquier momento"
+    },
+    "belly_satiety": {
+      "name": "Comida saciante reto pancita",
+      "foods": [
+        "lentejas",
+        "arroz",
+        "huevo",
+        "ensalada"
+      ],
+      "protein_g_approx": 30,
+      "cal_approx": 500,
+      "timing": "almuerzo"
+    }
+  }
+}

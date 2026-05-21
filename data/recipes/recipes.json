@@ -1,0 +1,1819 @@
+[
+  {
+    "id": "arepa-huevo-aguacate",
+    "name": "Arepa con huevo y aguacate",
+    "category": "desayuno",
+    "goal_tags": [
+      "glutes",
+      "muscle_gain",
+      "fat_loss"
+    ],
+    "country_style": "Colombia",
+    "difficulty": "fácil",
+    "ingredients": [
+      "1 arepa mediana",
+      "2 huevos",
+      "½ aguacate",
+      "Sal y pimienta"
+    ],
+    "steps": [
+      "Calentar arepa en sartén 3 min por lado.",
+      "Cocinar huevos al gusto (revueltos o fritos).",
+      "Servir sobre la arepa con aguacate en rodajas."
+    ],
+    "arju_tip": "Simple, con proteína real y grasa buena del aguacate.",
+    "social_hook": "Desayuno alto en proteína en 10 minutos.",
+    "short_caption": "Simple, completo y colombiano. Arepa + huevo + aguacate. El desayuno que no falla.",
+    "slug": "arepa-huevo-aguacate",
+    "seo_title": "Arepa con huevo y aguacate — Receta ArjunaFit",
+    "seo_description": "Simple, con proteína real y grasa buena del aguacate. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Arepa con huevo y aguacate",
+    "share_description": "Simple, completo y colombiano. Arepa + huevo + aguacate. El desayuno que no falla.",
+    "image_alt": "Arepa con huevo y aguacate saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 460,
+      "protein_g": 24,
+      "carbs_g": 40,
+      "fat_g": 20
+    },
+    "prep_time_minutes": 10
+  },
+  {
+    "id": "huevos-pericos-arepa",
+    "name": "Huevos pericos con arepa",
+    "category": "desayuno",
+    "goal_tags": [
+      "glutes",
+      "fat_loss",
+      "muscle_gain"
+    ],
+    "country_style": "Colombia",
+    "difficulty": "fácil",
+    "ingredients": [
+      "3 huevos",
+      "1 tomate picado",
+      "½ cebolla cabezona",
+      "Aceite de oliva",
+      "1 arepa"
+    ],
+    "steps": [
+      "Sofreír cebolla y tomate 3 min.",
+      "Añadir huevos batidos, revolver.",
+      "Servir con arepa caliente."
+    ],
+    "arju_tip": "El desayuno colombiano por excelencia. Rápido y completo.",
+    "social_hook": "El desayuno colombiano que sí tiene proteína.",
+    "short_caption": "Huevos pericos con arepa. 25g de proteína. Listo en 10 minutos. Sin excusas.",
+    "slug": "huevos-pericos-arepa",
+    "seo_title": "Huevos pericos con arepa — Receta ArjunaFit",
+    "seo_description": "El desayuno colombiano por excelencia. Rápido y completo. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Huevos pericos con arepa",
+    "share_description": "Huevos pericos con arepa. 25g de proteína. Listo en 10 minutos. Sin excusas.",
+    "image_alt": "Huevos pericos con arepa saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 420,
+      "protein_g": 26,
+      "carbs_g": 32,
+      "fat_g": 18
+    },
+    "prep_time_minutes": 10
+  },
+  {
+    "id": "yogur-banano-avena",
+    "name": "Yogur griego con banano y avena",
+    "category": "desayuno",
+    "goal_tags": [
+      "fat_loss",
+      "glutes"
+    ],
+    "country_style": "Universal",
+    "difficulty": "fácil",
+    "ingredients": [
+      "200g yogur griego natural",
+      "1 banano",
+      "4 cucharadas de avena",
+      "1 cdta de miel opcional"
+    ],
+    "steps": [
+      "Mezclar yogur con avena.",
+      "Añadir banano en rodajas.",
+      "Agregar miel si se quiere."
+    ],
+    "arju_tip": "Alta proteína sin cocinar. Ideal cuando hay poco tiempo.",
+    "social_hook": "Proteína alta sin cocinar nada.",
+    "short_caption": "5 minutos. Sin estufa. Sin excusas. Yogur griego + banano + avena = desayuno ganador.",
+    "slug": "yogur-banano-avena",
+    "seo_title": "Yogur griego con banano y avena — Receta ArjunaFit",
+    "seo_description": "Alta proteína sin cocinar. Ideal cuando hay poco tiempo. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Yogur griego con banano y avena",
+    "share_description": "5 minutos. Sin estufa. Sin excusas. Yogur griego + banano + avena = desayuno ganador.",
+    "image_alt": "Yogur griego con banano y avena saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 380,
+      "protein_g": 20,
+      "carbs_g": 55,
+      "fat_g": 5
+    },
+    "prep_time_minutes": 5
+  },
+  {
+    "id": "omelette-espinaca",
+    "name": "Omelette de espinaca y queso",
+    "category": "desayuno",
+    "goal_tags": [
+      "fat_loss",
+      "muscle_gain"
+    ],
+    "country_style": "Universal",
+    "difficulty": "fácil",
+    "ingredients": [
+      "3 huevos",
+      "1 taza de espinaca",
+      "2 cdas queso campesino rallado",
+      "Aceite de oliva"
+    ],
+    "steps": [
+      "Batir huevos con sal.",
+      "Sofreír espinaca 1 min.",
+      "Verter huevos, esperar 2 min, añadir queso y doblar."
+    ],
+    "arju_tip": "Bajo en carbs, alto en proteína. Perfecto para reducción de grasa.",
+    "social_hook": "Bajo en carbs, alto en proteína. El desayuno fit real.",
+    "short_caption": "No necesitas complicarte. Este omelette tiene todo lo que tu cuerpo pide en la mañana.",
+    "slug": "omelette-espinaca",
+    "seo_title": "Omelette de espinaca y queso — Receta ArjunaFit",
+    "seo_description": "Bajo en carbs, alto en proteína. Perfecto para reducción de grasa. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Omelette de espinaca y queso",
+    "share_description": "No necesitas complicarte. Este omelette tiene todo lo que tu cuerpo pide en la mañana.",
+    "image_alt": "Omelette de espinaca y queso saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 340,
+      "protein_g": 28,
+      "carbs_g": 4,
+      "fat_g": 22
+    },
+    "prep_time_minutes": 10
+  },
+  {
+    "id": "avena-proteina-fresas",
+    "name": "Avena con proteína y fresas",
+    "category": "desayuno",
+    "goal_tags": [
+      "muscle_gain",
+      "glutes"
+    ],
+    "country_style": "Universal",
+    "difficulty": "fácil",
+    "ingredients": [
+      "1 taza avena",
+      "1 scoop proteína en polvo (opcional)",
+      "1 taza fresas",
+      "1 taza leche o bebida vegetal"
+    ],
+    "steps": [
+      "Calentar avena con leche 3 min.",
+      "Añadir proteína si se tiene.",
+      "Agregar fresas y servir."
+    ],
+    "arju_tip": "Buen pre-entreno o desayuno de recuperación.",
+    "social_hook": "El pre-entreno más simple que existe.",
+    "short_caption": "Avena + proteína + fresas. Energía para el entrenamiento sin quedarte con hambre.",
+    "slug": "avena-proteina-fresas",
+    "seo_title": "Avena con proteína y fresas — Receta ArjunaFit",
+    "seo_description": "Buen pre-entreno o desayuno de recuperación. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Avena con proteína y fresas",
+    "share_description": "Avena + proteína + fresas. Energía para el entrenamiento sin quedarte con hambre.",
+    "image_alt": "Avena con proteína y fresas saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 420,
+      "protein_g": 30,
+      "carbs_g": 55,
+      "fat_g": 8
+    },
+    "prep_time_minutes": 10
+  },
+  {
+    "id": "tostadas-huevo",
+    "name": "Tostadas integrales con huevo",
+    "category": "desayuno",
+    "goal_tags": [
+      "fat_loss",
+      "glutes"
+    ],
+    "country_style": "Universal",
+    "difficulty": "fácil",
+    "ingredients": [
+      "2 tostadas integrales",
+      "2 huevos estrellados",
+      "1 tomate",
+      "Aguacate opcional"
+    ],
+    "steps": [
+      "Tostar el pan.",
+      "Cocinar huevos al gusto.",
+      "Armar con tomate y aguacate."
+    ],
+    "arju_tip": "Rápido y consistente. Buena opción para cualquier objetivo.",
+    "social_hook": "Rápido, consistente y con proteína real.",
+    "short_caption": "Tostadas integrales + huevo + aguacate. El desayuno que se puede repetir semana tras semana.",
+    "slug": "tostadas-huevo",
+    "seo_title": "Tostadas integrales con huevo — Receta ArjunaFit",
+    "seo_description": "Rápido y consistente. Buena opción para cualquier objetivo. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Tostadas integrales con huevo",
+    "share_description": "Tostadas integrales + huevo + aguacate. El desayuno que se puede repetir semana tras semana.",
+    "image_alt": "Tostadas integrales con huevo saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 360,
+      "protein_g": 20,
+      "carbs_g": 35,
+      "fat_g": 16
+    },
+    "prep_time_minutes": 8
+  },
+  {
+    "id": "bowl-pollo-aguacate",
+    "name": "Bowl de arroz con pollo y aguacate",
+    "category": "almuerzo",
+    "goal_tags": [
+      "muscle_gain",
+      "glutes"
+    ],
+    "country_style": "Colombia/LATAM",
+    "difficulty": "fácil",
+    "ingredients": [
+      "150g pechuga de pollo",
+      "1 taza arroz blanco",
+      "½ aguacate",
+      "Limón, sal, comino"
+    ],
+    "steps": [
+      "Cocinar arroz normal.",
+      "Dorar pollo sazonado con comino y sal.",
+      "Servir en bowl con aguacate."
+    ],
+    "arju_tip": "La base perfecta para quien quiere músculo. Escala las porciones.",
+    "social_hook": "El almuerzo que te ayuda a ganar músculo.",
+    "short_caption": "Arroz, pollo y aguacate. Proteína completa, carbohidratos buenos, grasa saludable. En un bowl.",
+    "slug": "bowl-pollo-aguacate",
+    "seo_title": "Bowl de arroz con pollo y aguacate — Receta ArjunaFit",
+    "seo_description": "La base perfecta para quien quiere músculo. Escala las porciones. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Bowl de arroz con pollo y aguacate",
+    "share_description": "Arroz, pollo y aguacate. Proteína completa, carbohidratos buenos, grasa saludable. En un bowl.",
+    "image_alt": "Bowl de arroz con pollo y aguacate saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 580,
+      "protein_g": 42,
+      "carbs_g": 55,
+      "fat_g": 16
+    },
+    "prep_time_minutes": 20
+  },
+  {
+    "id": "pollo-desmechado-papa",
+    "name": "Pollo desmechado con papa criolla",
+    "category": "almuerzo",
+    "goal_tags": [
+      "glutes",
+      "muscle_gain"
+    ],
+    "country_style": "Colombia",
+    "difficulty": "fácil",
+    "ingredients": [
+      "200g pechuga de pollo",
+      "200g papa criolla",
+      "Ajo, sal, comino",
+      "1 tomate picado"
+    ],
+    "steps": [
+      "Cocinar pechuga, desmechaer.",
+      "Hervir papas.",
+      "Sofreír tomate y ajo, añadir pollo, cocinar 5 min.",
+      "Servir con papas."
+    ],
+    "arju_tip": "Alto en proteína, carbohidratos complejos. Clásico colombiano que funciona.",
+    "social_hook": "Almuerzo colombiano alto en proteína.",
+    "short_caption": "Pollo desmechado con papa criolla. El clásico que funciona para cualquier objetivo.",
+    "slug": "pollo-desmechado-papa",
+    "seo_title": "Pollo desmechado con papa criolla — Receta ArjunaFit",
+    "seo_description": "Alto en proteína, carbohidratos complejos. Clásico colombiano que funciona. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Pollo desmechado con papa criolla",
+    "share_description": "Pollo desmechado con papa criolla. El clásico que funciona para cualquier objetivo.",
+    "image_alt": "Pollo desmechado con papa criolla saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 490,
+      "protein_g": 44,
+      "carbs_g": 45,
+      "fat_g": 8
+    },
+    "prep_time_minutes": 25
+  },
+  {
+    "id": "lentejas-arroz-huevo",
+    "name": "Lentejas con arroz y huevo",
+    "category": "almuerzo",
+    "goal_tags": [
+      "fat_loss",
+      "glutes",
+      "muscle_gain"
+    ],
+    "country_style": "Colombia",
+    "difficulty": "media",
+    "ingredients": [
+      "1 taza lentejas",
+      "1 taza arroz",
+      "2 huevos",
+      "Zanahoria, cebolla, ajo",
+      "Cilantro"
+    ],
+    "steps": [
+      "Cocinar lentejas 25 min con ajo y zanahoria.",
+      "Cocinar arroz aparte.",
+      "Añadir cilantro a las lentejas.",
+      "Servir con huevo frito."
+    ],
+    "arju_tip": "Completo, barato, llena. La proteína vegetal + huevo es una combinación poderosa.",
+    "social_hook": "Proteína vegetal + animal. La combinación más subestimada.",
+    "short_caption": "Lentejas con arroz y huevo. Completo, barato y llena de verdad.",
+    "slug": "lentejas-arroz-huevo",
+    "seo_title": "Lentejas con arroz y huevo — Receta ArjunaFit",
+    "seo_description": "Completo, barato, llena. La proteína vegetal + huevo es una combinación poderosa. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Lentejas con arroz y huevo",
+    "share_description": "Lentejas con arroz y huevo. Completo, barato y llena de verdad.",
+    "image_alt": "Lentejas con arroz y huevo saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 560,
+      "protein_g": 34,
+      "carbs_g": 75,
+      "fat_g": 12
+    },
+    "prep_time_minutes": 30
+  },
+  {
+    "id": "frijoles-arroz-carne",
+    "name": "Frijoles con arroz y carne magra",
+    "category": "almuerzo",
+    "goal_tags": [
+      "muscle_gain",
+      "glutes"
+    ],
+    "country_style": "Colombia",
+    "difficulty": "media",
+    "ingredients": [
+      "1 taza frijoles cocidos",
+      "1 taza arroz",
+      "120g carne magra (falda, res)",
+      "Hogao (tomate + cebolla)"
+    ],
+    "steps": [
+      "Hacer hogao: sofreír tomate y cebolla 8 min.",
+      "Añadir frijoles al hogao, 10 min.",
+      "Dorar carne.",
+      "Servir todo junto."
+    ],
+    "arju_tip": "El almuerzo paisa. Balanceado y sostenible.",
+    "social_hook": "El almuerzo paisa que sí te nutre.",
+    "short_caption": "Frijoles + arroz + carne. No tienes que cambiar lo que ya comes. Solo ajustarlo.",
+    "slug": "frijoles-arroz-carne",
+    "seo_title": "Frijoles con arroz y carne magra — Receta ArjunaFit",
+    "seo_description": "El almuerzo paisa. Balanceado y sostenible. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Frijoles con arroz y carne magra",
+    "share_description": "Frijoles + arroz + carne. No tienes que cambiar lo que ya comes. Solo ajustarlo.",
+    "image_alt": "Frijoles con arroz y carne magra saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 610,
+      "protein_g": 45,
+      "carbs_g": 70,
+      "fat_g": 14
+    },
+    "prep_time_minutes": 35
+  },
+  {
+    "id": "carne-molida-papa",
+    "name": "Carne molida magra con papa",
+    "category": "almuerzo",
+    "goal_tags": [
+      "muscle_gain",
+      "fat_loss"
+    ],
+    "country_style": "Colombia/LATAM",
+    "difficulty": "fácil",
+    "ingredients": [
+      "200g carne molida magra",
+      "2 papas medianas",
+      "Cebolla, tomate, ajo",
+      "Comino, sal, pimienta"
+    ],
+    "steps": [
+      "Dorar carne con ajo y cebolla.",
+      "Añadir tomate, comino, sal, cocinar 10 min.",
+      "Servir con papas cocidas."
+    ],
+    "arju_tip": "Rápido de preparar y alto en proteína. Muy versátil.",
+    "social_hook": "Proteína alta en menos de 20 minutos.",
+    "short_caption": "Carne molida con papa. Rápido, versátil y delicioso. Una de las mejores opciones de almuerzo.",
+    "slug": "carne-molida-papa",
+    "seo_title": "Carne molida magra con papa — Receta ArjunaFit",
+    "seo_description": "Rápido de preparar y alto en proteína. Muy versátil. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Carne molida magra con papa",
+    "share_description": "Carne molida con papa. Rápido, versátil y delicioso. Una de las mejores opciones de almuerzo.",
+    "image_alt": "Carne molida magra con papa saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 520,
+      "protein_g": 42,
+      "carbs_g": 40,
+      "fat_g": 18
+    },
+    "prep_time_minutes": 20
+  },
+  {
+    "id": "pescado-yuca-ensalada",
+    "name": "Pescado con yuca y ensalada",
+    "category": "almuerzo",
+    "goal_tags": [
+      "fat_loss",
+      "glutes"
+    ],
+    "country_style": "Colombia costera",
+    "difficulty": "media",
+    "ingredients": [
+      "200g tilapia o mojarra",
+      "200g yuca cocida",
+      "Ensalada verde",
+      "Limón, sal, ajo"
+    ],
+    "steps": [
+      "Marinar pescado con limón y ajo 10 min.",
+      "Dorar en sartén 4 min por lado.",
+      "Hervir yuca.",
+      "Servir con ensalada."
+    ],
+    "arju_tip": "Proteína magra + carbohidrato real. Bueno para reducción de grasa.",
+    "social_hook": "Proteína magra + carbohidrato real.",
+    "short_caption": "Pescado con yuca y ensalada. Fresco, ligero y con todo lo que necesitas.",
+    "slug": "pescado-yuca-ensalada",
+    "seo_title": "Pescado con yuca y ensalada — Receta ArjunaFit",
+    "seo_description": "Proteína magra + carbohidrato real. Bueno para reducción de grasa. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Pescado con yuca y ensalada",
+    "share_description": "Pescado con yuca y ensalada. Fresco, ligero y con todo lo que necesitas.",
+    "image_alt": "Pescado con yuca y ensalada saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 470,
+      "protein_g": 40,
+      "carbs_g": 42,
+      "fat_g": 10
+    },
+    "prep_time_minutes": 25
+  },
+  {
+    "id": "atun-arepa-tomate",
+    "name": "Atún con arepa y tomate",
+    "category": "almuerzo",
+    "goal_tags": [
+      "fat_loss",
+      "glutes",
+      "muscle_gain"
+    ],
+    "country_style": "Colombia",
+    "difficulty": "fácil",
+    "ingredients": [
+      "1 lata atún en agua (150g)",
+      "2 arepas",
+      "2 tomates",
+      "Cebolla, limón, sal"
+    ],
+    "steps": [
+      "Mezclar atún con tomate y cebolla picada, limón.",
+      "Calentar arepas.",
+      "Servir atún sobre arepas."
+    ],
+    "arju_tip": "El almuerzo más rápido con proteína alta. Ideal cuando hay poco tiempo.",
+    "social_hook": "El almuerzo más rápido con 35g de proteína.",
+    "short_caption": "Atún + arepa + tomate. Listo en 8 minutos. Alto en proteína. Sin cocina elaborada.",
+    "slug": "atun-arepa-tomate",
+    "seo_title": "Atún con arepa y tomate — Receta ArjunaFit",
+    "seo_description": "El almuerzo más rápido con proteína alta. Ideal cuando hay poco tiempo. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Atún con arepa y tomate",
+    "share_description": "Atún + arepa + tomate. Listo en 8 minutos. Alto en proteína. Sin cocina elaborada.",
+    "image_alt": "Atún con arepa y tomate saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 400,
+      "protein_g": 36,
+      "carbs_g": 38,
+      "fat_g": 8
+    },
+    "prep_time_minutes": 8
+  },
+  {
+    "id": "ensalada-pollo-aguacate",
+    "name": "Ensalada de pollo con aguacate",
+    "category": "almuerzo",
+    "goal_tags": [
+      "fat_loss",
+      "glutes"
+    ],
+    "country_style": "Universal",
+    "difficulty": "fácil",
+    "ingredients": [
+      "150g pechuga cocida desmenuzada",
+      "Lechuga, tomate, pepino",
+      "½ aguacate",
+      "Aceite de oliva, limón"
+    ],
+    "steps": [
+      "Desmenuzar pollo.",
+      "Preparar ensalada con vegetales.",
+      "Añadir pollo y aguacate.",
+      "Aliñar con aceite de oliva y limón."
+    ],
+    "arju_tip": "Perfecto para días de déficit. Saciante y con proteína alta.",
+    "social_hook": "Saciante, fresca y con proteína alta.",
+    "short_caption": "Esta ensalada no te va a dejar con hambre. Pollo + aguacate + limón. Simple y directo.",
+    "slug": "ensalada-pollo-aguacate",
+    "seo_title": "Ensalada de pollo con aguacate — Receta ArjunaFit",
+    "seo_description": "Perfecto para días de déficit. Saciante y con proteína alta. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Ensalada de pollo con aguacate",
+    "share_description": "Esta ensalada no te va a dejar con hambre. Pollo + aguacate + limón. Simple y directo.",
+    "image_alt": "Ensalada de pollo con aguacate saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 380,
+      "protein_g": 34,
+      "carbs_g": 12,
+      "fat_g": 20
+    },
+    "prep_time_minutes": 15
+  },
+  {
+    "id": "wrap-pollo",
+    "name": "Wrap integral de pollo",
+    "category": "almuerzo",
+    "goal_tags": [
+      "muscle_gain",
+      "glutes",
+      "fat_loss"
+    ],
+    "country_style": "Universal",
+    "difficulty": "fácil",
+    "ingredients": [
+      "1 tortilla integral",
+      "120g pollo a la plancha",
+      "Lechuga, tomate, aguacate",
+      "Yogur griego como aderezo"
+    ],
+    "steps": [
+      "Cocinar pollo con sal y limón.",
+      "Armar wrap con todos los ingredientes.",
+      "Doblar y servir."
+    ],
+    "arju_tip": "Portátil y completo. Bueno para llevar al trabajo o al gimnasio.",
+    "social_hook": "El almuerzo que puedes llevar a cualquier parte.",
+    "short_caption": "Wrap de pollo para llevar. Completo, portátil y alto en proteína.",
+    "slug": "wrap-pollo",
+    "seo_title": "Wrap integral de pollo — Receta ArjunaFit",
+    "seo_description": "Portátil y completo. Bueno para llevar al trabajo o al gimnasio. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Wrap integral de pollo",
+    "share_description": "Wrap de pollo para llevar. Completo, portátil y alto en proteína.",
+    "image_alt": "Wrap integral de pollo saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 440,
+      "protein_g": 36,
+      "carbs_g": 38,
+      "fat_g": 14
+    },
+    "prep_time_minutes": 12
+  },
+  {
+    "id": "sopa-pollo-verduras",
+    "name": "Sopa de pollo con papa y verduras",
+    "category": "almuerzo",
+    "goal_tags": [
+      "fat_loss",
+      "glutes"
+    ],
+    "country_style": "Colombia",
+    "difficulty": "fácil",
+    "ingredients": [
+      "200g pechuga",
+      "2 papas",
+      "Zanahoria, mazorca",
+      "Cilantro, ajo, sal"
+    ],
+    "steps": [
+      "Cocinar pechuga en agua con ajo 20 min.",
+      "Añadir papas, zanahoria y mazorca.",
+      "Cocinar 15 min más.",
+      "Agregar cilantro al servir."
+    ],
+    "arju_tip": "La sopa de pollo es la comida más reconfortante que existe. Y tiene mucha proteína.",
+    "social_hook": "La sopa de pollo que sí tiene proteína.",
+    "short_caption": "Caldo, pollo, papa, zanahoria y cilantro. El reconfortante que alimenta de verdad.",
+    "slug": "sopa-pollo-verduras",
+    "seo_title": "Sopa de pollo con papa y verduras — Receta ArjunaFit",
+    "seo_description": "La sopa de pollo es la comida más reconfortante que existe. Y tiene mucha proteína. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Sopa de pollo con papa y verduras",
+    "share_description": "Caldo, pollo, papa, zanahoria y cilantro. El reconfortante que alimenta de verdad.",
+    "image_alt": "Sopa de pollo con papa y verduras saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 420,
+      "protein_g": 36,
+      "carbs_g": 45,
+      "fat_g": 8
+    },
+    "prep_time_minutes": 35
+  },
+  {
+    "id": "pechuga-pure-papa",
+    "name": "Pechuga con puré de papa y ensalada",
+    "category": "cena",
+    "goal_tags": [
+      "muscle_gain",
+      "glutes"
+    ],
+    "country_style": "Colombia/LATAM",
+    "difficulty": "media",
+    "ingredients": [
+      "180g pechuga",
+      "2 papas",
+      "1 cda mantequilla",
+      "Leche, sal, pimienta",
+      "Ensalada verde"
+    ],
+    "steps": [
+      "Asar pechuga con ajo y sal.",
+      "Hacer puré: papa cocida + mantequilla + leche.",
+      "Servir con ensalada."
+    ],
+    "arju_tip": "Alta proteína, carbohidrato bueno, todo en un plato.",
+    "social_hook": "Cena clásica. Alta en proteína. Sin complicaciones.",
+    "short_caption": "Pechuga + puré de papa + ensalada. La cena que repite sola.",
+    "slug": "pechuga-pure-papa",
+    "seo_title": "Pechuga con puré de papa y ensalada — Receta ArjunaFit",
+    "seo_description": "Alta proteína, carbohidrato bueno, todo en un plato. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Pechuga con puré de papa y ensalada",
+    "share_description": "Pechuga + puré de papa + ensalada. La cena que repite sola.",
+    "image_alt": "Pechuga con puré de papa y ensalada saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 520,
+      "protein_g": 44,
+      "carbs_g": 45,
+      "fat_g": 14
+    },
+    "prep_time_minutes": 25
+  },
+  {
+    "id": "salmon-arroz-vegetales",
+    "name": "Salmón con arroz y vegetales",
+    "category": "cena",
+    "goal_tags": [
+      "fat_loss",
+      "muscle_gain"
+    ],
+    "country_style": "Universal",
+    "difficulty": "media",
+    "ingredients": [
+      "180g salmón",
+      "1 taza arroz",
+      "Brócoli, zanahoria, zucchini",
+      "Limón, aceite de oliva"
+    ],
+    "steps": [
+      "Dorar salmón en sartén 4 min por lado con limón.",
+      "Saltear vegetales con aceite de oliva.",
+      "Servir con arroz."
+    ],
+    "arju_tip": "Rico en omega-3, proteína y micronutrientes. Excelente para recuperación.",
+    "social_hook": "El plato de recuperación post-entreno.",
+    "short_caption": "Salmón + arroz + vegetales. Omega-3, proteína y carbohidratos. Todo lo que tu músculo necesita.",
+    "slug": "salmon-arroz-vegetales",
+    "seo_title": "Salmón con arroz y vegetales — Receta ArjunaFit",
+    "seo_description": "Rico en omega-3, proteína y micronutrientes. Excelente para recuperación. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Salmón con arroz y vegetales",
+    "share_description": "Salmón + arroz + vegetales. Omega-3, proteína y carbohidratos. Todo lo que tu músculo necesita.",
+    "image_alt": "Salmón con arroz y vegetales saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 560,
+      "protein_g": 46,
+      "carbs_g": 45,
+      "fat_g": 18
+    },
+    "prep_time_minutes": 20
+  },
+  {
+    "id": "tilapia-patacon",
+    "name": "Tilapia al horno con patacón",
+    "category": "cena",
+    "goal_tags": [
+      "fat_loss",
+      "glutes"
+    ],
+    "country_style": "Colombia costera",
+    "difficulty": "media",
+    "ingredients": [
+      "200g tilapia",
+      "1 plátano verde",
+      "Ajo, limón, sal",
+      "Aceite para patacón"
+    ],
+    "steps": [
+      "Marinar tilapia con ajo y limón.",
+      "Hornear 20 min a 200°C.",
+      "Freír patacón, aplanar, dorar.",
+      "Servir juntos."
+    ],
+    "arju_tip": "El plátano verde tiene almidón resistente que nutre las bacterias buenas del intestino.",
+    "social_hook": "El sabor costero con proteína alta.",
+    "short_caption": "Tilapia al horno con patacón. Colombiano, rico y equilibrado.",
+    "slug": "tilapia-patacon",
+    "seo_title": "Tilapia al horno con patacón — Receta ArjunaFit",
+    "seo_description": "El plátano verde tiene almidón resistente que nutre las bacterias buenas del intestino. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Tilapia al horno con patacón",
+    "share_description": "Tilapia al horno con patacón. Colombiano, rico y equilibrado.",
+    "image_alt": "Tilapia al horno con patacón saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 480,
+      "protein_g": 40,
+      "carbs_g": 38,
+      "fat_g": 14
+    },
+    "prep_time_minutes": 25
+  },
+  {
+    "id": "cena-huevos-vegetales",
+    "name": "Cena ligera de huevos con vegetales",
+    "category": "cena",
+    "goal_tags": [
+      "fat_loss",
+      "glutes"
+    ],
+    "country_style": "Universal",
+    "difficulty": "fácil",
+    "ingredients": [
+      "3 huevos",
+      "Pimentón, champiñones, espinaca",
+      "Aceite de oliva",
+      "Sal, pimienta"
+    ],
+    "steps": [
+      "Saltear vegetales 4 min.",
+      "Añadir huevos batidos.",
+      "Revolver hasta cocinar.",
+      "Servir con pan o arepa opcional."
+    ],
+    "arju_tip": "Cena rápida, ligera y con proteína real. Perfecta para días de poco hambre.",
+    "social_hook": "Cena ligera de alta proteína lista en 12 minutos.",
+    "short_caption": "Cuando no tienes mucho hambre pero tu cuerpo necesita proteína. Huevos + vegetales.",
+    "slug": "cena-huevos-vegetales",
+    "seo_title": "Cena ligera de huevos con vegetales — Receta ArjunaFit",
+    "seo_description": "Cena rápida, ligera y con proteína real. Perfecta para días de poco hambre. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Cena ligera de huevos con vegetales",
+    "share_description": "Cuando no tienes mucho hambre pero tu cuerpo necesita proteína. Huevos + vegetales.",
+    "image_alt": "Cena ligera de huevos con vegetales saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 320,
+      "protein_g": 26,
+      "carbs_g": 8,
+      "fat_g": 20
+    },
+    "prep_time_minutes": 12
+  },
+  {
+    "id": "pollo-al-curry",
+    "name": "Pollo al curry ligero",
+    "category": "cena",
+    "goal_tags": [
+      "fat_loss",
+      "muscle_gain"
+    ],
+    "country_style": "Universal",
+    "difficulty": "media",
+    "ingredients": [
+      "200g pollo",
+      "1 taza arroz",
+      "200ml leche de coco light",
+      "1 cda curry en polvo",
+      "Cebolla, ajo"
+    ],
+    "steps": [
+      "Sofreír cebolla y ajo.",
+      "Añadir pollo en cubos.",
+      "Agregar curry y leche de coco.",
+      "Cocinar 15 min. Servir con arroz."
+    ],
+    "arju_tip": "Diferente, sabroso y no requiere ingredientes raros.",
+    "social_hook": "Cena diferente sin ingredientes raros.",
+    "short_caption": "Curry de pollo con lo que tienes en casa. Diferente, sabroso y con proteína alta.",
+    "slug": "pollo-al-curry",
+    "seo_title": "Pollo al curry ligero — Receta ArjunaFit",
+    "seo_description": "Diferente, sabroso y no requiere ingredientes raros. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Pollo al curry ligero",
+    "share_description": "Curry de pollo con lo que tienes en casa. Diferente, sabroso y con proteína alta.",
+    "image_alt": "Pollo al curry ligero saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 520,
+      "protein_g": 42,
+      "carbs_g": 48,
+      "fat_g": 14
+    },
+    "prep_time_minutes": 20
+  },
+  {
+    "id": "bowl-platano-pollo",
+    "name": "Bowl de plátano maduro con pollo",
+    "category": "almuerzo",
+    "goal_tags": [
+      "muscle_gain",
+      "glutes"
+    ],
+    "country_style": "Colombia",
+    "difficulty": "fácil",
+    "ingredients": [
+      "150g pollo",
+      "1 plátano maduro",
+      "Lechuga, tomate",
+      "Aceite de coco o mantequilla"
+    ],
+    "steps": [
+      "Dorar pollo sazonado.",
+      "Freír plátano maduro en rodajas.",
+      "Armar bowl con todos los ingredientes."
+    ],
+    "arju_tip": "El plátano maduro tiene más azúcar simple que el verde, ideal post-entreno.",
+    "social_hook": "El bowl post-entreno con plátano maduro.",
+    "short_caption": "Plátano maduro + pollo. Dulce, salado y perfecto para después de entrenar.",
+    "slug": "bowl-platano-pollo",
+    "seo_title": "Bowl de plátano maduro con pollo — Receta ArjunaFit",
+    "seo_description": "El plátano maduro tiene más azúcar simple que el verde, ideal post-entreno. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Bowl de plátano maduro con pollo",
+    "share_description": "Plátano maduro + pollo. Dulce, salado y perfecto para después de entrenar.",
+    "image_alt": "Bowl de plátano maduro con pollo saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 490,
+      "protein_g": 38,
+      "carbs_g": 50,
+      "fat_g": 12
+    },
+    "prep_time_minutes": 20
+  },
+  {
+    "id": "crema-ahuyama",
+    "name": "Crema de ahuyama con pollo",
+    "category": "cena",
+    "goal_tags": [
+      "fat_loss"
+    ],
+    "country_style": "Colombia",
+    "difficulty": "media",
+    "ingredients": [
+      "300g ahuyama",
+      "150g pollo",
+      "Cebolla, ajo, sal",
+      "Crema de leche light opcional"
+    ],
+    "steps": [
+      "Hervir ahuyama hasta suave.",
+      "Licuar con caldo de pollo.",
+      "Dorar pollo aparte.",
+      "Servir crema con pollo encima."
+    ],
+    "arju_tip": "La ahuyama es alta en vitamina A y baja en calorías. Llena sin pesar.",
+    "social_hook": "Cena reconfortante, baja en calorías y saciante.",
+    "short_caption": "La crema de ahuyama que no te pasará hambre. Con pollo encima = proteína completa.",
+    "slug": "crema-ahuyama",
+    "seo_title": "Crema de ahuyama con pollo — Receta ArjunaFit",
+    "seo_description": "La ahuyama es alta en vitamina A y baja en calorías. Llena sin pesar. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Crema de ahuyama con pollo",
+    "share_description": "La crema de ahuyama que no te pasará hambre. Con pollo encima = proteína completa.",
+    "image_alt": "Crema de ahuyama con pollo saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 380,
+      "protein_g": 34,
+      "carbs_g": 28,
+      "fat_g": 10
+    },
+    "prep_time_minutes": 30
+  },
+  {
+    "id": "tortilla-vegetales",
+    "name": "Tortilla española de vegetales",
+    "category": "cena",
+    "goal_tags": [
+      "fat_loss",
+      "glutes"
+    ],
+    "country_style": "Universal",
+    "difficulty": "media",
+    "ingredients": [
+      "4 huevos",
+      "1 papa pequeña",
+      "Pimentón, cebolla",
+      "Aceite de oliva, sal"
+    ],
+    "steps": [
+      "Sofreír papa y cebolla hasta blandas.",
+      "Batir huevos, añadir vegetales.",
+      "Cocinar en sartén tapado 6 min. Voltear."
+    ],
+    "arju_tip": "Versátil. Sirve como cena o como snack. Fácil de guardar para el día siguiente.",
+    "social_hook": "Cena fácil de hacer y más fácil de repetir.",
+    "short_caption": "Tortilla de vegetales y papa. Lista en 15 minutos y sirve fría al día siguiente.",
+    "slug": "tortilla-vegetales",
+    "seo_title": "Tortilla española de vegetales — Receta ArjunaFit",
+    "seo_description": "Versátil. Sirve como cena o como snack. Fácil de guardar para el día siguiente. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Tortilla española de vegetales",
+    "share_description": "Tortilla de vegetales y papa. Lista en 15 minutos y sirve fría al día siguiente.",
+    "image_alt": "Tortilla española de vegetales saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 380,
+      "protein_g": 28,
+      "carbs_g": 22,
+      "fat_g": 20
+    },
+    "prep_time_minutes": 15
+  },
+  {
+    "id": "ensalada-atun-garbanzos",
+    "name": "Ensalada de atún con garbanzos",
+    "category": "almuerzo",
+    "goal_tags": [
+      "fat_loss",
+      "muscle_gain"
+    ],
+    "country_style": "Universal",
+    "difficulty": "fácil",
+    "ingredients": [
+      "1 lata atún",
+      "½ taza garbanzos cocidos",
+      "Tomate, pepino, cebolla morada",
+      "Aceite de oliva, limón"
+    ],
+    "steps": [
+      "Mezclar todos los ingredientes.",
+      "Aliñar con aceite y limón.",
+      "Servir frío."
+    ],
+    "arju_tip": "Lleva 5 minutos y tiene proteína de dos fuentes. Ideal para mediodía rápido.",
+    "social_hook": "Dos fuentes de proteína en una ensalada.",
+    "short_caption": "Atún + garbanzos. El almuerzo más rápido con fibra + proteína que existe.",
+    "slug": "ensalada-atun-garbanzos",
+    "seo_title": "Ensalada de atún con garbanzos — Receta ArjunaFit",
+    "seo_description": "Lleva 5 minutos y tiene proteína de dos fuentes. Ideal para mediodía rápido. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Ensalada de atún con garbanzos",
+    "share_description": "Atún + garbanzos. El almuerzo más rápido con fibra + proteína que existe.",
+    "image_alt": "Ensalada de atún con garbanzos saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 400,
+      "protein_g": 36,
+      "carbs_g": 32,
+      "fat_g": 10
+    },
+    "prep_time_minutes": 8
+  },
+  {
+    "id": "garbanzos-salteados-pollo",
+    "name": "Garbanzos salteados con pollo",
+    "category": "almuerzo",
+    "goal_tags": [
+      "muscle_gain",
+      "fat_loss"
+    ],
+    "country_style": "Universal/LATAM",
+    "difficulty": "fácil",
+    "ingredients": [
+      "150g pollo",
+      "1 taza garbanzos cocidos",
+      "Pimentón, cebolla, tomate",
+      "Comino, sal, aceite de oliva"
+    ],
+    "steps": [
+      "Dorar pollo en cubos.",
+      "Añadir vegetales, saltear.",
+      "Agregar garbanzos, cocinar 5 min más."
+    ],
+    "arju_tip": "Los garbanzos dan saciedad y fibra. El pollo da proteína. Muy buena combinación.",
+    "social_hook": "Los garbanzos que sí llenan.",
+    "short_caption": "Garbanzos salteados con pollo. Fibra + proteína + saciedad real.",
+    "slug": "garbanzos-salteados-pollo",
+    "seo_title": "Garbanzos salteados con pollo — Receta ArjunaFit",
+    "seo_description": "Los garbanzos dan saciedad y fibra. El pollo da proteína. Muy buena combinación. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Garbanzos salteados con pollo",
+    "share_description": "Garbanzos salteados con pollo. Fibra + proteína + saciedad real.",
+    "image_alt": "Garbanzos salteados con pollo saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 480,
+      "protein_g": 42,
+      "carbs_g": 40,
+      "fat_g": 12
+    },
+    "prep_time_minutes": 18
+  },
+  {
+    "id": "bowl-quinoa-pollo",
+    "name": "Bowl de quinoa con pollo",
+    "category": "almuerzo",
+    "goal_tags": [
+      "fat_loss",
+      "muscle_gain",
+      "glutes"
+    ],
+    "country_style": "Universal/LATAM",
+    "difficulty": "media",
+    "ingredients": [
+      "1 taza quinoa",
+      "150g pollo",
+      "Aguacate, tomate, cilantro",
+      "Limón, sal"
+    ],
+    "steps": [
+      "Cocinar quinoa 15 min.",
+      "Dorar pollo sazonado.",
+      "Armar bowl con todos los ingredientes."
+    ],
+    "arju_tip": "La quinoa tiene los 9 aminoácidos esenciales. Proteína completa vegetal.",
+    "social_hook": "El bowl con proteína completa vegetal + animal.",
+    "short_caption": "Quinoa + pollo + aguacate. Proteína de dos fuentes. Sabroso y completo.",
+    "slug": "bowl-quinoa-pollo",
+    "seo_title": "Bowl de quinoa con pollo — Receta ArjunaFit",
+    "seo_description": "La quinoa tiene los 9 aminoácidos esenciales. Proteína completa vegetal. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Bowl de quinoa con pollo",
+    "share_description": "Quinoa + pollo + aguacate. Proteína de dos fuentes. Sabroso y completo.",
+    "image_alt": "Bowl de quinoa con pollo saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 510,
+      "protein_g": 40,
+      "carbs_g": 52,
+      "fat_g": 14
+    },
+    "prep_time_minutes": 20
+  },
+  {
+    "id": "pasta-integral-pollo",
+    "name": "Pasta integral con pollo",
+    "category": "almuerzo",
+    "goal_tags": [
+      "muscle_gain",
+      "glutes"
+    ],
+    "country_style": "Universal",
+    "difficulty": "fácil",
+    "ingredients": [
+      "100g pasta integral",
+      "150g pollo",
+      "Tomate natural, ajo, albahaca",
+      "Aceite de oliva"
+    ],
+    "steps": [
+      "Cocinar pasta al dente.",
+      "Sofreír ajo, añadir tomate y cocinar 8 min.",
+      "Añadir pollo desmenuzado.",
+      "Mezclar con pasta."
+    ],
+    "arju_tip": "La pasta integral tiene más fibra que la blanca. No tienes que eliminarla.",
+    "social_hook": "Sí puedes comer pasta y mejorar tu físico.",
+    "short_caption": "Pasta integral con pollo y tomate. No tienes que eliminar la pasta. Solo hacerla mejor.",
+    "slug": "pasta-integral-pollo",
+    "seo_title": "Pasta integral con pollo — Receta ArjunaFit",
+    "seo_description": "La pasta integral tiene más fibra que la blanca. No tienes que eliminarla. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Pasta integral con pollo",
+    "share_description": "Pasta integral con pollo y tomate. No tienes que eliminar la pasta. Solo hacerla mejor.",
+    "image_alt": "Pasta integral con pollo saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 520,
+      "protein_g": 40,
+      "carbs_g": 60,
+      "fat_g": 10
+    },
+    "prep_time_minutes": 20
+  },
+  {
+    "id": "pasta-atun-tomate",
+    "name": "Pasta con atún y tomate",
+    "category": "almuerzo",
+    "goal_tags": [
+      "fat_loss",
+      "muscle_gain"
+    ],
+    "country_style": "Universal",
+    "difficulty": "fácil",
+    "ingredients": [
+      "100g pasta",
+      "1 lata atún",
+      "2 tomates naturales",
+      "Ajo, aceite de oliva, sal"
+    ],
+    "steps": [
+      "Cocinar pasta.",
+      "Hacer salsa: tomate + ajo 8 min.",
+      "Mezclar con atún y pasta."
+    ],
+    "arju_tip": "El clásico rápido. Listo en 15 min, con proteína buena.",
+    "social_hook": "Almuerzo listo en 15 minutos con proteína.",
+    "short_caption": "Pasta + atún + tomate. El clásico que no falla cuando hay poco tiempo.",
+    "slug": "pasta-atun-tomate",
+    "seo_title": "Pasta con atún y tomate — Receta ArjunaFit",
+    "seo_description": "El clásico rápido. Listo en 15 min, con proteína buena. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Pasta con atún y tomate",
+    "share_description": "Pasta + atún + tomate. El clásico que no falla cuando hay poco tiempo.",
+    "image_alt": "Pasta con atún y tomate saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 460,
+      "protein_g": 36,
+      "carbs_g": 58,
+      "fat_g": 8
+    },
+    "prep_time_minutes": 15
+  },
+  {
+    "id": "batido-proteina-banano",
+    "name": "Batido de proteína con banano",
+    "category": "snack",
+    "goal_tags": [
+      "muscle_gain",
+      "glutes"
+    ],
+    "country_style": "Universal",
+    "difficulty": "fácil",
+    "ingredients": [
+      "1 scoop proteína en polvo",
+      "1 banano",
+      "300ml leche o bebida vegetal",
+      "Hielo opcional"
+    ],
+    "steps": [
+      "Licuar todos los ingredientes.",
+      "Servir inmediatamente."
+    ],
+    "arju_tip": "Post-entreno perfecto. La proteína + banano acelera la recuperación.",
+    "social_hook": "Post-entreno perfecto. 3 minutos.",
+    "short_caption": "Proteína + banano + leche. El batido de recuperación más fácil. Sin magia, solo nutrición.",
+    "slug": "batido-proteina-banano",
+    "seo_title": "Batido de proteína con banano — Receta ArjunaFit",
+    "seo_description": "Post-entreno perfecto. La proteína + banano acelera la recuperación. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Batido de proteína con banano",
+    "share_description": "Proteína + banano + leche. El batido de recuperación más fácil. Sin magia, solo nutrición.",
+    "image_alt": "Batido de proteína con banano saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 380,
+      "protein_g": 35,
+      "carbs_g": 45,
+      "fat_g": 5
+    },
+    "prep_time_minutes": 3
+  },
+  {
+    "id": "smoothie-frutos-rojos",
+    "name": "Smoothie de frutos rojos y yogur",
+    "category": "snack",
+    "goal_tags": [
+      "fat_loss",
+      "glutes"
+    ],
+    "country_style": "Universal",
+    "difficulty": "fácil",
+    "ingredients": [
+      "200g yogur griego",
+      "1 taza frutos rojos (fresas, mora, arándanos)",
+      "1 cucharada miel",
+      "½ taza leche"
+    ],
+    "steps": [
+      "Licuar todos los ingredientes.",
+      "Servir frío."
+    ],
+    "arju_tip": "Antioxidantes + proteína. Ideal como colación o postre liviano.",
+    "social_hook": "Antioxidantes + proteína sin esfuerzo.",
+    "short_caption": "Smoothie de frutos rojos con yogur. Rápido, delicioso y con proteína.",
+    "slug": "smoothie-frutos-rojos",
+    "seo_title": "Smoothie de frutos rojos y yogur — Receta ArjunaFit",
+    "seo_description": "Antioxidantes + proteína. Ideal como colación o postre liviano. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Smoothie de frutos rojos y yogur",
+    "share_description": "Smoothie de frutos rojos con yogur. Rápido, delicioso y con proteína.",
+    "image_alt": "Smoothie de frutos rojos y yogur saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 280,
+      "protein_g": 18,
+      "carbs_g": 38,
+      "fat_g": 4
+    },
+    "prep_time_minutes": 5
+  },
+  {
+    "id": "panquecas-avena",
+    "name": "Panquecas de avena y banano",
+    "category": "desayuno",
+    "goal_tags": [
+      "muscle_gain",
+      "glutes"
+    ],
+    "country_style": "Universal/LATAM",
+    "difficulty": "fácil",
+    "ingredients": [
+      "1 banano",
+      "1 taza avena",
+      "2 huevos",
+      "½ cdta canela",
+      "Aceite de coco"
+    ],
+    "steps": [
+      "Licuar banano, avena y huevos.",
+      "Calentar sartén con aceite.",
+      "Cocinar porciones medianas 2 min por lado."
+    ],
+    "arju_tip": "Sin harina. El banano actúa como ligante. Fácil y deliciosas.",
+    "social_hook": "Panquecas sin harina que realmente quedan bien.",
+    "short_caption": "Avena + banano + huevo. Sin harina. Sin complicaciones. Con proteína real.",
+    "slug": "panquecas-avena",
+    "seo_title": "Panquecas de avena y banano — Receta ArjunaFit",
+    "seo_description": "Sin harina. El banano actúa como ligante. Fácil y deliciosas. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Panquecas de avena y banano",
+    "share_description": "Avena + banano + huevo. Sin harina. Sin complicaciones. Con proteína real.",
+    "image_alt": "Panquecas de avena y banano saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 420,
+      "protein_g": 22,
+      "carbs_g": 58,
+      "fat_g": 10
+    },
+    "prep_time_minutes": 15
+  },
+  {
+    "id": "arepa-rellena-pollo",
+    "name": "Arepa rellena de pollo",
+    "category": "almuerzo",
+    "goal_tags": [
+      "muscle_gain",
+      "glutes",
+      "fat_loss"
+    ],
+    "country_style": "Colombia",
+    "difficulty": "fácil",
+    "ingredients": [
+      "2 arepas",
+      "150g pollo desmechado",
+      "Aguacate, queso campesino",
+      "Hogao optional"
+    ],
+    "steps": [
+      "Cocinar pollo y desmechaer.",
+      "Abrir arepa por la mitad.",
+      "Rellenar con pollo, aguacate y queso."
+    ],
+    "arju_tip": "La arepa rellena es el street food saludable de Colombia.",
+    "social_hook": "El street food colombiano que sí te nutre.",
+    "short_caption": "Arepa rellena de pollo, aguacate y queso. El almuerzo más completo de 15 minutos.",
+    "slug": "arepa-rellena-pollo",
+    "seo_title": "Arepa rellena de pollo — Receta ArjunaFit",
+    "seo_description": "La arepa rellena es el street food saludable de Colombia. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Arepa rellena de pollo",
+    "share_description": "Arepa rellena de pollo, aguacate y queso. El almuerzo más completo de 15 minutos.",
+    "image_alt": "Arepa rellena de pollo saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 480,
+      "protein_g": 38,
+      "carbs_g": 42,
+      "fat_g": 16
+    },
+    "prep_time_minutes": 15
+  },
+  {
+    "id": "hamburguesa-casera-fit",
+    "name": "Hamburguesa casera fit",
+    "category": "cena",
+    "goal_tags": [
+      "muscle_gain",
+      "glutes"
+    ],
+    "country_style": "Universal/LATAM",
+    "difficulty": "media",
+    "ingredients": [
+      "200g carne molida magra",
+      "Pan integral",
+      "Lechuga, tomate, aguacate",
+      "Mostaza, cebolla"
+    ],
+    "steps": [
+      "Formar hamburguesa con carne, sal y pimienta.",
+      "Cocinar en sartén 4 min por lado.",
+      "Armar con toppings."
+    ],
+    "arju_tip": "Hacer la hamburguesa en casa te da control total del ingrediente. Sin culpa.",
+    "social_hook": "Hamburguesa sin culpa hecha en casa.",
+    "short_caption": "Cuando haces la hamburguesa en casa, controlas todo. Alta en proteína, sin excesos.",
+    "slug": "hamburguesa-casera-fit",
+    "seo_title": "Hamburguesa casera fit — Receta ArjunaFit",
+    "seo_description": "Hacer la hamburguesa en casa te da control total del ingrediente. Sin culpa. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Hamburguesa casera fit",
+    "share_description": "Cuando haces la hamburguesa en casa, controlas todo. Alta en proteína, sin excesos.",
+    "image_alt": "Hamburguesa casera fit saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 560,
+      "protein_g": 42,
+      "carbs_g": 42,
+      "fat_g": 20
+    },
+    "prep_time_minutes": 20
+  },
+  {
+    "id": "burrito-bowl",
+    "name": "Burrito bowl saludable",
+    "category": "almuerzo",
+    "goal_tags": [
+      "muscle_gain",
+      "glutes",
+      "fat_loss"
+    ],
+    "country_style": "México/LATAM",
+    "difficulty": "fácil",
+    "ingredients": [
+      "1 taza arroz",
+      "150g pollo o carne",
+      "Frijoles negros",
+      "Pico de gallo, aguacate",
+      "Yogur griego (como crema agria)"
+    ],
+    "steps": [
+      "Cocinar arroz y frijoles.",
+      "Cocinar proteína elegida.",
+      "Armar bowl en capas."
+    ],
+    "arju_tip": "Todo en un bowl. Completo, versátil y se puede preparar con lo que hay.",
+    "social_hook": "Todo en un bowl. Rápido. Completo.",
+    "short_caption": "Arroz, frijoles, pollo y aguacate. El burrito bowl que te deja listo para el día.",
+    "slug": "burrito-bowl",
+    "seo_title": "Burrito bowl saludable — Receta ArjunaFit",
+    "seo_description": "Todo en un bowl. Completo, versátil y se puede preparar con lo que hay. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Burrito bowl saludable",
+    "share_description": "Arroz, frijoles, pollo y aguacate. El burrito bowl que te deja listo para el día.",
+    "image_alt": "Burrito bowl saludable saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 580,
+      "protein_g": 42,
+      "carbs_g": 62,
+      "fat_g": 14
+    },
+    "prep_time_minutes": 20
+  },
+  {
+    "id": "arroz-paisa",
+    "name": "Arroz paisa saludable",
+    "category": "almuerzo",
+    "goal_tags": [
+      "muscle_gain",
+      "glutes"
+    ],
+    "country_style": "Colombia (Antioquia)",
+    "difficulty": "media",
+    "ingredients": [
+      "1 taza arroz",
+      "100g carne molida magra",
+      "½ taza frijoles",
+      "1 huevo frito",
+      "Chicharrón light opcional",
+      "Aguacate"
+    ],
+    "steps": [
+      "Cocinar cada elemento por separado.",
+      "Servir en plato con todos los componentes."
+    ],
+    "arju_tip": "La bandeja paisa simplificada y balanceada. Menos chicharrón, más proteína magra.",
+    "social_hook": "Bandeja paisa fit. La versión que sí funciona.",
+    "short_caption": "Frijoles, arroz, carne, huevo y aguacate. Sin chicharrón. Con toda la proteína.",
+    "slug": "arroz-paisa",
+    "seo_title": "Arroz paisa saludable — Receta ArjunaFit",
+    "seo_description": "La bandeja paisa simplificada y balanceada. Menos chicharrón, más proteína magra. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Arroz paisa saludable",
+    "share_description": "Frijoles, arroz, carne, huevo y aguacate. Sin chicharrón. Con toda la proteína.",
+    "image_alt": "Arroz paisa saludable saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 650,
+      "protein_g": 45,
+      "carbs_g": 70,
+      "fat_g": 18
+    },
+    "prep_time_minutes": 30
+  },
+  {
+    "id": "picada-fit",
+    "name": "Picada saludable alta en proteína",
+    "category": "cena",
+    "goal_tags": [
+      "muscle_gain",
+      "glutes"
+    ],
+    "country_style": "Colombia",
+    "difficulty": "media",
+    "ingredients": [
+      "150g pollo",
+      "100g chorizo light o salchicha de pollo",
+      "Papas criollas",
+      "Mazorca",
+      "Limón, sal"
+    ],
+    "steps": [
+      "Cocinar papas hervidas.",
+      "Dorar pollo y chorizo.",
+      "Servir todo junto con limón."
+    ],
+    "arju_tip": "La picada es la cena social. Esta versión tiene proteína alta sin exceso de grasa.",
+    "social_hook": "La cena social que sí tiene proteína alta.",
+    "short_caption": "Picada saludable. Para compartir o para ti solo. Pollo + chorizo light + papas criollas.",
+    "slug": "picada-fit",
+    "seo_title": "Picada saludable alta en proteína — Receta ArjunaFit",
+    "seo_description": "La picada es la cena social. Esta versión tiene proteína alta sin exceso de grasa. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Picada saludable alta en proteína",
+    "share_description": "Picada saludable. Para compartir o para ti solo. Pollo + chorizo light + papas criollas.",
+    "image_alt": "Picada saludable alta en proteína saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 580,
+      "protein_g": 44,
+      "carbs_g": 48,
+      "fat_g": 18
+    },
+    "prep_time_minutes": 25
+  },
+  {
+    "id": "tostada-aguacate-huevo",
+    "name": "Tostada de aguacate con huevo",
+    "category": "desayuno",
+    "goal_tags": [
+      "fat_loss",
+      "glutes"
+    ],
+    "country_style": "Universal",
+    "difficulty": "fácil",
+    "ingredients": [
+      "2 tostadas integrales",
+      "1 aguacate",
+      "2 huevos",
+      "Sal de mar, limón, pimentón en polvo"
+    ],
+    "steps": [
+      "Tostar el pan.",
+      "Aplastar aguacate con limón y sal.",
+      "Cocinar huevos (pochado o frito).",
+      "Montar: pan + aguacate + huevo."
+    ],
+    "arju_tip": "El desayuno más popular de Instagram, pero genuinamente bueno y saciante.",
+    "social_hook": "El desayuno que te mantiene lleno hasta el almuerzo.",
+    "short_caption": "Tostada de aguacate con huevo. Grasa buena + proteína. La combinación perfecta de mañana.",
+    "slug": "tostada-aguacate-huevo",
+    "seo_title": "Tostada de aguacate con huevo — Receta ArjunaFit",
+    "seo_description": "El desayuno más popular de Instagram, pero genuinamente bueno y saciante. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Tostada de aguacate con huevo",
+    "share_description": "Tostada de aguacate con huevo. Grasa buena + proteína. La combinación perfecta de mañana.",
+    "image_alt": "Tostada de aguacate con huevo saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 420,
+      "protein_g": 22,
+      "carbs_g": 34,
+      "fat_g": 22
+    },
+    "prep_time_minutes": 8
+  },
+  {
+    "id": "albondigas-arroz",
+    "name": "Albóndigas magras con arroz",
+    "category": "cena",
+    "goal_tags": [
+      "muscle_gain",
+      "glutes"
+    ],
+    "country_style": "Colombia/LATAM",
+    "difficulty": "media",
+    "ingredients": [
+      "200g carne molida magra",
+      "1 taza arroz",
+      "Tomate, ajo, cebolla",
+      "Huevo para mezclar",
+      "Perejil, sal"
+    ],
+    "steps": [
+      "Mezclar carne con huevo, ajo y perejil.",
+      "Formar albóndigas y dorar.",
+      "Hacer salsa de tomate.",
+      "Cocinar albóndigas en salsa 10 min.",
+      "Servir con arroz."
+    ],
+    "arju_tip": "Cambia el frente de la cena. Las albóndigas se preparan en lote para varios días.",
+    "social_hook": "Cena diferente con proteína alta.",
+    "short_caption": "Albóndigas caseras con arroz. Prepara el doble y tienes almuerzo para mañana.",
+    "slug": "albondigas-arroz",
+    "seo_title": "Albóndigas magras con arroz — Receta ArjunaFit",
+    "seo_description": "Cambia el frente de la cena. Las albóndigas se preparan en lote para varios días. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Albóndigas magras con arroz",
+    "share_description": "Albóndigas caseras con arroz. Prepara el doble y tienes almuerzo para mañana.",
+    "image_alt": "Albóndigas magras con arroz saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 520,
+      "protein_g": 42,
+      "carbs_g": 48,
+      "fat_g": 16
+    },
+    "prep_time_minutes": 25
+  },
+  {
+    "id": "pechuga-tomate-natural",
+    "name": "Pechuga en salsa de tomate natural",
+    "category": "cena",
+    "goal_tags": [
+      "fat_loss",
+      "muscle_gain"
+    ],
+    "country_style": "Colombia/LATAM",
+    "difficulty": "fácil",
+    "ingredients": [
+      "200g pechuga",
+      "3 tomates maduros",
+      "Ajo, cebolla, cilantro",
+      "Sal, comino"
+    ],
+    "steps": [
+      "Hacer salsa: tomate + ajo + cebolla 10 min.",
+      "Cocinar pechuga en la salsa 15 min.",
+      "Añadir cilantro al final.",
+      "Servir con arroz o papa."
+    ],
+    "arju_tip": "Alta proteína, baja grasa. El tomate tiene licopeno que es antiinflamatorio.",
+    "social_hook": "Alta proteína, baja grasa, sin complicaciones.",
+    "short_caption": "Pechuga en salsa de tomate natural. Sencilla, deliciosa y con solo ingredientes reales.",
+    "slug": "pechuga-tomate-natural",
+    "seo_title": "Pechuga en salsa de tomate natural — Receta ArjunaFit",
+    "seo_description": "Alta proteína, baja grasa. El tomate tiene licopeno que es antiinflamatorio. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Pechuga en salsa de tomate natural",
+    "share_description": "Pechuga en salsa de tomate natural. Sencilla, deliciosa y con solo ingredientes reales.",
+    "image_alt": "Pechuga en salsa de tomate natural saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 380,
+      "protein_g": 44,
+      "carbs_g": 12,
+      "fat_g": 8
+    },
+    "prep_time_minutes": 20
+  },
+  {
+    "id": "ensalada-quinoa-atun",
+    "name": "Ensalada de quinoa y atún",
+    "category": "almuerzo",
+    "goal_tags": [
+      "fat_loss",
+      "muscle_gain"
+    ],
+    "country_style": "Universal",
+    "difficulty": "media",
+    "ingredients": [
+      "1 taza quinoa cocida",
+      "1 lata atún",
+      "Pepino, tomate, cebolla",
+      "Aceite de oliva, limón"
+    ],
+    "steps": [
+      "Cocinar quinoa y dejar enfriar.",
+      "Mezclar con atún y vegetales.",
+      "Aliñar con aceite y limón."
+    ],
+    "arju_tip": "Proteína completa vegetal + proteína animal. Dos fuentes en una ensalada.",
+    "social_hook": "Dos fuentes de proteína completa.",
+    "short_caption": "Quinoa + atún. La ensalada que sí tiene proteína de calidad.",
+    "slug": "ensalada-quinoa-atun",
+    "seo_title": "Ensalada de quinoa y atún — Receta ArjunaFit",
+    "seo_description": "Proteína completa vegetal + proteína animal. Dos fuentes en una ensalada. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Ensalada de quinoa y atún",
+    "share_description": "Quinoa + atún. La ensalada que sí tiene proteína de calidad.",
+    "image_alt": "Ensalada de quinoa y atún saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 440,
+      "protein_g": 36,
+      "carbs_g": 46,
+      "fat_g": 10
+    },
+    "prep_time_minutes": 20
+  },
+  {
+    "id": "caldo-huevo-arepa",
+    "name": "Caldo de huevo con arepa",
+    "category": "cena",
+    "goal_tags": [
+      "fat_loss"
+    ],
+    "country_style": "Colombia",
+    "difficulty": "fácil",
+    "ingredients": [
+      "2 huevos",
+      "2 tazas caldo de pollo",
+      "Cebolla, cilantro",
+      "1 arepa"
+    ],
+    "steps": [
+      "Calentar caldo con cebolla y sal.",
+      "Escalfar huevos en el caldo.",
+      "Servir con cilantro y arepa."
+    ],
+    "arju_tip": "La cena más sencilla y reconfortante. Perfecta cuando no hay mucho hambre.",
+    "social_hook": "La cena más reconfortante con proteína.",
+    "short_caption": "Caldo de huevo con arepa. Cuando no tienes hambre pero sí necesitas proteína.",
+    "slug": "caldo-huevo-arepa",
+    "seo_title": "Caldo de huevo con arepa — Receta ArjunaFit",
+    "seo_description": "La cena más sencilla y reconfortante. Perfecta cuando no hay mucho hambre. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Caldo de huevo con arepa",
+    "share_description": "Caldo de huevo con arepa. Cuando no tienes hambre pero sí necesitas proteína.",
+    "image_alt": "Caldo de huevo con arepa saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 300,
+      "protein_g": 22,
+      "carbs_g": 28,
+      "fat_g": 10
+    },
+    "prep_time_minutes": 12
+  },
+  {
+    "id": "bowl-post-entreno",
+    "name": "Bowl post-entreno de arroz, pollo y aguacate",
+    "category": "almuerzo",
+    "goal_tags": [
+      "muscle_gain",
+      "glutes"
+    ],
+    "country_style": "Colombia/Universal",
+    "difficulty": "fácil",
+    "ingredients": [
+      "150g pollo a la plancha",
+      "1.5 taza arroz",
+      "½ aguacate",
+      "Tomate, limón"
+    ],
+    "steps": [
+      "Cocinar arroz.",
+      "Asar pollo sazonado.",
+      "Armar bowl con aguacate y tomate.",
+      "Exprimir limón al final."
+    ],
+    "arju_tip": "El combo ideal post-entreno. Carbohidratos para reponer + proteína para recuperar.",
+    "social_hook": "El bowl que tu músculo está esperando.",
+    "short_caption": "Arroz + pollo + aguacate. El post-entreno perfecto para recuperar y crecer.",
+    "slug": "bowl-post-entreno",
+    "seo_title": "Bowl post-entreno de arroz, pollo y aguacate — Receta ArjunaFit",
+    "seo_description": "El combo ideal post-entreno. Carbohidratos para reponer + proteína para recuperar. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Bowl post-entreno de arroz, pollo y aguacate",
+    "share_description": "Arroz + pollo + aguacate. El post-entreno perfecto para recuperar y crecer.",
+    "image_alt": "Bowl post-entreno de arroz, pollo y aguacate saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 600,
+      "protein_g": 44,
+      "carbs_g": 62,
+      "fat_g": 16
+    },
+    "prep_time_minutes": 20
+  },
+  {
+    "id": "papa-rellena-saludable",
+    "name": "Papa rellena saludable",
+    "category": "almuerzo",
+    "goal_tags": [
+      "muscle_gain",
+      "glutes"
+    ],
+    "country_style": "Colombia/LATAM",
+    "difficulty": "media",
+    "ingredients": [
+      "2 papas grandes",
+      "150g carne molida magra",
+      "Hogao, sal, comino",
+      "Huevo duro opcional"
+    ],
+    "steps": [
+      "Cocinar papas y aplanar.",
+      "Dorar carne con hogao.",
+      "Rellenar papas, dar forma.",
+      "Dorar en sartén o al horno."
+    ],
+    "arju_tip": "Versión fit de un plástico colombiano. Hecha en casa tiene mucha menos grasa.",
+    "social_hook": "El clásico colombiano hecho fit en casa.",
+    "short_caption": "Papa rellena con carne molida. Hecha en casa, sin fritura profunda, con proteína alta.",
+    "slug": "papa-rellena-saludable",
+    "seo_title": "Papa rellena saludable — Receta ArjunaFit",
+    "seo_description": "Versión fit de un plástico colombiano. Hecha en casa tiene mucha menos grasa. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Papa rellena saludable",
+    "share_description": "Papa rellena con carne molida. Hecha en casa, sin fritura profunda, con proteína alta.",
+    "image_alt": "Papa rellena saludable saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 520,
+      "protein_g": 38,
+      "carbs_g": 55,
+      "fat_g": 14
+    },
+    "prep_time_minutes": 30
+  },
+  {
+    "id": "quesadilla-pollo",
+    "name": "Quesadilla saludable de pollo",
+    "category": "cena",
+    "goal_tags": [
+      "muscle_gain",
+      "fat_loss",
+      "glutes"
+    ],
+    "country_style": "México/LATAM",
+    "difficulty": "fácil",
+    "ingredients": [
+      "2 tortillas integrales",
+      "120g pollo",
+      "50g queso campesino o mozzarella",
+      "Pimentón, espinaca"
+    ],
+    "steps": [
+      "Poner pollo y queso en tortilla.",
+      "Doblar y dorar en sartén 2 min por lado."
+    ],
+    "arju_tip": "Lista en 12 minutos. Alta proteína, baja complicación.",
+    "social_hook": "Lista en 12 minutos. Alta en proteína.",
+    "short_caption": "Quesadilla de pollo y queso. Sin complicaciones. Perfecta para la cena rápida.",
+    "slug": "quesadilla-pollo",
+    "seo_title": "Quesadilla saludable de pollo — Receta ArjunaFit",
+    "seo_description": "Lista en 12 minutos. Alta proteína, baja complicación. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Quesadilla saludable de pollo",
+    "share_description": "Quesadilla de pollo y queso. Sin complicaciones. Perfecta para la cena rápida.",
+    "image_alt": "Quesadilla saludable de pollo saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 460,
+      "protein_g": 38,
+      "carbs_g": 38,
+      "fat_g": 14
+    },
+    "prep_time_minutes": 12
+  },
+  {
+    "id": "tacos-pollo-saludables",
+    "name": "Tacos saludables de pollo",
+    "category": "cena",
+    "goal_tags": [
+      "fat_loss",
+      "muscle_gain"
+    ],
+    "country_style": "México/LATAM",
+    "difficulty": "fácil",
+    "ingredients": [
+      "3 tortillas maíz",
+      "150g pollo",
+      "Col morada, tomate, cilantro",
+      "Aguacate, limón, sal"
+    ],
+    "steps": [
+      "Cocinar pollo con comino y sal.",
+      "Calentar tortillas.",
+      "Armar tacos con todos los toppings."
+    ],
+    "arju_tip": "Los tacos de maíz tienen menos calorías que los de harina. El col morada añade fibra.",
+    "social_hook": "Tacos de maíz. Sin culpa. Con proteína.",
+    "short_caption": "Tacos de pollo con col morada y aguacate. La cena que se prepara sola.",
+    "slug": "tacos-pollo-saludables",
+    "seo_title": "Tacos saludables de pollo — Receta ArjunaFit",
+    "seo_description": "Los tacos de maíz tienen menos calorías que los de harina. El col morada añade fibra. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Tacos saludables de pollo",
+    "share_description": "Tacos de pollo con col morada y aguacate. La cena que se prepara sola.",
+    "image_alt": "Tacos saludables de pollo saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 480,
+      "protein_g": 36,
+      "carbs_g": 45,
+      "fat_g": 14
+    },
+    "prep_time_minutes": 15
+  },
+  {
+    "id": "cazuela-pollo-verduras",
+    "name": "Cazuela ligera de pollo y verduras",
+    "category": "cena",
+    "goal_tags": [
+      "fat_loss",
+      "glutes"
+    ],
+    "country_style": "Colombia",
+    "difficulty": "media",
+    "ingredients": [
+      "200g pollo",
+      "Zanahoria, papa criolla, arveja",
+      "Cebolla, ajo, cilantro",
+      "Caldo de pollo"
+    ],
+    "steps": [
+      "Dorar pollo en cubos.",
+      "Añadir verduras y caldo.",
+      "Cocinar 20 min tapado.",
+      "Agregar cilantro al final."
+    ],
+    "arju_tip": "La cazuela es una sopa espesa. Saciante sin ser pesada.",
+    "social_hook": "La cazuela que reconforta y nutre.",
+    "short_caption": "Pollo con verduras en caldo espeso. La cena que te hace sentir bien.",
+    "slug": "cazuela-pollo-verduras",
+    "seo_title": "Cazuela ligera de pollo y verduras — Receta ArjunaFit",
+    "seo_description": "La cazuela es una sopa espesa. Saciante sin ser pesada. Guárdala en ArjunaFit y ajusta tus porciones con Arju.",
+    "share_title": "Receta ArjunaFit: Cazuela ligera de pollo y verduras",
+    "share_description": "Pollo con verduras en caldo espeso. La cena que te hace sentir bien.",
+    "image_alt": "Cazuela ligera de pollo y verduras saludable estilo ArjunaFit",
+    "approx_macros": {
+      "calories": 420,
+      "protein_g": 38,
+      "carbs_g": 38,
+      "fat_g": 10
+    },
+    "prep_time_minutes": 30
+  }
+]

@@ -1,0 +1,18 @@
+<svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" font-family="'Outfit',system-ui,sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f0a1e"/>
+      <stop offset="100%" stop-color="#080614"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="75%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(109,40,255,.3)"/>
+      <stop offset="100%" stop-color="rgba(217,70,239,.15)"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="300" fill="url(#bg)"/>
+  <rect width="600" height="300" fill="url(#glow)"/>
+  <rect x="1" y="1" width="598" height="298" fill="none" stroke="rgba(109,40,255,.2)" stroke-width="1" rx="19"/>
+  <text x="300" y="135" text-anchor="middle" font-size="56">🫂</text>
+  <text x="300" y="182" text-anchor="middle" fill="#f5f3ff" font-size="22" font-weight="900">Comunidad ArjunaFit</text>
+  <text x="300" y="206" text-anchor="middle" fill="rgba(196,181,253,.6)" font-size="13">No estás en esto sola</text>
+</svg>

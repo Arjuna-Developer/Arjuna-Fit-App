@@ -1,0 +1,260 @@
+{
+  "version": "1.0",
+  "exercises": [
+    {
+      "id": "hip-thrust",
+      "name": "Hip Thrust",
+      "muscles": [
+        "glúteos",
+        "isquiotibiales"
+      ],
+      "equipment": [
+        "barra",
+        "banco",
+        "mancuernas"
+      ],
+      "difficulty": "intermedio",
+      "category": "empuje_cadera",
+      "cues": [
+        "Espalda apoyada en banco",
+        "Pausa 1 segundo arriba",
+        "Caderas neutras, no hiperlordosis"
+      ],
+      "soft_variant": "Glute bridge sin peso en el suelo",
+      "common_error": "No llevar cadera hasta arriba",
+      "arju_tip": "Este es el rey de los glúteos. Siente el squeeze arriba."
+    },
+    {
+      "id": "sentadilla",
+      "name": "Sentadilla con barra",
+      "muscles": [
+        "cuadriceps",
+        "glúteos",
+        "isquiotibiales"
+      ],
+      "equipment": [
+        "barra",
+        "rack"
+      ],
+      "difficulty": "intermedio",
+      "category": "empuje_pierna",
+      "cues": [
+        "Cadera por debajo de rodilla",
+        "Peso en talones",
+        "Pecho arriba"
+      ],
+      "soft_variant": "Sentadilla goblet con mancuerna",
+      "common_error": "Rodillas hacia adentro",
+      "arju_tip": "Técnica primero, peso después."
+    },
+    {
+      "id": "peso-muerto-rumano",
+      "name": "Peso Muerto Rumano",
+      "muscles": [
+        "isquiotibiales",
+        "glúteos",
+        "espalda baja"
+      ],
+      "equipment": [
+        "barra",
+        "mancuernas"
+      ],
+      "difficulty": "intermedio",
+      "category": "bisagra_cadera",
+      "cues": [
+        "Caderas atrás, no abajo",
+        "Espalda neutra",
+        "Sentir tensión en isquiotibiales"
+      ],
+      "soft_variant": "Buenos días con banda",
+      "common_error": "Redondear la espalda baja",
+      "arju_tip": "No es una sentadilla. Empuja las caderas hacia atrás."
+    },
+    {
+      "id": "sentadilla-bulgara",
+      "name": "Sentadilla Búlgara",
+      "muscles": [
+        "cuadriceps",
+        "glúteos"
+      ],
+      "equipment": [
+        "banco",
+        "mancuernas"
+      ],
+      "difficulty": "avanzado",
+      "category": "empuje_unilateral",
+      "cues": [
+        "Pie trasero en banco",
+        "Rodilla trasera baja controlado",
+        "Torso erguido"
+      ],
+      "soft_variant": "Zancada estacionaria",
+      "common_error": "Rodilla delantera colapsa",
+      "arju_tip": "Unilateral = más equilibrio y menos carga en columna."
+    },
+    {
+      "id": "plancha",
+      "name": "Plancha frontal",
+      "muscles": [
+        "core",
+        "hombros",
+        "glúteos"
+      ],
+      "equipment": [],
+      "difficulty": "principiante",
+      "category": "core",
+      "cues": [
+        "Caderas alineadas",
+        "No elevar ni hundir cadera",
+        "Respirar normal"
+      ],
+      "soft_variant": "Plancha con rodillas apoyadas",
+      "common_error": "Elevar las caderas",
+      "arju_tip": "30 segundos bien hechos valen más que 2 minutos mal hechos."
+    },
+    {
+      "id": "dead-bug",
+      "name": "Dead Bug",
+      "muscles": [
+        "core profundo",
+        "transverso"
+      ],
+      "equipment": [],
+      "difficulty": "principiante",
+      "category": "core",
+      "cues": [
+        "Espalda pegada al suelo",
+        "Extender opuesto: brazo-pierna",
+        "Exhalar al extender"
+      ],
+      "soft_variant": "Solo mover los brazos",
+      "common_error": "Separar la espalda del suelo",
+      "arju_tip": "El core profundo protege la columna. Este ejercicio lo activa bien."
+    },
+    {
+      "id": "bird-dog",
+      "name": "Bird Dog",
+      "muscles": [
+        "core",
+        "glúteos",
+        "espalda"
+      ],
+      "equipment": [],
+      "difficulty": "principiante",
+      "category": "core",
+      "cues": [
+        "Columna neutra",
+        "Extender en línea recta",
+        "No rotar la cadera"
+      ],
+      "soft_variant": "Solo extender el brazo sin mover pierna",
+      "common_error": "Rotación de cadera al extender",
+      "arju_tip": "Lento y controlado es mejor que rápido e inestable."
+    },
+    {
+      "id": "abduccion-banda",
+      "name": "Abducción con banda",
+      "muscles": [
+        "glúteo medio",
+        "glúteo mayor"
+      ],
+      "equipment": [
+        "banda elastica"
+      ],
+      "difficulty": "principiante",
+      "category": "aislamiento_gluteo",
+      "cues": [
+        "Banda sobre rodillas",
+        "Abrir contra resistencia",
+        "No dejar caer las rodillas"
+      ],
+      "soft_variant": "Sin banda, moverse más despacio",
+      "common_error": "Inclinar el tronco",
+      "arju_tip": "Activa el glúteo medio que muchos olvidan."
+    },
+    {
+      "id": "glute-bridge",
+      "name": "Glute Bridge",
+      "muscles": [
+        "glúteos",
+        "core"
+      ],
+      "equipment": [],
+      "difficulty": "principiante",
+      "category": "empuje_cadera",
+      "cues": [
+        "Pies cerca de los glúteos",
+        "Subir con cadera",
+        "Apretar arriba"
+      ],
+      "soft_variant": "Sin peso, ritmo lento",
+      "common_error": "Empujar con la espalda baja",
+      "arju_tip": "Perfecto para calentar o para días suaves."
+    },
+    {
+      "id": "mountain-climbers",
+      "name": "Mountain Climbers",
+      "muscles": [
+        "core",
+        "cadera",
+        "cardio"
+      ],
+      "equipment": [],
+      "difficulty": "intermedio",
+      "category": "cardio_funcional",
+      "cues": [
+        "Posición de plancha",
+        "Caderas abajo",
+        "Ritmo controlado"
+      ],
+      "soft_variant": "Versión lenta sin salto",
+      "common_error": "Elevar cadera al traer rodilla",
+      "arju_tip": "Cardio + core en un movimiento. Ideal para reto pancita."
+    },
+    {
+      "id": "dominadas",
+      "name": "Dominadas",
+      "muscles": [
+        "dorsal",
+        "bíceps",
+        "espalda"
+      ],
+      "equipment": [
+        "barra"
+      ],
+      "difficulty": "avanzado",
+      "category": "traccion_vertical",
+      "cues": [
+        "Agarre prono",
+        "Omoplatos abajo al subir",
+        "Bajar controlado"
+      ],
+      "soft_variant": "Jalones en máquina",
+      "common_error": "Balancear el cuerpo",
+      "arju_tip": "Si no puedes todavía, los jalones son el camino."
+    },
+    {
+      "id": "remo-mancuerna",
+      "name": "Remo con mancuerna",
+      "muscles": [
+        "dorsal",
+        "trapecios",
+        "bíceps"
+      ],
+      "equipment": [
+        "mancuerna",
+        "banco"
+      ],
+      "difficulty": "principiante",
+      "category": "traccion_horizontal",
+      "cues": [
+        "Espalda paralela",
+        "Codo al techo",
+        "Hombro no sube"
+      ],
+      "soft_variant": "Con banda elástica desde pared",
+      "common_error": "Rotar el tronco",
+      "arju_tip": "Buena alternativa para espalda sin barra."
+    }
+  ]
+}

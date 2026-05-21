@@ -1,0 +1,104 @@
+{
+  "version": "1.0",
+  "macro_guidelines": {
+    "challenge_glutes": {
+      "protein_g_per_kg": 1.8,
+      "fat_pct": 25,
+      "carbs_pct": 45
+    },
+    "challenge_belly": {
+      "protein_g_per_kg": 1.8,
+      "fat_pct": 30,
+      "carbs_pct": 40
+    },
+    "custom_muscle_gain": {
+      "protein_g_per_kg": 2.0,
+      "fat_pct": 25,
+      "carbs_pct": 45
+    },
+    "custom_fat_loss": {
+      "protein_g_per_kg": 2.2,
+      "fat_pct": 30,
+      "carbs_pct": 35
+    }
+  },
+  "protein_sources_latam": [
+    {
+      "food": "Pollo pechuga (120g)",
+      "protein_g": 30,
+      "cal": 165
+    },
+    {
+      "food": "Huevo entero (1)",
+      "protein_g": 6,
+      "cal": 78
+    },
+    {
+      "food": "Atún en lata (90g)",
+      "protein_g": 20,
+      "cal": 100
+    },
+    {
+      "food": "Yogur griego natural (200g)",
+      "protein_g": 17,
+      "cal": 130
+    },
+    {
+      "food": "Lentejas cocidas (180g)",
+      "protein_g": 14,
+      "cal": 230
+    },
+    {
+      "food": "Frijoles cocidos (180g)",
+      "protein_g": 12,
+      "cal": 210
+    },
+    {
+      "food": "Carne molida magra (100g)",
+      "protein_g": 22,
+      "cal": 150
+    },
+    {
+      "food": "Tilapia (120g)",
+      "protein_g": 26,
+      "cal": 130
+    },
+    {
+      "food": "Garbanzos cocidos (180g)",
+      "protein_g": 14,
+      "cal": 280
+    }
+  ],
+  "carb_sources_latam": [
+    {
+      "food": "Arepa mediana (1)",
+      "carbs_g": 30,
+      "cal": 160
+    },
+    {
+      "food": "Arroz blanco cocido (200g)",
+      "carbs_g": 46,
+      "cal": 210
+    },
+    {
+      "food": "Papa mediana (150g)",
+      "carbs_g": 28,
+      "cal": 130
+    },
+    {
+      "food": "Plátano maduro (1 mediano)",
+      "carbs_g": 30,
+      "cal": 120
+    },
+    {
+      "food": "Yuca cocida (150g)",
+      "carbs_g": 36,
+      "cal": 160
+    },
+    {
+      "food": "Avena cocida (200g)",
+      "carbs_g": 28,
+      "cal": 150
+    }
+  ]
+}

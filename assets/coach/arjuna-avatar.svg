@@ -1,0 +1,12 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" font-family="'Outfit',system-ui,sans-serif">
+  <defs>
+    <radialGradient id="g" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(109,40,255,.3)"/>
+      <stop offset="100%" stop-color="rgba(109,40,255,.05)"/>
+    </radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="58" fill="url(#g)" stroke="rgba(109,40,255,.8)" stroke-width="1.5"/>
+  <circle cx="60" cy="60" r="42" fill="rgba(109,40,255,.12)"/>
+  <text x="60" y="72" text-anchor="middle" font-size="38">🤖</text>
+  <text x="60" y="105" text-anchor="middle" fill="rgba(196,181,253,.55)" font-size="9" font-weight="700" letter-spacing="0.04em">ARJU</text>
+</svg>

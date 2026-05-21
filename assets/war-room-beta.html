@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ArjunaFit — War Room Mini Beta</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Outfit', system-ui, sans-serif; background: #07020f; color: #f5f3ff; padding: 20px; max-width: 900px; margin: 0 auto; }
+  h1 { color: #a78bfa; font-size: 22px; margin-bottom: 4px; }
+  .version { font-size: 12px; color: rgba(255,255,255,.3); margin-bottom: 28px; }
+  h2 { color: #c4b5fd; font-size: 15px; margin: 28px 0 12px; border-bottom: 1px solid rgba(139,92,246,.2); padding-bottom: 8px; }
+  .card { background: rgba(139,92,246,.07); border: 1px solid rgba(139,92,246,.18); border-radius: 14px; padding: 16px; margin: 10px 0; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  label { font-size: 11px; color: rgba(196,181,253,.5); display: block; margin-bottom: 3px; }
+  input, select, textarea {
+    width: 100%; background: rgba(0,0,0,.4); border: 1px solid rgba(255,255,255,.1); border-radius: 8px;
+    padding: 8px 10px; color: #f5f3ff; font-size: 13px; font-family: inherit;
+  }
+  textarea { resize: vertical; min-height: 60px; }
+  .badge { display: inline-block; padding: 3px 9px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+  .badge-purple { background: rgba(139,92,246,.2); color: #c4b5fd; border: 1px solid rgba(139,92,246,.3); }
+  .badge-gold   { background: rgba(245,197,66,.12); color: #fcd34d; border: 1px solid rgba(245,197,66,.25); }
+  .badge-green  { background: rgba(34,197,94,.12); color: #86efac; border: 1px solid rgba(34,197,94,.25); }
+  .badge-red    { background: rgba(239,68,68,.12); color: #fca5a5; border: 1px solid rgba(239,68,68,.25); }
+  .user-block { background: rgba(16,7,29,.8); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; padding: 16px; margin: 10px 0; }
+  .user-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .user-name { font-size: 15px; font-weight: 700; }
+  .check-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 6px; margin: 10px 0; }
+  .check-item { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+  input[type="checkbox"] { width: 16px; height: 16px; accent-color: #8b5cf6; cursor: pointer; }
+  .link-box { background: rgba(0,0,0,.5); border: 1px solid rgba(255,255,255,.08); border-radius: 8px; padding: 8px 12px; font-size: 11px; color: #818cf8; font-family: monospace; word-break: break-all; }
+  .msg-box { background: rgba(0,0,0,.4); border: 1px solid rgba(255,255,255,.08); border-radius: 12px; padding: 14px; font-size: 13px; line-height: 1.7; white-space: pre-wrap; }
+  .score-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0; }
+  .score-btn { padding: 4px 10px; border: 1px solid rgba(255,255,255,.1); border-radius: 6px; background: rgba(255,255,255,.04); color: rgba(255,255,255,.6); font-size: 12px; cursor: pointer; }
+  .score-btn:hover { border-color: rgba(139,92,246,.5); color: #c4b5fd; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 10px 0; }
+  th { text-align: left; color: rgba(196,181,253,.6); font-size: 11px; padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,.08); }
+  td { padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,.04); vertical-align: top; }
+  .btn { padding: 10px 20px; border-radius: 10px; border: none; font-weight: 700; font-size: 13px; cursor: pointer; }
+  .btn-primary { background: linear-gradient(135deg,#8b5cf6,#a855f7,#ec4899); color: #fff; box-shadow: 0 6px 20px rgba(168,85,247,.25); }
+  .btn-secondary { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); color: rgba(255,255,255,.7); }
+  section { margin-bottom: 36px; }
+  .go-banner { background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.3); border-radius: 14px; padding: 14px 18px; margin-bottom: 24px; font-size: 14px; color: #86efac; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<h1>🎯 ArjunaFit — War Room Mini Beta</h1>
+<div class="version">mini-beta-day1-war-room-v1 · Máx 5 usuarios · Operación controlada</div>
+
+<div class="go-banner">
+  🟢 GO confirmado — 9/9 checks críticos PASS · Listo para invitar 3–5 usuarios
+</div>
+
+<!-- ─── ESTADO GLOBAL ─────────────────────────────────────────────── -->
+<section>
+<h2>📊 Estado en tiempo real</h2>
+<div class="row3">
+  <div class="card" style="text-align:center">
+    <div style="font-size:32px;font-weight:800;color:#a78bfa" id="counter-invited">0</div>
+    <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px">Invitados</div>
+  </div>
+  <div class="card" style="text-align:center">
+    <div style="font-size:32px;font-weight:800;color:#86efac" id="counter-registered">0</div>
+    <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px">Registrados</div>
+  </div>
+  <div class="card" style="text-align:center">
+    <div style="font-size:32px;font-weight:800;color:#fcd34d" id="counter-active">0</div>
+    <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px">Activos (usaron app)</div>
+  </div>
+</div>
+<div style="margin-top:10px;font-size:12px;color:rgba(255,255,255,.3)">Actualizar manualmente revisando Admin → Usuarios + app_events</div>
+</section>
+
+<!-- ─── USUARIOS BETA ─────────────────────────────────────────────── -->
+<section>
+<h2>👥 Usuarios beta (llenar al invitar)</h2>
+
+<!-- USUARIO 1 -->
+<div class="user-block">
+  <div class="user-header">
+    <div>
+      <div class="user-name">Usuario 1</div>
+      <span class="badge badge-purple">Reto glúteos</span>
+      <span class="badge" style="background:rgba(168,85,247,.1);color:rgba(196,181,253,.6);border:1px solid rgba(168,85,247,.2);font-size:9px;margin-left:4px">Trial 7d → $32 USD</span>
+    </div>
+    <select style="width:120px;font-size:12px">
+      <option>Pendiente</option><option>Invitado</option><option>Registrado</option><option>Activo</option><option>Abandonó</option>
+    </select>
+  </div>
+  <div class="row" style="margin-bottom:10px">
+    <div><label>Nombre</label><input type="text" placeholder="Nombre real o alias"></div>
+    <div><label>Email</label><input type="email" placeholder="email@ejemplo.com"></div>
+  </div>
+  <div><label>Link enviado</label>
+    <div class="link-box">https://arjunafit.com/signup?product=challenge_glutes&utm_source=beta&utm_medium=manual&utm_campaign=mini_beta_day1</div>
+  </div>
+  <div class="check-grid" style="margin-top:12px">
+    <label class="check-item"><input type="checkbox"> Se registró</label>
+    <label class="check-item"><input type="checkbox"> Llegó al Home</label>
+    <label class="check-item"><input type="checkbox"> Completó onboarding</label>
+    <label class="check-item"><input type="checkbox"> Vio recetas</label>
+    <label class="check-item"><input type="checkbox"> Registró comida</label>
+    <label class="check-item"><input type="checkbox"> Abrió workout</label>
+    <label class="check-item"><input type="checkbox"> Usó Arju</label>
+    <label class="check-item"><input type="checkbox"> Cerró el día</label>
+    <label class="check-item"><input type="checkbox"> Envió feedback</label>
+    <label class="check-item"><input type="checkbox"> Volvió día 2</label>
+  </div>
+  <div class="row" style="margin-top:10px">
+    <div><label>Bug reportado</label><input type="text" placeholder="Descripción breve o N/A"></div>
+    <div><label>¿Pagaría $32 USD?</label>
+      <select><option>No preguntado</option><option>Sí definitivamente</option><option>Probablemente sí</option><option>Tal vez</option><option>No</option></select>
+    </div>
+  </div>
+  <div style="margin-top:8px"><label>Feedback principal</label><textarea placeholder="Qué dijo, qué confundió, qué le gustó..."></textarea></div>
+</div>
+
+<!-- USUARIO 2 -->
+<div class="user-block">
+  <div class="user-header">
+    <div>
+      <div class="user-name">Usuario 2</div>
+      <span class="badge badge-purple">Reto pancita</span>
+    </div>
+    <select style="width:120px;font-size:12px">
+      <option>Pendiente</option><option>Invitado</option><option>Registrado</option><option>Activo</option><option>Abandonó</option>
+    </select>
+  </div>
+  <div class="row" style="margin-bottom:10px">
+    <div><label>Nombre</label><input type="text"></div>
+    <div><label>Email</label><input type="email"></div>
+  </div>
+  <div><label>Link enviado</label>
+    <div class="link-box">https://arjunafit.com/signup?product=challenge_belly&utm_source=beta&utm_medium=manual&utm_campaign=mini_beta_day1</div>
+  </div>
+  <div class="check-grid" style="margin-top:12px">
+    <label class="check-item"><input type="checkbox"> Se registró</label>
+    <label class="check-item"><input type="checkbox"> Llegó al Home</label>
+    <label class="check-item"><input type="checkbox"> Completó onboarding</label>
+    <label class="check-item"><input type="checkbox"> Vio recetas</label>
+    <label class="check-item"><input type="checkbox"> Registró comida</label>
+    <label class="check-item"><input type="checkbox"> Abrió workout</label>
+    <label class="check-item"><input type="checkbox"> Usó Arju</label>
+    <label class="check-item"><input type="checkbox"> Cerró el día</label>
+    <label class="check-item"><input type="checkbox"> Envió feedback</label>
+    <label class="check-item"><input type="checkbox"> Volvió día 2</label>
+  </div>
+  <div class="row" style="margin-top:10px">
+    <div><label>Bug</label><input type="text" placeholder="N/A"></div>
+    <div><label>¿Pagaría?</label><select><option>No preguntado</option><option>Sí definitivamente</option><option>Probablemente sí</option><option>Tal vez</option><option>No</option></select></div>
+  </div>
+  <div style="margin-top:8px"><label>Feedback</label><textarea></textarea></div>
+</div>
+
+<!-- USUARIO 3 -->
+<div class="user-block">
+  <div class="user-header">
+    <div>
+      <div class="user-name">Usuario 3</div>
+      <span class="badge badge-gold">Masa muscular · $72/mes</span>
+    </div>
+    <select style="width:120px;font-size:12px">
+      <option>Pendiente</option><option>Invitado</option><option>Registrado</option><option>Activo</option><option>Abandonó</option>
+    </select>
+  </div>
+  <div class="row" style="margin-bottom:10px">
+    <div><label>Nombre</label><input type="text"></div>
+    <div><label>Email</label><input type="email"></div>
+  </div>
+  <div><label>Link</label>
+    <div class="link-box">https://arjunafit.com/signup?product=custom_muscle_gain&utm_source=beta&utm_medium=manual&utm_campaign=mini_beta_day1</div>
+  </div>
+  <div class="check-grid" style="margin-top:12px">
+    <label class="check-item"><input type="checkbox"> Se registró</label>
+    <label class="check-item"><input type="checkbox"> Llegó al Home</label>
+    <label class="check-item"><input type="checkbox"> Completó intake</label>
+    <label class="check-item"><input type="checkbox"> Vio recetas</label>
+    <label class="check-item"><input type="checkbox"> Registró comida</label>
+    <label class="check-item"><input type="checkbox"> Abrió workout</label>
+    <label class="check-item"><input type="checkbox"> Usó Arju</label>
+    <label class="check-item"><input type="checkbox"> Envió feedback</label>
+    <label class="check-item"><input type="checkbox"> Pidió soporte WA</label>
+    <label class="check-item"><input type="checkbox"> Volvió día 2</label>
+  </div>
+  <div style="margin-top:8px"><label>Feedback</label><textarea></textarea></div>
+</div>
+
+<!-- USUARIO 4 -->
+<div class="user-block">
+  <div class="user-header">
+    <div>
+      <div class="user-name">Usuario 4</div>
+      <span class="badge badge-gold">Reducción grasa · $72/mes</span>
+    </div>
+    <select style="width:120px;font-size:12px">
+      <option>Pendiente</option><option>Invitado</option><option>Registrado</option><option>Activo</option><option>Abandonó</option>
+    </select>
+  </div>
+  <div class="row" style="margin-bottom:10px">
+    <div><label>Nombre</label><input type="text"></div>
+    <div><label>Email</label><input type="email"></div>
+  </div>
+  <div><label>Link</label>
+    <div class="link-box">https://arjunafit.com/signup?product=custom_fat_loss&utm_source=beta&utm_medium=manual&utm_campaign=mini_beta_day1</div>
+  </div>
+  <div class="check-grid" style="margin-top:12px">
+    <label class="check-item"><input type="checkbox"> Se registró</label>
+    <label class="check-item"><input type="checkbox"> Llegó al Home</label>
+    <label class="check-item"><input type="checkbox"> Vio recetas</label>
+    <label class="check-item"><input type="checkbox"> Registró comida</label>
+    <label class="check-item"><input type="checkbox"> Abrió workout</label>
+    <label class="check-item"><input type="checkbox"> Usó Arju</label>
+    <label class="check-item"><input type="checkbox"> Envió feedback</label>
+    <label class="check-item"><input type="checkbox"> Volvió día 2</label>
+  </div>
+  <div style="margin-top:8px"><label>Feedback</label><textarea></textarea></div>
+</div>
+
+<!-- USUARIO 5 -->
+<div class="user-block">
+  <div class="user-header">
+    <div>
+      <div class="user-name">Usuario 5</div>
+      <span class="badge" style="background:rgba(99,102,241,.15);color:#a5b4fc;border:1px solid rgba(99,102,241,.3)">Interno / Demo</span>
+    </div>
+    <select style="width:120px;font-size:12px">
+      <option>Pendiente</option><option>Invitado</option><option>Registrado</option><option>Activo</option>
+    </select>
+  </div>
+  <div class="row" style="margin-bottom:10px">
+    <div><label>Nombre</label><input type="text" value="Demo interno"></div>
+    <div><label>Email</label><input type="email"></div>
+  </div>
+  <div><label>Link</label>
+    <div class="link-box">https://arjunafit.com/signup?product=challenge_glutes&utm_source=beta&utm_medium=manual&utm_campaign=mini_beta_internal</div>
+  </div>
+  <div class="check-grid" style="margin-top:12px">
+    <label class="check-item"><input type="checkbox"> Probó toda la app</label>
+    <label class="check-item"><input type="checkbox"> Detectó bugs</label>
+    <label class="check-item"><input type="checkbox"> Feedback de UX</label>
+    <label class="check-item"><input type="checkbox"> Confirmó flujo OK</label>
+  </div>
+  <div style="margin-top:8px"><label>Observaciones</label><textarea placeholder="Flujo general, UX, copy confuso, bugs encontrados..."></textarea></div>
+</div>
+</section>
+
+<!-- ─── MENSAJE INVITACIÓN ────────────────────────────────────────── -->
+<section>
+<h2>💬 Mensaje de invitación (copiar)</h2>
+<div class="msg-box">Hola, estoy probando una versión cerrada de ArjunaFit con pocas personas.
+
+La app te ayuda a organizar entrenamiento, nutrición, recetas y progreso con Arju, un Coach IA que te guía día a día.
+
+Hay dos retos con 7 días gratis:
+- Reto de glúteos
+- Reto para bajar la pancita
+
+Después de los 7 días, cada reto cuesta $32 USD si decides continuar.
+
+Ahora quiero validar si se entiende, si te guía bien y dónde te pierdes.
+
+¿Quieres probarla y darme feedback real?</div>
+</section>
+
+<!-- ─── PREGUNTAS DE FEEDBACK ─────────────────────────────────────── -->
+<section>
+<h2>❓ Preguntas de feedback (enviar después de que prueben)</h2>
+<div class="msg-box">Hola, gracias por probar ArjunaFit 🙏
+
+¿Puedes responder estas preguntas rápidas?
+
+1. ¿Pudiste crear cuenta fácilmente? (sí/no)
+2. ¿Entendiste qué hacer al entrar? (sí/no)
+3. ¿El Home te dijo claramente qué hacer? (sí/no)
+4. ¿Pudiste abrir entrenamiento? (sí/no)
+5. ¿Pudiste ver recetas? (sí/no)
+6. ¿Pudiste registrar comida? (sí/no)
+7. ¿Arju te ayudó o se sintió confuso?
+8. ¿Qué fue lo más confuso?
+9. ¿Qué fue lo más útil?
+10. ¿Qué te haría volver mañana?
+11. ¿Pagarías $32 USD por continuar el reto?
+
+Calificación del 1 al 5:
+Claridad: __
+Facilidad de uso: __
+Deseo de volver: __
+Valor percibido: __</div>
+</section>
+
+<!-- ─── BUGS DETECTADOS ───────────────────────────────────────────── -->
+<section>
+<h2>🐛 Bugs detectados durante beta</h2>
+<table>
+  <tr>
+    <th>Severidad</th><th>Usuario</th><th>Pantalla</th><th>Descripción</th><th>Estado</th>
+  </tr>
+  <tr>
+    <td><span class="badge badge-red">P0</span></td>
+    <td><input type="text" placeholder="U1" style="width:60px"></td>
+    <td><input type="text" placeholder="/pages/..."></td>
+    <td><input type="text" placeholder="Descripción"></td>
+    <td><select style="width:100px"><option>Nuevo</option><option>Corrigiendo</option><option>Fixed</option></select></td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-gold">P1</span></td>
+    <td><input type="text" style="width:60px"></td>
+    <td><input type="text"></td>
+    <td><input type="text"></td>
+    <td><select style="width:100px"><option>Nuevo</option><option>Corrigiendo</option><option>Fixed</option></select></td>
+  </tr>
+  <tr>
+    <td><span class="badge badge-purple">P2</span></td>
+    <td><input type="text" style="width:60px"></td>
+    <td><input type="text"></td>
+    <td><input type="text"></td>
+    <td><select style="width:100px"><option>Nuevo</option><option>Backlog</option><option>Fixed</option></select></td>
+  </tr>
+</table>
+</section>
+
+<!-- ─── DECISIÓN 24 HORAS ─────────────────────────────────────────── -->
+<section>
+<h2>⚖️ Decisión post 24 horas</h2>
+<div class="row3" style="margin-bottom:16px">
+  <div class="card" style="cursor:pointer;border-color:rgba(34,197,94,.3)">
+    <div style="font-size:20px;margin-bottom:6px">🟢</div>
+    <div style="font-weight:700;color:#86efac;font-size:13px">AMPLIAR</div>
+    <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px">0 P0, usuarios entienden, funciona. Invitar 10 usuarios.</div>
+  </div>
+  <div class="card" style="cursor:pointer;border-color:rgba(245,197,66,.3)">
+    <div style="font-size:20px;margin-bottom:6px">🟡</div>
+    <div style="font-weight:700;color:#fcd34d;font-size:13px">HOTFIX 48H</div>
+    <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px">Hay P1, confusión fuerte o errores de consola. Corregir y reinvitar.</div>
+  </div>
+  <div class="card" style="cursor:pointer;border-color:rgba(239,68,68,.3)">
+    <div style="font-size:20px;margin-bottom:6px">🔴</div>
+    <div style="font-weight:700;color:#fca5a5;font-size:13px">NO-GO</div>
+    <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px">Hay P0, signup/login roto, admin inseguro, flujo inutilizable.</div>
+  </div>
+</div>
+<div><label>Decisión elegida y razonamiento</label><textarea placeholder="Ej: AMPLIAR — 3/5 usuarios llegaron al Home, 2 registraron comida, 0 P0, feedback positivo sobre Arju. Próximo paso: invitar 5 más."></textarea></div>
+</section>
+
+<!-- ─── ADMIN CHECKLIST ──────────────────────────────────────────── -->
+<section>
+<h2>👁️ Checklist admin cada 2–3 horas</h2>
+<div class="card">
+  <div style="font-size:13px;line-height:2;color:rgba(255,255,255,.65)">
+    Admin → Usuarios → revisar nuevos registros<br>
+    Admin → Métricas → app_events recientes<br>
+    Admin → Errores → app_errors nuevos<br>
+    Admin → Feedback → beta_feedback nuevo<br>
+    WhatsApp wa.link/hteek6 → responder soporte en &lt;2h<br>
+    Anotar comportamiento en cada usuario arriba
+  </div>
+</div>
+</section>
+
+<div style="text-align:center;padding:20px 0;font-size:12px;color:rgba(255,255,255,.25)">
+  ArjunaFit · mini-beta-day1-war-room-v1 · Solo 3–5 usuarios · Operación controlada
+</div>
+
+</body>
+</html>

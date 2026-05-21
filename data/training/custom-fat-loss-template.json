@@ -1,0 +1,201 @@
+{
+  "program_id": "custom_fat_loss",
+  "name": "Plan de Reducción de Grasa",
+  "duration_days": 30,
+  "trial_days": 0,
+  "price_usd_month": 72,
+  "goal": "Reducir porcentaje de grasa de forma sostenible preservando músculo",
+  "commercial_rule": "Pago inmediato. Sin prueba gratis.",
+  "phases": [
+    {
+      "phase": 1,
+      "weeks": "1-2",
+      "focus": "Adaptación al déficit + establecer hábitos",
+      "intensity": "Moderada"
+    },
+    {
+      "phase": 2,
+      "weeks": "3",
+      "focus": "Incremento de actividad",
+      "intensity": "Media-Alta"
+    },
+    {
+      "phase": 3,
+      "weeks": "4",
+      "focus": "Semana de mantenimiento + evaluación",
+      "intensity": "Moderada"
+    }
+  ],
+  "weekly_template": {
+    "day_1": {
+      "title": "Fuerza cuerpo completo A",
+      "muscle_focus": [
+        "piernas",
+        "glúteos",
+        "core"
+      ],
+      "exercises": [
+        {
+          "name": "Sentadilla goblet",
+          "sets": 4,
+          "reps": "12-15",
+          "tip": "Mancuerna al pecho, espalda recta"
+        },
+        {
+          "name": "Hip thrust",
+          "sets": 3,
+          "reps": "15",
+          "tip": "Squeeze arriba"
+        },
+        {
+          "name": "Remo con mancuerna",
+          "sets": 3,
+          "reps": "12 c/l",
+          "tip": "Espalda paralela al suelo"
+        },
+        {
+          "name": "Plancha",
+          "sets": 3,
+          "reps": "30-45s",
+          "tip": "Caderas alineadas"
+        }
+      ]
+    },
+    "day_2": {
+      "title": "Cardio suave + movilidad",
+      "muscle_focus": [],
+      "exercises": [
+        {
+          "name": "Caminata rápida",
+          "sets": 1,
+          "reps": "30-45 min",
+          "tip": "7,000-10,000 pasos objetivo"
+        },
+        {
+          "name": "Estiramiento completo",
+          "sets": 1,
+          "reps": "15 min",
+          "tip": "Sin prisa"
+        }
+      ]
+    },
+    "day_3": {
+      "title": "Fuerza cuerpo completo B",
+      "muscle_focus": [
+        "pecho",
+        "espalda",
+        "brazos"
+      ],
+      "exercises": [
+        {
+          "name": "Press mancuernas",
+          "sets": 4,
+          "reps": "12",
+          "tip": "Rango completo de movimiento"
+        },
+        {
+          "name": "Dominadas o jalones",
+          "sets": 3,
+          "reps": "10-12",
+          "tip": "Omoplatos activos"
+        },
+        {
+          "name": "Zancadas",
+          "sets": 3,
+          "reps": "12 c/l",
+          "tip": "Rodilla no pasa la punta del pie"
+        },
+        {
+          "name": "Mountain climbers",
+          "sets": 3,
+          "reps": "30s",
+          "tip": "Caderas abajo"
+        }
+      ]
+    },
+    "day_4": {
+      "title": "Descanso activo",
+      "muscle_focus": [],
+      "exercises": [
+        {
+          "name": "Actividad libre",
+          "sets": 1,
+          "reps": "20-30 min",
+          "tip": "Caminar, bailar, nadar"
+        }
+      ]
+    },
+    "day_5": {
+      "title": "Fuerza + HIIT suave",
+      "muscle_focus": [
+        "glúteos",
+        "core",
+        "piernas"
+      ],
+      "exercises": [
+        {
+          "name": "Peso muerto rumano",
+          "sets": 4,
+          "reps": "12",
+          "tip": "Caderas atrás"
+        },
+        {
+          "name": "Sentadilla búlgara",
+          "sets": 3,
+          "reps": "10 c/l",
+          "tip": "Mantén el torso erguido"
+        },
+        {
+          "name": "Burpees suaves (sin salto)",
+          "sets": 3,
+          "reps": "8",
+          "tip": "Pace moderado"
+        },
+        {
+          "name": "Dead bug",
+          "sets": 3,
+          "reps": "10 c/l",
+          "tip": "Espalda pegada al suelo"
+        }
+      ]
+    },
+    "day_6": {
+      "title": "Caminata larga",
+      "muscle_focus": [],
+      "exercises": [
+        {
+          "name": "Caminata",
+          "sets": 1,
+          "reps": "45-60 min",
+          "tip": "Con terreno variado si puedes"
+        }
+      ]
+    },
+    "day_7": {
+      "title": "Descanso completo",
+      "muscle_focus": [],
+      "exercises": []
+    }
+  },
+  "nutrition_guidance": {
+    "protein_g_per_kg": 2.2,
+    "calorie_strategy": "deficit_moderado",
+    "deficit_calories": "300-500 kcal bajo TDEE",
+    "meal_frequency": "3-4 comidas con saciedad",
+    "key_foods": [
+      "pollo",
+      "huevo",
+      "atún",
+      "vegetales",
+      "avena",
+      "frijoles",
+      "yogur griego"
+    ]
+  },
+  "arju_tips": [
+    "Proteína alta protege el músculo mientras reduces grasa.",
+    "El déficit debe ser sostenible, no extremo.",
+    "Los vegetales son tus aliados: volumen de comida con pocas calorías.",
+    "Los pasos cuentan. No subestimes el movimiento diario."
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "program_id": "challenge_glutes",
+  "name": "Reto de glúteos",
+  "duration_days": 37,
+  "trial_days": 7,
+  "goal": "Mejorar fuerza, forma y consistencia en glúteos con técnica correcta",
+  "phases": [
+    {
+      "phase": 1,
+      "weeks": "1-2",
+      "focus": "Activación y técnica",
+      "intensity": "Moderada"
+    },
+    {
+      "phase": 2,
+      "weeks": "3-4",
+      "focus": "Progresión de volumen",
+      "intensity": "Media-Alta"
+    },
+    {
+      "phase": 3,
+      "weeks": "5-6",
+      "focus": "Fuerza y consolidación",
+      "intensity": "Alta"
+    }
+  ],
+  "weekly_template": {
+    "day_1": {
+      "title": "Glúteos · Empuje",
+      "exercises": [
+        {
+          "name": "Hip Thrust con Barra",
+          "sets": 4,
+          "reps": "10-12",
+          "tip": "Pausa 1 segundo arriba"
+        },
+        {
+          "name": "Sentadilla Búlgara",
+          "sets": 3,
+          "reps": "10 c/l",
+          "tip": "Rodilla trasera casi al suelo"
+        },
+        {
+          "name": "Peso Muerto Rumano",
+          "sets": 3,
+          "reps": "12",
+          "tip": "Caderas atrás, espalda recta"
+        }
+      ],
+      "duration_min": 45
+    },
+    "day_2": {
+      "title": "Recuperación activa",
+      "exercises": [
+        {
+          "name": "Caminata",
+          "sets": 1,
+          "reps": "20 min",
+          "tip": "Ritmo tranquilo"
+        },
+        {
+          "name": "Estiramiento cadena posterior",
+          "sets": 1,
+          "reps": "10 min",
+          "tip": "Sostener 30s cada posición"
+        }
+      ],
+      "duration_min": 30
+    },
+    "day_3": {
+      "title": "Glúteos · Tracción",
+      "exercises": [
+        {
+          "name": "Peso Muerto Sumo",
+          "sets": 4,
+          "reps": "10",
+          "tip": "Pies en 45°, empujar el suelo"
+        },
+        {
+          "name": "Extensión de Cadera en Polea",
+          "sets": 3,
+          "reps": "15 c/l",
+          "tip": "Contraer glúteo arriba"
+        },
+        {
+          "name": "Abducción con Banda",
+          "sets": 3,
+          "reps": "20",
+          "tip": "No dejar caer las rodillas"
+        }
+      ],
+      "duration_min": 40
+    },
+    "day_4": {
+      "title": "Descanso completo",
+      "exercises": [],
+      "duration_min": 0
+    },
+    "day_5": {
+      "title": "Glúteos · Fuerza Total",
+      "exercises": [
+        {
+          "name": "Sentadilla con barra",
+          "sets": 4,
+          "reps": "8-10",
+          "tip": "Cadera por debajo de rodilla"
+        },
+        {
+          "name": "Hip Thrust Unilateral",
+          "sets": 3,
+          "reps": "12 c/l",
+          "tip": "No dejar que la cadera rote"
+        },
+        {
+          "name": "Glute Bridge con peso",
+          "sets": 3,
+          "reps": "15",
+          "tip": "Squeeze 2 segundos arriba"
+        }
+      ],
+      "duration_min": 50
+    },
+    "day_6": {
+      "title": "Movilidad y Core",
+      "exercises": [
+        {
+          "name": "Pigeon pose",
+          "sets": 2,
+          "reps": "60s c/l",
+          "tip": "Sin dolor, solo tensión"
+        },
+        {
+          "name": "Plancha",
+          "sets": 3,
+          "reps": "30-45s",
+          "tip": "No elevar las caderas"
+        },
+        {
+          "name": "Caminata Nordic",
+          "sets": 1,
+          "reps": "15 min",
+          "tip": "Terreno variado si es posible"
+        }
+      ],
+      "duration_min": 30
+    },
+    "day_7": {
+      "title": "Descanso y recuperación",
+      "exercises": [],
+      "duration_min": 0
+    }
+  }
+}

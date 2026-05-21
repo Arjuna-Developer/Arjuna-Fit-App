@@ -1,0 +1,209 @@
+{
+  "program_id": "custom_muscle_gain",
+  "name": "Plan de Aumento de Masa Muscular",
+  "duration_days": 30,
+  "trial_days": 0,
+  "price_usd_month": 72,
+  "goal": "Aumentar masa muscular con progresión de fuerza y nutrición suficiente",
+  "commercial_rule": "Pago inmediato. Sin prueba gratis.",
+  "phases": [
+    {
+      "phase": 1,
+      "weeks": "1-2",
+      "focus": "Adaptación neuromuscular + técnica",
+      "intensity": "Moderada"
+    },
+    {
+      "phase": 2,
+      "weeks": "3",
+      "focus": "Progresión de volumen",
+      "intensity": "Alta"
+    },
+    {
+      "phase": 3,
+      "weeks": "4",
+      "focus": "Semana de descarga + consolidación",
+      "intensity": "Suave"
+    }
+  ],
+  "weekly_template": {
+    "day_1": {
+      "title": "Pecho + Tríceps",
+      "muscle_focus": [
+        "pecho",
+        "triceps"
+      ],
+      "exercises": [
+        {
+          "name": "Press de banca",
+          "sets": 4,
+          "reps": "8-10",
+          "tip": "Escápulas retraídas, pies en el suelo",
+          "soft_variant": "Press con mancuernas en banco inclinado"
+        },
+        {
+          "name": "Press inclinado mancuernas",
+          "sets": 3,
+          "reps": "10-12",
+          "tip": "Ángulo 30-45°, bajar controlado"
+        },
+        {
+          "name": "Fondos en paralelas",
+          "sets": 3,
+          "reps": "8-12",
+          "tip": "Ligeramente hacia adelante para pecho"
+        },
+        {
+          "name": "Extensiones de tríceps en polea",
+          "sets": 3,
+          "reps": "12-15",
+          "tip": "Codos fijos, solo mueve el antebrazo"
+        }
+      ]
+    },
+    "day_2": {
+      "title": "Espalda + Bíceps",
+      "muscle_focus": [
+        "espalda",
+        "biceps"
+      ],
+      "exercises": [
+        {
+          "name": "Dominadas o jalones",
+          "sets": 4,
+          "reps": "6-10",
+          "tip": "Omoplatos hacia abajo al subir"
+        },
+        {
+          "name": "Remo con barra",
+          "sets": 3,
+          "reps": "8-10",
+          "tip": "Pecho a la barra, no la barra al pecho"
+        },
+        {
+          "name": "Remo con mancuerna",
+          "sets": 3,
+          "reps": "10-12",
+          "tip": "Mantener espalda recta, codo al techo"
+        },
+        {
+          "name": "Curl de bíceps barra",
+          "sets": 3,
+          "reps": "10-12",
+          "tip": "No balancear el cuerpo"
+        }
+      ]
+    },
+    "day_3": {
+      "title": "Descanso activo",
+      "muscle_focus": [],
+      "exercises": [
+        {
+          "name": "Caminata o movilidad",
+          "sets": 1,
+          "reps": "20-30 min",
+          "tip": "Recuperación activa"
+        }
+      ]
+    },
+    "day_4": {
+      "title": "Piernas",
+      "muscle_focus": [
+        "cuadriceps",
+        "isquiotibiales",
+        "gluteos"
+      ],
+      "exercises": [
+        {
+          "name": "Sentadilla con barra",
+          "sets": 4,
+          "reps": "8-10",
+          "tip": "Cadera por debajo de rodilla, peso en talones"
+        },
+        {
+          "name": "Peso muerto rumano",
+          "sets": 3,
+          "reps": "10-12",
+          "tip": "Caderas atrás, sentir isquiotibiales"
+        },
+        {
+          "name": "Prensa de pierna",
+          "sets": 3,
+          "reps": "12-15",
+          "tip": "No bloquear rodillas arriba"
+        },
+        {
+          "name": "Hip thrust",
+          "sets": 3,
+          "reps": "12-15",
+          "tip": "Pausa 1 segundo arriba"
+        }
+      ]
+    },
+    "day_5": {
+      "title": "Hombros + Core",
+      "muscle_focus": [
+        "deltoides",
+        "trapecio",
+        "core"
+      ],
+      "exercises": [
+        {
+          "name": "Press militar con barra",
+          "sets": 4,
+          "reps": "8-10",
+          "tip": "Core activado, no arquear lumbar"
+        },
+        {
+          "name": "Elevaciones laterales",
+          "sets": 3,
+          "reps": "12-15",
+          "tip": "Codo ligeramente doblado"
+        },
+        {
+          "name": "Plancha frontal",
+          "sets": 3,
+          "reps": "30-45s",
+          "tip": "Respirar normal"
+        },
+        {
+          "name": "Crunch con peso",
+          "sets": 3,
+          "reps": "15",
+          "tip": "Solo el core sube, no el cuello"
+        }
+      ]
+    },
+    "day_6": {
+      "title": "Descanso completo",
+      "muscle_focus": [],
+      "exercises": []
+    },
+    "day_7": {
+      "title": "Descanso completo",
+      "muscle_focus": [],
+      "exercises": []
+    }
+  },
+  "nutrition_guidance": {
+    "protein_g_per_kg": 2.0,
+    "calorie_strategy": "superavit_moderado",
+    "extra_calories": "200-300 kcal sobre TDEE",
+    "meal_frequency": "3-4 comidas principales",
+    "key_foods": [
+      "pollo",
+      "huevo",
+      "atún",
+      "arroz",
+      "avena",
+      "papa",
+      "legumbres"
+    ]
+  },
+  "arju_tips": [
+    "La proteína es el ladrillo del músculo. Priorízala en cada comida.",
+    "El músculo crece en el descanso, no en el entrenamiento.",
+    "La progresión de carga semana a semana es lo que marca diferencia.",
+    "No temas a los carbohidratos: son tu combustible."
+  ]
+}

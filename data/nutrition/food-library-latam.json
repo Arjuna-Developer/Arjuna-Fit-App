@@ -1,0 +1,294 @@
+{
+  "version": "1.0",
+  "note": "Valores aproximados por porción estándar. No son exactos. Arju los usa como referencia general.",
+  "proteins": [
+    {
+      "name": "Pechuga de pollo",
+      "portion": "120g",
+      "protein_g": 30,
+      "cal": 165,
+      "carbs_g": 0,
+      "fat_g": 3,
+      "latam_common": true
+    },
+    {
+      "name": "Huevo entero",
+      "portion": "1 unidad",
+      "protein_g": 6,
+      "cal": 78,
+      "carbs_g": 0,
+      "fat_g": 5,
+      "latam_common": true
+    },
+    {
+      "name": "Atún en agua",
+      "portion": "90g (lata)",
+      "protein_g": 20,
+      "cal": 100,
+      "carbs_g": 0,
+      "fat_g": 1,
+      "latam_common": true
+    },
+    {
+      "name": "Carne molida magra",
+      "portion": "100g",
+      "protein_g": 22,
+      "cal": 150,
+      "carbs_g": 0,
+      "fat_g": 7,
+      "latam_common": true
+    },
+    {
+      "name": "Tilapia",
+      "portion": "120g",
+      "protein_g": 26,
+      "cal": 130,
+      "carbs_g": 0,
+      "fat_g": 2,
+      "latam_common": true
+    },
+    {
+      "name": "Salmón",
+      "portion": "120g",
+      "protein_g": 24,
+      "cal": 200,
+      "carbs_g": 0,
+      "fat_g": 11,
+      "latam_common": false
+    },
+    {
+      "name": "Yogur griego natural",
+      "portion": "200g",
+      "protein_g": 17,
+      "cal": 130,
+      "carbs_g": 7,
+      "fat_g": 4,
+      "latam_common": true
+    },
+    {
+      "name": "Queso campesino",
+      "portion": "60g",
+      "protein_g": 10,
+      "cal": 130,
+      "carbs_g": 1,
+      "fat_g": 9,
+      "latam_common": true
+    },
+    {
+      "name": "Lentejas cocidas",
+      "portion": "180g",
+      "protein_g": 14,
+      "cal": 230,
+      "carbs_g": 40,
+      "fat_g": 1,
+      "latam_common": true
+    },
+    {
+      "name": "Frijoles cocidos",
+      "portion": "180g",
+      "protein_g": 12,
+      "cal": 210,
+      "carbs_g": 38,
+      "fat_g": 1,
+      "latam_common": true
+    },
+    {
+      "name": "Garbanzos cocidos",
+      "portion": "180g",
+      "protein_g": 14,
+      "cal": 280,
+      "carbs_g": 45,
+      "fat_g": 5,
+      "latam_common": true
+    }
+  ],
+  "carbohydrates": [
+    {
+      "name": "Arepa mediana",
+      "portion": "1 unidad",
+      "carbs_g": 30,
+      "cal": 160,
+      "protein_g": 3,
+      "fat_g": 2,
+      "latam_common": true
+    },
+    {
+      "name": "Arroz blanco cocido",
+      "portion": "200g",
+      "carbs_g": 46,
+      "cal": 210,
+      "protein_g": 4,
+      "fat_g": 0,
+      "latam_common": true
+    },
+    {
+      "name": "Papa mediana",
+      "portion": "150g",
+      "carbs_g": 28,
+      "cal": 130,
+      "protein_g": 3,
+      "fat_g": 0,
+      "latam_common": true
+    },
+    {
+      "name": "Papa criolla",
+      "portion": "100g",
+      "carbs_g": 16,
+      "cal": 80,
+      "protein_g": 2,
+      "fat_g": 0,
+      "latam_common": true
+    },
+    {
+      "name": "Plátano maduro",
+      "portion": "1 mediano",
+      "carbs_g": 30,
+      "cal": 120,
+      "protein_g": 1,
+      "fat_g": 0,
+      "latam_common": true
+    },
+    {
+      "name": "Plátano verde / patacón",
+      "portion": "100g",
+      "carbs_g": 32,
+      "cal": 140,
+      "protein_g": 1,
+      "fat_g": 1,
+      "latam_common": true
+    },
+    {
+      "name": "Yuca cocida",
+      "portion": "150g",
+      "carbs_g": 36,
+      "cal": 165,
+      "protein_g": 1,
+      "fat_g": 0,
+      "latam_common": true
+    },
+    {
+      "name": "Avena cruda",
+      "portion": "50g",
+      "carbs_g": 30,
+      "cal": 190,
+      "protein_g": 7,
+      "fat_g": 3,
+      "latam_common": true
+    },
+    {
+      "name": "Pan integral",
+      "portion": "2 tajadas",
+      "carbs_g": 26,
+      "cal": 160,
+      "protein_g": 6,
+      "fat_g": 2,
+      "latam_common": true
+    },
+    {
+      "name": "Pasta integral cocida",
+      "portion": "150g",
+      "carbs_g": 35,
+      "cal": 175,
+      "protein_g": 7,
+      "fat_g": 1,
+      "latam_common": false
+    },
+    {
+      "name": "Quinoa cocida",
+      "portion": "150g",
+      "carbs_g": 34,
+      "cal": 185,
+      "protein_g": 7,
+      "fat_g": 3,
+      "latam_common": false
+    }
+  ],
+  "fats": [
+    {
+      "name": "Aguacate",
+      "portion": "½ mediano",
+      "fat_g": 11,
+      "cal": 120,
+      "carbs_g": 7,
+      "protein_g": 2,
+      "latam_common": true
+    },
+    {
+      "name": "Aceite de oliva",
+      "portion": "1 cucharada",
+      "fat_g": 14,
+      "cal": 120,
+      "carbs_g": 0,
+      "protein_g": 0,
+      "latam_common": true
+    },
+    {
+      "name": "Aceite de coco",
+      "portion": "1 cucharada",
+      "fat_g": 14,
+      "cal": 120,
+      "carbs_g": 0,
+      "protein_g": 0,
+      "latam_common": true
+    },
+    {
+      "name": "Nueces",
+      "portion": "30g",
+      "fat_g": 18,
+      "cal": 200,
+      "carbs_g": 4,
+      "protein_g": 5,
+      "latam_common": false
+    }
+  ],
+  "vegetables_latam": [
+    {
+      "name": "Espinaca",
+      "cal_100g": 23,
+      "protein_g": 2.9,
+      "fiber_g": 2.2
+    },
+    {
+      "name": "Brócoli",
+      "cal_100g": 34,
+      "protein_g": 2.8,
+      "fiber_g": 2.6
+    },
+    {
+      "name": "Zanahoria",
+      "cal_100g": 41,
+      "protein_g": 0.9,
+      "fiber_g": 2.8
+    },
+    {
+      "name": "Tomate",
+      "cal_100g": 18,
+      "protein_g": 0.9,
+      "fiber_g": 1.2
+    },
+    {
+      "name": "Cebolla",
+      "cal_100g": 40,
+      "protein_g": 1.1,
+      "fiber_g": 1.7
+    },
+    {
+      "name": "Pimentón",
+      "cal_100g": 31,
+      "protein_g": 1,
+      "fiber_g": 2.1
+    },
+    {
+      "name": "Ahuyama/zapallo",
+      "cal_100g": 26,
+      "protein_g": 1,
+      "fiber_g": 0.5
+    },
+    {
+      "name": "Pepino",
+      "cal_100g": 16,
+      "protein_g": 0.7,
+      "fiber_g": 0.5
+    }
+  ]
+}

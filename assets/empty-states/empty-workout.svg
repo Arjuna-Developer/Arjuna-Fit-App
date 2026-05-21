@@ -1,0 +1,7 @@
+<svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="60" cy="60" r="52" fill="rgba(245,158,11,.06)" stroke="rgba(245,158,11,.12)" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <circle cx="60" cy="60" r="36" fill="rgba(245,158,11,.04)"/>
+  <path d="M30 60h12M78 60h12M42 60h36M38 50v20M82 50v20" 
+    stroke="rgba(253,186,116,.35)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M34 54v12M86 54v12" stroke="rgba(253,186,116,.25)" stroke-width="3" stroke-linecap="round"/>
+</svg>

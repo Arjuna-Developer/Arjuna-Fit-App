@@ -1,0 +1,155 @@
+{
+  "program_id": "challenge_belly",
+  "name": "Reto para bajar la pancita",
+  "duration_days": 37,
+  "trial_days": 7,
+  "goal": "Mejorar hábitos, reducir grasa general, fortalecer core, sentirse mejor con constancia",
+  "phases": [
+    {
+      "phase": 1,
+      "weeks": "1-2",
+      "focus": "Activación y hábitos",
+      "intensity": "Suave"
+    },
+    {
+      "phase": 2,
+      "weeks": "3-4",
+      "focus": "Movimiento y core",
+      "intensity": "Moderada"
+    },
+    {
+      "phase": 3,
+      "weeks": "5-6",
+      "focus": "Consistencia y fuerza",
+      "intensity": "Media"
+    }
+  ],
+  "weekly_template": {
+    "day_1": {
+      "title": "Core y movimiento",
+      "exercises": [
+        {
+          "name": "Plancha frontal",
+          "sets": 3,
+          "reps": "30-45s",
+          "tip": "Respirar normal, no aguantar"
+        },
+        {
+          "name": "Dead Bug",
+          "sets": 3,
+          "reps": "10 c/l",
+          "tip": "Espalda pegada al suelo"
+        },
+        {
+          "name": "Caminata",
+          "sets": 1,
+          "reps": "20-30 min",
+          "tip": "Paso rápido pero cómodo"
+        }
+      ],
+      "duration_min": 40
+    },
+    "day_2": {
+      "title": "Movilidad y respiración",
+      "exercises": [
+        {
+          "name": "Respiración diafragmática",
+          "sets": 1,
+          "reps": "5 min",
+          "tip": "Inhala por nariz, exhala lento"
+        },
+        {
+          "name": "Estiramiento completo",
+          "sets": 1,
+          "reps": "15 min",
+          "tip": "Toda la cadena posterior"
+        }
+      ],
+      "duration_min": 20
+    },
+    "day_3": {
+      "title": "Fuerza funcional",
+      "exercises": [
+        {
+          "name": "Sentadilla corporal",
+          "sets": 3,
+          "reps": "15",
+          "tip": "Cadera atrás, peso en talones"
+        },
+        {
+          "name": "Bird Dog",
+          "sets": 3,
+          "reps": "10 c/l",
+          "tip": "Columna neutra todo el tiempo"
+        },
+        {
+          "name": "Puentes de glúteo",
+          "sets": 3,
+          "reps": "20",
+          "tip": "Apretar glúteo arriba"
+        }
+      ],
+      "duration_min": 35
+    },
+    "day_4": {
+      "title": "Pasos y movimiento libre",
+      "exercises": [
+        {
+          "name": "Caminata larga",
+          "sets": 1,
+          "reps": "30-45 min",
+          "tip": "Incluye terreno inclinado si puedes"
+        }
+      ],
+      "duration_min": 45
+    },
+    "day_5": {
+      "title": "Core avanzado",
+      "exercises": [
+        {
+          "name": "Mountain Climbers",
+          "sets": 3,
+          "reps": "30s",
+          "tip": "Caderas abajo, ritmo controlado"
+        },
+        {
+          "name": "Plancha lateral",
+          "sets": 2,
+          "reps": "30s c/l",
+          "tip": "Cadera elevada, no dejar caer"
+        },
+        {
+          "name": "Hollow hold",
+          "sets": 3,
+          "reps": "20s",
+          "tip": "Si es muy difícil, doblar rodillas"
+        }
+      ],
+      "duration_min": 30
+    },
+    "day_6": {
+      "title": "Actividad libre",
+      "exercises": [
+        {
+          "name": "Actividad favorita",
+          "sets": 1,
+          "reps": "30-45 min",
+          "tip": "Bailar, nadar, montar bici"
+        }
+      ],
+      "duration_min": 45
+    },
+    "day_7": {
+      "title": "Descanso activo",
+      "exercises": [
+        {
+          "name": "Estiramiento suave",
+          "sets": 1,
+          "reps": "15 min",
+          "tip": ""
+        }
+      ],
+      "duration_min": 15
+    }
+  }
+}

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <circle cx="100" cy="100" r="85" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="6"/>
+  <text x="100" y="125" font-family="Georgia,serif" font-weight="700" font-size="90"
+    text-anchor="middle" fill="rgba(255,255,255,0.35)">AF</text>
+  <text x="100" y="175" font-family="Arial,sans-serif" font-size="16" text-anchor="middle"
+    fill="rgba(255,255,255,0.25)" letter-spacing="2">ARJUNAFIT</text>
+</svg>

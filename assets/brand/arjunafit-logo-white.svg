@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 160">
+  <circle cx="80" cy="80" r="68" fill="none" stroke="white" stroke-width="6"/>
+  <text x="80" y="103" font-family="Georgia,serif" font-weight="700" font-size="72"
+    text-anchor="middle" fill="white">AF</text>
+  <text x="200" y="68" font-family="Arial,sans-serif" font-weight="800" font-size="48"
+    fill="white" letter-spacing="2">ARJUNA</text>
+  <text x="204" y="118" font-family="Arial,sans-serif" font-weight="300" font-size="48"
+    fill="white" letter-spacing="12">FIT</text>
+</svg>
