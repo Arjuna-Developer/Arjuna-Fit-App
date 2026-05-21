@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32-v2.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#6D28FF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ArjunaFit">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="af-version" content="mini-beta-day1-war-room-v1">
+<title>Tu plan personalizado · ArjunaFit</title>
+<link rel="stylesheet" href="/assets/visual-system.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080511;--bg-card:rgba(16,10,32,.9);--bg-input:rgba(255,255,255,.04);
+  --primary:#8b5cf6;--primary-glow:rgba(139,92,246,.3);--pri-lite:#ddd6fe;--pri-mid:#a78bfa;
+  --accent:#ec4899;--text-1:#f5f3ff;--text-2:rgba(245,243,255,.72);--text-3:rgba(245,243,255,.42);
+  --amber:rgba(245,158,11,.85);--amber-bg:rgba(245,158,11,.08);--amber-border:rgba(245,158,11,.22);
+  --green:rgba(52,211,153,.8);--r:16px;--r-lg:20px;--ease:cubic-bezier(.34,1.12,.64,1);
+}
+html,body{background:var(--bg);color:var(--text-1);font-family:'Outfit',sans-serif;min-height:100dvh;overflow-x:hidden}
+.page{max-width:430px;margin:0 auto;padding:0 0 120px}
+
+/* ── Progress bar ─────────────────────────────────────────── */
+.prog-wrap{height:3px;background:rgba(255,255,255,.07);position:sticky;top:0;z-index:20}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .4s var(--ease)}
+
+/* ── Plan card ─────────────────────────────────────────────── */
+.plan-card{
+  margin:24px 20px 0;
+  background:linear-gradient(145deg,rgba(139,92,246,.14),rgba(236,72,153,.07));
+  border:1px solid rgba(167,139,250,.22);
+  border-radius:var(--r-lg);padding:20px;
+  display:flex;align-items:center;gap:16px;
+  box-shadow:0 8px 32px rgba(139,92,246,.12);
+}
+.plan-card-icon{font-size:32px;filter:drop-shadow(0 4px 12px rgba(139,92,246,.4));flex-shrink:0}
+.plan-card-name{font-size:17px;font-weight:800;letter-spacing:-.02em;margin-bottom:5px}
+.plan-card-price{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 12px;border-radius:8px;
+  background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.2);
+  font-size:11px;font-weight:700;color:var(--pri-lite);letter-spacing:.03em
+}
+
+/* ── Alert card ─────────────────────────────────────────────── */
+.alert-card{
+  margin:16px 20px 0;
+  background:var(--amber-bg);
+  border:1px solid var(--amber-border);
+  border-radius:var(--r-lg);padding:18px 20px;
+}
+.alert-icon{width:32px;height:32px;border-radius:50%;background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.alert-title{font-size:14px;font-weight:700;color:var(--amber);margin-bottom:5px}
+.alert-body{font-size:12px;color:rgba(255,255,255,.52);line-height:1.65;margin-bottom:14px}
+.alert-btns{display:flex;flex-direction:column;gap:9px}
+
+/* ── Premium buttons ───────────────────────────────────────── */
+.af-btn-primary{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;min-height:50px;padding:13px 20px;
+  border:none;border-radius:var(--r);cursor:pointer;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  color:#fff;font-family:'Outfit',sans-serif;font-size:14px;font-weight:800;
+  box-shadow:0 6px 28px var(--primary-glow);
+  transition:transform .15s var(--ease),box-shadow .2s;letter-spacing:.01em;
+}
+.af-btn-primary:active{transform:scale(.97);box-shadow:0 3px 14px var(--primary-glow)}
+.af-btn-secondary{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;min-height:48px;padding:12px 20px;
+  border:1.5px solid rgba(167,139,250,.3);border-radius:var(--r);cursor:pointer;
+  background:rgba(255,255,255,.03);
+  color:var(--pri-lite);font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;
+  transition:border-color .2s,background .2s;
+}
+.af-btn-secondary:active{background:rgba(167,139,250,.08)}
+.af-btn-ghost{
+  background:none;border:none;cursor:pointer;
+  font-family:'Outfit',sans-serif;font-size:12px;color:var(--text-3);
+  display:block;width:100%;text-align:center;padding:8px;
+}
+
+/* ── Divider ─────────────────────────────────────────────────── */
+.divider{height:1px;background:rgba(255,255,255,.06);margin:24px 20px}
+
+/* ── Intake section ──────────────────────────────────────────── */
+.intake-header{padding:8px 20px 0}
+.step-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--pri-mid);margin-bottom:10px}
+.step-title{font-size:20px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px;line-height:1.3}
+.step-sub{font-size:13px;color:var(--text-3);line-height:1.6;margin-bottom:20px}
+
+/* ── Option cards ────────────────────────────────────────────── */
+.opt-grid{padding:0 20px;display:flex;flex-direction:column;gap:10px}
+.af-option{
+  display:flex;align-items:center;gap:14px;
+  padding:15px 16px;
+  background:rgba(255,255,255,.03);
+  border:1.5px solid rgba(255,255,255,.07);
+  border-radius:var(--r);cursor:pointer;
+  transition:background .18s,border-color .18s;
+  text-align:left;width:100%;
+}
+.af-option:active{transform:scale(.985)}
+.af-option.sel{
+  background:rgba(139,92,246,.1);
+  border-color:rgba(167,139,250,.4);
+}
+.af-option.sel .opt-check{
+  background:var(--primary);border-color:var(--primary);
+}
+.af-option.sel .opt-check::after{opacity:1}
+.opt-check{
+  width:20px;height:20px;border-radius:50%;border:1.5px solid rgba(255,255,255,.2);
+  background:rgba(255,255,255,.04);flex-shrink:0;position:relative;transition:all .18s;
+}
+.opt-check::after{
+  content:'';position:absolute;inset:5px;border-radius:50%;
+  background:#fff;opacity:0;transition:opacity .15s;
+}
+.opt-icon{font-size:20px;flex-shrink:0;line-height:1}
+.opt-text{font-size:14px;font-weight:600;color:var(--text-1)}
+.opt-sub{font-size:11px;color:var(--text-3);margin-top:2px}
+
+/* ── Chips (multi-select) ───────────────────────────────────── */
+.chip-grid{padding:0 20px;display:flex;flex-wrap:wrap;gap:8px}
+.af-chip{
+  padding:9px 14px;
+  background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);
+  border-radius:24px;font-size:12px;font-weight:600;color:var(--text-2);
+  cursor:pointer;transition:all .18s;
+}
+.af-chip.sel{
+  background:rgba(139,92,246,.14);border-color:rgba(167,139,250,.42);color:var(--pri-lite);
+}
+
+/* ── Step nav (hidden steps) ────────────────────────────────── */
+.step{padding:4px 0;display:none;animation:fadeIn .28s var(--ease) both}
+.step.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ── Datos recibidos final screen ───────────────────────────── */
+.datos-screen{margin:24px 20px 0;display:none}
+.datos-screen.show{display:block}
+.datos-icon{
+  width:64px;height:64px;border-radius:50%;margin:0 auto 18px;
+  background:linear-gradient(135deg,rgba(139,92,246,.25),rgba(236,72,153,.15));
+  border:1px solid rgba(167,139,250,.25);
+  display:flex;align-items:center;justify-content:center;font-size:28px;
+}
+.datos-title{font-size:22px;font-weight:800;text-align:center;letter-spacing:-.02em;margin-bottom:10px}
+.datos-copy{font-size:13px;color:var(--text-3);text-align:center;line-height:1.75;margin-bottom:6px}
+.datos-price{
+  display:inline-block;padding:7px 16px;border-radius:10px;
+  background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.22);
+  font-size:14px;font-weight:700;color:var(--pri-lite);margin:14px auto;
+}
+.datos-badge{
+  display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:8px;
+  background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);
+  font-size:11px;font-weight:700;color:var(--amber);margin-bottom:20px;
+}
+
+/* ── Fixed CTA bar ──────────────────────────────────────────── */
+.cta-bar{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:min(430px,100vw);
+  padding:14px 20px calc(14px + env(safe-area-inset-bottom));
+  background:linear-gradient(to top,var(--bg) 65%,transparent);
+  z-index:50;display:flex;flex-direction:column;gap:9px;
+}
+</style>
+</head>
+<body>
+<div class="page" id="mainPage">
+
+  <!-- Progress -->
+  <div class="prog-wrap"><div class="prog-fill" id="progFill" style="width:12%"></div></div>
+
+  <!-- Plan card -->
+  <div class="plan-card">
+    <div class="plan-card-icon" id="planIcon">💪</div>
+    <div>
+      <div class="plan-card-name" id="planName">Plan personalizado</div>
+      <span class="plan-card-price">$72 USD/mes · pago inmediato</span>
+    </div>
+  </div>
+
+  <!-- Pending activation alert -->
+  <div class="alert-card" id="paymentBanner">
+    <div style="display:flex;align-items:flex-start;gap:13px">
+      <div class="alert-icon">⚡</div>
+      <div style="flex:1">
+        <div class="alert-title">Tu plan está pendiente de activación</div>
+        <div class="alert-body">Puedes dejarnos estos datos iniciales, pero tu plan personalizado se activa cuando confirmemos el pago.</div>
+        <div class="alert-btns">
+          <button class="af-btn-primary" id="payBannerBtn" style="min-height:46px;font-size:13px">
+            Continuar al pago →
+          </button>
+          <button class="af-btn-secondary" id="arjunaBannerBtn" style="min-height:44px;font-size:12px">
+            💬 Hablar con Arjuna
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Intake header (steps) -->
+  <div class="intake-header" id="intakeHeader">
+    <div class="step-label" id="stepLabel">Paso 1 de 8</div>
+    <div class="step-title" id="stepTitle">¿Cuál es tu objetivo principal?</div>
+    <div class="step-sub" id="stepSub">Arju va a ajustar tu entrenamiento y nutrición según esto.</div>
+  </div>
+
+  <!-- STEP 1: Goals (populated by JS) -->
+  <div class="step active" id="step1">
+    <div class="opt-grid" id="goalsGrid"></div>
+  </div>
+
+  <!-- STEP 2: Location -->
+  <div class="step" id="step2">
+    <div class="opt-grid">
+      <button class="af-option" data-val="gym" onclick="selectOpt(this,'step2')">
+        <span class="opt-check"></span><span class="opt-icon">🏋️</span>
+        <div><div class="opt-text">Gimnasio</div><div class="opt-sub">Máquinas, pesas, cables</div></div>
+      </button>
+      <button class="af-option" data-val="casa" onclick="selectOpt(this,'step2')">
+        <span class="opt-check"></span><span class="opt-icon">🏠</span>
+        <div><div class="opt-text">Casa</div><div class="opt-sub">Mancuernas, bandas o peso corporal</div></div>
+      </button>
+      <button class="af-option" data-val="ambos" onclick="selectOpt(this,'step2')">
+        <span class="opt-check"></span><span class="opt-icon">🔄</span>
+        <div><div class="opt-text">Ambos</div><div class="opt-sub">Alterno entre gym y casa</div></div>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Days -->
+  <div class="step" id="step3">
+    <div class="opt-grid">
+      <button class="af-option" data-val="3" onclick="selectOpt(this,'step3')">
+        <span class="opt-check"></span><span class="opt-icon">📅</span>
+        <div><div class="opt-text">3 días a la semana</div><div class="opt-sub">Sólido y sostenible</div></div>
+      </button>
+      <button class="af-option" data-val="4" onclick="selectOpt(this,'step3')">
+        <span class="opt-check"></span><span class="opt-icon">📅</span>
+        <div><div class="opt-text">4 días a la semana</div><div class="opt-sub">Buen equilibrio trabajo/recuperación</div></div>
+      </button>
+      <button class="af-option" data-val="5" onclick="selectOpt(this,'step3')">
+        <span class="opt-check"></span><span class="opt-icon">📅</span>
+        <div><div class="opt-text">5 días a la semana</div><div class="opt-sub">Alta frecuencia</div></div>
+      </button>
+      <button class="af-option" data-val="6" onclick="selectOpt(this,'step3')">
+        <span class="opt-check"></span><span class="opt-icon">📅</span>
+        <div><div class="opt-text">6 días a la semana</div><div class="opt-sub">Muy comprometida</div></div>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 4: Level -->
+  <div class="step" id="step4">
+    <div class="opt-grid">
+      <button class="af-option" data-val="beginner" onclick="selectOpt(this,'step4')">
+        <span class="opt-check"></span><span class="opt-icon">🌱</span>
+        <div><div class="opt-text">Estoy empezando</div><div class="opt-sub">Poca experiencia o llevo tiempo sin entrenar</div></div>
+      </button>
+      <button class="af-option" data-val="intermediate" onclick="selectOpt(this,'step4')">
+        <span class="opt-check"></span><span class="opt-icon">🔥</span>
+        <div><div class="opt-text">Intermedia</div><div class="opt-sub">Entreno con regularidad</div></div>
+      </button>
+      <button class="af-option" data-val="advanced" onclick="selectOpt(this,'step4')">
+        <span class="opt-check"></span><span class="opt-icon">⚡</span>
+        <div><div class="opt-text">Avanzada</div><div class="opt-sub">Mucha experiencia en entrenamiento</div></div>
+      </button>
+      <button class="af-option" data-val="inconsistent" onclick="selectOpt(this,'step4')">
+        <span class="opt-check"></span><span class="opt-icon">💪</span>
+        <div><div class="opt-text">Entreno pero me falta constancia</div><div class="opt-sub">Sé cómo hacerlo pero no lo mantengo</div></div>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 5: Equipment (chips) -->
+  <div class="step" id="step5">
+    <div class="chip-grid">
+      <button class="af-chip" data-val="maquinas" onclick="toggleChip(this)">Máquinas</button>
+      <button class="af-chip" data-val="mancuernas" onclick="toggleChip(this)">Mancuernas</button>
+      <button class="af-chip" data-val="barra" onclick="toggleChip(this)">Barra</button>
+      <button class="af-chip" data-val="bandas" onclick="toggleChip(this)">Bandas</button>
+      <button class="af-chip" data-val="peso_corporal" onclick="toggleChip(this)">Peso corporal</button>
+      <button class="af-chip" data-val="cables" onclick="toggleChip(this)">Cables</button>
+      <button class="af-chip" data-val="no_se" onclick="toggleChip(this)">No estoy segura</button>
+    </div>
+  </div>
+
+  <!-- STEP 6: Care (chips) -->
+  <div class="step" id="step6">
+    <div class="chip-grid">
+      <button class="af-chip" data-val="rodilla" onclick="toggleChip(this)">Rodilla</button>
+      <button class="af-chip" data-val="espalda" onclick="toggleChip(this)">Espalda baja</button>
+      <button class="af-chip" data-val="hombro" onclick="toggleChip(this)">Hombro</button>
+      <button class="af-chip" data-val="cuello" onclick="toggleChip(this)">Cuello</button>
+      <button class="af-chip" data-val="cadera" onclick="toggleChip(this)">Cadera</button>
+      <button class="af-chip" data-val="ninguna" onclick="selectSingleChip(this,'step6')">Ninguna</button>
+      <button class="af-chip" data-val="otra" onclick="toggleChip(this)">Otra</button>
+    </div>
+  </div>
+
+  <!-- STEP 7: Nutrition (chips) -->
+  <div class="step" id="step7">
+    <div class="chip-grid">
+      <button class="af-chip" data-val="no_se_cocinar" onclick="toggleChip(this)">No sé qué comer</button>
+      <button class="af-chip" data-val="salto_comidas" onclick="toggleChip(this)">Me salto comidas</button>
+      <button class="af-chip" data-val="poca_proteina" onclick="toggleChip(this)">Me cuesta subir proteína</button>
+      <button class="af-chip" data-val="ansiedad" onclick="toggleChip(this)">Como por ansiedad</button>
+      <button class="af-chip" data-val="comida_afuera" onclick="toggleChip(this)">Pido mucha comida afuera</button>
+      <button class="af-chip" data-val="macros" onclick="toggleChip(this)">No sé contar macros</button>
+    </div>
+  </div>
+
+  <!-- STEP 8: Coaching style -->
+  <div class="step" id="step8">
+    <div class="opt-grid">
+      <button class="af-option" data-val="simple" onclick="selectOpt(this,'step8')">
+        <span class="opt-check"></span><span class="opt-icon">✦</span>
+        <div><div class="opt-text">Simple y claro</div><div class="opt-sub">Solo lo esencial</div></div>
+      </button>
+      <button class="af-option" data-val="guided" onclick="selectOpt(this,'step8')">
+        <span class="opt-check"></span><span class="opt-icon">🧭</span>
+        <div><div class="opt-text">Que Arju me guíe bastante</div><div class="opt-sub">Quiero saber qué hacer cada día</div></div>
+      </button>
+      <button class="af-option" data-val="detailed" onclick="selectOpt(this,'step8')">
+        <span class="opt-check"></span><span class="opt-icon">📊</span>
+        <div><div class="opt-text">Quiero más detalle</div><div class="opt-sub">Macros, progresión, datos de avance</div></div>
+      </button>
+      <button class="af-option" data-val="stepbystep" onclick="selectOpt(this,'step8')">
+        <span class="opt-check"></span><span class="opt-icon">🪜</span>
+        <div><div class="opt-text">Ir paso a paso</div><div class="opt-sub">Una cosa a la vez</div></div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Datos recibidos screen -->
+  <div class="datos-screen" id="datosScreen">
+    <div style="text-align:center;padding:0 20px">
+      <div class="datos-icon">📋</div>
+      <h2 class="datos-title">Datos recibidos</h2>
+      <p class="datos-copy">Ya tenemos la información inicial para preparar tu plan personalizado. El siguiente paso es activar el pago mensual.</p>
+      <span class="datos-price" id="datosPrice">$72 USD/mes</span><br>
+      <span class="datos-badge">⚡ Pendiente de activación</span>
+    </div>
+    <div style="padding:0 20px;display:flex;flex-direction:column;gap:9px">
+      <button class="af-btn-primary" id="finalPayBtn">Pagar y empezar →</button>
+      <button class="af-btn-secondary" id="finalArjunaBtn">💬 Hablar con Arjuna</button>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<!-- Fixed CTA bar (hidden on final screen) -->
+<div class="cta-bar" id="ctaBar">
+  <button class="af-btn-primary" id="nextBtn" disabled>Continuar</button>
+  <button class="af-btn-ghost" id="skipBtn" style="display:none">Saltar esta pregunta</button>
+</div>
+
+<script src="/js/core/auth-bootstrap.js"></script>
+<script src="/js/core/auth-guard.js"></script>
+<script src="/js/core/ops-config.js"></script>
+<script src="/js/core/analytics.js"></script>
+<script src="/js/core/commerce-config.js"></script>
+<script>
+'use strict';
+
+// ── Auth guard ───────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  // Show loading overlay while checking session
+  var overlay = document.getElementById('authOverlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'authOverlay';
+    overlay.style.cssText = 'position:fixed;inset:0;background:#07020f;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;font-family:Outfit,sans-serif;color:#f5f3ff';
+    overlay.innerHTML = '<div style="font-size:32px;margin-bottom:16px">✦</div><div style="font-size:14px;color:rgba(255,255,255,.45)" data-loading-text>Verificando sesión...</div>';
+    document.body.prepend(overlay);
+  }
+
+  if (window.AB_boot) {
+    AB_boot({
+      ldrId: 'authOverlay',
+      requireAuth: true,
+      onReady: function(session, profile, state) {
+        // Custom plans only — redirect retos away
+        if (state.isReto) {
+          window.location.replace('/pages/onboarding.html'); return;
+        }
+        overlay.style.display = 'none';
+      }
+    });
+  } else {
+    // Fallback: just hide overlay after 3s
+    setTimeout(function() { overlay.style.display = 'none'; }, 3000);
+  }
+});
+
+const TOTAL_STEPS = 8;
+var current = 1;
+var answers = {};
+
+// ── Product context ─────────────────────────────────────────
+var productType = localStorage.getItem('af-product-type') || 'custom_muscle_gain';
+var isMasa = productType === 'custom_muscle_gain';
+var productName = isMasa ? 'Aumento de masa muscular' : 'Reducción de porcentaje graso';
+
+// ── Payment helpers ─────────────────────────────────────────
+var HOTMART_URLS = {
+  custom_muscle_gain: 'https://pay.hotmart.com/M105694336W?bid=1777962608286',
+  custom_fat_loss:    'https://pay.hotmart.com/M105694336W',
+};
+var WA_NUMBER = window.AF_Support ? AF_Support.whatsappNumber : '573209497919';
+
+function openPayment() {
+  // Prefer centralized config from AF_Commerce, fallback to local HOTMART_URLS
+  var url = null;
+  if (window.AF_Commerce && AF_Commerce.getCheckoutUrl) {
+    url = AF_Commerce.getCheckoutUrl(productType);
+  }
+  if (!url && window.AF_Commerce && window.PRODUCTS && PRODUCTS[productType]) {
+    url = PRODUCTS[productType].checkoutUrl || null;
+  }
+  if (!url) url = HOTMART_URLS[productType] || null;
+
+  if (url) {
+    var userEmail = localStorage.getItem('af-user-email') || '';
+    var userId    = localStorage.getItem('af-user-id') || '';
+    // Append tracking params if supported by Hotmart
+    var finalUrl = url;
+    if (userEmail) finalUrl += (url.includes('?') ? '&' : '?') + 'email=' + encodeURIComponent(userEmail);
+    if (window.AF) AF.track('checkout_started', {
+      product: productType, price: 72, currency: 'USD',
+      source_route: '/pages/custom-plan-intake.html'
+    });
+    if (window.AF) AF.track('hotmart_redirect_opened', { product: productType });
+    window.open(finalUrl, '_blank');
+    // After redirect: show pending activation message
+    setTimeout(function() {
+      var payBtn = document.getElementById('finalPayBtn');
+      if (payBtn) {
+        payBtn.textContent = '✅ Abrí Hotmart — esperando confirmación';
+        payBtn.disabled = true;
+        payBtn.style.background = 'rgba(52,211,153,.15)';
+        payBtn.style.border = '1px solid rgba(52,211,153,.3)';
+        payBtn.style.color = 'rgba(52,211,153,.9)';
+      }
+      // Show WhatsApp nudge
+      var arjBtn = document.getElementById('finalArjunaBtn');
+      if (arjBtn) arjBtn.textContent = '💬 Ya pagué — hablar con Arjuna para activar';
+    }, 1500);
+  } else {
+    // No checkout URL → fallback to WhatsApp
+    if (window.AF) AF.track('manual_activation_whatsapp_clicked', { product: productType });
+    openWhatsApp();
+  }
+}
+
+function openWhatsApp() {
+  var msg = encodeURIComponent('Hola Arjuna! Quiero activar mi ' + productName + ' ($72 USD/mes).');
+  window.open((window.AF_Support ? AF_Support.whatsappUrl : 'https://wa.link/hteek6') + '?text=' + msg, '_blank');
+  localStorage.setItem('af-subscription-status', 'pending_manual_activation');
+  if (window.AF) AF.track('custom_plan_manual_activation_clicked', { product: productType });
+}
+
+// ── Init payment banner buttons ──────────────────────────────
+var payBannerBtn   = document.getElementById('payBannerBtn');
+var arjunaBannerBtn = document.getElementById('arjunaBannerBtn');
+if (payBannerBtn)    payBannerBtn.onclick    = openPayment;
+if (arjunaBannerBtn) arjunaBannerBtn.onclick = openWhatsApp;
+
+// Hide banner if already paid
+(function() {
+  var status = localStorage.getItem('af-subscription-status');
+  var paid   = localStorage.getItem('af-paid') === '1';
+  if (status === 'active' || paid) {
+    var banner = document.getElementById('paymentBanner');
+    if (banner) banner.style.display = 'none';
+  }
+})();
+
+// Update plan badge
+document.getElementById('planIcon').textContent = isMasa ? '💪' : '⚡';
+document.getElementById('planName').textContent = productName;
+
+// Analytics
+if (window.AF) AF.track('custom_plan_intake_started', { product: productType });
+
+// ── Populate goals for step 1 ─────────────────────────────
+var GOALS_MASA = [
+  { val:'general_mass',  icon:'📈', text:'Ganar masa muscular general', sub:'Aumentar volumen y fuerza en todo el cuerpo' },
+  { val:'legs_glutes',   icon:'🍑', text:'Piernas y glúteos', sub:'Énfasis en tren inferior' },
+  { val:'upper_body',    icon:'💪', text:'Tren superior', sub:'Pecho, espalda, hombros, brazos' },
+  { val:'strength',      icon:'🏋️', text:'Fuerza y volumen', sub:'Levantar más y verme más fuerte' },
+  { val:'feel_stronger', icon:'⚡', text:'Verme más fuerte', sub:'Definición y masa al mismo tiempo' },
+];
+var GOALS_GRASA = [
+  { val:'reduce_fat',    icon:'🔥', text:'Reducir grasa corporal', sub:'Bajar porcentaje graso general' },
+  { val:'belly',         icon:'👀', text:'Mejorar abdomen', sub:'Reducir zona abdominal' },
+  { val:'defined',       icon:'✦',  text:'Verme más definida', sub:'Tonificar y marcar' },
+  { val:'habits',        icon:'🌱', text:'Mejorar hábitos', sub:'Comida, movimiento y constancia' },
+  { val:'feel_lighter',  icon:'💨', text:'Sentirme más ligera', sub:'Energía, peso y cómo me siento' },
+];
+
+var goals = isMasa ? GOALS_MASA : GOALS_GRASA;
+var grid = document.getElementById('goalsGrid');
+goals.forEach(function(g) {
+  var btn = document.createElement('button');
+  btn.className = 'af-option';
+  btn.dataset.val = g.val;
+  btn.onclick = function() { selectOpt(btn, 'step1'); };
+  btn.innerHTML = '<span class="opt-check"></span><span class="opt-icon">' + g.icon + '</span><div><div class="opt-text">' + g.text + '</div><div class="opt-sub">' + g.sub + '</div></div>';
+  grid.appendChild(btn);
+});
+
+// Step 1 title
+document.getElementById('step1Title').textContent = isMasa
+  ? '¿Qué te importa más del aumento de masa?'
+  : '¿Cuál es tu objetivo principal de reducción?';
+
+// ── Option selection ─────────────────────────────────────
+function selectOpt(btn, stepId) {
+  document.querySelectorAll('#' + stepId + ' .af-option').forEach(function(b) { b.classList.remove('sel'); });
+  btn.classList.add('sel');
+  answers['step' + current] = btn.dataset.val;
+  document.getElementById('nextBtn').disabled = false;
+}
+
+function toggleChip(btn) {
+  // Deselect "ninguna" if selecting something else
+  if (btn.dataset.val !== 'ninguna') {
+    document.querySelectorAll('.af-chip[data-val="ninguna"]').forEach(function(c) { c.classList.remove('sel'); });
+  }
+  btn.classList.toggle('sel');
+  // Collect all selected chips
+  var key = 'step' + current;
+  var selected = Array.from(document.querySelectorAll('#step' + current + ' .af-chip.sel')).map(function(c) { return c.dataset.val; });
+  answers[key] = selected.join(',');
+  document.getElementById('nextBtn').disabled = selected.length === 0;
+}
+
+function selectSingleChip(btn, stepId) {
+  document.querySelectorAll('#' + stepId + ' .af-chip').forEach(function(c) { c.classList.remove('sel'); });
+  btn.classList.add('sel');
+  answers['step' + current] = btn.dataset.val;
+  document.getElementById('nextBtn').disabled = false;
+}
+
+// ── Navigation ───────────────────────────────────────────
+function nextStep() {
+  if (current > TOTAL_STEPS) { finish(); return; }
+  current++;
+  showStep(current);
+}
+
+function skipStep() {
+  current++;
+  showStep(current);
+}
+
+function showStep(n) {
+  var STEP_INFO = {
+    1: { title: 'Tu objetivo principal', sub: 'Arju ajustará tu entrenamiento y nutrición según esto.' },
+    2: { title: '¿Dónde entrenas?', sub: 'Esto define qué ejercicios y equipos incluir.' },
+    3: { title: '¿Cuántos días disponibles?', sub: 'Arju organizará tu semana según esto.' },
+    4: { title: '¿Cuál es tu nivel?', sub: 'Para ajustar el nivel de los ejercicios.' },
+    5: { title: '¿Qué equipo tienes?', sub: 'Puedes elegir varios.' },
+    6: { title: '¿Algo que debamos cuidar?', sub: 'Lesiones o molestias que Arju debe tener en cuenta.' },
+    7: { title: '¿Qué se te complica con la comida?', sub: 'Sin presión — Arju adapta el enfoque nutricional.' },
+    8: { title: '¿Cómo prefieres el acompañamiento?', sub: 'Arju adapta cuánto y cómo te guía.' },
+  };
+  var info = STEP_INFO[n];
+  if (info) {
+    var tEl = document.getElementById('stepTitle');
+    var sEl = document.getElementById('stepSub');
+    var lEl = document.getElementById('stepLabel');
+    if (tEl) tEl.textContent = info.title;
+    if (sEl) sEl.textContent = info.sub;
+    if (lEl) lEl.textContent = 'Paso ' + n + ' de ' + TOTAL_STEPS;
+  }
+  document.querySelectorAll('.step').forEach(function(s) { s.classList.remove('active'); });
+  if (n > TOTAL_STEPS) { finish(); return; }
+  var stepEl = document.getElementById('step' + n);
+  if (stepEl) stepEl.classList.add('active');
+  // Progress
+  var pct = Math.round((n / TOTAL_STEPS) * 100);
+  document.getElementById('progFill').style.width = pct + '%';
+  // Reset CTA
+  document.getElementById('nextBtn').disabled = true;
+  // Skip visible for optional steps
+  var optionalSteps = [5, 6, 7];
+  document.getElementById('skipBtn').style.display = optionalSteps.includes(n) ? 'block' : 'none';
+}
+
+// ── Finish ───────────────────────────────────────────────
+function finish() {
+  // Hide CTA
+  document.getElementById('ctaBar').style.display = 'none';
+  // Show final step
+  document.querySelectorAll('.step').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('datosScreen').classList.add('show');
+  document.getElementById('progFill').style.width = '100%';
+  document.getElementById('stepLabel').textContent = '✓ Listo';
+
+  // Save answers
+  var profile = {
+    primary_goal:      answers.step1 || '',
+    training_location: answers.step2 || '',
+    training_days:     answers.step3 || '',
+    training_level:    answers.step4 || '',
+    equipment:         answers.step5 || '',
+    constraints:       answers.step6 || '',
+    nutrition_challenge: answers.step7 || '',
+    coaching_style:    answers.step8 || '',
+    intake_completed:  true,
+    intake_completed_at: new Date().toISOString(),
+    product_type:      productType,
+  };
+
+  Object.entries(profile).forEach(function(_a) {
+    var key = _a[0], val = _a[1];
+    if (val) localStorage.setItem('af-' + key.replace(/_/g,'-'), String(val));
+  });
+  localStorage.setItem('af-custom-plan-intake', JSON.stringify(profile));
+  localStorage.setItem('af-onboarding-completed', '1');
+  localStorage.setItem('af-onboarding-completed-at', new Date().toISOString());
+
+  // Final message
+  var finalMsg = isMasa
+    ? 'Vamos a construir músculo con entrenamiento, comida suficiente y progresión inteligente.'
+    : 'Vamos a reducir grasa con fuerza, comida clara y constancia, sin castigarte.';
+  document.getElementById('finalMsg').textContent = finalMsg;
+  document.getElementById('finalTitle').textContent = isMasa ? '¡Tu plan de masa está listo!' : '¡Tu plan de reducción está listo!';
+
+  if (window.AF) AF.track('custom_plan_intake_completed', { product: productType, goal: answers.step1 });
+  if (window.AF) AF.track('custom_plan_payment_required_viewed', { product: productType });
+
+  // IMPORTANT: Stay in payment_required — do NOT go to dashboard
+  // Bind pay/arjuna buttons on the datos screen
+  var finalPayBtn    = document.getElementById('finalPayBtn');
+  var finalArjunaBtn = document.getElementById('finalArjunaBtn');
+  if (finalPayBtn) finalPayBtn.onclick = function() {
+    if (window.AF_Commerce) window.AF_Commerce.handleCommercialAction(productType);
+    else openPayment();
+  };
+  if (finalArjunaBtn) finalArjunaBtn.onclick = function() {
+    if (window.AF) AF.track('manual_activation_whatsapp_clicked', { product: productType });
+    openWhatsApp();
+  };
+} // close finish()
+
+// Init
+document.getElementById('nextBtn').disabled = true;
+document.getElementById('skipBtn').style.display = 'none';
+
+</script>
+</body>
+</html>

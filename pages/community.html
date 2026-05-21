@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32-v2.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#6D28FF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ArjunaFit">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="af-version" content="mini-beta-day1-war-room-v1">
+<title>Comunidad · ArjunaFit</title>
+<link rel="stylesheet" href="/assets/visual-system.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0c0714;--bg-card:#130d22;--primary:#7c3aed;--pri-glow:rgba(124,58,237,.35);
+  --pri-lite:#c4b5fd;--accent:#ec4899;--text-1:#f1f0f4;--text-2:rgba(240,238,248,.7);
+  --text-3:rgba(240,238,248,.45);--green:rgba(52,211,153,.8);--r:16px;
+  --ease:cubic-bezier(0.34,1.12,0.64,1);--nav:72px;
+}
+html,body{background:var(--bg);color:var(--text-1);font-family:'Outfit',sans-serif;min-height:100dvh;overflow-x:hidden}
+.page{max-width:430px;margin:0 auto;padding:0 0 calc(var(--nav) + 16px)}
+
+/* Header */
+.comm-hero{background:linear-gradient(160deg,rgba(124,58,237,.15) 0%,rgba(236,72,153,.08) 100%);border-bottom:1px solid rgba(255,255,255,.06);padding:28px 20px 24px}
+.back-btn{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-3);text-decoration:none;margin-bottom:18px;background:none;border:none;cursor:pointer;padding:0;font-family:'Outfit',sans-serif}
+.back-btn svg{opacity:.5}
+.comm-badge{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.2);border-radius:20px;font-size:11px;font-weight:700;color:var(--green);margin-bottom:14px;letter-spacing:.04em}
+.comm-hero h1{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+.comm-hero p{font-size:14px;color:var(--text-3);line-height:1.7}
+
+/* Sections */
+.section{padding:20px}
+.section-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:14px}
+
+/* Arjuna message card */
+.arju-card{background:rgba(124,58,237,.08);border:1px solid rgba(196,181,253,.15);border-radius:var(--r);padding:18px;position:relative;overflow:hidden;margin-bottom:16px}
+.arju-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 0%,rgba(124,58,237,.12),transparent 60%);pointer-events:none}
+.arju-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--accent));display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:12px}
+.arju-card h3{font-size:14px;font-weight:700;margin-bottom:8px}
+.arju-card p{font-size:13px;color:var(--text-3);line-height:1.75}
+
+/* Video placeholder */
+.video-placeholder{background:rgba(255,255,255,.03);border:1px dashed rgba(255,255,255,.08);border-radius:14px;padding:28px;text-align:center;margin-top:14px}
+.video-placeholder .vp-icon{font-size:32px;margin-bottom:8px}
+.video-placeholder p{font-size:12px;color:rgba(255,255,255,.3)}
+
+/* Resource cards */
+.resource-grid{display:flex;flex-direction:column;gap:10px}
+.resource-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:16px;cursor:pointer;transition:background .18s,border-color .18s;position:relative;overflow:hidden}
+.resource-card:active{background:rgba(124,58,237,.08);transform:scale(.99)}
+.resource-card.expanded{border-color:rgba(196,181,253,.2)}
+.resource-card .rc-tag{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(196,181,253,.5);margin-bottom:7px}
+.resource-card .rc-title{font-size:14px;font-weight:700;color:var(--text-1);margin-bottom:0}
+.resource-card .rc-body{font-size:13px;color:var(--text-3);line-height:1.7;margin-top:10px;display:none}
+.resource-card.expanded .rc-body{display:block}
+.resource-card .rc-cta{display:inline-block;margin-top:12px;font-size:12px;font-weight:700;color:var(--pri-lite);text-decoration:none}
+.resource-card .rc-arrow{position:absolute;top:16px;right:16px;font-size:16px;color:rgba(255,255,255,.2);transition:transform .2s}
+.resource-card.expanded .rc-arrow{transform:rotate(90deg);color:rgba(196,181,253,.5)}
+
+/* Rules */
+.rules-list{display:flex;flex-direction:column;gap:8px}
+.rule-item{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:rgba(255,255,255,.02);border-radius:12px;font-size:13px;color:var(--text-2)}
+.rule-item .ri-num{width:22px;height:22px;border-radius:50%;background:rgba(124,58,237,.15);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--pri-lite);flex-shrink:0;margin-top:1px}
+
+/* Chat coming soon */
+.coming-soon{background:rgba(255,255,255,.02);border:1px dashed rgba(255,255,255,.08);border-radius:var(--r);padding:20px;text-align:center}
+.coming-soon h3{font-size:15px;font-weight:700;margin-bottom:8px}
+.coming-soon p{font-size:13px;color:var(--text-3);line-height:1.6;margin-bottom:14px}
+.btn-arjuna{display:inline-block;padding:10px 20px;border-radius:12px;background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.25);color:rgba(52,211,153,.8);font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;text-decoration:none}
+
+/* Preview (no access) */
+.preview-overlay{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(8,5,17,.97)}
+.preview-card{max-width:360px;width:100%;text-align:center}
+.preview-card .pi{font-size:52px;margin-bottom:16px}
+.preview-card h2{font-size:22px;font-weight:800;margin-bottom:10px}
+.preview-card p{font-size:14px;color:var(--text-3);line-height:1.7;margin-bottom:22px}
+.btn-unlock{display:block;padding:14px;border-radius:var(--r);background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;font-family:'Outfit',sans-serif;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 6px 24px var(--pri-glow);margin-bottom:10px;cursor:pointer;border:none;width:100%}
+.btn-back{font-size:13px;color:var(--text-3);text-decoration:none;display:block}
+
+/* Nav */
+nav{position:fixed;bottom:calc(12px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:min(calc(100vw - 24px),406px);height:64px;background:rgba(12,7,22,.88);backdrop-filter:blur(40px) saturate(1.8);border:1px solid rgba(196,181,253,.08);border-radius:26px;display:flex;align-items:flex-start;z-index:100;box-shadow:0 12px 40px rgba(0,0,0,.55)}
+.nav-items{width:100%;display:flex;justify-content:space-around;padding-top:9px}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:0 10px;text-decoration:none;background:none;border:none;cursor:pointer;font-family:'Outfit',sans-serif;-webkit-tap-highlight-color:transparent}
+.ni-icon{font-size:20px;line-height:1}
+.ni-label{font-size:10px;font-weight:600;color:rgba(255,255,255,.35);letter-spacing:.03em}
+.nav-item.active .ni-label{color:var(--pri-lite)}
+</style>
+</head>
+<body>
+
+<!-- Preview overlay for users without access (shown by JS) -->
+<div id="previewOverlay" style="display:none" class="preview-overlay">
+  <div class="preview-card">
+    <div class="pi">🤝</div>
+    <h2>Comunidad ArjunaFit</h2>
+    <p id="previewCopy">Este espacio se activa cuando desbloqueas tu reto o plan. Ahí tendrás recursos, apoyo y acompañamiento para no hacer el proceso sola.</p>
+    <button class="btn-unlock" id="previewCta" onclick="handleUnlock()">Desbloquear reto por $32 USD</button>
+    <a href="/pages/dashboard.html" class="btn-back">Volver al inicio</a>
+  </div>
+</div>
+
+<div class="page" id="mainContent" style="display:none">
+
+  <!-- Hero -->
+  <div class="comm-hero">
+    <a href="/pages/dashboard.html" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Inicio
+    </a>
+    <div class="comm-badge">✦ Comunidad gratuita · Activa</div>
+    <h1>Comunidad ArjunaFit</h1>
+    <p>Este espacio existe para recordarte que no tienes que hacer el proceso sola.</p>
+  </div>
+
+  <!-- Arjuna message -->
+  <div class="section">
+    <div class="section-label">Un mensaje de Arjuna</div>
+    <div class="arju-card">
+      <div class="arju-avatar">🧘</div>
+      <h3>Esta comunidad es para sostener, no para juzgar</h3>
+      <p>"Esta comunidad no es para competir ni compararte. Es para ayudarte a volver, resolver dudas y sostener el proceso cuando la motivación baje."</p>
+      <div class="video-placeholder">
+        <div class="vp-icon">▶️</div>
+        <p>Video de bienvenida — próximamente</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resources -->
+  <div class="section">
+    <div class="section-label">Recursos para tu proceso</div>
+    <div class="resource-grid" id="resourceGrid"></div>
+  </div>
+
+  <!-- Rules -->
+  <div class="section">
+    <div class="section-label">Cómo cuidamos este espacio</div>
+    <div class="rules-list">
+      <div class="rule-item"><div class="ri-num">1</div><div>Cero burlas o presión agresiva.</div></div>
+      <div class="rule-item"><div class="ri-num">2</div><div>No comparamos cuerpos.</div></div>
+      <div class="rule-item"><div class="ri-num">3</div><div>No damos consejos médicos sin fundamento.</div></div>
+      <div class="rule-item"><div class="ri-num">4</div><div>Compartimos avances reales, no solo perfección.</div></div>
+      <div class="rule-item"><div class="ri-num">5</div><div>Si un día no pudo ser, puedes volver.</div></div>
+      <div class="rule-item"><div class="ri-num">6</div><div>El respeto va primero, siempre.</div></div>
+    </div>
+    <p style="font-size:12px;color:rgba(255,255,255,.25);margin-top:12px;text-align:center">Este espacio es para construir, no para juzgar.</p>
+  </div>
+
+  <!-- Chat / group coming soon -->
+  <div class="section">
+    <div class="coming-soon">
+      <h3>💬 Grupo y conversaciones</h3>
+      <p>Estamos preparando un espacio para compartir dudas, avances y apoyo sin ruido ni presión.</p>
+      <a id="chatWaLink" href="#" class="btn-arjuna" style="display:none">Hablar con Arjuna →</a>
+      <p id="chatPending" style="font-size:12px;color:rgba(255,255,255,.25)">Próximamente disponible</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-items">
+    <a href="/pages/dashboard.html" class="nav-item"><div class="ni-icon">🏠</div><div class="ni-label">Inicio</div></a>
+    <a href="/pages/nutrition.html" class="nav-item"><div class="ni-icon">🥗</div><div class="ni-label">Nutrición</div></a>
+    <a href="/pages/workout.html" class="nav-item"><div class="ni-icon">🏋️</div><div class="ni-label">Entrena</div></a>
+    <a href="/pages/community.html" class="nav-item active"><div class="ni-icon">🤝</div><div class="ni-label">Comunidad</div></a>
+    <a href="/pages/profile.html" class="nav-item"><div class="ni-icon">👤</div><div class="ni-label">Perfil</div></a>
+  </div>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/js/core/auth-bootstrap.js"></script>
+<script src="/js/core/ops-config.js"></script>
+<script src="/js/core/analytics.js"></script>
+<script src="/js/core/commerce-config.js"></script>
+<script>
+'use strict';
+
+// ── Community resources ───────────────────────────────────────────
+var RESOURCES = [
+  { id:'start_simple',  tag:'Inicio',       title:'Empieza simple',
+    body:'No necesitas cambiar todo en un día. Una comida registrada, un calentamiento o una receta simple. Una acción pequeña mantiene vivo el proceso.',
+    cta:'Volver a mi día', route:'/pages/dashboard.html',
+    products:['challenge_glutes','challenge_belly','custom_muscle_gain','custom_fat_loss'] },
+  { id:'easy_meals',    tag:'Nutrición',    title:'Comidas que salvan el día',
+    body:'Huevos con arepa · Yogur con banano · Pollo con arroz · Atún con arepa · Tortilla con vegetales · Lentejas con huevo.\nSimple, real, repetible.',
+    cta:'Ver recetario', route:'/pages/nutrition.html?tab=recetario',
+    products:['challenge_belly','custom_fat_loss'] },
+  { id:'protein_first', tag:'Nutrición',    title:'Comer también construye músculo',
+    body:'Para ganar masa, el entrenamiento importa, pero la comida y recuperación también. Proteína en cada comida principal.',
+    cta:'Ver recetario', route:'/pages/nutrition.html?tab=recetario',
+    products:['challenge_glutes','custom_muscle_gain'] },
+  { id:'come_back',     tag:'Regreso',      title:'Si te perdiste unos días',
+    body:'No empezamos de cero. Retomamos desde donde estás. Registra una comida, haz un calentamiento o cierra tu día. Volver también cuenta.',
+    cta:'Continuar mi día', route:'/pages/dashboard.html',
+    products:['challenge_glutes','challenge_belly','custom_muscle_gain','custom_fat_loss'] },
+  { id:'technique',     tag:'Entrenamiento',title:'Técnica antes que ego',
+    body:'Subir peso sirve cuando puedes mantener control. Repetir con buena técnica — sin importar el peso — también es avanzar.',
+    cta:'Ver entreno', route:'/pages/workout.html',
+    products:['challenge_glutes','custom_muscle_gain'] },
+  { id:'no_ganas',      tag:'Mindset',      title:'Qué hacer si no tienes ganas',
+    body:'Los días sin ganas también forman parte del proceso. Una acción pequeña — una comida, cinco minutos de movimiento — mantiene el hábito vivo.',
+    cta:'Empezar con poco', route:'/pages/dashboard.html',
+    products:['challenge_glutes','challenge_belly','custom_muscle_gain','custom_fat_loss'] },
+  { id:'glutes_feel',   tag:'Glúteos',      title:'Cómo sentir mejor el glúteo',
+    body:'Antes de subir peso, buscamos conexión y técnica. Pausa en la contracción, control en la bajada. Sentir el músculo importa más que el número.',
+    cta:'Ver entreno', route:'/pages/workout.html',
+    products:['challenge_glutes'] },
+  { id:'belly_no_guilt',tag:'Abdomen',      title:'Bajar abdomen sin castigarte',
+    body:'El abdomen cambia con entrenamiento, nutrición y tiempo. No buscamos castigo ni extremos. Buscamos hábitos que puedas repetir.',
+    cta:'Continuar', route:'/pages/dashboard.html',
+    products:['challenge_belly','custom_fat_loss'] },
+  { id:'log_food',      tag:'Nutrición',    title:'Registrar comida sin obsesionarte',
+    body:'Registrar es para tener dirección, no para juzgarte. Una comida registrada es información. Úsala sin presión.',
+    cta:'Registrar comida', route:'/pages/nutrition.html',
+    products:['challenge_glutes','challenge_belly','custom_muscle_gain','custom_fat_loss'] },
+];
+
+// ── Check access ─────────────────────────────────────────────────
+var productType = localStorage.getItem('af-product-type') || '';
+var paid        = localStorage.getItem('af-paid') === '1';
+var status      = localStorage.getItem('af-subscription-status') || '';
+var tipo        = localStorage.getItem('af-product-tipo') || '';
+
+var hasCommunity = paid || status === 'active';
+
+// Also check via Supabase async
+(async function checkCommunity() {
+  try {
+    var sb = window.supabase ? window.supabase.createClient(
+      'https://egswsqymkxmbtcpnozcq.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM'
+    ) : null;
+    if (!sb) return;
+    var { data: { session } } = await sb.auth.getSession();
+    if (!session?.user?.id) return;
+    var { data } = await sb
+      .from('community_memberships')
+      .select('status')
+      .eq('user_id', session.user.id)
+      .eq('community_id', 'free_arjunafit_community')
+      .eq('status', 'active')
+      .maybeSingle();
+    if (data) {
+      hasCommunity = true;
+      showCommunity();
+    }
+  } catch(e) {}
+})();
+
+function showCommunity() {
+  document.getElementById('previewOverlay').style.display = 'none';
+  document.getElementById('mainContent').style.display = 'block';
+  renderResources();
+  if (window.AF) AF.track('community_opened', { product: productType, status: 'active' });
+}
+
+function showPreview() {
+  document.getElementById('previewOverlay').style.display = 'flex';
+  document.getElementById('mainContent').style.display = 'none';
+  // Adjust CTA based on product state
+  var cta = document.getElementById('previewCta');
+  var copy = document.getElementById('previewCopy');
+  if (tipo === 'plan') {
+    cta.textContent = 'Activar plan personalizado';
+    copy.textContent = 'La comunidad se activa cuando confirmas tu plan personalizado ($72 USD/mes).';
+  } else {
+    cta.textContent = 'Desbloquear reto por $32 USD';
+    copy.textContent = 'Este espacio se activa cuando desbloqueas tu reto completo. Ahí tendrás recursos, apoyo y acompañamiento para no hacer el proceso sola.';
+  }
+  if (window.AF) AF.track('community_access_denied', { product: productType });
+}
+
+function handleUnlock() {
+  if (window.AF_Commerce) window.AF_Commerce.handleCommercialAction(productType);
+}
+
+// ── Render resources ─────────────────────────────────────────────
+function renderResources() {
+  var grid = document.getElementById('resourceGrid');
+  if (!grid) return;
+  // Show resources relevant to this product (or all if no product)
+  var filtered = RESOURCES.filter(function(r) {
+    return !productType || r.products.includes(productType) || !r.products.length;
+  });
+  // Max 6 to avoid overwhelming
+  filtered = filtered.slice(0, 6);
+  grid.innerHTML = filtered.map(function(r) {
+    return '<div class="resource-card" id="rc-' + r.id + '" onclick="toggleResource(\'' + r.id + '\')">' +
+      '<div class="rc-tag">' + r.tag + '</div>' +
+      '<div class="rc-title">' + r.title + '</div>' +
+      '<div class="rc-arrow">›</div>' +
+      '<div class="rc-body">' +
+        '<p>' + r.body.replace(/\n/g,'<br>') + '</p>' +
+        '<a href="' + r.route + '" class="rc-cta" onclick="if(window.AF)AF.track(\'community_resource_clicked\',{id:\'' + r.id + '\'})">' + r.cta + ' →</a>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  // WhatsApp for chat section
+  var WA = window.AF_Support ? AF_Support.whatsappNumber : '573209497919';
+  if (WA && WA !== '573209497919') {
+    document.getElementById('chatWaLink').href = 'https://wa.me/' + WA;
+    document.getElementById('chatWaLink').style.display = 'inline-block';
+    document.getElementById('chatPending').style.display = 'none';
+  }
+}
+
+function toggleResource(id) {
+  var card = document.getElementById('rc-' + id);
+  if (!card) return;
+  var wasExpanded = card.classList.contains('expanded');
+  document.querySelectorAll('.resource-card').forEach(function(c) { c.classList.remove('expanded'); });
+  if (!wasExpanded) {
+    card.classList.add('expanded');
+    if (window.AF) AF.track('community_resource_clicked', { resource_id: id, product: productType });
+  }
+}
+
+// ── Init ─────────────────────────────────────────────────────────
+if (hasCommunity) {
+  showCommunity();
+} else {
+  showPreview();
+}
+
+if (window.AF) AF.track('community_card_viewed', { product: productType, has_access: hasCommunity });
+</script>
+</body>
+</html>

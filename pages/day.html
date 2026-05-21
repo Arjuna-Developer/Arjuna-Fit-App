@@ -1,0 +1,1874 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0B0614" />
+  <title>Entrenamiento — ArjunaFit</title>
+  <link rel="manifest" href="/manifest.json" />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ══════════════════════════════════════════
+       ARJUNAFIT — DESIGN SYSTEM (inline, self-contained)
+       ══════════════════════════════════════════ */
+    :root {
+      --bg:           #0B0614;
+      --bg2:          #0e0919;
+      --surface:      #130d1e;
+      --surface2:     #1a1228;
+      --surface3:     #201530;
+      --border:       rgba(109,40,255,0.18);
+      --border2:      rgba(255,255,255,0.07);
+      --primary:      #6D28FF;
+      --primary-glow: rgba(109,40,255,0.28);
+      --primary-dim:  rgba(109,40,255,0.12);
+      --pink:         #D946EF;
+      --pink-dim:     rgba(217,70,239,0.12);
+      --gold:         #f59e0b;
+      --gold-dim:     rgba(245,158,11,0.12);
+      --green:        #10b981;
+      --green-dim:    rgba(16,185,129,0.12);
+      --red:          #ef4444;
+      --text:         #f1f5f9;
+      --text2:        #cbd5e1;
+      --text3:        #64748b;
+      --radius:       18px;
+      --radius-sm:    12px;
+      --radius-xs:    8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    html { height: -webkit-fill-available; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      max-width: 430px;
+      margin: 0 auto;
+      padding-bottom: 100px;
+      overscroll-behavior-y: none;
+    }
+
+    /* ── HEADER ── */
+    .page-header {
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      background: rgba(11, 6, 20, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: env(safe-area-inset-top, 0) 0 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+    }
+    .back-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 20px;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .back-btn:active { background: var(--surface2); }
+    .header-text { flex: 1; min-width: 0; }
+    .header-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .header-sub { font-size: 12px; color: var(--text3); margin-top: 1px; }
+
+    /* ── LOADING ── */
+    .loading-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      gap: 16px;
+      padding: 40px;
+    }
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border: 3px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── ERROR ── */
+    .error-screen {
+      margin: 40px 20px;
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.3);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+    }
+    .error-icon { font-size: 40px; margin-bottom: 12px; }
+    .error-msg { font-size: 14px; color: var(--text2); line-height: 1.6; margin-bottom: 16px; }
+    .btn-retry {
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      background: var(--primary);
+      color: white;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* ── REST DAY ── */
+    .rest-day-card {
+      margin: 32px 20px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 24px;
+      text-align: center;
+    }
+    .rest-emoji { font-size: 72px; margin-bottom: 16px; display: block; }
+    .rest-day-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .rest-day-msg { font-size: 14px; color: var(--text3); line-height: 1.7; margin-bottom: 24px; }
+    .btn-back-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: var(--radius-sm);
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* ── ALREADY DONE ── */
+    .done-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: var(--green-dim);
+      border: 1px solid rgba(16,185,129,0.35);
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    /* ── HERO WORKOUT CARD ── */
+    .workout-hero {
+      margin: 20px 20px 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .hero-gradient {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--pink) 100%);
+      padding: 28px 24px 24px;
+      text-align: center;
+      position: relative;
+    }
+    .hero-gradient::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 30%, rgba(255,255,255,0.1), transparent 60%);
+    }
+    .hero-emoji { font-size: 60px; margin-bottom: 12px; position: relative; }
+    .hero-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 6px;
+      position: relative;
+    }
+    .hero-msg { font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.5; position: relative; }
+    .hero-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 14px;
+      position: relative;
+    }
+    .hero-tag {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── PROGRESS BAR ── */
+    .workout-progress {
+      padding: 14px 20px 0;
+    }
+    .progress-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .progress-label { font-size: 12px; color: var(--text3); font-weight: 500; }
+    .progress-count { font-size: 12px; color: var(--text2); font-weight: 600; }
+    .progress-bar-bg {
+      height: 5px;
+      background: var(--surface2);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--pink));
+      border-radius: 10px;
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      min-width: 0;
+    }
+
+    /* ── PHASES ── */
+    .phase-tabs {
+      display: flex;
+      gap: 8px;
+      padding: 16px 20px 0;
+    }
+    .phase-tab {
+      flex: 1;
+      padding: 10px 6px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text3);
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+    .phase-tab .phase-icon { font-size: 18px; }
+    .phase-tab.active {
+      background: var(--primary-dim);
+      border-color: var(--primary);
+      color: var(--text);
+    }
+    .phase-tab.done-tab {
+      background: var(--green-dim);
+      border-color: rgba(16,185,129,0.4);
+      color: var(--green);
+    }
+
+    /* ── SECTION ── */
+    .section { padding: 20px 20px 0; }
+    .section-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-note {
+      font-size: 12px;
+      color: var(--text3);
+      background: var(--surface2);
+      border-radius: var(--radius-xs);
+      padding: 8px 12px;
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    /* ── METHOD CARD ── */
+    .method-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .method-header {
+      background: var(--surface2);
+      padding: 14px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .method-phases {
+      display: grid;
+      grid-template-columns: 1fr 24px 1fr;
+      gap: 0;
+      align-items: center;
+      padding: 16px;
+    }
+    .method-phase {
+      background: var(--surface2);
+      border-radius: var(--radius-sm);
+      padding: 14px 10px;
+      text-align: center;
+    }
+    .method-phase-num {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .method-phase-label { font-size: 11px; color: var(--text3); margin-top: 3px; }
+    .method-arrow { text-align: center; color: var(--text3); font-size: 18px; }
+    .method-rest-note {
+      padding: 0 16px 16px;
+      font-size: 12px;
+      color: var(--text3);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* ── WARMUP ITEMS ── */
+    .warmup-list { display: flex; flex-direction: column; gap: 0; }
+    .warmup-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border2);
+    }
+    .warmup-item:last-child { border-bottom: none; }
+    .warmup-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 13px;
+      background: var(--primary-dim);
+      border: 1px solid rgba(109,40,255,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .warmup-name { font-weight: 600; font-size: 14px; line-height: 1.3; }
+    .warmup-detail { font-size: 12px; color: var(--text3); margin-top: 3px; }
+    .warmup-done-btn {
+      margin-left: auto;
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      background: var(--surface2);
+      color: var(--text3);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+    .warmup-done-btn.checked {
+      background: var(--green-dim);
+      border-color: rgba(16,185,129,0.4);
+      color: var(--green);
+    }
+
+    /* ── EXERCISES ── */
+    .exercise-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 14px;
+      transition: border-color 0.25s;
+    }
+    .exercise-card.completed { border-color: rgba(16,185,129,0.4); }
+
+    .ex-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px 16px 0;
+    }
+    .ex-num {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--primary-dim);
+      border: 1px solid rgba(109,40,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .ex-num.done-num {
+      background: var(--green-dim);
+      border-color: rgba(16,185,129,0.4);
+      color: var(--green);
+    }
+    .ex-info { flex: 1; min-width: 0; }
+    .ex-name { font-weight: 700; font-size: 15px; line-height: 1.3; margin-bottom: 4px; }
+    .ex-emg { font-size: 12px; color: var(--primary); font-weight: 600; }
+    .ex-spec { font-size: 12px; color: var(--text3); margin-top: 2px; }
+
+    /* Video placeholder */
+    .ex-video-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(109,40,255,0.15);
+      border: 1px solid rgba(109,40,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      cursor: pointer;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    /* Sets section */
+    .sets-section { padding: 14px 16px; }
+
+    .sets-group { margin-bottom: 12px; }
+    .sets-group-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .sets-group-label.approx { color: var(--gold); }
+    .sets-group-label.effective { color: var(--primary); }
+    .sets-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .set-btn {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      border: 2px solid;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      transition: all 0.15s;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .set-btn:active { transform: scale(0.9); }
+    .set-btn .set-num {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .set-btn .set-sub { font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* Approx sets */
+    .set-btn.approx {
+      border-color: rgba(245,158,11,0.25);
+      background: rgba(245,158,11,0.06);
+      color: rgba(245,158,11,0.5);
+    }
+    .set-btn.approx.checked {
+      border-color: var(--gold);
+      background: rgba(245,158,11,0.18);
+      color: var(--gold);
+    }
+    /* Effective sets */
+    .set-btn.effective {
+      border-color: rgba(109,40,255,0.25);
+      background: rgba(109,40,255,0.06);
+      color: rgba(109,40,255,0.5);
+    }
+    .set-btn.effective.checked {
+      border-color: var(--primary);
+      background: rgba(109,40,255,0.22);
+      color: var(--text);
+    }
+
+    .rest-hint {
+      font-size: 11px;
+      color: var(--text3);
+      margin-top: 6px;
+    }
+
+    /* Tip collapse */
+    .ex-tips {
+      margin: 0 16px 16px;
+      background: rgba(109,40,255,0.07);
+      border: 1px solid rgba(109,40,255,0.18);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+    }
+    .tip-ok { color: #4ade80; font-size: 13px; margin-bottom: 6px; line-height: 1.4; }
+    .tip-err { color: #f87171; font-size: 13px; line-height: 1.4; }
+    .tip-bullets { margin-top: 8px; }
+    .tip-bullet {
+      font-size: 12px;
+      color: var(--text3);
+      padding: 3px 0;
+      padding-left: 14px;
+      position: relative;
+    }
+    .tip-bullet::before {
+      content: '·';
+      position: absolute;
+      left: 4px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* ── REST TIMER OVERLAY ── */
+    .rest-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(11, 6, 20, 0.97);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 32px;
+    }
+    .rest-overlay.show { display: flex; }
+
+    .rest-exercise-name {
+      font-size: 13px;
+      color: var(--text3);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .rest-heading {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+    .rest-circle {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 4px solid var(--primary-glow);
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      position: relative;
+    }
+    .rest-circle::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: conic-gradient(var(--primary) var(--progress, 0%), transparent 0%);
+      z-index: -1;
+    }
+    .rest-timer-num {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 80px;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1;
+    }
+    .rest-timer-label { font-size: 13px; color: var(--text3); }
+    .rest-next-info {
+      font-size: 14px;
+      color: var(--text2);
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+    .rest-actions { display: flex; gap: 12px; }
+    .btn-skip-rest {
+      padding: 14px 32px;
+      border-radius: var(--radius-sm);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-add-rest {
+      padding: 14px 20px;
+      border-radius: var(--radius-sm);
+      background: var(--primary-dim);
+      border: 1px solid rgba(109,40,255,0.3);
+      color: var(--primary);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* ── COMPLETE SCREEN ── */
+    .complete-screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 24px 120px;
+      text-align: center;
+    }
+    .complete-screen.show { display: flex; }
+    .complete-ring {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: var(--green-dim);
+      border: 3px solid rgba(16,185,129,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 56px;
+      margin-bottom: 24px;
+    }
+    .complete-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .complete-msg {
+      font-size: 14px;
+      color: var(--text3);
+      line-height: 1.7;
+      max-width: 280px;
+      margin-bottom: 32px;
+    }
+    .complete-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 100%;
+      margin-bottom: 32px;
+    }
+    .stat-box {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 8px;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .stat-label { font-size: 11px; color: var(--text3); margin-top: 3px; }
+    .btn-home {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 16px;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, var(--primary), var(--pink));
+      color: white;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+    }
+
+    /* ── BOTTOM BAR ── */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 430px;
+      padding: 12px 20px calc(12px + env(safe-area-inset-bottom, 0px));
+      background: rgba(11, 6, 20, 0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+      z-index: 89;
+    }
+    .btn-complete {
+      width: 100%;
+      padding: 16px;
+      border-radius: var(--radius);
+      border: none;
+      background: linear-gradient(135deg, var(--primary), var(--pink));
+      color: white;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+      letter-spacing: 0.3px;
+    }
+    .btn-complete:active { transform: scale(0.98); opacity: 0.88; }
+    .btn-complete:disabled {
+      background: var(--surface2);
+      color: var(--text3);
+      cursor: not-allowed;
+    }
+    .complete-hint {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text3);
+      margin-top: 6px;
+    }
+
+    /* ── UTILITIES ── */
+    .hidden { display: none !important; }
+    .card-base {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <div class="header-inner">
+      <a href="/pages/dashboard.html" class="back-btn">&#8592;</a>
+      <div class="header-text">
+        <div class="header-title" id="headerTitle">Entrenamiento</div>
+        <div class="header-sub" id="headerSub">Cargando...</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <div id="mainContent">
+    <div class="loading-screen">
+      <div class="spinner"></div>
+      <div style="color:var(--text3);font-size:13px;font-weight:500">Preparando tu sesión...</div>
+    </div>
+  </div>
+
+  <!-- COMPLETE SCREEN (hidden by default) -->
+  <div class="complete-screen" id="completeScreen"></div>
+
+  <!-- REST TIMER OVERLAY -->
+  <div class="rest-overlay" id="restOverlay">
+    <div class="rest-exercise-name" id="restExName"></div>
+    <div class="rest-heading">⏸ Descansa</div>
+    <div class="rest-circle" id="restCircle">
+      <div class="rest-timer-num" id="restTimerNum">90</div>
+      <div class="rest-timer-label">segundos</div>
+    </div>
+    <div class="rest-next-info" id="restNextInfo">Prepara la siguiente serie</div>
+    <div class="rest-actions">
+      <button class="btn-skip-rest" onclick="skipRest()">Saltar →</button>
+      <button class="btn-add-rest" onclick="addRestTime(30)">+30s</button>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR (hidden until workout loads) -->
+  <div class="bottom-bar hidden" id="bottomBar">
+    <button class="btn-complete" id="btnComplete" onclick="completeWorkout()">
+      ✅ Completar entrenamiento
+    </button>
+    <div class="complete-hint" id="completeHint"></div>
+  </div>
+
+  <!-- ════════════════════════════════════════════
+       SUPABASE + APP INIT
+       ════════════════════════════════════════════ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="/js/supabase-client.js"></script><!-- defines window.sb -->
+
+  <script>
+  /* ══════════════════════════════════════════════
+     ArjunaFit — day.html  v3  (rebuilt 2026)
+     ══════════════════════════════════════════════ */
+
+  // ── State ──────────────────────────────────────
+  let AF = {
+    profile: null,
+    dayInfo: null,
+    completedSets: {},   // { 'ex-0-approx-0': true, 'ex-0-eff-1': true, ... }
+    warmupDone: {},
+    restTimer: null,
+    restTotal: 0,
+    restRemaining: 0,
+    userId: null,
+  };
+
+  // ── Init ───────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', async () => {
+    try {
+      // Auth guard
+      if (typeof sb === 'undefined') {
+        throw new Error('Supabase client not loaded. Verifica /js/supabase-client.js');
+      }
+
+      const { data: { session } } = await sb.auth.getSession();
+      if (!session) {
+        window.location.href = '/index.html';
+        return;
+      }
+      AF.userId = session.user.id;
+
+      // Load profile
+      const { data: profile, error: pErr } = await sb
+        .from('profiles')
+        .select('*')
+        .eq('id', AF.userId)
+        .maybeSingle();
+
+      if (pErr) throw pErr;
+      AF.profile = profile || {};
+
+      // Check today's log
+      const today = new Date().toISOString().split('T')[0];
+      const { data: todayLog } = await sb
+        .from('day_logs')
+        .select('id, day_num')
+        .eq('user_id', AF.userId)
+        .eq('log_date', today)
+        .maybeSingle();
+
+      renderPage(!!todayLog);
+
+    } catch (err) {
+      console.error('[day.html] Init error:', err);
+      showError(err.message || 'Error cargando el entrenamiento.');
+    }
+  });
+
+  // ── Render page ────────────────────────────────
+  function renderPage(alreadyDone) {
+    const reto   = AF.profile.reto   || 'gluteos';
+    const dayNum = AF.profile.workout_day_num || 1;
+
+    AF.dayInfo = getDayInfo(reto, dayNum);
+    const d = AF.dayInfo;
+
+    // Update header
+    setEl('headerTitle', d.name);
+    setEl('headerSub', `Semana ${d.weekNum} · Día ${d.dayInWeek} de ${d.daysPerWeek}`);
+
+    const main = document.getElementById('mainContent');
+
+    if (d.isRest) {
+      main.innerHTML = buildRestDay();
+      return;
+    }
+
+    if (alreadyDone) {
+      main.innerHTML = buildAlreadyDone(d);
+      return;
+    }
+
+    main.innerHTML = buildWorkout(d);
+    document.getElementById('bottomBar').classList.remove('hidden');
+    attachListeners();
+    updateProgress();
+  }
+
+  // ── Build workout HTML ─────────────────────────
+  function buildWorkout(d) {
+    const repRange = (AF.profile.peso || 60) >= 70 ? '8-10' : '10-12';
+    const restSec  = AF.profile.descanso_segundos || 90;
+    const location = AF.profile.gym_or_home === 'gym' ? 'gym' : 'casa';
+    const exercises = d.exercises[location] || d.exercises.gym || d.exercises.casa || [];
+
+    return `
+      <!-- Hero -->
+      <div class="workout-hero">
+        <div class="hero-gradient">
+          <div class="hero-emoji">${d.emoji}</div>
+          <div class="hero-title">${d.name}</div>
+          <div class="hero-msg">${d.msg}</div>
+          <div class="hero-tags">
+            <span class="hero-tag">⏱ ~${d.duration} min</span>
+            <span class="hero-tag">${exercises.length} ejercicios</span>
+            <span class="hero-tag">⚡ ${d.intensity || 'RPE 7'}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress -->
+      <div class="workout-progress">
+        <div class="progress-row">
+          <span class="progress-label">Progreso de sesión</span>
+          <span class="progress-count" id="progressCount">0 / ${exercises.length}</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- Phase tabs -->
+      <div class="phase-tabs">
+        <div class="phase-tab active" id="tabWarmup" onclick="scrollToPhase('warmupSection')">
+          <span class="phase-icon">🔥</span>
+          <span>Calentamiento</span>
+        </div>
+        <div class="phase-tab" id="tabTrain" onclick="scrollToPhase('trainSection')">
+          <span class="phase-icon">💪</span>
+          <span>Entrena</span>
+        </div>
+      </div>
+
+      <!-- Method card -->
+      <div class="section">
+        <div class="section-title">📋 Método ArjunaFit</div>
+        <div class="method-card">
+          <div class="method-header">Estructura por ejercicio</div>
+          <div class="method-phases">
+            <div class="method-phase">
+              <div class="method-phase-num" style="color:var(--gold)">20</div>
+              <div class="method-phase-label">reps · Peso ligero<br>Calentamiento</div>
+            </div>
+            <div class="method-arrow">→</div>
+            <div class="method-phase">
+              <div class="method-phase-num" style="color:var(--primary)">${repRange}</div>
+              <div class="method-phase-label">reps · Peso efectivo<br>Músculo activo</div>
+            </div>
+          </div>
+          <div class="method-rest-note">
+            🔄 Aproximaciones = activan el músculo sin fatiga<br>
+            🔥 Series efectivas = aquí crece el músculo
+          </div>
+        </div>
+      </div>
+
+      <!-- Warmup section -->
+      <div class="section" id="warmupSection">
+        <div class="section-title">🔥 Calentamiento</div>
+        <div class="section-note">12-15 minutos. No lo saltes — protege tus articulaciones.</div>
+        <div class="card-base" style="padding:0 16px">
+          <div class="warmup-list">
+            ${buildWarmupItems(d.warmup)}
+          </div>
+        </div>
+      </div>
+
+      <!-- Training section -->
+      <div class="section" id="trainSection">
+        <div class="section-title">💪 Entrenamiento</div>
+        <div class="section-note">Toca cada serie para marcarla. El descanso empieza automáticamente.</div>
+        ${exercises.map((ex, i) => buildExerciseCard(ex, i, repRange, restSec)).join('')}
+      </div>
+
+      <div style="height:20px"></div>
+    `;
+  }
+
+  // ── Warmup items ───────────────────────────────
+  function buildWarmupItems(items) {
+    if (!items || !items.length) {
+      items = [
+        { icon:'🚶', name:'Caminata activa o trote suave', detail:'5 minutos · Ritmo conversacional' },
+        { icon:'⭕', name:'Movilidad de cadera', detail:'10 repeticiones cada lado · Círculos amplios' },
+        { icon:'🦵', name:'Sentadilla sin peso', detail:'2 × 15 reps · Rango completo' },
+        { icon:'🤸', name:'Activación de glúteos', detail:'Clamshell 2 × 20 cada lado' },
+      ];
+    }
+    return items.map((w, i) => `
+      <div class="warmup-item">
+        <div class="warmup-icon">${w.icon || '🏃'}</div>
+        <div style="flex:1;min-width:0">
+          <div class="warmup-name">${w.name}</div>
+          <div class="warmup-detail">${w.detail}</div>
+        </div>
+        <button class="warmup-done-btn" id="warmup-${i}" onclick="toggleWarmup(${i})" aria-label="Marcar listo">✓</button>
+      </div>
+    `).join('');
+  }
+
+  // ── Exercise card ──────────────────────────────
+  function buildExerciseCard(ex, idx, repRange, restSec) {
+    const approxSets = 2;
+    const effSets    = ex.sets || 4;
+
+    const approxBtns = Array.from({ length: approxSets }, (_, s) => `
+      <button class="set-btn approx" 
+              id="ex-${idx}-approx-${s}"
+              data-ex="${idx}" data-type="approx" data-set="${s}" data-rest="45"
+              onclick="toggleSet(this)">
+        <span class="set-num">${s + 1}</span>
+        <span class="set-sub">aprox</span>
+      </button>
+    `).join('');
+
+    const effBtns = Array.from({ length: effSets }, (_, s) => `
+      <button class="set-btn effective"
+              id="ex-${idx}-eff-${s}"
+              data-ex="${idx}" data-type="eff" data-set="${s}" data-rest="${restSec}"
+              data-ex-name="${ex.name}"
+              onclick="toggleSet(this)">
+        <span class="set-num">${s + 1}</span>
+        <span class="set-sub">efec</span>
+      </button>
+    `).join('');
+
+    return `
+      <div class="exercise-card" id="ex-card-${idx}">
+        <div class="ex-header">
+          <div class="ex-num" id="ex-num-${idx}">${idx + 1}</div>
+          <div class="ex-info">
+            <div class="ex-name">${ex.name}</div>
+            <div class="ex-emg">${ex.emg || ''}</div>
+            <div class="ex-spec">${effSets} series × ${repRange} reps · ${restSec}s descanso</div>
+          </div>
+          <div class="ex-video-btn" onclick="showVideo('${ex.driveId || ''}', '${ex.name}')" title="Ver video">▶</div>
+        </div>
+
+        <div class="sets-section">
+          <div class="sets-group">
+            <div class="sets-group-label approx">🔄 Aproximaciones (calentamiento)</div>
+            <div class="sets-row">${approxBtns}</div>
+          </div>
+          <div class="sets-group">
+            <div class="sets-group-label effective">🔥 Series efectivas</div>
+            <div class="sets-row">${effBtns}</div>
+            <div class="rest-hint">⏱ ${restSec}s de descanso entre series</div>
+          </div>
+        </div>
+
+        ${ex.ok ? `
+        <div class="ex-tips">
+          <div class="tip-ok">✅ ${ex.ok}</div>
+          ${ex.err ? `<div class="tip-err">⚠️ ${ex.err}</div>` : ''}
+          ${ex.tips && ex.tips.length ? `
+            <div class="tip-bullets">
+              ${ex.tips.map(t => `<div class="tip-bullet">${t}</div>`).join('')}
+            </div>
+          ` : ''}
+        </div>` : ''}
+      </div>
+    `;
+  }
+
+  // ── Rest day ───────────────────────────────────
+  function buildRestDay() {
+    return `
+      <div class="rest-day-card">
+        <span class="rest-emoji">😴</span>
+        <div class="rest-day-title">Día de descanso</div>
+        <div class="rest-day-msg">
+          El músculo crece cuando descansas.<br>
+          Hidratación, sueño y movilidad suave son bienvenidos hoy.<br><br>
+          <strong>El próximo entrenamiento es mañana.</strong>
+        </div>
+        <a href="/pages/dashboard.html" class="btn-back-home">🏠 Volver al inicio</a>
+      </div>
+    `;
+  }
+
+  // ── Already done ───────────────────────────────
+  function buildAlreadyDone(d) {
+    return `
+      <div style="padding:32px 20px">
+        <div class="done-badge">✓ Completado hoy</div>
+        <div style="font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;margin-bottom:8px">
+          ¡${d.emoji} Sesión completada!
+        </div>
+        <div style="font-size:14px;color:var(--text3);line-height:1.7;margin-bottom:28px">
+          Ya completaste tu entrenamiento de hoy.<br>
+          El músculo crece en el descanso. 💪
+        </div>
+        <a href="/pages/dashboard.html" class="btn-back-home" style="display:inline-flex">
+          🏠 Volver al inicio
+        </a>
+      </div>
+    `;
+  }
+
+  // ── Attach listeners ───────────────────────────
+  function attachListeners() {
+    // nothing extra needed — onclick attrs handle everything
+  }
+
+  // ── Toggle set ─────────────────────────────────
+  function toggleSet(btn) {
+    const key = btn.id;
+    const isChecked = btn.classList.contains('checked');
+
+    if (!isChecked) {
+      btn.classList.add('checked');
+      AF.completedSets[key] = true;
+
+      // Auto rest timer for effective sets
+      if (btn.dataset.type === 'eff') {
+        const restSec = parseInt(btn.dataset.rest) || 90;
+        const exName  = btn.dataset.exName || '';
+        startRest(restSec, exName, getNextSetInfo(btn));
+      }
+
+      // Check if full exercise is done
+      checkExerciseDone(parseInt(btn.dataset.ex));
+
+    } else {
+      btn.classList.remove('checked');
+      delete AF.completedSets[key];
+      checkExerciseDone(parseInt(btn.dataset.ex));
+    }
+
+    updateProgress();
+  }
+
+  // ── Check if exercise fully completed ──────────
+  function checkExerciseDone(exIdx) {
+    const d = AF.dayInfo;
+    const location = AF.profile.gym_or_home === 'gym' ? 'gym' : 'casa';
+    const exercises = d.exercises[location] || d.exercises.gym || d.exercises.casa || [];
+    const ex = exercises[exIdx];
+    if (!ex) return;
+
+    const effSets = ex.sets || 4;
+    const allEffDone = Array.from({ length: effSets }, (_, s) =>
+      !!AF.completedSets[`ex-${exIdx}-eff-${s}`]
+    ).every(Boolean);
+
+    const card = document.getElementById(`ex-card-${exIdx}`);
+    const num  = document.getElementById(`ex-num-${exIdx}`);
+    if (!card || !num) return;
+
+    if (allEffDone) {
+      card.classList.add('completed');
+      num.classList.add('done-num');
+      num.textContent = '✓';
+    } else {
+      card.classList.remove('completed');
+      num.classList.remove('done-num');
+      num.textContent = exIdx + 1;
+    }
+  }
+
+  // ── Update progress bar ────────────────────────
+  function updateProgress() {
+    const d = AF.dayInfo;
+    const location = AF.profile.gym_or_home === 'gym' ? 'gym' : 'casa';
+    const exercises = d.exercises[location] || d.exercises.gym || d.exercises.casa || [];
+    const total = exercises.length;
+
+    let done = 0;
+    exercises.forEach((ex, i) => {
+      const effSets = ex.sets || 4;
+      const allDone = Array.from({ length: effSets }, (_, s) =>
+        !!AF.completedSets[`ex-${i}-eff-${s}`]
+      ).every(Boolean);
+      if (allDone) done++;
+    });
+
+    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+    const fill = document.getElementById('progressFill');
+    const count = document.getElementById('progressCount');
+    if (fill)  fill.style.width = `${pct}%`;
+    if (count) count.textContent = `${done} / ${total}`;
+
+    // Enable/disable complete button
+    const btn = document.getElementById('btnComplete');
+    const hint = document.getElementById('completeHint');
+    if (btn) {
+      if (done === total) {
+        btn.disabled = false;
+        if (hint) hint.textContent = '¡Todos los ejercicios completados! 🔥';
+      } else {
+        btn.disabled = false; // allow early completion
+        if (hint) hint.textContent = `${done} de ${total} ejercicios completados`;
+      }
+    }
+  }
+
+  // ── Toggle warmup item ─────────────────────────
+  function toggleWarmup(i) {
+    const btn = document.getElementById(`warmup-${i}`);
+    if (!btn) return;
+    AF.warmupDone[i] = !AF.warmupDone[i];
+    btn.classList.toggle('checked', AF.warmupDone[i]);
+
+    const tab = document.getElementById('tabWarmup');
+    if (tab && Object.values(AF.warmupDone).filter(Boolean).length >= 3) {
+      tab.classList.add('done-tab');
+      tab.classList.remove('active');
+      document.getElementById('tabTrain')?.classList.add('active');
+    }
+  }
+
+  // ── Scroll to section ──────────────────────────
+  function scrollToPhase(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ── Rest timer ─────────────────────────────────
+  function startRest(seconds, exName, nextInfo) {
+    clearInterval(AF.restTimer);
+    AF.restTotal     = seconds;
+    AF.restRemaining = seconds;
+
+    setEl('restExName',   exName ? `Siguiente: ${exName}` : '');
+    setEl('restTimerNum', seconds);
+    setEl('restNextInfo', nextInfo || 'Prepara la siguiente serie');
+
+    document.getElementById('restOverlay').classList.add('show');
+
+    AF.restTimer = setInterval(() => {
+      AF.restRemaining--;
+      setEl('restTimerNum', AF.restRemaining);
+
+      // Update conic progress on circle
+      const pct = ((AF.restTotal - AF.restRemaining) / AF.restTotal) * 100;
+      const circle = document.getElementById('restCircle');
+      if (circle) circle.style.setProperty('--progress', `${pct}%`);
+
+      if (AF.restRemaining <= 0) {
+        skipRest();
+        // Vibrate if available
+        if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+      }
+    }, 1000);
+  }
+
+  function skipRest() {
+    clearInterval(AF.restTimer);
+    document.getElementById('restOverlay').classList.remove('show');
+  }
+
+  function addRestTime(sec) {
+    AF.restRemaining += sec;
+    AF.restTotal     += sec;
+    setEl('restTimerNum', AF.restRemaining);
+  }
+
+  function getNextSetInfo(currentBtn) {
+    const exIdx  = parseInt(currentBtn.dataset.ex);
+    const setIdx = parseInt(currentBtn.dataset.set);
+    const d = AF.dayInfo;
+    const location = AF.profile.gym_or_home === 'gym' ? 'gym' : 'casa';
+    const exercises = d.exercises[location] || d.exercises.gym || d.exercises.casa || [];
+    const ex = exercises[exIdx];
+    if (!ex) return '';
+    const effSets = ex.sets || 4;
+    if (setIdx + 1 < effSets) return `Serie ${setIdx + 2} de ${effSets}`;
+    if (exIdx + 1 < exercises.length) return `Siguiente: ${exercises[exIdx + 1].name}`;
+    return '¡Último ejercicio terminado! 🎉';
+  }
+
+  // ── Video placeholder ──────────────────────────
+  function showVideo(driveId, name) {
+    if (driveId) {
+      window.open(`https://drive.google.com/file/d/${driveId}/view`, '_blank');
+    } else {
+      alert(`Video de ${name} próximamente`);
+    }
+  }
+
+  // ── Complete workout ───────────────────────────
+  async function completeWorkout() {
+    const btn = document.getElementById('btnComplete');
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = 'Guardando...';
+    }
+
+    try {
+      const today = new Date().toISOString().split('T')[0];
+      const dayNum = AF.profile.workout_day_num || 1;
+
+      // Save day log
+      await sb.from('day_logs').upsert({
+        user_id:  AF.userId,
+        log_date: today,
+        day_num:  dayNum,
+        reto:     AF.profile.reto || 'gluteos',
+      });
+
+      // Save to progress table
+      await sb.from('progress').insert({
+        user_id:  AF.userId,
+        day_num:  dayNum,
+        reto:     AF.profile.reto || 'gluteos',
+      });
+
+      // Advance workout day
+      const nextDay = dayNum + 1;
+      await sb.from('profiles').update({
+        workout_day_num: nextDay,
+        streak_current: (AF.profile.streak_current || 0) + 1,
+        streak_max: Math.max((AF.profile.streak_max || 0), (AF.profile.streak_current || 0) + 1),
+      }).eq('id', AF.userId);
+
+      showCompleteScreen(dayNum);
+
+    } catch (err) {
+      console.error('[day.html] Complete error:', err);
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = '✅ Completar entrenamiento';
+      }
+      alert('Hubo un error guardando. Intenta de nuevo.');
+    }
+  }
+
+  function showCompleteScreen(dayNum) {
+    document.getElementById('bottomBar').classList.add('hidden');
+    document.getElementById('mainContent').classList.add('hidden');
+
+    const location = AF.profile.gym_or_home === 'gym' ? 'gym' : 'casa';
+    const exercises = AF.dayInfo.exercises[location] || AF.dayInfo.exercises.gym || [];
+    const totalSets = exercises.reduce((sum, ex) => sum + (ex.sets || 4), 0);
+    const newStreak = (AF.profile.streak_current || 0) + 1;
+
+    const screen = document.getElementById('completeScreen');
+    screen.innerHTML = `
+      <div class="complete-ring">🎉</div>
+      <div class="complete-title">¡Sesión completada!</div>
+      <div class="complete-msg">
+        ${AF.profile.nombre ? `¡Bien hecho, ${AF.profile.nombre}!` : '¡Excelente trabajo!'}<br>
+        El músculo crece en el descanso. Duerme bien esta noche.
+      </div>
+      <div class="complete-stats">
+        <div class="stat-box">
+          <div class="stat-num">${exercises.length}</div>
+          <div class="stat-label">Ejercicios</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">${totalSets}</div>
+          <div class="stat-label">Series</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">${newStreak} 🔥</div>
+          <div class="stat-label">Racha</div>
+        </div>
+      </div>
+      <a href="/pages/dashboard.html" class="btn-home">🏠 Volver al inicio</a>
+    `;
+    screen.classList.add('show');
+
+    if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+  }
+
+  // ── Error screen ───────────────────────────────
+  function showError(msg) {
+    document.getElementById('mainContent').innerHTML = `
+      <div class="error-screen">
+        <div class="error-icon">⚠️</div>
+        <div class="error-msg">${msg}</div>
+        <button class="btn-retry" onclick="location.reload()">Reintentar</button>
+      </div>
+    `;
+  }
+
+  // ── Util ───────────────────────────────────────
+  function setEl(id, val) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
+  }
+
+  // ══════════════════════════════════════════════
+  // WORKOUT DATA — RETO GLÚTEOS
+  // ══════════════════════════════════════════════
+  const WARMUP_GENERAL = [
+    { icon:'🚶', name:'Trote suave o caminata activa',        detail:'5 min · Eleva la temperatura corporal' },
+    { icon:'⭕', name:'Círculos de cadera',                    detail:'10 reps cada lado · Movilidad articular' },
+    { icon:'🦵', name:'Sentadilla sin peso',                  detail:'2 × 15 reps · Activa cuádriceps y glúteos' },
+    { icon:'🤸', name:'Clamshell / Mariposa lateral',         detail:'2 × 20 reps cada lado · Activa el glúteo medio' },
+    { icon:'🏋️', name:'Puente de glúteos sin peso',           detail:'2 × 20 reps · Activación pre-entrenamiento' },
+  ];
+
+  const WARMUP_ABDOMEN = [
+    { icon:'🚶', name:'Trote suave',                          detail:'5 min · Activa el metabolismo' },
+    { icon:'⭕', name:'Rotación de tronco',                   detail:'10 reps cada lado · Movilidad lumbar' },
+    { icon:'🤸', name:'Plancha isométrica',                   detail:'2 × 20s · Activa el core' },
+    { icon:'🦵', name:'Rodillas al pecho (caminando)',        detail:'20 pasos · Activa cadera y core' },
+  ];
+
+  // ── GLUTES EXERCISES ─────────────────────────
+  const EX_GLUTES = {
+    glutes: {
+      gym: [
+        { name:'Hip Thrust con Barra', emg:'~78%', sets:4, rest:90, driveId:'',
+          ok:'Pelvis neutra en la cima — sin hiperlordosis',
+          err:'No hiperextiendas la lumbar arriba',
+          tips:['Pausa 2 seg en la cima de cada rep','Pies al ancho de hombros, rodillas a 90°','Empuja con los talones, no con los pies completos'] },
+        { name:'Sentadilla con Barra', emg:'~90%', sets:4, rest:90, driveId:'',
+          ok:'Rodillas siguen la dirección de las puntas de los pies',
+          err:'No colapses las rodillas hacia adentro',
+          tips:['Baja hasta paralelo o más profundo','Core apretado durante toda la rep'] },
+        { name:'Romanian Deadlift', emg:'~65%', sets:3, rest:75, driveId:'',
+          ok:'Espalda recta, bisagra de cadera, siente el estiramiento',
+          err:'No redondees la espalda lumbar',
+          tips:['Barra pegada a las piernas todo el camino','Siente el estiramiento en isquiotibiales'] },
+        { name:'Abducción en Cable', emg:'~70% glúteo medio', sets:3, rest:60, driveId:'',
+          ok:'Control total — no uses impulso',
+          err:'No inclines el tronco para ayudarte',
+          tips:['Pausa de 1s arriba','3 series de 15 reps cada pierna'] },
+      ],
+      casa: [
+        { name:'Hip Thrust con Silla/Sofá', emg:'~70%', sets:4, rest:90, driveId:'',
+          ok:'Pelvis neutra en la cima',
+          err:'No hiperextiendas la lumbar',
+          tips:['Añade peso con mochila','Pausa 2 seg arriba'] },
+        { name:'Sentadilla Búlgara', emg:'~85%', sets:4, rest:90, driveId:'',
+          ok:'Rodilla trasera cerca del suelo, tronco vertical',
+          err:'No dejes que la rodilla delantera pase la punta del pie en exceso',
+          tips:['Pie trasero en silla o sofá','4 series de 10-12 cada pierna'] },
+        { name:'Peso Muerto con Mancuernas', emg:'~75%', sets:3, rest:75, driveId:'',
+          ok:'Bisagra de cadera, espalda recta',
+          err:'No redondees la espalda',
+          tips:['Siente el estiramiento en isquios'] },
+        { name:'Patada de Glúteo en 4 Apoyos', emg:'~65%', sets:3, rest:60, driveId:'',
+          ok:'Rodilla a 90°, empuja el talón al techo',
+          err:'No rotar el torso',
+          tips:['3 × 15-20 cada pierna'] },
+      ],
+    },
+
+    posterior: {
+      gym: [
+        { name:'Peso Muerto Convencional', emg:'~110%', sets:4, rest:120, driveId:'',
+          ok:'Espalda recta, cadera atrás, barra pegada al cuerpo',
+          err:'NUNCA redondees la espalda — para si lo haces',
+          tips:['Activa el core antes de levantar','Respira antes de cada rep'] },
+        { name:'Romanian Deadlift', emg:'~65%', sets:4, rest:90, driveId:'',
+          ok:'Bisagra de cadera pura',
+          err:'No redondees la lumbar',
+          tips:['Siente el estiramiento en isquios','Baja lento 3 segundos'] },
+        { name:'Curl de Isquiotibiales en Máquina', emg:'~65%', sets:3, rest:75, driveId:'',
+          ok:'Control excéntrico — baja en 3 segundos',
+          err:'No uses impulso al subir',
+          tips:['Pausa 1s arriba'] },
+        { name:'Hiperextensión en Banco', emg:'Erector + Glúteo', sets:3, rest:75, driveId:'',
+          ok:'Core apretado, movimiento desde la cadera',
+          err:'No hiperextiendas la lumbar',
+          tips:['Añade peso al avanzar'] },
+      ],
+      casa: [
+        { name:'Good Morning sin peso', emg:'~70% posterior', sets:4, rest:90, driveId:'',
+          ok:'Espalda recta, bisagra de cadera',
+          err:'No redondees la lumbar',
+          tips:['3 × 15 reps','Control total en bajada'] },
+        { name:'Peso Muerto con Mancuernas', emg:'~75%', sets:4, rest:90, driveId:'',
+          ok:'Espalda neutra, bisagra pura',
+          err:'No flexiones las rodillas en exceso',
+          tips:['Siente el estiramiento en isquios'] },
+        { name:'Superman', emg:'Erector + Glúteo', sets:3, rest:60, driveId:'',
+          ok:'Eleva pecho y piernas al mismo tiempo',
+          err:'No hiperextiendas el cuello',
+          tips:['Pausa 2s arriba','3 × 15 reps'] },
+      ],
+    },
+
+    anterior: {
+      gym: [
+        { name:'Sentadilla con Barra', emg:'~90%', sets:4, rest:90, driveId:'',
+          ok:'Profundidad completa — por debajo del paralelo',
+          err:'No colapses las rodillas',
+          tips:['Core apretado durante toda la rep','Pies levemente hacia afuera'] },
+        { name:'Prensa de Piernas', emg:'~75%', sets:4, rest:90, driveId:'',
+          ok:'Pies en la parte alta de la plataforma para mayor glúteo',
+          err:'No bloquees las rodillas al extender',
+          tips:['Baja hasta 90° de rodillas','Impulsa con los talones'] },
+        { name:'Extensión de Cuádriceps', emg:'~85% cuádriceps', sets:3, rest:75, driveId:'',
+          ok:'Extensión completa, pausa 1s arriba',
+          err:'No uses impulso al subir',
+          tips:['Control en la bajada 3 segundos'] },
+        { name:'Zancada con Barra', emg:'~80%', sets:3, rest:90, driveId:'',
+          ok:'Tronco vertical, rodilla trasera cerca del suelo',
+          err:'No dejes que la rodilla delantera pase el pie',
+          tips:['3 × 12 cada pierna'] },
+      ],
+      casa: [
+        { name:'Sentadilla con Salto', emg:'~120% explosive', sets:4, rest:90, driveId:'',
+          ok:'Aterriza suave con rodillas semiflexionadas',
+          err:'No aterrices con rodillas en valgo',
+          tips:['Explosivo en la subida','Aterriza silencioso = buena técnica'] },
+        { name:'Sentadilla Sumo profunda', emg:'~85%', sets:4, rest:90, driveId:'',
+          ok:'Pies muy separados, punteras hacia afuera 45°',
+          err:'No colapses las rodillas',
+          tips:['Baja lo más profundo posible','Con o sin mancuerna al centro'] },
+        { name:'Zancada dinámica', emg:'~80%', sets:3, rest:75, driveId:'',
+          ok:'Alternadas, tronco vertical',
+          err:'No inclines el tronco',
+          tips:['3 × 12 cada pierna'] },
+        { name:'Sentadilla Pistol asistida', emg:'~90%', sets:3, rest:90, driveId:'',
+          ok:'Agárrate a la pared para asistencia',
+          err:'No redondees la lumbar',
+          tips:['Progresa reduciendo la asistencia'] },
+      ],
+    },
+  };
+
+  // ── ABDOMEN EXERCISES ────────────────────────
+  const EX_ABDOMEN = {
+    fuerza: {
+      gym: [
+        { name:'Sentadilla con Barra', emg:'~90%', sets:4, rest:90, driveId:'',
+          ok:'Rodillas siguen las puntas, pecho arriba, baja paralelo',
+          err:'No colapses las rodillas — activa el core',
+          tips:['El core apretado protege la lumbar','Respira antes de bajar'] },
+        { name:'Peso Muerto Convencional', emg:'~110%', sets:4, rest:90, driveId:'',
+          ok:'Espalda recta, cadera atrás, barra pegada al cuerpo',
+          err:'NUNCA redondees la espalda',
+          tips:['Activa el core antes de levantar'] },
+        { name:'Plancha Frontal', emg:'Core 100%', sets:3, rest:60, driveId:'',
+          ok:'Cuerpo recto como tabla, core apretado',
+          err:'No dejes caer las caderas',
+          tips:['30-60 segundos','Progresa añadiendo tiempo'] },
+        { name:'Crunch en Cable', emg:'Recto 143%', sets:3, rest:60, driveId:'',
+          ok:'Flexiona la columna, no solo inclinas el torso',
+          err:'No jales con el cuello',
+          tips:['Pausa 1s en la contracción máxima'] },
+      ],
+      casa: [
+        { name:'Sentadilla Sumo con Mancuerna', emg:'~85%', sets:4, rest:90, driveId:'',
+          ok:'Core activo, pies separados, punteras afuera',
+          err:'No colapses las rodillas',
+          tips:['Mancuerna central'] },
+        { name:'Peso Muerto con Mancuernas', emg:'~95%', sets:4, rest:90, driveId:'',
+          ok:'Espalda neutra, bisagra pura',
+          err:'No redondees la lumbar',
+          tips:['Siente el estiramiento en isquios'] },
+        { name:'Plancha Frontal', emg:'Core 100%', sets:3, rest:60, driveId:'',
+          ok:'Cuerpo recto',
+          err:'No subas las caderas',
+          tips:['30-60 segundos'] },
+        { name:'Crunch invertido', emg:'Recto 120%', sets:3, rest:60, driveId:'',
+          ok:'Eleva las caderas del suelo, no solo las piernas',
+          err:'No uses impulso',
+          tips:['Pausa arriba 1s','Baja lento 3 segundos'] },
+      ],
+    },
+    hiit: {
+      gym: [
+        { name:'Burpee completo', emg:'Full body', sets:4, rest:20, driveId:'',
+          ok:'Movimiento fluido, core activo',
+          err:'No arquees la espalda en plancha',
+          tips:['20s trabajo / 10s descanso × 8 rondas'] },
+        { name:'Mountain Climbers', emg:'Core + Cardio', sets:3, rest:20, driveId:'',
+          ok:'Caderas al nivel de los hombros, rodillas al pecho',
+          err:'No subas las caderas',
+          tips:['30s máxima velocidad'] },
+        { name:'Jump Squat', emg:'~120% explosive', sets:4, rest:20, driveId:'',
+          ok:'Aterriza suave con rodillas semiflexionadas',
+          err:'No aterrices con rodillas en valgo',
+          tips:['Aterriza silencioso = buena técnica'] },
+        { name:'Plancha con Toque de Hombro', emg:'Core antirotación', sets:3, rest:30, driveId:'',
+          ok:'Caderas sin rotar al tocar el hombro contrario',
+          err:'No rotar las caderas',
+          tips:['15 repeticiones por lado'] },
+      ],
+      casa: [
+        { name:'Burpee', emg:'Full body', sets:4, rest:20, driveId:'',
+          ok:'Explosivo y controlado',
+          err:'No arquees la espalda',
+          tips:['8 rondas de 20s / 10s rest'] },
+        { name:'Mountain Climbers', emg:'Core + Cardio', sets:3, rest:20, driveId:'',
+          ok:'Rodillas al pecho rápido',
+          err:'No eleves las caderas',
+          tips:['Máxima velocidad 30s'] },
+        { name:'Jumping Jacks', emg:'Cardio', sets:3, rest:20, driveId:'',
+          ok:'Brazos completos, coordinado',
+          err:'Sin impacto suave al aterrizar',
+          tips:['45s trabajo / 15s rest'] },
+        { name:'Plancha con toque de hombro', emg:'Core antirotación', sets:3, rest:30, driveId:'',
+          ok:'Caderas estables',
+          err:'No rotar',
+          tips:['15 reps por lado'] },
+      ],
+    },
+    core: {
+      gym: [
+        { name:'Crunch en Cable', emg:'Recto 143%', sets:4, rest:60, driveId:'',
+          ok:'Flexiona la columna, no solo inclina el torso',
+          err:'No jales con el cuello',
+          tips:['Pausa 1s en la contracción máxima'] },
+        { name:'Plancha Lateral', emg:'Oblicuos 80%', sets:3, rest:60, driveId:'',
+          ok:'Cuerpo en línea recta',
+          err:'No dejes caer las caderas',
+          tips:['30-45s cada lado'] },
+        { name:'Rueda Abdominal', emg:'Recto 119%', sets:3, rest:90, driveId:'',
+          ok:'Core apretado durante todo el movimiento',
+          err:'No dejes caer las caderas',
+          tips:['Empieza con rango corto','Progresa con el tiempo'] },
+        { name:'Crunches en Banco Declinado', emg:'Recto 100%+', sets:3, rest:75, driveId:'',
+          ok:'Flexión real de columna vertebral',
+          err:'No uses el cuello',
+          tips:['Rango completo','Pausa arriba 1s'] },
+      ],
+      casa: [
+        { name:'Crunch con Rotación (Bicicleta)', emg:'Oblicuos 210%', sets:4, rest:45, driveId:'',
+          ok:'Rotación real del torso',
+          err:'No jales el cuello',
+          tips:['Lento: 2s subida, 2s bajada'] },
+        { name:'Plancha Frontal Progresiva', emg:'Core 100%', sets:3, rest:60, driveId:'',
+          ok:'Cuerpo recto, core máximo',
+          err:'No subas las caderas',
+          tips:['30s → 45s → 60s semana a semana'] },
+        { name:'Crunch Invertido', emg:'Recto 120%', sets:3, rest:60, driveId:'',
+          ok:'Eleva las caderas del suelo',
+          err:'No uses impulso',
+          tips:['Pausa arriba 1s','Baja lento 3 segundos'] },
+        { name:'Dead Bug', emg:'Transverso + Estabilización', sets:3, rest:45, driveId:'',
+          ok:'Espalda pegada al suelo todo el tiempo',
+          err:'Si se despega la espalda, reduce el rango',
+          tips:['10 reps por lado','El más seguro para la lumbar'] },
+      ],
+    },
+    hiit_core: {
+      gym: [
+        { name:'Kettlebell Swing', emg:'Full body + Core', sets:4, rest:30, driveId:'',
+          ok:'Bisagra de cadera explosiva, core apretado en la cima',
+          err:'No es sentadilla — es bisagra de cadera',
+          tips:['15-20 reps × 5 series'] },
+        { name:'Mountain Climbers', emg:'Core + Cardio', sets:3, rest:20, driveId:'',
+          ok:'Rodillas al pecho, caderas niveladas',
+          err:'No subas las caderas',
+          tips:['30s explosivo / 15s descanso'] },
+        { name:'Crunch con Rotación', emg:'Oblicuos 210%', sets:4, rest:45, driveId:'',
+          ok:'Rotación real del torso',
+          err:'No jales el cuello',
+          tips:['Lento y controlado'] },
+        { name:'Plancha Dinámica (up-down)', emg:'Core completo', sets:3, rest:45, driveId:'',
+          ok:'Baja a antebrazos y sube a manos manteniendo caderas estables',
+          err:'No rotar las caderas al cambiar',
+          tips:['10 reps × 4 series'] },
+      ],
+      casa: [
+        { name:'Burpee + Plancha', emg:'Full body', sets:4, rest:30, driveId:'',
+          ok:'Agrega pausa de 2s en plancha',
+          err:'No pierdas la posición de plancha',
+          tips:['10 reps × 4 series'] },
+        { name:'Jumping Jacks con core', emg:'Cardio + Core', sets:3, rest:20, driveId:'',
+          ok:'Core apretado durante todo el salto',
+          err:'No relajes el abdomen',
+          tips:['40s trabajo / 20s descanso'] },
+        { name:'Bicicleta Abdominal', emg:'Oblicuos 210%', sets:4, rest:45, driveId:'',
+          ok:'Rotación real, lenta y controlada',
+          err:'No jales el cuello',
+          tips:['3 series de 20 reps cada lado'] },
+        { name:'Dead Bug', emg:'Transverso + Estabilización', sets:3, rest:45, driveId:'',
+          ok:'Espalda pegada al suelo todo el tiempo',
+          err:'Si se despega la espalda, reduce el rango',
+          tips:['10 reps por lado'] },
+      ],
+    },
+    fullbody: {
+      gym: [
+        { name:'Clean & Press con Barra', emg:'Full body', sets:4, rest:90, driveId:'',
+          ok:'Explosión desde la cadera, core apretado',
+          err:'No uses la espalda para impulsar — usa las caderas',
+          tips:['Técnica primero, peso después'] },
+        { name:'Remo con Barra', emg:'Espalda + Core', sets:4, rest:75, driveId:'',
+          ok:'Espalda recta, codo atrás',
+          err:'No redondees la espalda',
+          tips:['3 × 12 reps'] },
+        { name:'Prensa de Piernas', emg:'~75%', sets:3, rest:90, driveId:'',
+          ok:'Rango completo, 90° en rodillas',
+          err:'No bloquees las rodillas',
+          tips:['Impulsa con los talones'] },
+        { name:'Plancha Lateral con elevación', emg:'Oblicuos 90%', sets:3, rest:60, driveId:'',
+          ok:'Caderas arriba, elevación controlada',
+          err:'No dejes caer las caderas',
+          tips:['15 reps cada lado'] },
+      ],
+      casa: [
+        { name:'Sentadilla + Press de hombro', emg:'Full body', sets:4, rest:90, driveId:'',
+          ok:'Sentadilla completa + press arriba',
+          err:'No pierdas el equilibrio',
+          tips:['Con mancuernas o botella con agua'] },
+        { name:'Remo con mancuernas', emg:'Espalda + Core', sets:4, rest:75, driveId:'',
+          ok:'Core estable, codo al techo',
+          err:'No rotar el tronco',
+          tips:['3 × 12 cada brazo'] },
+        { name:'Zancada + Curl de bíceps', emg:'Piernas + Brazos', sets:3, rest:75, driveId:'',
+          ok:'Tronco vertical, curl en el punto más bajo',
+          err:'No inclines el tronco',
+          tips:['10 reps cada pierna'] },
+        { name:'Burpee Modificado', emg:'Full body', sets:3, rest:60, driveId:'',
+          ok:'Movimiento completo con control',
+          err:'No pierdas la posición de plancha',
+          tips:['8-10 reps × 3 series'] },
+      ],
+    },
+    cardio: {
+      gym: [
+        { name:'Caminata inclinada (treadmill)', emg:'Glúteo + Cardio', sets:1, rest:0, driveId:'',
+          ok:'Inclinación 10-15%, velocidad conversacional',
+          err:'No te agarres de las barras laterales',
+          tips:['30-45 minutos'] },
+        { name:'Elíptica', emg:'Full body bajo impacto', sets:1, rest:0, driveId:'',
+          ok:'Postura erguida, impulso desde los glúteos',
+          err:'No encojas los hombros',
+          tips:['30 minutos'] },
+        { name:'Stretching completo', emg:'Flexibilidad', sets:1, rest:0, driveId:'',
+          ok:'10-15 min de estiramiento suave de todo el cuerpo',
+          err:'No fuerces los rangos',
+          tips:['Enfócate en piernas, glúteos y core'] },
+      ],
+      casa: [
+        { name:'Caminata activa', emg:'Cardio', sets:1, rest:0, driveId:'',
+          ok:'30-45 minutos al aire libre',
+          err:'No vayas tan rápido que no puedas conversar',
+          tips:['Usa audífonos con algo que disfrutes'] },
+        { name:'Yoga / Movilidad', emg:'Recuperación activa', sets:1, rest:0, driveId:'',
+          ok:'20-30 min de movimiento suave',
+          err:'No fuerces los rangos',
+          tips:['Enfócate en las zonas más tensas'] },
+      ],
+    },
+  };
+
+  // ══════════════════════════════════════════════
+  // getDayInfo — core logic
+  // ══════════════════════════════════════════════
+  function getDayInfo(reto, dayNum) {
+    if (reto === 'abdomen') return getDayInfoAbdomen(dayNum);
+    return getDayInfoGlutes(dayNum);
+  }
+
+  function getDayInfoGlutes(dayNum) {
+    const PATTERN = ['train','train','train','rest','train','train','train'];
+    const SESSIONS = ['glutes','posterior','anterior'];
+    const totalWeeks = 8;
+
+    const dayIndex  = (dayNum - 1) % 7;
+    const weekNum   = Math.ceil(dayNum / 7);
+    const dayInWeek = dayIndex + 1;
+    const type      = PATTERN[dayIndex];
+
+    if (type === 'rest') {
+      return { isRest: true, weekNum, dayInWeek, daysPerWeek: 6, name: 'Descanso 😴', emoji: '😴', msg: '' };
+    }
+
+    // Count train days before this one in week to pick session
+    let trainCount = 0;
+    for (let i = 0; i < dayIndex; i++) {
+      if (PATTERN[i] === 'train') trainCount++;
+    }
+    const sessionType = SESSIONS[trainCount % 3];
+
+    const NAMES = { glutes:'Glúteos 🍑', posterior:'Cadena Posterior 💪', anterior:'Pierna Completa 🦵' };
+    const MSGS  = {
+      glutes:    'Hip Thrust primero. Máxima activación de glúteos.',
+      posterior: 'Cadena posterior al máximo. Siente cada contracción.',
+      anterior:  'Cuádriceps y pierna completa. Sentadilla profunda con técnica.',
+    };
+
+    return {
+      isRest:    false,
+      name:      NAMES[sessionType],
+      emoji:     sessionType === 'glutes' ? '🍑' : sessionType === 'posterior' ? '💪' : '🦵',
+      msg:       MSGS[sessionType],
+      weekNum,
+      dayInWeek,
+      daysPerWeek: 6,
+      duration:  45,
+      intensity: 'RPE 7-8',
+      exercises: EX_GLUTES[sessionType] || EX_GLUTES.glutes,
+      warmup:    WARMUP_GENERAL,
+    };
+  }
+
+  function getDayInfoAbdomen(dayNum) {
+    const PATTERN = ['train','train','train','train','train','cardio','rest'];
+    const TYPES   = ['fuerza','hiit','core','hiit_core','fullbody'];
+
+    const dayIndex  = (dayNum - 1) % 7;
+    const weekNum   = Math.ceil(dayNum / 7);
+    const dayInWeek = dayIndex + 1;
+    const type      = PATTERN[dayIndex];
+
+    if (type === 'rest') {
+      return { isRest: true, weekNum, dayInWeek, daysPerWeek: 6, name: 'Descanso 😴', emoji: '😴', msg: '' };
+    }
+
+    const NAMES = {
+      fuerza:    'Fuerza + Core 💪',
+      hiit:      'HIIT Explosivo 🔥',
+      core:      'Core Intenso 🎯',
+      hiit_core: 'HIIT + Core 🔥',
+      fullbody:  'Full Body + Core 💥',
+      cardio:    'Cardio Suave 🚶',
+    };
+    const MSGS = {
+      fuerza:    'Fuerza de base + core integrado. El abdomen trabaja en cada rep.',
+      hiit:      'HIIT explosivo. Máxima quema calórica en poco tiempo.',
+      core:      'Core intenso. Aislamos y destruimos el abdomen en 30 minutos.',
+      hiit_core: 'HIIT + Core combinados. Cardio y fuerza abdominal en una sola sesión.',
+      fullbody:  'Full body funcional con core integrado en cada ejercicio.',
+      cardio:    'Cardio suave de recuperación. Cuida tu cuerpo.',
+    };
+
+    // Train types sequence
+    let trainCount = 0;
+    for (let i = 0; i < dayIndex; i++) {
+      if (PATTERN[i] === 'train') trainCount++;
+    }
+    const sessionType = type === 'cardio' ? 'cardio' : TYPES[trainCount % 5];
+
+    return {
+      isRest:    false,
+      name:      NAMES[sessionType],
+      emoji:     sessionType === 'hiit' || sessionType === 'hiit_core' ? '🔥' : sessionType === 'core' ? '🎯' : sessionType === 'cardio' ? '🚶' : '💪',
+      msg:       MSGS[sessionType],
+      weekNum,
+      dayInWeek,
+      daysPerWeek: 6,
+      duration:  40,
+      intensity: sessionType === 'hiit' || sessionType === 'hiit_core' ? 'RPE 8-9' : 'RPE 7',
+      exercises: EX_ABDOMEN[sessionType] || EX_ABDOMEN.fuerza,
+      warmup:    WARMUP_ABDOMEN,
+    };
+  }
+
+  </script>
+</body>
+</html>

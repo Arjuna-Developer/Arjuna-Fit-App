@@ -1,0 +1,1066 @@
+<!D
+      <a href="#" onclick="showTab('knowledge');return false" class="nav-card"><div class="nav-card-icon">🧠</div><div class="nav-card-name">Educación de Arju</div><div class="nav-card-sub">Knowledge base IA</div></a>OCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32-v2.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#6D28FF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ArjunaFit">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="af-version" content="mini-beta-day1-war-room-v1">
+<title>Admin · ArjunaFit</title>
+<link rel="stylesheet" href="/assets/visual-system.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#07020f;color:#f5f3ff;font-family:'Outfit',sans-serif;min-height:100dvh}
+.page{max-width:960px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:22px;font-weight:800;margin-bottom:4px}
+.sub{font-size:12px;color:rgba(255,255,255,.3);margin-bottom:20px}
+
+/* Tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:12px}
+.tab-btn{padding:7px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:rgba(255,255,255,.45);font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .18s}
+.tab-btn.active{background:rgba(139,92,246,.18);border-color:rgba(167,139,250,.3);color:#ddd6fe}
+
+/* KPI grid */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:24px}
+.kpi{background:#130d22;border:1px solid rgba(167,139,250,.12);border-radius:13px;padding:13px 15px;cursor:pointer;transition:border-color .18s}
+.kpi:hover{border-color:rgba(167,139,250,.3)}
+.kpi-label{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:5px}
+.kpi-val{font-size:24px;font-weight:800;margin-bottom:2px}
+.kpi-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px}
+.dot-g{background:#34d399}.dot-a{background:#f59e0b}.dot-r{background:#ef4444}
+
+/* Section */
+.sec-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.28);margin:20px 0 10px}
+
+/* Cards grid */
+.nav-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:24px}
+.nav-card{background:#130d22;border:1px solid rgba(167,139,250,.12);border-radius:14px;padding:16px;cursor:pointer;text-decoration:none;display:block;transition:all .2s}
+.nav-card:hover{border-color:rgba(167,139,250,.35);background:#1a0f2e}
+.nav-card-icon{font-size:24px;margin-bottom:8px}
+.nav-card-name{font-size:13px;font-weight:700;color:#f5f3ff;margin-bottom:3px}
+.nav-card-sub{font-size:11px;color:rgba(255,255,255,.35)}
+
+/* Table */
+.table-wrap{overflow-x:auto;border-radius:14px;border:1px solid rgba(255,255,255,.07)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:9px 12px;font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,255,255,.3);border-bottom:1px solid rgba(255,255,255,.07);background:#0e0920;white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.015)}
+
+/* Badges */
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700}
+.b-green{background:rgba(52,211,153,.12);color:#34d399;border:1px solid rgba(52,211,153,.2)}
+.b-amber{background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.2)}
+.b-red{background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.18)}
+.b-purple{background:rgba(139,92,246,.12);color:#a78bfa;border:1px solid rgba(139,92,246,.2)}
+.b-gray{background:rgba(255,255,255,.05);color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.08)}
+
+/* Filters */
+.filter-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.f-btn{padding:5px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.03);color:rgba(255,255,255,.45);font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s}
+.f-btn.on{background:rgba(139,92,246,.18);border-color:rgba(167,139,250,.3);color:#ddd6fe}
+
+/* Buttons */
+.btn-sm{padding:5px 11px;border-radius:9px;border:none;cursor:pointer;font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;transition:all .15s}
+.btn-primary{background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff}
+.btn-green{background:rgba(52,211,153,.2);border:1px solid rgba(52,211,153,.3);color:#34d399}
+.btn-amber{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.25);color:#f59e0b}
+.btn-ghost{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.5)}
+
+/* Detail modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:999;display:none;align-items:center;justify-content:center;padding:16px}
+.modal-overlay.open{display:flex}
+.modal{background:#130d22;border:1px solid rgba(167,139,250,.2);border-radius:20px;padding:24px;max-width:500px;width:100%;max-height:90vh;overflow-y:auto}
+.modal h3{font-size:16px;font-weight:800;margin-bottom:14px}
+.modal-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:12px}
+.modal-row:last-child{border-bottom:none}
+.modal-key{color:rgba(255,255,255,.4)}
+.modal-val{font-weight:600;color:#f5f3ff;text-align:right;max-width:250px;word-break:break-all}
+.modal-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.07)}
+
+/* Alert */
+.alert-bar{padding:10px 14px;border-radius:12px;font-size:12px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.alert-bar.red{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.18);color:rgba(252,165,165,.85)}
+.alert-bar.amber{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.18);color:rgba(253,211,77,.85)}
+.alert-bar.green{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.18);color:rgba(52,211,153,.85)}
+
+/* Insight */
+.insight{display:flex;gap:10px;padding:10px 13px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:11px;margin-bottom:7px;font-size:12px;color:rgba(255,255,255,.6)}
+
+/* Section panels */
+.panel{display:none}
+.panel.active{display:block}
+
+/* Search input */
+.search-input{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.09);border-radius:11px;padding:9px 14px;color:#f5f3ff;font-family:'Outfit',sans-serif;font-size:12px;outline:none;width:240px;transition:border-color .2s}
+.search-input:focus{border-color:rgba(139,92,246,.5)}
+
+/* Top bar */
+.top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px}
+.admin-badge{position:fixed;bottom:12px;right:12px;z-index:9999;padding:6px 12px;background:rgba(139,92,246,.18);border:1px solid rgba(167,139,250,.28);border-radius:10px;font-size:11px;font-weight:700;color:#ddd6fe}
+.admin-badge a{color:#a78bfa;text-decoration:none;margin-left:6px}
+</style>
+</head>
+<body>
+
+<!-- Admin guard (runs immediately) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(async function guardAdmin() {
+  // ⚠️  SECURITY FIX: ALWAYS verify Supabase — localStorage is NOT trusted for access
+  // localStorage.af-is-admin can be set by anyone in DevTools → must verify server-side
+  console.log('[AdminGuard] verifying session with Supabase (localStorage ignored for access)');
+  var isAdmin = false;
+  try {
+    var sb = window.supabase ? window.supabase.createClient(
+      'https://egswsqymkxmbtcpnozcq.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM',
+      { auth: { persistSession: true, storageKey: 'arjunafit-auth' } }
+    ) : null;
+    if (sb) {
+      var sess = await sb.auth.getSession();
+      var uid = sess.data?.session?.user?.id;
+      console.log('[AdminGuard] uid:', uid ? uid.substring(0,8) : 'NONE (no session)');
+      if (uid) {
+        var { data: p } = await sb.from('profiles').select('is_admin,role').eq('id', uid).maybeSingle();
+        isAdmin = p?.is_admin === true || p?.role === 'admin';
+        console.log('[AdminGuard] profile is_admin:', p?.is_admin, 'role:', p?.role, '→', isAdmin ? 'ALLOW' : 'BLOCK');
+        if (isAdmin) {
+          // Safe to cache AFTER Supabase confirmed
+          localStorage.setItem('af-is-admin','1');
+          localStorage.setItem('af-role','admin');
+          window.sb = sb;
+        } else {
+          // Clear stale localStorage
+          localStorage.setItem('af-is-admin','0');
+          localStorage.removeItem('af-role');
+        }
+      }
+    }
+  } catch(e) { console.warn('[AdminGuard] check failed:', e.message); }
+  if (!isAdmin) {if (!isAdmin) {
+      document.body.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;font-family:Outfit,sans-serif;background:#07020f;color:#f5f3ff;text-align:center;padding:24px"><div style="font-size:40px;margin-bottom:16px">🔒</div><div style="font-size:18px;font-weight:700;margin-bottom:8px">Acceso restringido</div><div style="font-size:13px;color:rgba(255,255,255,.4);margin-bottom:24px">No tienes acceso al panel admin.</div><a href="/pages/dashboard.html" style="padding:12px 24px;background:linear-gradient(135deg,#8b5cf6,#ec4899);border-radius:14px;color:#fff;text-decoration:none;font-weight:700;font-size:13px">Ir a la app</a></div>';
+      return;
+    }
+  }
+  // Admin confirmed — init page
+  window._adminReady = true;
+})();
+</script>
+
+<div class="page">
+  <div class="top-bar">
+    <div>
+      <h1>⚙️ Panel Admin ArjunaFit</h1>
+      <div class="sub">Control de usuarios, pagos, soporte, métricas y comunidad.</div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button onclick="loadAll()" class="btn-sm btn-ghost">🔄 Actualizar</button>
+      <a href="/pages/dashboard.html" class="btn-sm btn-ghost" style="text-decoration:none">📱 Ver app</a>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('overview')">📊 Resumen</button>
+    <button class="tab-btn" onclick="showTab('users')">👥 Usuarios</button>
+    <button class="tab-btn" onclick="showTab('payments')">💳 Pagos</button>
+    <button class="tab-btn" onclick="showTab('support')">🆘 Soporte</button>
+    <button class="tab-btn" onclick="showTab('community')">🌐 Comunidad</button>
+    <button class="tab-btn" onclick="showTab('actions')">📋 Acciones</button>
+    <a href="/pages/growth.html" class="tab-btn" style="text-decoration:none">📈 Métricas →</a>
+    <a href="/pages/commercial.html" class="tab-btn" style="text-decoration:none">🎯 Seguimiento →</a>
+  </div>
+
+  <!-- ══ OVERVIEW ══════════════════════════════════════════════ -->
+  <div class="panel active" id="tab-overview">
+    <div class="kpi-grid" id="kpiGrid">
+      <div class="kpi"><div class="kpi-label">Usuarios totales</div><div class="kpi-val" id="k-total">—</div></div>
+      <div class="kpi"><div class="kpi-label">Nuevos hoy</div><div class="kpi-val" id="k-today">—</div></div>
+      <div class="kpi"><div class="kpi-label">Trials activos</div><div class="kpi-val" id="k-trials">—</div><div style="font-size:10px;color:rgba(52,211,153,.7)"><span class="kpi-dot dot-g"></span>en curso</div></div>
+      <div class="kpi"><div class="kpi-label">Trials vencidos</div><div class="kpi-val" id="k-expired">—</div><div style="font-size:10px;color:rgba(245,158,11,.7)"><span class="kpi-dot dot-a"></span>sin pago</div></div>
+      <div class="kpi"><div class="kpi-label">Pago requerido</div><div class="kpi-val" id="k-payrequired">—</div><div style="font-size:10px;color:rgba(245,158,11,.7)"><span class="kpi-dot dot-a"></span>personalizados</div></div>
+      <div class="kpi"><div class="kpi-label">Pagos aprobados</div><div class="kpi-val" id="k-paid">—</div><div style="font-size:10px;color:rgba(52,211,153,.7)"><span class="kpi-dot dot-g"></span>confirmados</div></div>
+      <div class="kpi"><div class="kpi-label">Pagos pendientes</div><div class="kpi-val" id="k-ppending">—</div><div style="font-size:10px;color:rgba(245,158,11,.7)"><span class="kpi-dot dot-a"></span>pendientes</div></div>
+      <div class="kpi"><div class="kpi-label">Tickets urgentes</div><div class="kpi-val" id="k-urgent">—</div><div style="font-size:10px;color:rgba(239,68,68,.7)"><span class="kpi-dot dot-r"></span>abiertos</div></div>
+      <div class="kpi"><div class="kpi-label">Comunidad</div><div class="kpi-val" id="k-community">—</div></div>
+      <div class="kpi"><div class="kpi-label">Alta intención</div><div class="kpi-val" id="k-highintent">—</div><div style="font-size:10px;color:rgba(236,72,153,.7)">score ≥ 15</div></div>
+    </div>
+
+    <div class="sec-title">Alertas accionables</div>
+    <div id="alertsContainer"><div style="font-size:12px;color:rgba(255,255,255,.3)">Cargando alertas…</div></div>
+
+    <div class="sec-title">Acceso rápido</div>
+    <div class="nav-grid">
+      <a href="#" onclick="showTab('users');return false" class="nav-card"><div class="nav-card-icon">👥</div><div class="nav-card-name">Usuarios</div><div class="nav-card-sub">Ver y activar</div></a>
+      <a href="/pages/growth.html" class="nav-card"><div class="nav-card-icon">📈</div><div class="nav-card-name">Métricas</div><div class="nav-card-sub">Funnel y gráficas</div></a>
+      <a href="#" onclick="showTab('payments');return false" class="nav-card"><div class="nav-card-icon">💳</div><div class="nav-card-name">Pagos</div><div class="nav-card-sub">Aprobados y fallidos</div></a>
+      <a href="#" onclick="showTab('support');return false" class="nav-card"><div class="nav-card-icon">🆘</div><div class="nav-card-name">Soporte</div><div class="nav-card-sub">Tickets abiertos</div></a>
+      <a href="#" onclick="showTab('community');return false" class="nav-card"><div class="nav-card-icon">🌐</div><div class="nav-card-name">Comunidad</div><div class="nav-card-sub">Miembros y gaps</div></a>
+      <a href="/pages/commercial.html" class="nav-card"><div class="nav-card-icon">🎯</div><div class="nav-card-name">Seguimiento</div><div class="nav-card-sub">Leads alta intención</div></a>
+      <a href="#" onclick="showTab('actions');return false" class="nav-card"><div class="nav-card-icon">📋</div><div class="nav-card-name">Acciones admin</div><div class="nav-card-sub">Historial de cambios</div></a>
+      <a href="/pages/beta-survey.html" class="nav-card"><div class="nav-card-icon">🧪</div><div class="nav-card-name">Feedback beta</div><div class="nav-card-sub">Ver respuestas</div></a>
+    </div>
+
+    <div class="sec-title">Insights automáticos</div>
+    <div id="insightsContainer"><div style="font-size:12px;color:rgba(255,255,255,.3)">Calculando…</div></div>
+  </div>
+
+  <!-- ══ USERS ══════════════════════════════════════════════════ -->
+  <div class="panel" id="tab-users">
+    <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap">
+      <input class="search-input" id="userSearch" type="search" placeholder="Buscar email o nombre…" oninput="filterUsers()">
+      <button onclick="loadUsers()" class="btn-sm btn-ghost">🔄</button>
+    </div>
+    <div class="filter-row" id="userFilters">
+      <button class="f-btn on" onclick="setUserFilter('all',this)">Todos</button>
+      <button class="f-btn" onclick="setUserFilter('trialing',this)">Trial activo</button>
+      <button class="f-btn" onclick="setUserFilter('expired',this)">Trial vencido</button>
+      <button class="f-btn" onclick="setUserFilter('payment_required',this)">Pago requerido</button>
+      <button class="f-btn" onclick="setUserFilter('active',this)">Activos</button>
+      <button class="f-btn" onclick="setUserFilter('high_intent',this)">Alta intención</button>
+    </div>
+    <div id="usersContainer"><div style="font-size:12px;color:rgba(255,255,255,.3)">Cargando usuarios…</div></div>
+  </div>
+
+  <!-- ══ PAYMENTS ═══════════════════════════════════════════════ -->
+  <div class="panel" id="tab-payments">
+    <div id="paymentsContainer"><div style="font-size:12px;color:rgba(255,255,255,.3)">Cargando pagos…</div></div>
+  </div>
+
+  <!-- ══ SUPPORT ════════════════════════════════════════════════ -->
+  <div class="panel" id="tab-support">
+    <div class="filter-row">
+      <button class="f-btn on" onclick="setSupportFilter('open',this)">Abiertos</button>
+      <button class="f-btn" onclick="setSupportFilter('urgent',this)">Urgentes</button>
+      <button class="f-btn" onclick="setSupportFilter('all',this)">Todos</button>
+      <button class="f-btn" onclick="setSupportFilter('resolved',this)">Resueltos</button>
+    </div>
+    <div id="supportContainer"><div style="font-size:12px;color:rgba(255,255,255,.3)">Cargando tickets…</div></div>
+  </div>
+
+  <!-- ══ COMMUNITY ══════════════════════════════════════════════ -->
+  <div class="panel" id="tab-community">
+    <div id="communityContainer"><div style="font-size:12px;color:rgba(255,255,255,.3)">Cargando comunidad…</div></div>
+  </div>
+
+  <!-- ══ ADMIN ACTIONS ══════════════════════════════════════════ -->
+  <div class="panel" id="tab-actions">
+    <div id="actionsContainer"><div style="font-size:12px;color:rgba(255,255,255,.3)">Cargando historial…</div></div>
+  </div>
+
+  <!-- ══ HEALTH ══════════════════════════════════════════════════ -->
+  <div class="panel" id="tab-health">
+    <div class="kpi-grid" style="margin-bottom:20px">
+      <div class="kpi"><div class="kpi-label">Frontend</div><div class="kpi-val" id="h-frontend">—</div></div>
+      <div class="kpi"><div class="kpi-label">Supabase</div><div class="kpi-val" id="h-db">—</div></div>
+      <div class="kpi"><div class="kpi-label">Auth</div><div class="kpi-val" id="h-auth">—</div></div>
+      <div class="kpi"><div class="kpi-label">Versión</div><div class="kpi-val" style="font-size:11px" id="h-version">—</div></div>
+      <div class="kpi"><div class="kpi-label">Errores 24h</div><div class="kpi-val" id="h-errors">—</div></div>
+      <div class="kpi"><div class="kpi-label">Críticos</div><div class="kpi-val" id="h-critical">—</div></div>
+    </div>
+    <div class="sec-title">Errores recientes</div>
+    <div id="errorsContainer"><div style="font-size:12px;color:rgba(255,255,255,.3)">Toca Salud para cargar.</div></div>
+    <div class="sec-title" style="margin-top:20px">Checklist pre-deploy</div>
+    <div style="font-size:12px;color:rgba(255,255,255,.45);line-height:2;background:#0e0920;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:14px">
+      ✅ Login/signup funciona · ✅ Retos crean trial · ✅ Personalizados sin trial<br>
+      ✅ Home sin loading infinito · ✅ Nutrición guarda · ✅ Admin entra, normal no<br>
+      ✅ Pagos/fallback sin botones muertos · ✅ Consola sin errores P0 · ✅ Mobile 390px
+    </div>
+  </div>
+
+  <!-- ══ TODAY ═════════════════════════════════════════════════ -->
+  <div class="panel" id="tab-today">
+    <div class="sec-title">Reporte de hoy</div>
+    <div class="kpi-grid">
+      <div class="kpi"><div class="kpi-label">Usuarios nuevos</div><div class="kpi-val" id="t-signups">—</div></div>
+      <div class="kpi"><div class="kpi-label">Pagos aprobados</div><div class="kpi-val" id="t-paid">—</div></div>
+      <div class="kpi"><div class="kpi-label">Pendientes</div><div class="kpi-val" id="t-pending">—</div></div>
+      <div class="kpi"><div class="kpi-label">Tickets urgentes</div><div class="kpi-val" id="t-urgent">—</div></div>
+      <div class="kpi"><div class="kpi-label">Comidas reg.</div><div class="kpi-val" id="t-meals">—</div></div>
+      <div class="kpi"><div class="kpi-label">Entrenos</div><div class="kpi-val" id="t-workouts">—</div></div>
+      <div class="kpi"><div class="kpi-label">Trials vencidos</div><div class="kpi-val" id="t-expired">—</div></div>
+      <div class="kpi"><div class="kpi-label">Errores críticos</div><div class="kpi-val" id="t-errors">—</div></div>
+    </div>
+    <div class="sec-title" style="margin-top:16px">Acciones rápidas</div>
+    <div style="display:flex;gap:9px;flex-wrap:wrap">
+      <button onclick="showTab('support')" class="btn-sm btn-amber">🆘 Tickets urgentes</button>
+      <button onclick="showTab('payments')" class="btn-sm btn-ghost">💳 Pagos</button>
+      <button onclick="showTab('community')" class="btn-sm btn-ghost">🌐 Comunidad</button>
+      <button onclick="showTab('health')" class="btn-sm btn-ghost">❤️ Salud</button>
+      <a href="/pages/growth.html" class="btn-sm btn-ghost" style="text-decoration:none">📈 Métricas</a>
+      <a href="/pages/dashboard.html" class="btn-sm btn-ghost" style="text-decoration:none">📱 Ver app</a>
+    </div>
+  </div>
+
+
+  <!-- ══ BETA OBSERVATION ═══════════════════════════════════════ -->
+  <div class="panel" id="tab-beta">
+    <div class="sec-title">Mini beta — Usuarios activos</div>
+    <div class="kpi-grid" id="betaKpis">
+      <div class="kpi"><div class="kpi-label">Registrados</div><div class="kpi-val" id="b-signups">—</div></div>
+      <div class="kpi"><div class="kpi-label">Onboarding ✅</div><div class="kpi-val" id="b-onboarded">—</div></div>
+      <div class="kpi"><div class="kpi-label">Comidas reg.</div><div class="kpi-val" id="b-meals">—</div></div>
+      <div class="kpi"><div class="kpi-label">Entrenos</div><div class="kpi-val" id="b-workouts">—</div></div>
+      <div class="kpi"><div class="kpi-label">WA clicks</div><div class="kpi-val" id="b-wa">—</div></div>
+      <div class="kpi"><div class="kpi-label">Errores 24h</div><div class="kpi-val" id="b-errors">—</div></div>
+    </div>
+
+    <div class="sec-title" style="margin-top:16px">Checklist por usuario</div>
+    <div id="betaUserList"><div style="font-size:12px;color:rgba(255,255,255,.3)">Cargando usuarios beta...</div></div>
+
+    <div class="sec-title" style="margin-top:16px">Bugs reportados</div>
+    <div id="betaBugs">
+      <div style="font-size:12px;color:rgba(255,255,255,.35);margin-bottom:8px">Clasifica los bugs que recibas:</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <span style="padding:4px 12px;border-radius:8px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:rgba(239,68,68,.8);font-size:11px;font-weight:700">🔴 P0 — Bloquea uso</span>
+        <span style="padding:4px 12px;border-radius:8px;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);color:rgba(245,158,11,.8);font-size:11px;font-weight:700">🟡 P1 — Grave</span>
+        <span style="padding:4px 12px;border-radius:8px;background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.25);color:rgba(147,139,250,.8);font-size:11px;font-weight:700">🔵 P2 — Medio</span>
+        <span style="padding:4px 12px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);font-size:11px;font-weight:700">⚪ P3 — Menor</span>
+      </div>
+      <div id="bugList" style="margin-top:12px;font-size:12px;color:rgba(255,255,255,.3)">Sin bugs reportados aún.</div>
+    </div>
+
+    <div class="sec-title" style="margin-top:16px">Criterio para ampliar a 10-20 usuarios</div>
+    <div style="font-size:12px;color:rgba(255,255,255,.45);line-height:2;background:#0e0920;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:14px">
+      ✅ 0 P0 abiertos<br>
+      ✅ P1 críticos corregidos<br>
+      ✅ Signup funciona bien<br>
+      ✅ Onboarding funciona bien<br>
+      ✅ Al menos 2 usuarios registraron comida<br>
+      ✅ Al menos 1 usuario abrió entrenamiento<br>
+      ✅ Mobile no bloquea<br>
+      ✅ Soporte responde por WhatsApp
+    </div>
+  </div>
+
+</div>
+
+<!-- User detail modal -->
+<div class="modal-overlay" id="userModal">
+  <div class="modal">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <h3 id="modalUserName">Usuario</h3>
+      <button onclick="closeModal()" style="background:none;border:none;color:rgba(255,255,255,.4);font-size:18px;cursor:pointer">✕</button>
+    </div>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- Confirm modal -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal" style="max-width:380px">
+    <h3 id="confirmTitle">Confirmar acción</h3>
+    <p id="confirmMsg" style="font-size:13px;color:rgba(255,255,255,.5);margin:12px 0 20px;line-height:1.6"></p>
+    <div style="display:flex;gap:10px">
+      <button id="confirmYes" class="btn-sm btn-primary" style="flex:1;min-height:40px">Confirmar</button>
+      <button onclick="document.getElementById('confirmModal').classList.remove('open')" class="btn-sm btn-ghost" style="flex:1;min-height:40px">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-badge">⚙️ Admin<a href="/pages/dashboard.html">Ver app →</a></div>
+
+<script src="/js/core/auth-bootstrap.js"></script>
+<script src="/js/core/ops-config.js"></script>
+<script src="/js/core/analytics.js"></script>
+<script>
+'use strict';
+const SUPABASE_URL = 'https://egswsqymkxmbtcpnozcq.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM';
+var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+var _allUsers = [];
+var _userFilter = 'all';
+var _supportFilter = 'open';
+
+// ── Tab navigation ────────────────────────────────────────────────
+function showTab(id) {
+  document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  var panel = document.getElementById('tab-' + id);
+  if (panel) panel.classList.add('active');
+  event && event.target && event.target.classList && event.target.classList.add('active');
+  // Lazy load
+  if (id === 'users')     loadUsers();
+  if (id === 'payments')  loadPayments();
+  if (id === 'support')   loadSupport();
+  if (id === 'community') loadCommunity();
+  if (id === 'actions')   loadActions();
+  if (id === 'health')    loadHealth();
+  if (id === 'today')     loadToday();
+  if (id === 'beta')      loadBeta();
+}
+
+// ── KPIs ──────────────────────────────────────────────────────────
+function set(id, val) { var el = document.getElementById(id); if (el) el.textContent = val; }
+
+async function loadKPIs() {
+  try {
+    var [total, trialing, expired, payrequired, paid, ppending, urgent, community, highintent, today] = await Promise.all([
+      sb.from('profiles').select('id',{count:'exact',head:true}),
+      sb.from('profiles').select('id',{count:'exact',head:true}).eq('subscription_status','trialing'),
+      sb.from('profiles').select('id',{count:'exact',head:true}).eq('subscription_status','expired'),
+      sb.from('profiles').select('id',{count:'exact',head:true}).eq('subscription_status','payment_required'),
+      sb.from('payments').select('id',{count:'exact',head:true}).eq('status','approved'),
+      sb.from('payments').select('id',{count:'exact',head:true}).eq('status','pending'),
+      sb.from('support_tickets').select('id',{count:'exact',head:true}).eq('priority','urgent').eq('status','open'),
+      sb.from('community_memberships').select('id',{count:'exact',head:true}).eq('status','active'),
+      sb.from('commercial_contacts').select('id',{count:'exact',head:true}).gte('intent_score',15),
+      sb.from('profiles').select('id',{count:'exact',head:true}).gte('created_at', new Date(new Date().toISOString().split('T')[0]).toISOString()),
+    ]);
+    set('k-total', total.count||0);
+    set('k-today', today.count||0);
+    set('k-trials', trialing.count||0);
+    set('k-expired', expired.count||0);
+    set('k-payrequired', payrequired.count||0);
+    set('k-paid', paid.count||0);
+    set('k-ppending', ppending.count||0);
+    set('k-urgent', urgent.count||0);
+    set('k-community', community.count||0);
+    set('k-highintent', highintent.count||0);
+  } catch(e) { console.warn('KPI error:', e.message); }
+}
+
+// ── Alerts ────────────────────────────────────────────────────────
+async function loadAlerts() {
+  var cont = document.getElementById('alertsContainer');
+  var alerts = [];
+  try {
+    var [urgTickets, needsReview, highIntent, betaFeedback] = await Promise.all([
+      sb.from('support_tickets').select('id',{count:'exact',head:true}).eq('priority','urgent').eq('status','open'),
+      sb.from('payments').select('id',{count:'exact',head:true}).eq('status','needs_review'),
+      sb.from('commercial_contacts').select('id',{count:'exact',head:true}).gte('intent_score',15).not('status','in','(won,lost)'),
+      sb.from('beta_feedback').select('id',{count:'exact',head:true}),
+    ]);
+    if ((urgTickets.count||0) > 0) alerts.push({ type:'red', icon:'🔴', msg:(urgTickets.count)+' ticket(s) urgentes abiertos. Requieren atención.', tab:'support' });
+    if ((needsReview.count||0) > 0) alerts.push({ type:'amber', icon:'⚠️', msg:(needsReview.count)+' pago(s) necesitan revisión manual.', tab:'payments' });
+    if ((highIntent.count||0) > 0) alerts.push({ type:'amber', icon:'🔥', msg:(highIntent.count)+' leads de alta intención sin seguimiento.' });
+    if ((betaFeedback.count||0) > 0) alerts.push({ type:'green', icon:'🧪', msg:(betaFeedback.count)+' respuestas de feedback beta recibidas.' });
+    if (!alerts.length) { cont.innerHTML = '<div class="alert-bar green">✅ Sin alertas activas en este momento.</div>'; return; }
+    cont.innerHTML = alerts.map(function(a) {
+      return '<div class="alert-bar ' + a.type + '">' + a.icon + ' ' + a.msg +
+        (a.tab ? ' <button onclick="showTab(\''+a.tab+'\')" class="btn-sm btn-ghost" style="margin-left:auto;font-size:10px">Ver →</button>' : '') + '</div>';
+    }).join('');
+  } catch(e) { cont.innerHTML = '<div class="alert-bar amber">No se pudieron cargar alertas.</div>'; }
+}
+
+// ── Insights ──────────────────────────────────────────────────────
+async function loadInsights() {
+  var cont = document.getElementById('insightsContainer');
+  var insights = [];
+  try {
+    var since7d = new Date(Date.now() - 7*86400000).toISOString();
+    var [sigs, meals, unlocks, paid7d] = await Promise.all([
+      sb.from('app_events').select('id',{count:'exact',head:true}).eq('event_name','signup_success').gte('created_at',since7d),
+      sb.from('app_events').select('id',{count:'exact',head:true}).eq('event_name','first_meal_logged').gte('created_at',since7d),
+      sb.from('app_events').select('id',{count:'exact',head:true}).eq('event_name','unlock_clicked').gte('created_at',since7d),
+      sb.from('payments').select('id',{count:'exact',head:true}).eq('status','approved').gte('created_at',since7d),
+    ]);
+    var sigN=sigs.count||0, mealN=meals.count||0, unlockN=unlocks.count||0, paidN=paid7d.count||0;
+    if (sigN > 0 && mealN < sigN*0.5) insights.push({ icon:'🍽️', msg:'Menos del 50% de nuevos usuarios registra su primera comida (7 días). Revisar CTA de nutrición en Home.' });
+    if (unlockN > 0 && paidN < unlockN*0.3) insights.push({ icon:'💳', msg:'Muchos tocan "Desbloquear" pero pocos completan el pago. Revisar el flujo de checkout.' });
+    if (!insights.length) insights.push({ icon:'✅', msg:'Sin insights críticos esta semana. El comportamiento parece estable.' });
+    cont.innerHTML = insights.map(function(i) { return '<div class="insight"><span>' + i.icon + '</span><span>' + i.msg + '</span></div>'; }).join('');
+  } catch(e) { cont.innerHTML = '<div class="insight">⚠️ Error cargando insights.</div>'; }
+}
+
+// ── Users ─────────────────────────────────────────────────────────
+function STATUS_BADGE(s) {
+  var map = {
+    trialing:         '<span class="badge b-green">Trial</span>',
+    active:           '<span class="badge b-green">Activo</span>',
+    expired:          '<span class="badge b-amber">Vencido</span>',
+    payment_required: '<span class="badge b-amber">Pago req.</span>',
+    inactive:         '<span class="badge b-gray">Inactivo</span>',
+  };
+  return map[s] || '<span class="badge b-gray">' + (s||'—') + '</span>';
+}
+function PROD_BADGE(p) {
+  var map = {
+    challenge_glutes:   '<span class="badge b-purple">🍑 Glúteos</span>',
+    challenge_belly:    '<span class="badge b-amber">🔥 Pancita</span>',
+    custom_muscle_gain: '<span class="badge b-green">💪 Masa</span>',
+    custom_fat_loss:    '<span class="badge b-purple">⚡ Red.grasa</span>',
+  };
+  return map[p] || '<span class="badge b-gray">' + (p||'—') + '</span>';
+}
+
+async function loadUsers() {
+  var cont = document.getElementById('usersContainer');
+  cont.innerHTML = '<div style="font-size:12px;color:rgba(255,255,255,.3);padding:12px">Cargando…</div>';
+  try {
+    var q = sb.from('profiles').select('id,email,full_name,product_type,subscription_status,access_level,trial_day_num,is_admin,created_at').order('created_at',{ascending:false}).limit(100);
+    if (_userFilter === 'trialing')         q = q.eq('subscription_status','trialing');
+    if (_userFilter === 'expired')          q = q.eq('subscription_status','expired');
+    if (_userFilter === 'payment_required') q = q.eq('subscription_status','payment_required');
+    if (_userFilter === 'active')           q = q.eq('subscription_status','active');
+    var { data, error } = await q;
+    if (error) throw error;
+    _allUsers = data || [];
+    renderUsers();
+  } catch(e) { cont.innerHTML = '<div style="font-size:12px;color:rgba(239,68,68,.6);padding:12px">Error: ' + e.message + '</div>'; }
+}
+
+function renderUsers() {
+  var search = (document.getElementById('userSearch')?.value || '').toLowerCase();
+  var users = _allUsers.filter(function(u) {
+    if (search) return (u.email||'').toLowerCase().includes(search) || (u.full_name||'').toLowerCase().includes(search);
+    return true;
+  });
+  if (!users.length) { document.getElementById('usersContainer').innerHTML = '<div style="font-size:12px;color:rgba(255,255,255,.3);padding:14px">Sin usuarios con este filtro.</div>'; return; }
+  var html = '<div class="table-wrap"><table><thead><tr><th>Usuario</th><th>Producto</th><th>Estado</th><th>Acceso</th><th>Día trial</th><th>Registro</th><th>Acciones</th></tr></thead><tbody>';
+  users.forEach(function(u) {
+    html += '<tr>' +
+      '<td><div style="font-weight:600">' + (u.full_name || u.email?.split('@')[0] || '—') + '</div>' +
+        '<div style="font-size:10px;color:rgba(255,255,255,.35)">' + (u.email||'—') + '</div></td>' +
+      '<td>' + PROD_BADGE(u.product_type) + '</td>' +
+      '<td>' + STATUS_BADGE(u.subscription_status) + '</td>' +
+      '<td><span class="badge ' + (u.access_level==='full'?'b-green':'b-amber') + '">' + (u.access_level||'locked') + '</span></td>' +
+      '<td>' + (u.trial_day_num || '—') + '</td>' +
+      '<td>' + (u.created_at ? u.created_at.substring(0,10) : '—') + '</td>' +
+      '<td><button onclick="openUser(' + JSON.stringify(JSON.stringify(u)) + ')" class="btn-sm btn-ghost">Ver →</button></td>' +
+    '</tr>';
+  });
+  html += '</tbody></table></div>';
+  html += '<div style="font-size:11px;color:rgba(255,255,255,.25);margin-top:8px;padding:0 2px">' + users.length + ' usuario(s)</div>';
+  document.getElementById('usersContainer').innerHTML = html;
+}
+
+function filterUsers() { renderUsers(); }
+function setUserFilter(f, btn) {
+  _userFilter = f;
+  document.querySelectorAll('#userFilters .f-btn').forEach(function(b) { b.classList.remove('on'); });
+  btn.classList.add('on');
+  loadUsers();
+}
+
+// ── User detail modal ─────────────────────────────────────────────
+function openUser(uStr) {
+  var u = JSON.parse(uStr);
+  document.getElementById('modalUserName').textContent = u.full_name || u.email || 'Usuario';
+  var isReto = u.product_type === 'challenge_glutes' || u.product_type === 'challenge_belly';
+  var isPlan = u.product_type === 'custom_muscle_gain' || u.product_type === 'custom_fat_loss';
+  var rows = [
+    ['Email', u.email||'—'],
+    ['Producto', u.product_type||'—'],
+    ['Estado', u.subscription_status||'—'],
+    ['Acceso', u.access_level||'—'],
+    ['Día trial', u.trial_day_num||'—'],
+    ['Registro', u.created_at?.substring(0,10)||'—'],
+    ['Rol', u.is_admin ? '⚙️ Admin' : 'Usuario'],
+  ];
+  var html = rows.map(function(r) {
+    return '<div class="modal-row"><span class="modal-key">' + r[0] + '</span><span class="modal-val">' + r[1] + '</span></div>';
+  }).join('');
+  html += '<div class="modal-actions">';
+  if (isReto && u.subscription_status !== 'active') {
+    html += '<button onclick="activateReto(\'' + u.id + '\',\'' + u.product_type + '\')" class="btn-sm btn-green">✅ Activar reto ($32)</button>';
+  }
+  if (isPlan && u.subscription_status !== 'active') {
+    html += '<button onclick="activatePlan(\'' + u.id + '\',\'' + u.product_type + '\')" class="btn-sm btn-green">✅ Activar plan ($72)</button>';
+  }
+  if (u.subscription_status === 'active') {
+    html += '<button onclick="assignCommunity(\'' + u.id + '\')" class="btn-sm btn-amber">🌐 Asignar comunidad</button>';
+  }
+  html += '</div>';
+  document.getElementById('modalContent').innerHTML = html;
+  document.getElementById('userModal').classList.add('open');
+}
+function closeModal() { document.getElementById('userModal').classList.remove('open'); }
+
+// ── Manual activations ────────────────────────────────────────────
+function confirmAction(title, msg, fn) {
+  document.getElementById('confirmTitle').textContent = title;
+  document.getElementById('confirmMsg').textContent = msg;
+  document.getElementById('confirmYes').onclick = function() {
+    document.getElementById('confirmModal').classList.remove('open');
+    fn();
+  };
+  document.getElementById('confirmModal').classList.add('open');
+}
+
+async function activateReto(userId, productType) {
+  closeModal();
+  confirmAction(
+    'Activar reto completo',
+    '¿Activar acceso completo al reto por $32 USD para este usuario? Se actualizará subscription_status, access_level y se asignará comunidad.',
+    async function() {
+      try {
+        var adminId = localStorage.getItem('af-user-id');
+        // Uses security definer function — validates admin server-side
+        var { error: rpcErr } = await sb.rpc('admin_activate_challenge', {
+          p_target_user_id: userId, p_product_type: productType
+        });
+        if (rpcErr) throw rpcErr;
+        alert('✅ Reto activado correctamente.');
+        loadAll();
+      } catch(e) { alert('Error: ' + e.message); }
+    }
+  );
+}
+
+async function activatePlan(userId, productType) {
+  closeModal();
+  confirmAction(
+    'Activar plan personalizado',
+    '¿Activar plan personalizado de $72 USD/mes para este usuario? Se actualizará subscription_status, access_level y se asignará comunidad.',
+    async function() {
+      try {
+        var adminId = localStorage.getItem('af-user-id');
+        var { error: rpcErr } = await sb.rpc('admin_activate_plan', {
+          p_target_user_id: userId, p_product_type: productType
+        });
+        if (rpcErr) throw rpcErr;
+        alert('✅ Plan personalizado activado.');
+        loadAll();
+      } catch(e) { alert('Error: ' + e.message); }
+    }
+  );
+}
+
+async function assignCommunity(userId) {
+  closeModal();
+  try {
+    var adminId = localStorage.getItem('af-user-id');
+    await sb.from('community_memberships').upsert({ user_id: userId, status: 'active', joined_at: new Date().toISOString(), assigned_by: 'admin' }, { onConflict: 'user_id' });
+    await sb.from('admin_actions').insert({ admin_user_id: adminId, target_user_id: userId, action_type: 'community_assigned', metadata_json: { reason: 'manual_admin' } });
+    alert('✅ Comunidad asignada.');
+    loadKPIs();
+  } catch(e) { alert('Error: ' + e.message); }
+}
+
+// ── Payments ──────────────────────────────────────────────────────
+async function loadPayments() {
+  var cont = document.getElementById('paymentsContainer');
+  cont.innerHTML = '<div style="font-size:12px;color:rgba(255,255,255,.3);padding:12px">Cargando pagos…</div>';
+  try {
+    var { data, error } = await sb.from('payments').select('*').order('created_at',{ascending:false}).limit(50);
+    if (error) throw error;
+    if (!data?.length) { cont.innerHTML = '<div style="font-size:12px;color:rgba(255,255,255,.3);padding:14px">Sin pagos registrados.</div>'; return; }
+    var ST = { approved:'b-green', pending:'b-amber', needs_review:'b-amber', failed:'b-red', cancelled:'b-gray', refunded:'b-gray' };
+    var html = '<div class="table-wrap"><table><thead><tr><th>Email</th><th>Producto</th><th>Monto</th><th>Estado</th><th>Proveedor</th><th>Fecha</th></tr></thead><tbody>';
+    data.forEach(function(p) {
+      html += '<tr>' +
+        '<td style="font-size:11px">' + (p.email||'—') + '</td>' +
+        '<td>' + PROD_BADGE(p.product_type) + '</td>' +
+        '<td style="font-weight:700">$' + (p.amount||0) + ' ' + (p.currency||'USD') + '</td>' +
+        '<td><span class="badge ' + (ST[p.status]||'b-gray') + '">' + (p.status||'—') + '</span></td>' +
+        '<td style="font-size:11px;color:rgba(255,255,255,.4)">' + (p.provider||'—') + '</td>' +
+        '<td style="font-size:11px;color:rgba(255,255,255,.35)">' + (p.created_at?.substring(0,10)||'—') + '</td>' +
+      '</tr>';
+    });
+    html += '</tbody></table></div>';
+    cont.innerHTML = html;
+  } catch(e) { cont.innerHTML = '<div style="font-size:12px;color:rgba(239,68,68,.6);padding:12px">Error: ' + e.message + '</div>'; }
+}
+
+// ── Support ───────────────────────────────────────────────────────
+async function loadSupport() {
+  var cont = document.getElementById('supportContainer');
+  cont.innerHTML = '<div style="font-size:12px;color:rgba(255,255,255,.3);padding:12px">Cargando tickets…</div>';
+  try {
+    var q = sb.from('support_tickets').select('*').order('created_at',{ascending:false}).limit(60);
+    if (_supportFilter === 'open')     q = q.eq('status','open');
+    if (_supportFilter === 'urgent')   q = q.eq('priority','urgent');
+    if (_supportFilter === 'resolved') q = q.eq('status','resolved');
+    var { data, error } = await q;
+    if (error) throw error;
+    if (!data?.length) { cont.innerHTML = '<div style="font-size:12px;color:rgba(52,211,153,.6);padding:14px">✅ Sin tickets con este filtro.</div>'; return; }
+    var PR = { urgent:'b-red', high:'b-amber', medium:'b-purple', low:'b-gray' };
+    var html = '<div class="table-wrap"><table><thead><tr><th>Categoría</th><th>Prioridad</th><th>Estado</th><th>Mensaje</th><th>Fecha</th><th>Acción</th></tr></thead><tbody>';
+    data.forEach(function(t) {
+      html += '<tr>' +
+        '<td><span class="badge b-gray">' + (t.category||'otro') + '</span></td>' +
+        '<td><span class="badge ' + (PR[t.priority]||'b-gray') + '">' + (t.priority||'—') + '</span></td>' +
+        '<td><span class="badge ' + (t.status==='resolved'?'b-green':'b-amber') + '">' + (t.status||'—') + '</span></td>' +
+        '<td style="max-width:240px;overflow:hidden;text-overflow:ellipsis;font-size:11px;color:rgba(255,255,255,.55)">' + (t.message||'—').substring(0,80) + '</td>' +
+        '<td style="font-size:11px;color:rgba(255,255,255,.35)">' + (t.created_at?.substring(0,10)||'—') + '</td>' +
+        '<td><button onclick="resolveTicket(\'' + t.id + '\')" class="btn-sm btn-green" style="font-size:10px">✓ Resolver</button></td>' +
+      '</tr>';
+    });
+    html += '</tbody></table></div>';
+    cont.innerHTML = html;
+  } catch(e) { cont.innerHTML = '<div style="font-size:12px;color:rgba(239,68,68,.6);padding:12px">Error: ' + e.message + '</div>'; }
+}
+
+async function resolveTicket(id) {
+  try {
+    await sb.from('support_tickets').update({ status: 'resolved', resolved_at: new Date().toISOString() }).eq('id', id);
+    loadSupport(); loadKPIs();
+  } catch(e) { alert('Error: ' + e.message); }
+}
+
+function setSupportFilter(f, btn) {
+  _supportFilter = f;
+  document.querySelectorAll('#tab-support .f-btn').forEach(function(b) { b.classList.remove('on'); });
+  btn.classList.add('on');
+  loadSupport();
+}
+
+// ── Community ─────────────────────────────────────────────────────
+async function loadCommunity() {
+  var cont = document.getElementById('communityContainer');
+  cont.innerHTML = '<div style="font-size:12px;color:rgba(255,255,255,.3);padding:12px">Cargando…</div>';
+  try {
+    var [members, paidUsers] = await Promise.all([
+      sb.from('community_memberships').select('user_id,status,joined_at,assigned_by').eq('status','active').limit(50),
+      sb.from('profiles').select('id,email,full_name,product_type,subscription_status').eq('subscription_status','active').limit(50),
+    ]);
+    var memberIds = new Set((members.data||[]).map(function(m) { return m.user_id; }));
+    var gaps = (paidUsers.data||[]).filter(function(u) { return !memberIds.has(u.id); });
+    var html = '<div class="kpi-grid" style="margin-bottom:20px">' +
+      '<div class="kpi"><div class="kpi-label">Miembros activos</div><div class="kpi-val">' + (members.data?.length||0) + '</div></div>' +
+      '<div class="kpi"><div class="kpi-label">Pagados sin comunidad</div><div class="kpi-val" style="color:rgba(245,158,11,.9)">' + gaps.length + '</div></div>' +
+    '</div>';
+    if (gaps.length > 0) {
+      html += '<div class="alert-bar amber" style="margin-bottom:12px">⚠️ ' + gaps.length + ' usuario(s) con pago activo sin comunidad asignada.</div>';
+      html += '<div class="table-wrap"><table><thead><tr><th>Usuario</th><th>Producto</th><th>Estado</th><th>Acción</th></tr></thead><tbody>';
+      gaps.forEach(function(u) {
+        html += '<tr><td><div style="font-weight:600">' + (u.full_name||u.email?.split('@')[0]||'—') + '</div><div style="font-size:10px;color:rgba(255,255,255,.3)">' + (u.email||'') + '</div></td>' +
+          '<td>' + PROD_BADGE(u.product_type) + '</td>' +
+          '<td>' + STATUS_BADGE(u.subscription_status) + '</td>' +
+          '<td><button onclick="assignCommunity(\'' + u.id + '\')" class="btn-sm btn-amber">🌐 Asignar</button></td></tr>';
+      });
+      html += '</tbody></table></div>';
+    } else {
+      html += '<div class="alert-bar green">✅ Todos los usuarios activos tienen comunidad asignada.</div>';
+    }
+    cont.innerHTML = html;
+  } catch(e) { cont.innerHTML = '<div style="font-size:12px;color:rgba(239,68,68,.6);padding:12px">Error: ' + e.message + '</div>'; }
+}
+
+// ── Admin actions log ─────────────────────────────────────────────
+async function loadActions() {
+  var cont = document.getElementById('actionsContainer');
+  cont.innerHTML = '<div style="font-size:12px;color:rgba(255,255,255,.3);padding:12px">Cargando historial…</div>';
+  try {
+    var { data, error } = await sb.from('admin_actions').select('*').order('created_at',{ascending:false}).limit(40);
+    if (error) throw error;
+    if (!data?.length) { cont.innerHTML = '<div style="font-size:12px;color:rgba(255,255,255,.3);padding:14px">Sin acciones admin registradas.</div>'; return; }
+    var AT = { manual_activation:'b-green', community_assigned:'b-purple', payment_marked_approved:'b-green', support_ticket_resolved:'b-amber', access_level_changed:'b-amber' };
+    var html = '<div class="table-wrap"><table><thead><tr><th>Acción</th><th>Producto</th><th>Estado nuevo</th><th>Fecha</th></tr></thead><tbody>';
+    data.forEach(function(a) {
+      html += '<tr>' +
+        '<td><span class="badge ' + (AT[a.action_type]||'b-gray') + '">' + (a.action_type||'—').replace(/_/g,' ') + '</span></td>' +
+        '<td>' + PROD_BADGE(a.product_type) + '</td>' +
+        '<td style="font-size:11px">' + (a.new_status||'—') + '</td>' +
+        '<td style="font-size:11px;color:rgba(255,255,255,.35)">' + (a.created_at?.substring(0,16).replace('T',' ')||'—') + '</td>' +
+      '</tr>';
+    });
+    html += '</tbody></table></div>';
+    cont.innerHTML = html;
+  } catch(e) { cont.innerHTML = '<div style="font-size:12px;color:rgba(239,68,68,.6);padding:12px">Error: ' + e.message + '</div>'; }
+}
+
+// ── Main load ─────────────────────────────────────────────────────
+async function loadAll() {
+  await Promise.all([loadKPIs(), loadAlerts(), loadInsights()]);
+}
+
+
+// ── Health Check ──────────────────────────────────────────────────
+async function loadHealth() {
+  set('h-version', window.AF_BUILD?.version || 'unknown');
+  set('h-frontend', '✅');
+  try {
+    var since24h = new Date(Date.now() - 86400000).toISOString();
+    var [dbCheck, authCheck, errors24h, criticals] = await Promise.all([
+      sb.from('profiles').select('id',{count:'exact',head:true}).limit(1),
+      sb.auth.getSession(),
+      sb.from('app_errors').select('id',{count:'exact',head:true}).gte('created_at',since24h),
+      sb.from('app_errors').select('id',{count:'exact',head:true}).eq('severity','critical').gte('created_at',since24h),
+    ]);
+    set('h-db', dbCheck.error ? '❌' : '✅');
+    set('h-auth', authCheck.data?.session ? '✅' : '⚠️');
+    var errN = errors24h.count || 0;
+    var critN = criticals.count || 0;
+    set('h-errors', errN > 10 ? '⚠️ ' + errN : '✅ ' + errN);
+    set('h-critical', critN > 0 ? '🔴 ' + critN : '✅ 0');
+  } catch(e) {
+    set('h-db', '❌'); set('h-auth', '—');
+  }
+  // Load error log
+  var cont = document.getElementById('errorsContainer');
+  try {
+    var { data } = await sb.from('app_errors').select('*').order('created_at',{ascending:false}).limit(10);
+    if (!data?.length) { cont.innerHTML = '<div style="font-size:12px;color:rgba(52,211,153,.6)">✅ Sin errores recientes.</div>'; return; }
+    var SEV = { critical:'b-red', error:'b-red', warning:'b-amber', info:'b-gray' };
+    cont.innerHTML = '<div class="table-wrap"><table><thead><tr><th>Severidad</th><th>Ruta</th><th>Mensaje</th><th>Fecha</th></tr></thead><tbody>' +
+    data.map(function(e) {
+      return '<tr><td><span class="badge ' + (SEV[e.severity]||'b-gray') + '">' + (e.severity||'—') + '</span></td>' +
+        '<td style="font-size:11px;color:rgba(255,255,255,.45)">' + (e.route||'—').substring(0,30) + '</td>' +
+        '<td style="font-size:11px;max-width:220px;overflow:hidden;text-overflow:ellipsis">' + (e.error_message||'—').substring(0,80) + '</td>' +
+        '<td style="font-size:11px;color:rgba(255,255,255,.3)">' + (e.created_at?.substring(0,16).replace('T',' ')||'—') + '</td></tr>';
+    }).join('') + '</tbody></table></div>';
+  } catch(err) { cont.innerHTML = '<div style="font-size:12px;color:rgba(239,68,68,.6)">Error cargando.</div>'; }
+}
+
+// ── Today report ──────────────────────────────────────────────────
+async function loadBeta() {
+  var since = new Date(Date.now() - 7*86400000).toISOString();
+  try {
+    var [signups, onboarded, meals, workouts, waClicks, errs] = await Promise.all([
+      sb.from('profiles').select('id',{count:'exact',head:true}).gte('created_at',since),
+      sb.from('profiles').select('id',{count:'exact',head:true}).eq('onboarding_completed',true).gte('created_at',since),
+      sb.from('nutrition_logs').select('id',{count:'exact',head:true}).gte('created_at',since),
+      sb.from('app_events').select('id',{count:'exact',head:true}).eq('event_name','workout_started').gte('created_at',since),
+      sb.from('app_events').select('id',{count:'exact',head:true}).eq('event_name','whatsapp_clicked').gte('created_at',since),
+      sb.from('app_errors').select('id',{count:'exact',head:true}).gte('created_at', new Date(Date.now()-86400000).toISOString()),
+    ]);
+    set('b-signups',  signups.count || 0);
+    set('b-onboarded',onboarded.count || 0);
+    set('b-meals',    meals.count || 0);
+    set('b-workouts', workouts.count || 0);
+    set('b-wa',       waClicks.count || 0);
+    var errN = errs.count || 0;
+    document.getElementById('b-errors').textContent = errN;
+    document.getElementById('b-errors').style.color = errN > 0 ? 'rgba(239,68,68,.9)' : 'rgba(52,211,153,.9)';
+  } catch(e) { console.warn('loadBeta:', e.message); }
+
+  // Load user checklist
+  var listEl = document.getElementById('betaUserList');
+  try {
+    var { data: users } = await sb.from('profiles')
+      .select('id,email,full_name,product_type,onboarding_completed,subscription_status,created_at')
+      .gte('created_at', since)
+      .order('created_at',{ascending:false}).limit(20);
+    if (!users?.length) { listEl.innerHTML = '<div style="font-size:12px;color:rgba(255,255,255,.25)">Sin usuarios beta todavía.</div>'; return; }
+    listEl.innerHTML = '<div class="table-wrap"><table><thead><tr><th>Usuario</th><th>Producto</th><th>Onboarding</th><th>Estado</th><th>Registrado</th></tr></thead><tbody>' +
+    users.map(function(u) {
+      var onbIcon = u.onboarding_completed ? '✅' : '⏳';
+      var statusBadge = u.subscription_status === 'active' ? '<span class="badge b-green">active</span>'
+        : u.subscription_status === 'trialing' ? '<span class="badge b-blue">trial</span>'
+        : '<span class="badge b-amber">'+( u.subscription_status||'—')+'</span>';
+      return '<tr><td style="font-size:11px">'+(u.full_name||u.email||'—').substring(0,20)+'</td><td style="font-size:11px">'+(u.product_type||'—')+'</td><td style="text-align:center">'+onbIcon+'</td><td>'+statusBadge+'</td><td style="font-size:10px;color:rgba(255,255,255,.3)">'+(u.created_at?.substring(0,10)||'—')+'</td></tr>';
+    }).join('') + '</tbody></table></div>';
+  } catch(e) { listEl.innerHTML = '<div style="font-size:12px;color:rgba(239,68,68,.6)">Error cargando usuarios.</div>'; }
+}
+
+async function loadToday() {
+  var today = new Date().toISOString().split('T')[0];
+  var todayStart = today + 'T00:00:00.000Z';
+  try {
+    var [sigs, paid, pend, urgent, meals, workouts, expired, errors] = await Promise.all([
+      sb.from('profiles').select('id',{count:'exact',head:true}).gte('created_at',todayStart),
+      sb.from('payments').select('id',{count:'exact',head:true}).eq('status','approved').gte('created_at',todayStart),
+      sb.from('payments').select('id',{count:'exact',head:true}).eq('status','pending').gte('created_at',todayStart),
+      sb.from('support_tickets').select('id',{count:'exact',head:true}).eq('priority','urgent').eq('status','open'),
+      sb.from('nutrition_logs').select('id',{count:'exact',head:true}).gte('created_at',todayStart),
+      sb.from('app_events').select('id',{count:'exact',head:true}).eq('event_name','workout_started').gte('created_at',todayStart),
+      sb.from('profiles').select('id',{count:'exact',head:true}).eq('subscription_status','expired').gte('updated_at',todayStart),
+      sb.from('app_errors').select('id',{count:'exact',head:true}).in('severity',['error','critical']).gte('created_at',todayStart),
+    ]);
+    set('t-signups', sigs.count||0); set('t-paid', paid.count||0);
+    set('t-pending', pend.count||0); set('t-urgent', urgent.count||0);
+    set('t-meals', meals.count||0); set('t-workouts', workouts.count||0);
+    set('t-expired', expired.count||0);
+    var errN = errors.count || 0;
+    document.getElementById('t-errors').textContent = errN;
+    document.getElementById('t-errors').style.color = errN > 0 ? 'rgba(239,68,68,.9)' : 'rgba(52,211,153,.9)';
+  } catch(e) { console.warn('Today report error:', e.message); }
+}
+
+document.addEventListener('DOMContentLoaded', loadAll);
+
+// Override showTab to lazy-load health/today
+var _origShowTab = showTab;
+showTab = function(id) {
+  _origShowTab(id);
+  if (id === 'health') loadHealth();
+  if (id === 'today')  loadToday();
+};
+</script>
+
+<!-- ─────────────────────────────────────────────────────────────
+     TAB: Educación de Arju — Knowledge Center
+     ───────────────────────────────────────────────────────────── -->
+<div id="tab-knowledge" class="panel">
+  <div class="sec-title">🧠 Educación de Arju</div>
+  <p style="font-size:13px;color:rgba(255,255,255,.45);margin:-8px 0 20px;line-height:1.5">
+    Carga información propia de ArjunaFit para que Arju la use al responder. Sube solo contenido
+    propio, autorizado o de libre uso. Material externo con copyright: usa solo notas o resúmenes propios.
+  </p>
+
+  <!-- Stats row -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px">
+    <div class="stat-card">
+      <div class="stat-number" id="kn-total-docs">—</div>
+      <div class="stat-label">Documentos</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="kn-total-chunks">—</div>
+      <div class="stat-label">Chunks activos</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" id="kn-last-updated">—</div>
+      <div class="stat-label">Última actualización</div>
+    </div>
+  </div>
+
+  <!-- Two columns: Add doc | List docs -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px">
+
+    <!-- ADD DOCUMENT -->
+    <div style="background:#130d22;border:1px solid rgba(167,139,250,.14);border-radius:16px;padding:20px">
+      <div style="font-size:14px;font-weight:700;color:#f5f3ff;margin-bottom:16px">➕ Agregar conocimiento</div>
+
+      <div style="margin-bottom:12px">
+        <label style="font-size:11px;color:rgba(255,255,255,.45);display:block;margin-bottom:4px">Título *</label>
+        <input id="kn-title" type="text" placeholder="Ej: Principios de nutrición ArjunaFit"
+          style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;
+                 padding:10px 12px;color:#fff;font-size:13px;box-sizing:border-box">
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+        <div>
+          <label style="font-size:11px;color:rgba(255,255,255,.45);display:block;margin-bottom:4px">Categoría *</label>
+          <select id="kn-category"
+            style="width:100%;background:#1a0f2e;border:1px solid rgba(255,255,255,.1);border-radius:10px;
+                   padding:9px 12px;color:#fff;font-size:13px">
+            <option value="general">General</option>
+            <option value="brand_voice">Voz de marca</option>
+            <option value="commercial_rules">Reglas comerciales</option>
+            <option value="training">Entrenamiento</option>
+            <option value="nutrition">Nutrición</option>
+            <option value="recipes">Recetas</option>
+            <option value="challenge_glutes">Reto glúteos</option>
+            <option value="challenge_belly">Reto pancita</option>
+            <option value="custom_muscle_gain">Masa muscular</option>
+            <option value="custom_fat_loss">Reducción grasa</option>
+            <option value="safety">Seguridad</option>
+            <option value="support">Soporte</option>
+            <option value="objections">Objeciones</option>
+            <option value="founder_notes">Notas fundador</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:11px;color:rgba(255,255,255,.45);display:block;margin-bottom:4px">Idioma</label>
+          <select id="kn-language"
+            style="width:100%;background:#1a0f2e;border:1px solid rgba(255,255,255,.1);border-radius:10px;
+                   padding:9px 12px;color:#fff;font-size:13px">
+            <option value="es">Español</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-bottom:12px">
+        <label style="font-size:11px;color:rgba(255,255,255,.45);display:block;margin-bottom:4px">Fuente / Autor</label>
+        <input id="kn-source" type="text" placeholder="Ej: ArjunaFit interno, Fundador, Recurso propio"
+          style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;
+                 padding:10px 12px;color:#fff;font-size:13px;box-sizing:border-box">
+      </div>
+
+      <div style="margin-bottom:12px">
+        <label style="font-size:11px;color:rgba(255,255,255,.45);display:block;margin-bottom:4px">Tags (separados por coma)</label>
+        <input id="kn-tags" type="text" placeholder="Ej: proteína, glúteos, técnica"
+          style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;
+                 padding:10px 12px;color:#fff;font-size:13px;box-sizing:border-box">
+      </div>
+
+      <!-- Content type tabs -->
+      <div style="display:flex;gap:8px;margin-bottom:10px">
+        <button id="kn-type-text" onclick="knSetType('text')"
+          style="padding:6px 14px;border-radius:8px;border:1px solid rgba(167,139,250,.5);
+                 background:rgba(139,92,246,.25);color:#c4b5fd;font-size:12px;cursor:pointer">
+          ✏️ Texto
+        </button>
+        <button id="kn-type-file" onclick="knSetType('file')"
+          style="padding:6px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.1);
+                 background:transparent;color:rgba(255,255,255,.45);font-size:12px;cursor:pointer">
+          📎 Archivo .txt/.md/.json
+        </button>
+      </div>
+
+      <!-- Text area -->
+      <div id="kn-text-area" style="margin-bottom:12px">
+        <textarea id="kn-content" rows="8" placeholder="Pega aquí el contenido que quieres que Arju aprenda..."
+          style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;
+                 padding:10px 12px;color:#fff;font-size:12px;resize:vertical;box-sizing:border-box;line-height:1.6">
+        </textarea>
+      </div>
+
+      <!-- File area (hidden by default) -->
+      <div id="kn-file-area" style="display:none;margin-bottom:12px">
+        <label style="font-size:11px;color:rgba(255,255,255,.45);display:block;margin-bottom:6px">
+          Archivo (.txt, .md, .json — máx 500KB)
+        </label>
+        <input id="kn-file" type="file" accept=".txt,.md,.json"
+          style="color:rgba(255,255,255,.6);font-size:12px">
+        <div id="kn-file-preview" style="display:none;margin-top:8px;padding:8px 12px;
+          background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:8px;
+          font-size:11px;color:#86efac"></div>
+      </div>
+
+      <button onclick="knSaveDocument()"
+        style="width:100%;padding:12px;background:linear-gradient(135deg,#8b5cf6,#a855f7,#ec4899);
+               border:none;border-radius:12px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;
+               box-shadow:0 8px 22px rgba(168,85,247,.22)">
+        💾 Guardar y procesar
+      </button>
+
+      <div id="kn-save-status" style="margin-top:10px;font-size:12px;text-align:center;min-height:18px"></div>
+    </div>
+
+    <!-- DOCUMENT LIST -->
+    <div style="background:#130d22;border:1px solid rgba(167,139,250,.14);border-radius:16px;padding:20px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div style="font-size:14px;font-weight:700;color:#f5f3ff">📚 Documentos cargados</div>
+        <button onclick="knLoadDocuments()"
+          style="padding:6px 14px;border-radius:8px;background:rgba(255,255,255,.06);
+                 border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.6);font-size:11px;cursor:pointer">
+          Actualizar
+        </button>
+      </div>
+      <div id="kn-docs-list" style="max-height:480px;overflow-y:auto"></div>
+    </div>
+  </div>
+
+  <!-- TEST PANEL -->
+  <div style="background:#130d22;border:1px solid rgba(167,139,250,.14);border-radius:16px;padding:20px">
+    <div style="font-size:14px;font-weight:700;color:#f5f3ff;margin-bottom:14px">🔍 Probar conocimiento de Arju</div>
+    <div style="display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:end;margin-bottom:14px">
+      <div>
+        <label style="font-size:11px;color:rgba(255,255,255,.45);display:block;margin-bottom:4px">Pregunta de prueba</label>
+        <input id="kn-test-query" type="text" placeholder="Ej: ¿qué comer antes de entrenar glúteos?"
+          style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;
+                 padding:10px 12px;color:#fff;font-size:13px;box-sizing:border-box">
+      </div>
+      <div>
+        <label style="font-size:11px;color:rgba(255,255,255,.45);display:block;margin-bottom:4px">Modo</label>
+        <select id="kn-test-mode"
+          style="background:#1a0f2e;border:1px solid rgba(255,255,255,.1);border-radius:10px;
+                 padding:9px 12px;color:#fff;font-size:12px">
+          <option value="daily_coach">Coach diario</option>
+          <option value="nutrition_coach">Nutrición</option>
+          <option value="workout_session">Entreno</option>
+          <option value="recipe_coach">Recetas</option>
+          <option value="support">Soporte</option>
+        </select>
+      </div>
+      <button onclick="knTestSearch()"
+        style="padding:10px 18px;background:linear-gradient(135deg,#8b5cf6,#ec4899);border:none;
+               border-radius:10px;color:#fff;font-size:12px;font-weight:700;cursor:pointer">
+        🔍 Buscar
+      </button>
+    </div>
+    <div id="kn-test-results" style="min-height:100px"></div>
+  </div>
+</div>
+
+<script src="/js/admin-knowledge.js"></script>
+<script src="/js/core/arju-knowledge.js"></script>
+</body>
+</html>

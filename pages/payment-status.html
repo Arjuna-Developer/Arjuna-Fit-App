@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32-v2.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#6D28FF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ArjunaFit">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="af-version" content="mini-beta-day1-war-room-v1">
+<title>Estado de pago · ArjunaFit</title>
+<link rel="stylesheet" href="/assets/visual-system.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0c0714;--primary:#7c3aed;--pri-glow:rgba(124,58,237,.35);--pri-lite:#c4b5fd;--accent:#ec4899;--text-1:#f1f0f4;--text-3:rgba(240,238,248,.45);--r:16px}
+html,body{background:var(--bg);color:var(--text-1);font-family:'Outfit',sans-serif;min-height:100dvh}
+.page{max-width:430px;margin:0 auto;padding:48px 20px;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:20px}
+.status-icon{font-size:60px;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.status-icon.static{animation:none}
+h1{font-size:22px;font-weight:800;letter-spacing:-.02em}
+p{font-size:14px;color:var(--text-3);line-height:1.75;max-width:300px}
+.btn-main{width:100%;max-width:320px;padding:14px;border-radius:var(--r);border:none;cursor:pointer;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;font-family:'Outfit',sans-serif;font-size:14px;font-weight:800;box-shadow:0 6px 24px var(--pri-glow)}
+.btn-sec{width:100%;max-width:320px;padding:12px;border-radius:13px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:rgba(255,255,255,.45);font-family:'Outfit',sans-serif;font-size:13px;cursor:pointer}
+.product-badge{background:rgba(124,58,237,.1);border:1px solid rgba(196,181,253,.2);border-radius:14px;padding:12px 18px;font-size:13px;font-weight:700;color:var(--pri-lite)}
+.community-note{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.15);border-radius:14px;padding:12px 16px;font-size:13px;color:rgba(52,211,153,.8)}
+.spinner{width:40px;height:40px;border:3px solid rgba(124,58,237,.2);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="page" id="page">
+  <div class="spinner" id="loader"></div>
+  <h1 id="title">Verificando pago…</h1>
+  <p id="copy">Esto puede tomar unos segundos.</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/js/core/auth-bootstrap.js"></script>
+<script src="/js/core/ops-config.js"></script>
+<script src="/js/core/analytics.js"></script>
+<script>
+'use strict';
+
+const SUPABASE_URL = 'https://egswsqymkxmbtcpnozcq.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM';
+const _sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const PRODUCT_NAMES = {
+  challenge_glutes:   'Reto de glúteos',
+  challenge_belly:    'Reto para bajar la pancita',
+  custom_muscle_gain: 'Aumento de masa muscular',
+  custom_fat_loss:    'Reducción de porcentaje graso',
+};
+
+if (window.AF) AF.track('payment_success_page_viewed', {
+  product: localStorage.getItem('af-product-type') || '',
+});
+
+function render(state, productType, planName) {
+  var page = document.getElementById('page');
+  var loader = document.getElementById('loader');
+  var title = document.getElementById('title');
+  var copy = document.getElementById('copy');
+
+  if (state === 'approved') {
+    page.innerHTML = [
+      '<div class="status-icon static">✅</div>',
+      '<h1>Pago confirmado</h1>',
+      '<p>Tu acceso ya está activo. ' + (productType && productType.startsWith('challenge_') ? 'Tu progreso se conserva.' : 'Vamos a preparar tu plan.') + '</p>',
+      planName ? '<div class="product-badge">✦ ' + planName + '</div>' : '',
+      '<div class="community-note">🤝 También quedaste dentro de la comunidad gratuita ArjunaFit.</div>',
+      '<button class="btn-main" onclick="goToApp(\'' + productType + '\')">',
+        productType && productType.startsWith('challenge_') ? 'Continuar mi reto →' : 'Preparar mi plan →',
+      '</button>',
+    ].join('');
+    if (window.AF) AF.track('payment_status_resolved_approved', { product: productType });
+  } else if (state === 'pending') {
+    page.innerHTML = [
+      '<div class="spinner"></div>',
+      '<h1>Validando tu pago</h1>',
+      '<p>Esto puede tardar unos minutos. Tu acceso se activará cuando confirmemos el pago.</p>',
+      '<button class="btn-main" onclick="checkStatus()">Actualizar estado</button>',
+      '<button class="btn-sec" onclick="window.location.href=\'/\'">Ir al inicio</button>',
+    ].join('');
+    if (window.AF) AF.track('payment_status_resolved_pending', { product: productType });
+  } else {
+    page.innerHTML = [
+      '<div class="status-icon static">❌</div>',
+      '<h1>No pudimos confirmar el pago</h1>',
+      '<p>Revisa tu método de pago e intenta nuevamente. Si el problema persiste, habla con Arjuna.</p>',
+      '<button class="btn-main" onclick="window.history.back()">Intentar nuevamente</button>',
+      '<a href="' + (window.AF_Support ? AF_Support.whatsappUrl : 'https://wa.link/hteek6') + '" target="_blank" style="font-size:12px;color:rgba(255,255,255,.35);text-decoration:none">Hablar con Arjuna</a>',
+    ].join('');
+    if (window.AF) AF.track('payment_status_resolved_failed', { product: productType });
+  }
+}
+
+function goToApp(productType) {
+  if (!productType || productType.startsWith('challenge_')) {
+    window.location.href = localStorage.getItem('af-onboarding-completed') === '1'
+      ? '/pages/dashboard.html'
+      : '/pages/onboarding.html';
+  } else {
+    window.location.href = localStorage.getItem('af-custom-plan-intake')
+      ? '/pages/dashboard.html'
+      : '/pages/custom-plan-intake.html';
+  }
+}
+
+async function checkStatus() {
+  var productType = localStorage.getItem('af-product-type') || '';
+  var planName    = PRODUCT_NAMES[productType] || '';
+  var paid        = localStorage.getItem('af-paid') === '1';
+  var status      = localStorage.getItem('af-subscription-status') || '';
+
+  if (window.AF) AF.track('payment_status_refresh_clicked', { product: productType });
+
+  // Check localStorage first (set by webhook via complete-account or direct)
+  if (paid || status === 'active') {
+    render('approved', productType, planName);
+    return;
+  }
+
+  // Try Supabase
+  try {
+    var { data: { session } } = await _sb.auth.getSession();
+    if (session?.user?.id) {
+      var { data: profile } = await _sb
+        .from('profiles')
+        .select('subscription_status, access_level, paid_amount')
+        .eq('id', session.user.id)
+        .maybeSingle();
+
+      if (profile?.subscription_status === 'active' || profile?.access_level === 'full') {
+        localStorage.setItem('af-paid', '1');
+        localStorage.setItem('af-subscription-status', 'active');
+        render('approved', productType, planName);
+      } else if (profile?.subscription_status === 'pending' || profile?.subscription_status === 'payment_required') {
+        render('pending', productType, planName);
+      } else {
+        render('pending', productType, planName); // default to pending while webhook may be in flight
+      }
+    } else {
+      // No session — check localStorage payment status
+      render(paid ? 'approved' : 'pending', productType, planName);
+    }
+  } catch(e) {
+    console.error('Status check error:', e.message);
+    render('pending', productType, planName);
+  }
+}
+
+// Auto-check on load
+checkStatus();
+// Support link
+document.addEventListener('DOMContentLoaded', function() {
+  var pg = document.getElementById('page');
+  if (!pg) return;
+  var helpLink = document.createElement('div');
+  helpLink.style.cssText = 'text-align:center;margin-top:14px';
+  var a = document.createElement('a');
+  a.href = '/pages/help.html?cat=pague_sin_acceso';
+  a.textContent = '¿Necesitas ayuda con tu pago?';
+  a.style.cssText = 'font-size:12px;color:rgba(255,255,255,.3);text-decoration:none';
+  a.onclick = function() { if (window.AF) AF.track('payment_support_clicked'); };
+  helpLink.appendChild(a);
+  pg.appendChild(helpLink);
+});
+
+// Re-check every 10s while page is open (webhook may arrive late)
+setInterval(function() {
+  var status = localStorage.getItem('af-subscription-status');
+  if (status !== 'active') checkStatus();
+}, 10000);
+</script>
+</body>
+</html>

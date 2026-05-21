@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32-v2.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#6D28FF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ArjunaFit">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="af-version" content="mini-beta-day1-war-room-v1">
+<title>Seguimiento · Admin ArjunaFit</title>
+<link rel="stylesheet" href="/assets/visual-system.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0c0714;--card:#130d22;--primary:#7c3aed;--pri-lite:#c4b5fd;--text-1:#f1f0f4;--text-3:rgba(240,238,248,.45);--r:14px;--green:rgba(52,211,153,.8);--amber:rgba(245,158,11,.8);--red:rgba(239,68,68,.8)}
+html,body{background:var(--bg);color:var(--text-1);font-family:'Outfit',sans-serif;min-height:100dvh}
+.page{max-width:960px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:20px;font-weight:800;margin-bottom:16px}
+
+/* Filters */
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
+.f-btn{padding:6px 12px;border-radius:16px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:var(--text-3);font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;cursor:pointer}
+.f-btn.active{background:rgba(124,58,237,.2);border-color:rgba(196,181,253,.35);color:var(--pri-lite)}
+
+/* Contact table */
+.contacts-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:24px}
+.contacts-table th{text-align:left;padding:8px 10px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.3);border-bottom:1px solid rgba(255,255,255,.06)}
+.contacts-table td{padding:10px 10px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top}
+.contacts-table tr:hover td{background:rgba(255,255,255,.02);cursor:pointer}
+.intent-badge{display:inline-block;padding:2px 7px;border-radius:6px;font-size:10px;font-weight:700}
+.ib-high{background:rgba(239,68,68,.15);color:var(--red)}
+.ib-med{background:rgba(245,158,11,.12);color:var(--amber)}
+.ib-low{background:rgba(255,255,255,.06);color:rgba(255,255,255,.35)}
+.ib-very-high{background:rgba(124,58,237,.2);color:var(--pri-lite)}
+.stage-badge{display:inline-block;padding:2px 7px;border-radius:6px;font-size:10px;background:rgba(255,255,255,.05);color:rgba(255,255,255,.5)}
+.status-dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:5px}
+.sd-new{background:rgba(196,181,253,.6)}.sd-contacted{background:var(--amber)}.sd-won{background:var(--green)}.sd-lost{background:var(--red)}.sd-active{background:rgba(96,165,250,.7)}
+
+/* Detail panel */
+.detail-panel{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:var(--r);padding:20px;display:none}
+.detail-panel.show{display:block}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.detail-field{font-size:12px}
+.df-label{color:var(--text-3);margin-bottom:3px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.df-value{color:var(--text-1);font-weight:600}
+.section-mini{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.25);margin:16px 0 8px}
+
+/* Suggested messages */
+.msg-card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:11px;padding:13px;margin-bottom:8px;font-size:12px;color:var(--text-3);line-height:1.7;position:relative}
+.msg-copy-btn{position:absolute;top:10px;right:10px;padding:4px 9px;background:rgba(124,58,237,.15);border:1px solid rgba(196,181,253,.2);border-radius:7px;color:var(--pri-lite);font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;cursor:pointer}
+
+/* Actions */
+.action-bar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
+.act-btn{padding:7px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:rgba(255,255,255,.6);font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;cursor:pointer}
+.act-btn.primary{background:rgba(124,58,237,.2);border-color:rgba(196,181,253,.3);color:var(--pri-lite)}
+.act-btn.green{background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.2);color:var(--green)}
+.act-btn.red{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.2);color:var(--red)}
+
+/* Note form */
+textarea.note-input{width:100%;padding:10px 12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;color:var(--text-1);font-family:'Outfit',sans-serif;font-size:12px;min-height:70px;resize:vertical;outline:none;margin-bottom:8px}
+.followup-row{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.followup-row button{padding:6px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:rgba(255,255,255,.5);font-family:'Outfit',sans-serif;font-size:11px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="page">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <h1>👥 Seguimiento comercial</h1>
+    <a href="/pages/growth.html" style="font-size:12px;color:var(--text-3);text-decoration:none">← Crecimiento</a>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <button class="f-btn active" onclick="loadContacts('all',this)">Todos</button>
+    <button class="f-btn" onclick="loadContacts('high_intent',this)">🔥 Alta intención</button>
+    <button class="f-btn" onclick="loadContacts('trial_d6d7',this)">⏳ Trial día 6/7</button>
+    <button class="f-btn" onclick="loadContacts('unlock',this)">🔓 Tocó desbloquear</button>
+    <button class="f-btn" onclick="loadContacts('custom_pending',this)">💳 Personalizado sin pagar</button>
+    <button class="f-btn" onclick="loadContacts('payment_pending',this)">🔄 Pago pendiente</button>
+    <button class="f-btn" onclick="loadContacts('followup_today',this)">📅 Seguimiento hoy</button>
+    <button class="f-btn" onclick="loadContacts('won',this)">✅ Ganados</button>
+  </div>
+
+  <div id="contactCount" style="font-size:11px;color:rgba(255,255,255,.25);margin-bottom:10px">Cargando...</div>
+
+  <!-- Contact list -->
+  <div style="background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);overflow:hidden;margin-bottom:20px">
+    <table class="contacts-table">
+      <thead><tr>
+        <th>Contacto</th><th>Producto</th><th>Etapa</th><th>Intención</th><th>Estado</th><th>Último evento</th><th>Seguimiento</th>
+      </tr></thead>
+      <tbody id="contactsBody"><tr><td colspan="7" style="color:var(--text-3);padding:20px;text-align:center">Cargando contactos...</td></tr></tbody>
+    </table>
+  </div>
+
+  <!-- Detail panel -->
+  <div class="detail-panel" id="detailPanel">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <h2 id="detailName" style="font-size:16px;font-weight:800">—</h2>
+      <button onclick="closeDetail()" style="background:none;border:none;color:var(--text-3);cursor:pointer;font-size:18px">✕</button>
+    </div>
+    <div class="detail-grid" id="detailGrid"></div>
+
+    <!-- Actions -->
+    <div class="action-bar" id="actionBar"></div>
+
+    <!-- Note form -->
+    <div class="section-mini">Agregar nota</div>
+    <textarea class="note-input" id="noteInput" placeholder="Objeción, status, seguimiento..."></textarea>
+    <div style="display:flex;gap:8px;margin-bottom:16px">
+      <select id="noteType" style="padding:7px 10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:9px;color:var(--text-1);font-family:Outfit,sans-serif;font-size:11px">
+        <option value="general">General</option>
+        <option value="follow_up">Seguimiento</option>
+        <option value="payment">Pago</option>
+        <option value="objection">Objeción</option>
+        <option value="support">Soporte</option>
+        <option value="manual_activation">Activación manual</option>
+      </select>
+      <button onclick="addNote()" class="act-btn primary">Guardar nota</button>
+    </div>
+
+    <!-- Follow-up -->
+    <div class="section-mini">Próximo seguimiento</div>
+    <div class="followup-row" id="followupRow"></div>
+
+    <!-- Suggested messages -->
+    <div class="section-mini">Mensajes sugeridos</div>
+    <div id="suggestedMessages"></div>
+
+    <!-- Notes history -->
+    <div class="section-mini">Notas</div>
+    <div id="notesHistory"><div style="font-size:12px;color:var(--text-3)">Sin notas.</div></div>
+  </div>
+
+  <div style="margin-top:20px;text-align:center">
+    <a href="/pages/admin-beta.html" style="font-size:12px;color:rgba(255,255,255,.3);text-decoration:none">← Admin principal</a>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+'use strict';
+const sb = window.supabase.createClient(
+  'https://egswsqymkxmbtcpnozcq.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM'
+);
+
+var currentContactId = null;
+var currentContact   = null;
+
+var STAGE_LABELS = { landing_visitor:'Landing', product_selected:'Eligió producto', signup_started:'Inicio registro', signup_completed:'Registrado', onboarding_completed:'Onboarding', day1_activated:'Día 1 activo', trial_day6:'Trial día 6', trial_day7:'Trial día 7', unlock_clicked:'Click desbloquear', checkout_started:'Checkout', payment_pending:'Pago pendiente', payment_approved:'Pagó', custom_intake_completed:'Intake listo', support_requested:'Soporte' };
+var PRODUCT_ICONS = { challenge_glutes:'🍑', challenge_belly:'🔥', custom_muscle_gain:'💪', custom_fat_loss:'⚡', unknown:'?' };
+var STATUS_DOT    = { new:'sd-new', active:'sd-active', contacted:'sd-contacted', won:'sd-won', lost:'sd-lost', waiting_reply:'sd-contacted', no_response:'sd-contacted', needs_support:'sd-contacted' };
+
+function intentBadge(score) {
+  if (score >= 30) return '<span class="intent-badge ib-very-high">⚡ Muy alta (' + score + ')</span>';
+  if (score >= 15) return '<span class="intent-badge ib-high">🔥 Alta (' + score + ')</span>';
+  if (score >= 6)  return '<span class="intent-badge ib-med">◈ Media (' + score + ')</span>';
+  return '<span class="intent-badge ib-low">Baja (' + score + ')</span>';
+}
+
+async function loadContacts(filter, btn) {
+  document.querySelectorAll('.f-btn').forEach(function(b) { b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  document.getElementById('contactsBody').innerHTML = '<tr><td colspan="7" style="color:var(--text-3);padding:16px;text-align:center">Cargando...</td></tr>';
+  closeDetail();
+
+  try {
+    var query = sb.from('commercial_contacts').select('*').order('intent_score', { ascending:false }).limit(50);
+    if (filter === 'high_intent')   query = query.gte('intent_score', 15).not('status', 'in', '(won,lost)');
+    if (filter === 'trial_d6d7')    query = query.in('funnel_stage', ['trial_day6','trial_day7']);
+    if (filter === 'unlock')        query = query.eq('funnel_stage', 'unlock_clicked').not('status', 'in', '(won)');
+    if (filter === 'custom_pending') query = query.in('product_interest', ['custom_muscle_gain','custom_fat_loss']).not('status', 'in', '(won)');
+    if (filter === 'payment_pending') query = query.eq('funnel_stage', 'payment_pending');
+    if (filter === 'won')           query = query.eq('status', 'won');
+
+    var { data, error } = await query;
+    if (error) throw error;
+
+    if (!data || !data.length) {
+      document.getElementById('contactsBody').innerHTML = '<tr><td colspan="7" style="color:var(--text-3);padding:16px;text-align:center">Sin contactos en este filtro.</td></tr>';
+      document.getElementById('contactCount').textContent = '0 contactos';
+      return;
+    }
+
+    document.getElementById('contactCount').textContent = data.length + ' contactos';
+    document.getElementById('contactsBody').innerHTML = data.map(function(c) {
+      var dotClass = STATUS_DOT[c.status] || 'sd-new';
+      var followup = c.next_follow_up_at ? '📅 ' + new Date(c.next_follow_up_at).toLocaleDateString('es-CO',{month:'short',day:'numeric'}) : '—';
+      var lastEvt  = c.last_event_name ? c.last_event_name.replace(/_/g,' ') : '—';
+      var pi       = PRODUCT_ICONS[c.product_interest] || '?';
+      return '<tr onclick="openDetail(\'' + c.id + '\')">' +
+        '<td><div style="font-weight:700;color:var(--text-1)">' + (c.name || '—') + '</div><div style="color:var(--text-3);font-size:11px">' + (c.email || '—') + '</div></td>' +
+        '<td>' + pi + ' <span style="font-size:11px">' + (c.product_interest || '—').replace(/_/g,' ') + '</span></td>' +
+        '<td><span class="stage-badge">' + (STAGE_LABELS[c.funnel_stage] || c.funnel_stage || '—') + '</span></td>' +
+        '<td>' + intentBadge(c.intent_score || 0) + '</td>' +
+        '<td><span class="status-dot ' + dotClass + '"></span>' + (c.status || '—') + '</td>' +
+        '<td style="color:var(--text-3);font-size:11px">' + lastEvt + '</td>' +
+        '<td style="font-size:11px;color:var(--text-3)">' + followup + '</td>' +
+      '</tr>';
+    }).join('');
+  } catch(e) {
+    document.getElementById('contactsBody').innerHTML = '<tr><td colspan="7" style="color:rgba(239,68,68,.7);padding:16px">' + e.message + '</td></tr>';
+  }
+}
+
+async function openDetail(id) {
+  currentContactId = id;
+  var { data: c } = await sb.from('commercial_contacts').select('*').eq('id', id).single();
+  currentContact = c;
+  var panel = document.getElementById('detailPanel');
+  panel.classList.add('show');
+  panel.scrollIntoView({ behavior:'smooth', block:'start' });
+
+  document.getElementById('detailName').textContent = c.name || c.email || 'Contacto';
+  document.getElementById('detailGrid').innerHTML = [
+    field('Email', c.email || '—'),
+    field('Producto', (PRODUCT_ICONS[c.product_interest] || '') + ' ' + (c.product_interest || '—').replace(/_/g,' ')),
+    field('Etapa', STAGE_LABELS[c.funnel_stage] || c.funnel_stage || '—'),
+    field('Intención', c.intent_score + ' — ' + intentLabel(c.intent_score || 0)),
+    field('Estado', c.status || '—'),
+    field('Fuente', c.source || '—'),
+    field('Último evento', c.last_event_name ? c.last_event_name.replace(/_/g,' ') + ' (' + relTime(c.last_event_at) + ')' : '—'),
+    field('Seguimiento', c.next_follow_up_at ? new Date(c.next_follow_up_at).toLocaleString('es-CO') : '—'),
+  ].join('');
+
+  // Actions
+  document.getElementById('actionBar').innerHTML =
+    '<button class="act-btn" onclick="updateStatus(\'' + id + '\',\'contacted\')">✓ Marcar contactado</button>' +
+    '<button class="act-btn" onclick="updateStatus(\'' + id + '\',\'waiting_reply\')">⏳ Esperando respuesta</button>' +
+    '<button class="act-btn green" onclick="updateStatus(\'' + id + '\',\'won\')">✅ Ganado</button>' +
+    '<button class="act-btn red" onclick="updateStatus(\'' + id + '\',\'lost\')">❌ Perdido</button>' +
+    (c.phone ? '<a href="https://wa.me/' + c.phone + '" target="_blank" class="act-btn primary">💬 WhatsApp</a>' : '') +
+    '<a href="/pages/help.html" class="act-btn">🎫 Crear ticket</a>';
+
+  // Follow-up shortcuts
+  document.getElementById('followupRow').innerHTML =
+    ['Mañana','En 2 días','En 7 días'].map(function(label, i) {
+      var days = [1,2,7][i];
+      return '<button onclick="scheduleFollowup(\'' + id + '\',' + days + ')">' + label + '</button>';
+    }).join('');
+
+  // Suggested messages
+  renderMessages(c);
+
+  // Load notes
+  var { data: notes } = await sb.from('commercial_notes').select('*').eq('contact_id', id).order('created_at', { ascending:false }).limit(10);
+  document.getElementById('notesHistory').innerHTML = notes && notes.length
+    ? notes.map(function(n) {
+        return '<div style="padding:10px 12px;background:rgba(255,255,255,.02);border-radius:10px;margin-bottom:6px;font-size:12px">' +
+          '<div style="color:rgba(196,181,253,.6);font-size:10px;margin-bottom:4px">' + n.note_type + ' · ' + new Date(n.created_at).toLocaleString('es-CO') + '</div>' +
+          '<div style="color:var(--text-1)">' + n.note + '</div>' +
+        '</div>';
+      }).join('')
+    : '<div style="font-size:12px;color:var(--text-3)">Sin notas.</div>';
+}
+
+function field(label, value) {
+  return '<div class="detail-field"><div class="df-label">' + label + '</div><div class="df-value">' + value + '</div></div>';
+}
+
+function intentLabel(score) { return score >= 30 ? 'Muy alta' : score >= 15 ? 'Alta' : score >= 6 ? 'Media' : 'Baja'; }
+function relTime(dt) { if (!dt) return '—'; var d = Math.round((Date.now() - new Date(dt)) / 60000); return d < 60 ? d + 'm' : Math.round(d/60) + 'h'; }
+
+function renderMessages(c) {
+  var MESSAGES = {
+    trial_day6:   'Hola, vi que ya estás cerca de terminar tus 7 días gratis en ArjunaFit.\n\nLa idea no es que lo hayas hecho perfecto, sino que hayas podido ver cómo la app organiza tu entreno, comida y progreso.\n\nSi quieres continuar, puedes desbloquear el reto completo por $32 USD y seguir desde donde vas.',
+    trial_day7:   'Hola, ya terminaste tus 7 días gratis en ArjunaFit.\n\nTu progreso sigue guardado. Puedes continuar el reto completo por $32 USD y seguir desde donde quedaste.',
+    unlock_clicked:'Hola, vi que intentaste desbloquear tu reto en ArjunaFit.\n\nTu progreso sigue guardado. Si tuviste algún problema con el pago o quieres que te ayude a activarlo, me dices y lo revisamos.',
+    custom_intake_completed:'Hola, ya recibimos tus datos iniciales para el plan personalizado.\n\nEl siguiente paso es activar el pago mensual para poder prepararlo y darte acceso completo. Si tienes alguna duda, te ayudo.',
+    payment_pending:'Hola, tu pago aparece en validación.\n\nA veces puede tardar unos minutos en confirmarse. Si ya pagaste y aún no ves acceso, lo revisamos con prioridad.',
+    default:'Hola, qué bueno verte en ArjunaFit.\n\nTu progreso sigue aquí y podemos retomar con algo simple: una comida, un calentamiento o continuar tu reto.',
+  };
+  var key = MESSAGES[c.funnel_stage] ? c.funnel_stage : 'default';
+  var msg = MESSAGES[key];
+  document.getElementById('suggestedMessages').innerHTML =
+    '<div class="msg-card">' + msg.replace(/\n/g,'<br>') +
+    '<button class="msg-copy-btn" onclick="copyMsg(' + "'" + msg.replace(/'/g,"\\'") + "'" + ')">Copiar</button>' +
+    '</div>';
+}
+
+function copyMsg(msg) {
+  navigator.clipboard.writeText(msg).then(function() {
+    var btn = document.querySelector('.msg-copy-btn');
+    if (btn) { btn.textContent = '✓ Copiado'; setTimeout(function() { btn.textContent = 'Copiar'; }, 2000); }
+  }).catch(function() { alert(msg); });
+}
+
+async function addNote() {
+  var note = document.getElementById('noteInput').value.trim();
+  var type = document.getElementById('noteType').value;
+  if (!note || !currentContactId) return;
+  await sb.from('commercial_notes').insert({ contact_id: currentContactId, note, note_type: type, created_at: new Date().toISOString() });
+  document.getElementById('noteInput').value = '';
+  openDetail(currentContactId);
+}
+
+async function updateStatus(id, status) {
+  await sb.from('commercial_contacts').update({ status, updated_at: new Date().toISOString() }).eq('id', id);
+  if (currentContact) currentContact.status = status;
+  loadContacts('all');
+  openDetail(id);
+}
+
+async function scheduleFollowup(id, days) {
+  var date = new Date(Date.now() + days * 86400000).toISOString();
+  await sb.from('commercial_contacts').update({ next_follow_up_at: date, updated_at: new Date().toISOString() }).eq('id', id);
+  openDetail(id);
+}
+
+function closeDetail() {
+  document.getElementById('detailPanel').classList.remove('show');
+  currentContactId = null;
+  currentContact = null;
+}
+
+// Init
+loadContacts('all');
+</script>
+</body>
+</html>

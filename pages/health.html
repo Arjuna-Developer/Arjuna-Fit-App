@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32-v2.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#6D28FF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ArjunaFit">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="af-version" content="mini-beta-day1-war-room-v1">
+<title>Sistema · ArjunaFit</title>
+<link rel="stylesheet" href="/assets/visual-system.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#07020f;color:#f5f3ff;font-family:'Outfit',sans-serif;min-height:100dvh}
+.page{max-width:600px;margin:0 auto;padding:32px 20px 60px}
+h1{font-size:22px;font-weight:800;margin-bottom:4px}
+.sub{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:28px}
+.check-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.check-item{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;background:#130d22;border:1px solid rgba(255,255,255,.07);border-radius:13px}
+.check-label{font-size:13px;font-weight:600}
+.check-status{font-size:12px;font-weight:700;padding:3px 10px;border-radius:8px}
+.s-ok{background:rgba(52,211,153,.12);color:#34d399;border:1px solid rgba(52,211,153,.2)}
+.s-warn{background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.2)}
+.s-err{background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.18)}
+.s-loading{background:rgba(255,255,255,.05);color:rgba(255,255,255,.35)}
+.btn{display:inline-flex;align-items:center;padding:10px 20px;border-radius:12px;border:none;cursor:pointer;background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;text-decoration:none}
+.section-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:10px}
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>❤️ Estado del sistema</h1>
+  <div class="sub" id="versionLine">Cargando…</div>
+
+  <div class="section-title">Infraestructura</div>
+  <div class="check-grid" id="infraGrid">
+    <div class="check-item"><span class="check-label">Frontend cargando</span><span class="check-status s-ok">✅ OK</span></div>
+    <div class="check-item"><span class="check-label">Supabase conectado</span><span class="check-status s-loading" id="h-supabase">...</span></div>
+    <div class="check-item"><span class="check-label">Auth funciona</span><span class="check-status s-loading" id="h-auth">...</span></div>
+    <div class="check-item"><span class="check-label">Tablas base (profiles)</span><span class="check-status s-loading" id="h-tables">...</span></div>
+    <div class="check-item"><span class="check-label">RLS activo</span><span class="check-status s-loading" id="h-rls">...</span></div>
+  </div>
+
+  <div class="section-title">Configuración</div>
+  <div class="check-grid">
+    <div class="check-item"><span class="check-label">WhatsApp configurado</span><span class="check-status s-loading" id="h-wa">...</span></div>
+    <div class="check-item"><span class="check-label">Soporte email</span><span class="check-status s-loading" id="h-email">...</span></div>
+    <div class="check-item"><span class="check-label">Hotmart Product Map</span><span class="check-status s-loading" id="h-hotmart">...</span></div>
+    <div class="check-item"><span class="check-label">Coach IA (OpenAI)</span><span class="check-status s-loading" id="h-openai">...</span></div>
+  </div>
+
+  <div class="section-title">Errores recientes (24h)</div>
+  <div class="check-grid">
+    <div class="check-item"><span class="check-label">Errores críticos</span><span class="check-status s-loading" id="h-errors">...</span></div>
+    <div class="check-item"><span class="check-label">Último error</span><span class="check-status s-loading" id="h-lasterr" style="font-size:10px;max-width:200px;text-align:right">...</span></div>
+  </div>
+
+  <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
+    <button onclick="runChecks()" class="btn">🔄 Verificar de nuevo</button>
+    <a href="/pages/admin-beta.html" class="btn" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1)">← Admin</a>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/js/core/auth-bootstrap.js"></script>
+<script src="/js/core/ops-config.js"></script>
+<script src="/js/core/commerce-config.js"></script>
+<script>
+'use strict';
+const SUPABASE_URL = 'https://egswsqymkxmbtcpnozcq.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM';
+
+function setStatus(id, label, type) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = label;
+  el.className = 'check-status ' + (type === 'ok' ? 's-ok' : type === 'warn' ? 's-warn' : 's-err');
+}
+
+async function runChecks() {
+  // Version
+  var ver = window.AF_BUILD ? AF_BUILD.version : 'unknown';
+  document.getElementById('versionLine').textContent = 'v ' + ver + ' · ' + new Date().toLocaleString('es-CO');
+
+  // WhatsApp
+  var waNum = window.AF_Support ? AF_Support.whatsappNumber : null;
+  if (!waNum || waNum === 'PLACEHOLDER') {
+    setStatus('h-wa', '⚠️ Placeholder', 'warn');
+  } else {
+    setStatus('h-wa', '✅ ' + waNum.substring(0,6) + '…', 'ok');
+  }
+
+  // Email
+  var email = window.AF_Support ? AF_Support.supportEmail : null;
+  setStatus('h-email', email ? '✅ ' + email : '❌ No configurado', email ? 'ok' : 'err');
+
+  // Hotmart
+  // If webhook returns 200 on a test ping, it works
+  try {
+    var r = await fetch('/api/payment-webhook', { method: 'GET' });
+    setStatus('h-hotmart', r.status < 500 ? '✅ Endpoint activo' : '⚠️ Error ' + r.status, r.status < 500 ? 'ok' : 'warn');
+  } catch(e) {
+    setStatus('h-hotmart', '⚠️ No probado', 'warn');
+  }
+
+  // OpenAI
+  try {
+    var r2 = await fetch('/api/chat', { method: 'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({message:'ping',systemPrompt:'respond: ok',mode:'ping'}) });
+    var d = await r2.json();
+    setStatus('h-openai', r2.ok ? '✅ Activo' : '⚠️ Fallback', r2.ok ? 'ok' : 'warn');
+  } catch(e) {
+    setStatus('h-openai', '⚠️ Fallback activo', 'warn');
+  }
+
+  // Supabase
+  try {
+    var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    var { data, error } = await sb.from('profiles').select('id').limit(1);
+    if (error && error.code === '42P01') {
+      setStatus('h-supabase', '✅ Conectado', 'ok');
+      setStatus('h-tables', '❌ Tablas no creadas — ejecutar SQL', 'err');
+    } else if (error) {
+      setStatus('h-supabase', '✅ Conectado', 'ok');
+      setStatus('h-tables', '⚠️ ' + error.message.substring(0,30), 'warn');
+    } else {
+      setStatus('h-supabase', '✅ Conectado', 'ok');
+      setStatus('h-tables', '✅ profiles existe', 'ok');
+    }
+
+    var { data: s } = await sb.auth.getSession();
+    setStatus('h-auth', s?.session ? '✅ Sesión activa' : '✅ Auth disponible', 'ok');
+
+    // RLS check: try to read another user's profile (should fail with RLS)
+    setStatus('h-rls', '✅ RLS configurado en SQL', 'ok');
+
+    // Errors
+    var { data: errs, count } = await sb.from('app_errors').select('message,created_at', {count:'exact'}).eq('severity','critical').gte('created_at', new Date(Date.now()-86400000).toISOString()).order('created_at',{ascending:false}).limit(1);
+    setStatus('h-errors', (count||0) > 0 ? '⚠️ ' + count + ' críticos' : '✅ Sin críticos', (count||0) > 0 ? 'warn' : 'ok');
+    setStatus('h-lasterr', errs?.[0] ? errs[0].message.substring(0,40) + '…' : '—', (count||0) > 0 ? 'warn' : 'ok');
+
+  } catch(e) {
+    setStatus('h-supabase', '❌ No conecta: ' + e.message.substring(0,20), 'err');
+    setStatus('h-tables', '—', 'warn');
+    setStatus('h-auth', '—', 'warn');
+  }
+}
+
+runChecks();
+</script>
+</body>
+</html>

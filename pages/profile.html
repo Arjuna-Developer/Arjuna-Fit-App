@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32-v2.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#6D28FF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ArjunaFit">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta charset="UTF-8">
+<meta name="af-version" content="mini-beta-day1-war-room-v1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ArjunaFit · Perfil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0714;--card:#130d22;--el:#1a1030;
+  --pri:#7c3aed;--pl:#c4b5fd;--acc:#ec4899;
+  --ok:#10b981;--err:#ef4444;--warn:#f59e0b;
+  --t:#f1f0f4;--t2:#c4b5fd;--t3:#7c6fa0;--t4:#3d3258;
+  --bd:rgba(124,58,237,.2);--su:rgba(255,255,255,.06);
+  --font:'Outfit',sans-serif;--max:430px;--nav:64px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:var(--font);-webkit-font-smoothing:antialiased;min-height:100dvh}
+.page{max-width:var(--max);margin:0 auto;min-height:100dvh;padding-bottom:calc(var(--nav)+env(safe-area-inset-bottom))}
+
+/* Header */
+.hdr{padding:calc(env(safe-area-inset-top)+14px) 20px 12px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10;background:linear-gradient(to bottom,var(--bg) 60%,transparent)}
+.back{width:38px;height:38px;border-radius:12px;background:var(--el);border:1px solid var(--su);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;text-decoration:none;transition:transform .15s}
+.back:active{transform:scale(.9)}
+.hdr-title{font-size:17px;font-weight:700}
+
+/* Content */
+.cnt{padding:4px 20px 24px;display:flex;flex-direction:column;gap:14px}
+
+/* Avatar hero */
+.avatar-hero{background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(236,72,153,.06));border:1px solid var(--bd);border-radius:24px;padding:24px 20px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;position:relative}
+.avatar-wrap{position:relative;cursor:pointer}
+.avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--pri),var(--acc));display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:800;color:#fff;box-shadow:0 0 24px rgba(124,58,237,.45);overflow:hidden;transition:opacity .2s}
+.avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.avatar-edit-badge{position:absolute;bottom:0;right:0;width:26px;height:26px;border-radius:50%;background:var(--pri);border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:12px}
+.avatar-upload-hint{font-size:11px;color:var(--t3);font-weight:500}
+.avatar-name{font-size:22px;font-weight:800;letter-spacing:-.03em}
+.avatar-email{font-size:13px;color:var(--t3)}
+.reto-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:20px;background:rgba(124,58,237,.15);border:1px solid var(--bd);font-size:11px;font-weight:700;color:var(--pl);letter-spacing:.05em;text-transform:uppercase}
+
+/* Stats */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:var(--card);border:1px solid var(--su);border-radius:16px;padding:14px 10px;text-align:center;position:relative;overflow:hidden}
+.stat::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(124,58,237,.05),transparent);pointer-events:none}
+.stat-v{font-size:24px;font-weight:900;letter-spacing:-.05em}
+.stat-l{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);margin-top:3px}
+
+/* Menu */
+.sec-lbl{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t4);padding:0 4px}
+.menu{background:var(--card);border:1px solid var(--su);border-radius:20px;overflow:hidden}
+.mi{display:flex;align-items:center;gap:12px;padding:15px 16px;cursor:pointer;border-bottom:1px solid var(--su);text-decoration:none;transition:background .15s}
+.mi:last-child{border-bottom:none}
+.mi:active{background:rgba(255,255,255,.03)}
+.mi-icon{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.mi-text{flex:1}
+.mi-title{font-size:14px;font-weight:600;color:var(--t)}
+.mi-sub{font-size:11px;color:var(--t3);margin-top:1px}
+.mi-arrow{color:var(--t4);font-size:16px}
+.mi.danger .mi-title{color:var(--err)}
+.mi.danger .mi-icon{background:rgba(239,68,68,.1)}
+
+/* Toggle */
+.tog{width:42px;height:24px;border-radius:12px;background:var(--t4);position:relative;cursor:pointer;transition:background .2s;border:none;flex-shrink:0}
+.tog::after{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.tog.on{background:var(--pri)}
+.tog.on::after{transform:translateX(18px)}
+
+/* Upload indicator */
+.upload-toast{position:fixed;top:calc(env(safe-area-inset-top)+16px);left:50%;transform:translateX(-50%) translateY(-60px);background:var(--el);border:1px solid var(--bd);border-radius:14px;padding:10px 18px;font-size:13px;font-weight:600;color:var(--t2);z-index:999;transition:transform .3s;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.upload-toast.show{transform:translateX(-50%) translateY(0)}
+
+/* Nav */
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:var(--max);height:calc(var(--nav)+env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:rgba(13,8,20,.95);backdrop-filter:blur(20px);border-top:1px solid var(--su);display:flex;align-items:flex-start;z-index:100}
+.nav-items{width:100%;display:flex;justify-content:space-around;padding-top:8px}
+.ni{display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 10px;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.ni-icon{font-size:22px;line-height:1}
+.ni-lbl{font-family:var(--font);font-size:10px;font-weight:600;letter-spacing:.04em;color:var(--t4)}
+.nc{display:flex;flex-direction:column;align-items:center;gap:3px;padding:0 10px;padding-top:4px;text-decoration:none}
+.nc-icon{width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,var(--pri),#9333ea);display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 16px rgba(124,58,237,.5);margin-top:-14px}
+.nc-lbl{font-family:var(--font);font-size:10px;font-weight:600;color:var(--pl)}
+
+/* Loader */
+.ldr{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;align-items:center;justify-content:center;transition:opacity .3s,visibility .3s}
+.ldr.off{opacity:0;visibility:hidden;pointer-events:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+  <link rel="stylesheet" href="/assets/visual-system.css">
+
+  <style>
+  .nav-ambient{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100vw,430px);height:140px;background:radial-gradient(ellipse at 50% 100%,rgba(124,58,237,.18) 0%,rgba(168,85,247,.1) 30%,transparent 70%);filter:blur(20px);z-index:99;pointer-events:none}
+  nav[style*="position:fixed"]{background:rgba(12,7,22,.88)!important;backdrop-filter:blur(40px) saturate(1.8)!important;-webkit-backdrop-filter:blur(40px) saturate(1.8)!important;border-radius:26px!important;border-color:rgba(196,181,253,.08)!important;box-shadow:0 -1px 0 rgba(255,255,255,.04) inset,0 12px 40px rgba(0,0,0,.55),0 0 60px rgba(124,58,237,.06)!important}
+  </style>
+</head>
+<body style="overflow-x:hidden">
+
+<div class="ldr" id="ldr"><div style="width:36px;height:36px;border-radius:50%;border:3px solid rgba(124,58,237,.2);border-top-color:#7c3aed;animation:spin .7s linear infinite"></div></div>
+
+<!-- Hidden file input for photo upload -->
+<input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhotoUpload(this)">
+
+<!-- Upload toast -->
+<div class="upload-toast" id="uploadToast">📸 Subiendo foto...</div>
+
+<div class="page">
+  <div class="hdr">
+    <a href="/pages/dashboard.html" class="back">←</a>
+    <div class="hdr-title">Mi Perfil</div>
+  </div>
+
+  <div class="cnt">
+
+    <!-- Avatar hero -->
+    <div class="avatar-hero">
+      <div class="avatar-wrap" onclick="document.getElementById('photoInput').click()">
+        <div class="avatar" id="avatarEl"><span id="avatarInitial">🏋️</span></div>
+        <div class="avatar-edit-badge">✏️</div>
+      </div>
+      <div class="avatar-upload-hint">Toca para cambiar foto</div>
+      <div class="avatar-name" id="avatarName">Cargando...</div>
+      <div class="avatar-email" id="avatarEmail"></div>
+      <div class="reto-pill" id="retoPill">🍑 Reto Glúteos</div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat"><div class="stat-v" id="sStreak">0</div><div class="stat-l">🔥 Racha</div></div>
+      <div class="stat"><div class="stat-v" id="sSessions">0</div><div class="stat-l">💪 Sesiones</div></div>
+      <div class="stat"><div class="stat-v" id="sWeek">1</div><div class="stat-l">📅 Semana</div></div>
+    </div>
+
+    <!-- Preferencias -->
+    <div class="sec-lbl">Preferencias</div>
+    <div class="menu">
+      <div class="mi" onclick="toggleDark()">
+        <div class="mi-icon" style="background:rgba(124,58,237,.1)">🌙</div>
+        <div class="mi-text"><div class="mi-title">Modo oscuro</div><div class="mi-sub">Tema premium dark</div></div>
+        <button class="tog on" id="darkTog"></button>
+      </div>
+      <a href="/pages/onboarding.html" class="mi">
+        <div class="mi-icon" style="background:rgba(16,185,129,.1)">⚙️</div>
+        <div class="mi-text"><div class="mi-title">Editar mi plan</div><div class="mi-sub">Objetivo, peso, nivel</div></div>
+        <span class="mi-arrow">›</span>
+      </a>
+    </div>
+
+    <!-- Soporte -->
+    <div class="sec-lbl">Soporte</div>
+    <div class="menu">
+      <a href="mailto:hola@arjunafit.app" class="mi">
+        <div class="mi-icon" style="background:rgba(236,72,153,.1)">💬</div>
+        <div class="mi-text"><div class="mi-title">Contactar soporte</div><div class="mi-sub">hola@arjunafit.app</div></div>
+        <span class="mi-arrow">›</span>
+      </a>
+      <a href="https://wa.link/hteek6" target="_blank" rel="noopener" class="mi">
+        <div class="mi-icon" style="background:rgba(37,211,102,.1)">💬</div>
+        <div class="mi-body">
+          <div class="mi-title">Hablar con Arjuna</div>
+          <div class="mi-sub">Soporte por WhatsApp</div>
+        </div>
+        <div class="mi-arr">›</div>
+      </a>
+      <a href="https://arjunafit.com/privacidad" target="_blank" class="mi">
+        <div class="mi-icon" style="background:rgba(245,158,11,.1)">🔒</div>
+        <div class="mi-text"><div class="mi-title">Privacidad</div><div class="mi-sub">Política de datos</div></div>
+        <span class="mi-arrow">›</span>
+      </a>
+    </div>
+
+    <!-- Cuenta -->
+    <div class="sec-lbl">Cuenta</div>
+    <div class="menu">
+      <div class="mi danger" onclick="doLogout()">
+        <div class="mi-icon">🚪</div>
+        <div class="mi-text"><div class="mi-title">Cerrar sesión</div><div class="mi-sub" id="logoutSub">—</div></div>
+        <span class="mi-arrow">›</span>
+      </div>
+    </div>
+
+    <div style="text-align:center;font-size:11px;color:var(--t4);padding:8px 0">ArjunaFit · v2.0</div>
+
+  </div>
+
+  <nav class="bnav">
+    <div class="nav-items">
+      <a href="/pages/dashboard.html" class="ni"><span class="ni-icon">🏠</span><span class="ni-lbl">Inicio</span></a>
+      <a href="/pages/workout.html" class="nc"><div class="nc-icon">💪</div><span class="nc-lbl">Entrena</span></a>
+      <a href="/pages/coach.html" class="ni"><span class="ni-icon">🤖</span><span class="ni-lbl">Coach</span></a>
+      <a href="/pages/progress.html" class="ni"><span class="ni-icon">📈</span><span class="ni-lbl">Progreso</span></a>
+      <a href="/pages/nutrition.html" class="ni"><span class="ni-icon">🥗</span><span class="ni-lbl">Nutrición</span></a>
+    </div>
+  </nav>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js">
+  // ── Show plan/trial status ────────────────────────
+  (function() {
+    const card = document.getElementById('planStatusCard');
+    const txt  = document.getElementById('planStatusText');
+    const sub  = document.getElementById('planStatusSub');
+    if (!card) return;
+
+    const tipo  = localStorage.getItem('af-product-tipo') || 'reto';
+    const reto  = localStorage.getItem('af-selected-reto') || 'gluteos';
+    const start = parseInt(localStorage.getItem('af-trial-start') || '0');
+    
+    const retoNames = {gluteos:'Reto de glúteos', pancita:'Reto para bajar la pancita',
+                       masa:'Plan masa muscular', definicion:'Plan definición'};
+    const planName = retoNames[reto] || 'ArjunaFit';
+    
+    card.style.display = 'block';
+
+    const isPaid = localStorage.getItem('af-paid') === '1';
+
+    // Check pending manual activation
+    const isPending = localStorage.getItem('af-subscription-status') === 'pending_manual_activation';
+    if (isPending) {
+      card.style.background = 'rgba(245,158,11,.07)';
+      card.style.borderColor = 'rgba(245,158,11,.2)';
+      if (txt) txt.textContent = 'Activación pendiente';
+      if (sub) sub.textContent = 'Arjuna revisará tu acceso pronto.';
+      // Add contact button
+      var ctaEl = card.querySelector('.plan-cta');
+      if (ctaEl) { ctaEl.style.display = 'block'; ctaEl.textContent = 'Contactar a Arjuna'; ctaEl.onclick = function() { if(window.AF_Commerce) window.AF_Commerce.showActivationModal(localStorage.getItem('af-product-type')); }; }
+    } else if (tipo === 'plan') {
+      card.style.background = 'rgba(139,92,246,.08)';
+      card.style.borderColor = 'rgba(139,92,246,.2)';
+      if (txt) txt.textContent = planName;
+      if (sub) sub.textContent = 'Plan personalizado · $72 USD/mes · pago inmediato';
+    } else if (isPaid) {
+      // Paid reto — full access
+      card.style.background = 'rgba(52,211,153,.07)';
+      card.style.borderColor = 'rgba(52,211,153,.2)';
+      if (txt) txt.textContent = planName;
+      const daysPassed = start ? Math.floor((Date.now() - start) / 86400000) : 0;
+      if (sub) sub.textContent = 'Día ' + (daysPassed+1) + ' de 37 · Reto activo ✓';
+    } else if (start) {
+      const daysPassed = Math.floor((Date.now() - start) / 86400000);
+      const daysLeft   = Math.max(0, 7 - daysPassed);
+      const trialEndDate = new Date(start + 7*24*60*60*1000).toLocaleDateString('es-CO',{day:'numeric',month:'long'});
+      if (txt) txt.textContent = planName;
+      if (daysLeft > 0) {
+        if (sub) sub.textContent = 'Día ' + (daysPassed+1) + ' de 7 gratis · ' + daysLeft + ' día' + (daysLeft!==1?'s':'') + ' restante · luego $32 USD' + (daysLeft!==1?'s':'');
+        // Show trial end date
+        var trialEndEl = document.getElementById('trialEndDate');
+        if (trialEndEl) { trialEndEl.textContent = 'Prueba hasta ' + trialEndDate; trialEndEl.style.display = 'block'; }
+      } else {
+        card.style.background = 'rgba(245,158,11,.08)';
+        card.style.borderColor = 'rgba(245,158,11,.2)';
+        if (sub) sub.textContent = 'Prueba terminada · Tu progreso se guarda';
+        // Show unlock CTA
+        var unlockEl = document.getElementById('profileUnlockBtn');
+        if (unlockEl) unlockEl.style.display = 'block';
+      }
+    } else {
+      if (txt) txt.textContent = planName;
+      if (sub) sub.textContent = '7 días gratis disponibles · Sin tarjeta de crédito';
+    }
+  })();
+
+</script>
+<script src="/js/core/ops-config.js"></script>
+<script src="/js/core/analytics.js"></script>
+<script src="/js/core/supabase-client.js"></script>
+<script src="/js/core/auth-bootstrap.js"></script>
+<script src="/js/core/auth-guard.js"></script>
+<script>
+let _sb=null,_uid=null;
+try{_sb=window.sb||window.supabase?.createClient('https://egswsqymkxmbtcpnozcq.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM',{auth:{persistSession:true,storageKey:'arjunafit-auth'}})}catch(e){}
+
+function showToast(msg){
+  const t=document.getElementById('uploadToast');
+  if (t) t.textContent = msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+function toggleDark(){document.getElementById('darkTog').classList.toggle('on')}
+
+async function handlePhotoUpload(input){
+  const file=input.files?.[0];
+  if(!file||!_sb||!_uid)return;
+  if(file.size>5*1024*1024){alert('La foto debe ser menor a 5MB');return;}
+
+  showToast('📸 Subiendo foto...');
+  try{
+    const ext=file.name.split('.').pop()||'jpg';
+    const path=`avatars/${_uid}.${ext}`;
+    const{error:upErr}=await _sb.storage.from('profile-photos').upload(path,file,{upsert:true});
+    if(upErr)throw upErr;
+
+    const{data}=_sb.storage.from('profile-photos').getPublicUrl(path);
+    const url=data.publicUrl+`?t=${Date.now()}`;
+
+    await _sb.from('profiles').update({avatar_url:url}).eq('id',_uid);
+
+    // Update avatar in UI
+    const av=document.getElementById('avatarEl');
+    av.innerHTML=`<img src="${url}" alt="Avatar">`;
+    showToast('✓ Foto actualizada');
+  }catch(e){
+    console.error('Photo upload error:',e);
+    showToast('Error al subir. Intenta de nuevo.');
+  }
+  input.value='';
+}
+
+async function doLogout(){
+  if(!confirm('¿Cerrar sesión?'))return;
+  try{await _sb?.auth.signOut();}catch(e){}
+  window.location.replace('/');
+}
+
+async function init(){
+  setTimeout(()=>document.getElementById('ldr').classList.add('off'),5000);
+  if(!_sb){document.getElementById('ldr').classList.add('off');return;}
+  try{
+    const{data:{session}}=await _sb.auth.getSession();
+    if(!session?.user){window.location.replace('/');return;}
+    _uid=session.user.id;
+    document.getElementById('logoutSub').textContent=session.user.email||'—';
+
+    const[profRes,progRes]=await Promise.all([
+      _sb.from('profiles').select('*').eq('id',_uid).maybeSingle(),
+      _sb.from('progress').select('id',{count:'exact',head:true}).eq('user_id',_uid)
+    ]);
+    const p=profRes.data;
+
+    if(p){
+      const name=p.nombre||session.user.email?.split('@')[0]||'Chica';
+      document.getElementById('avatarName').textContent=name;
+      document.getElementById('avatarEmail').textContent=session.user.email||'';
+      document.getElementById('sStreak').textContent=p.streak_current||0;
+      document.getElementById('sWeek').textContent=p.workout_day_num?Math.ceil(p.workout_day_num/3):1;
+      const retoNames={gluteos:'🍑 Reto de glúteos',pancita:'🔥 Reto pancita',masa:'💪 Plan masa muscular',definicion:'⚡ Plan definición'};
+      document.getElementById('retoPill').textContent=retoNames[p.reto]||'🏋️ Reto';
+
+      // Avatar: photo or initial
+      const av=document.getElementById('avatarEl');
+      if(p.avatar_url){
+        av.innerHTML=`<img src="${p.avatar_url}" alt="${name}">`;
+      }else{
+        document.getElementById('avatarInitial').textContent=name[0]?.toUpperCase()||'🏋️';
+      }
+    }
+    document.getElementById('sSessions').textContent=progRes.count||0;
+  }catch(e){console.error(e);}
+  document.getElementById('ldr').classList.add('off');
+}
+init();
+</script>
+<script src="/js/core/transitions.js"></script>
+
+
+      <!-- Mensajes de Arju — notification center -->
+      <div style="margin-bottom:20px">
+        <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px">Mensajes de Arju</div>
+        <div id="notifCenter" style="display:flex;flex-direction:column;gap:8px">
+          <div style="font-size:12px;color:rgba(255,255,255,.25);text-align:center;padding:12px">Cargando mensajes...</div>
+        </div>
+      </div>
+
+      <!-- Membresía comunidad gratuita -->
+      <div id="communityCard" style="display:none;margin-bottom:16px;background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.15);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px">
+        <div style="font-size:20px">🤝</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:rgba(52,211,153,.8)">Comunidad gratuita ArjunaFit</div>
+          <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:2px">Miembro activo</div>
+        </div>
+        <div style="margin-left:auto;font-size:10px;font-weight:700;padding:3px 9px;background:rgba(52,211,153,.12);border-radius:8px;color:rgba(52,211,153,.7)">✓ ACTIVO</div>
+      </div>
+      <!-- Beta feedback widget -->
+      <div style="margin-top:20px;padding:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:16px">
+        <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px">¿Algo no funcionó?</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px" id="feedbackChips">
+          <button class="fb-chip" data-cat="no_entendi">No entendí qué hacer</button>
+          <button class="fb-chip" data-cat="comida_fallo">No pude registrar comida</button>
+          <button class="fb-chip" data-cat="entreno_fallo">No pude entrenar</button>
+          <button class="fb-chip" data-cat="algo_roto">Algo se veía roto</button>
+          <button class="fb-chip" data-cat="coach_raro">Coach respondió raro</button>
+          <button class="fb-chip" data-cat="otro">Otro</button>
+        </div>
+        <textarea id="feedbackMsg" placeholder="Cuéntanos qué pasó (opcional)" style="width:100%;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#f1f0f4;font-family:Outfit,sans-serif;font-size:13px;resize:vertical;min-height:70px;box-sizing:border-box;outline:none"></textarea>
+        <button id="fbSend" onclick="sendFeedback()" style="margin-top:10px;width:100%;padding:11px;border-radius:12px;border:none;cursor:pointer;background:rgba(124,58,237,.2);color:#c4b5fd;font-family:Outfit,sans-serif;font-size:13px;font-weight:700">Enviar feedback</button>
+        <div id="fbConfirm" style="display:none;font-size:12px;color:rgba(52,211,153,.7);text-align:center;margin-top:8px">✅ Gracias. Arju lo tiene en cuenta.</div>
+        <div style="margin-top:10px;text-align:center"><a href="/pages/beta-survey.html" style="font-size:12px;color:rgba(196,181,253,.5);text-decoration:none">→ Responder encuesta beta completa</a></div>
+      </div>
+
+      <!-- App version -->
+      <div id="betaUserBadge" style="display:none;justify-content:center;margin-top:12px"><span style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;background:rgba(124,58,237,.12);color:rgba(196,181,253,.6);border:1px solid rgba(196,181,253,.15)">Beta Tester</span></div>
+      <div style="text-align:center;margin-top:8px;font-size:11px;color:rgba(255,255,255,.15)" id="appVersionDisplay">v closed-beta-v1</div>
+
+      <style>
+        .fb-chip{padding:7px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:rgba(240,238,248,.5);font-family:Outfit,sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s}
+        .fb-chip.on{background:rgba(124,58,237,.2);border-color:rgba(196,181,253,.3);color:#c4b5fd}
+      </style>
+      <script>
+        var _fbCat = '';
+        document.querySelectorAll('.fb-chip').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            document.querySelectorAll('.fb-chip').forEach(function(b) { b.classList.remove('on'); });
+            btn.classList.add('on');
+            _fbCat = btn.dataset.cat;
+          });
+        });
+
+        // Beta flag
+  (function() {
+    var isBeta = localStorage.getItem('af-beta-user') === '1';
+    var betaEl = document.getElementById('betaUserBadge');
+    if (isBeta && betaEl) betaEl.style.display = 'inline-flex';
+  })();
+
+  async function sendFeedback() {
+          var msg = document.getElementById('feedbackMsg')?.value || '';
+          if (!_fbCat && !msg) { alert('Elige una categoría o escribe algo.'); return; }
+          var btn = document.getElementById('fbSend');
+          btn.disabled = true; btn.textContent = 'Enviando...';
+          try {
+            var uid = null;
+            try { var raw = localStorage.getItem('sb-egswsqymkxmbtcpnozcq-auth-token'); uid = raw ? JSON.parse(raw)?.user?.id : null; } catch(e) {}
+            await fetch('https://egswsqymkxmbtcpnozcq.supabase.co/rest/v1/beta_feedback', {
+              method: 'POST',
+              headers: {'Content-Type':'application/json','apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM','Prefer':'return=minimal'},
+              body: JSON.stringify({
+              user_id: uid || null,
+              category: _fbCat || 'general',
+              message: msg || null,
+              route: window.location.pathname,
+              device: /Mobile|Android|iPhone/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
+              browser: navigator.userAgent.slice(0,100),
+              product_type: localStorage.getItem('af-product-type') || null,
+              app_version: window.AF_VERSION || null,
+              status: 'new',
+            })
+            });
+          } catch(e) {}
+          document.getElementById('fbConfirm').style.display = 'block';
+          btn.style.display = 'none';
+          if(window.AF) AF.track('feedback_sent', {cat: _fbCat});
+        }
+
+        // Notification center
+(function() {
+  var center = document.getElementById('notifCenter');
+  if (!center) return;
+  var NUDGE_TYPES = ['log_meal','start_workout','close_day','return_after_absence','suggest_recipe','trial_low_activity','onboarding_resume'];
+  var NUDGE_LABELS = {
+    log_meal: '🥗 Registro de comida',
+    start_workout: '💪 Entrenamiento',
+    close_day: '🌙 Cierre del día',
+    return_after_absence: '👋 Regreso',
+    suggest_recipe: '🍳 Receta sugerida',
+    trial_low_activity: '🌱 Tu prueba',
+    onboarding_resume: '🧠 Preparar tu día',
+  };
+  var shown = [];
+  NUDGE_TYPES.forEach(function(type) {
+    var ts = parseInt(localStorage.getItem('af-nudge-' + type) || '0');
+    if (ts > 0) shown.push({ type, ts });
+  });
+  shown.sort(function(a,b){return b.ts-a.ts;});
+  var last5 = shown.slice(0,5);
+  if (!last5.length) {
+    center.innerHTML = '<div style="font-size:12px;color:rgba(255,255,255,.25);text-align:center;padding:12px">Sin mensajes recientes.</div>';
+  } else {
+    center.innerHTML = last5.map(function(n) {
+      var ago = Math.floor((Date.now()-n.ts)/(1000*60));
+      var agoStr = ago < 60 ? ago + ' min' : Math.floor(ago/60) + 'h';
+      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(255,255,255,.03);border-radius:10px;font-size:12px">' +
+        '<span style="color:rgba(240,238,248,.65)">' + (NUDGE_LABELS[n.type]||n.type) + '</span>' +
+        '<span style="color:rgba(255,255,255,.25)">' + agoStr + '</span>' +
+      '</div>';
+    }).join('');
+  }
+})();
+
+
+  // Load community membership
+  (async function() {
+    try {
+      var sess = await _sb.auth.getSession();
+      var uid = sess?.data?.session?.user?.id;
+      if (!uid) return;
+      var { data } = await _sb
+        .from('community_memberships')
+        .select('status')
+        .eq('user_id', uid)
+        .eq('community_id', 'free_arjunafit_community')
+        .eq('status', 'active')
+        .maybeSingle();
+      if (data) {
+        var card = document.getElementById('communityCard');
+        if (card) card.style.display = 'flex';
+      }
+    } catch(e) {}
+  })();
+
+  
+  // Payment status display
+  (function() {
+    var paymentStatus = localStorage.getItem('af-payment-status');
+    if (paymentStatus === 'pending') {
+      var notice = document.createElement('div');
+      notice.style.cssText = 'margin-bottom:14px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:14px;padding:12px 16px;font-size:12px;color:rgba(253,186,116,.8);line-height:1.6';
+      notice.innerHTML = '⏳ <strong>Estamos validando tu pago.</strong> Esto puede tardar unos minutos.';
+      var planCard = document.getElementById('planStatusCard');
+      if (planCard && planCard.parentNode) planCard.parentNode.insertBefore(notice, planCard);
+    }
+  })();
+
+  // Update version display
+        if(window.AF) document.getElementById('appVersionDisplay').textContent = 'v ' + (AF.version || 'beta-qa-events-v1');
+      </script>
+<script src="/js/core/pwa-install.js"></script>
+</body>
+</html>

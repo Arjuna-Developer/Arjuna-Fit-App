@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32-v2.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#6D28FF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ArjunaFit">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta charset="UTF-8">
+<meta name="af-version" content="mini-beta-day1-war-room-v1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ArjunaFit · Empecemos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0c0714; --card:#130d22; --elevated:#1a1030; --input:#1f1438;
+  --primary:#7c3aed; --plight:#c4b5fd; --accent:#ec4899;
+  --success:#10b981; --danger:#ef4444; --warning:#f59e0b;
+  --text:#f1f0f4; --text2:#c4b5fd; --text3:#7c6fa0; --muted:#3d3258;
+  --border:rgba(124,58,237,0.22); --subtle:rgba(255,255,255,0.06);
+  --font:'Outfit',sans-serif; --max:430px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{height:100%}
+body{
+  min-height:100%;background:var(--bg);color:var(--text);
+  font-family:var(--font);-webkit-font-smoothing:antialiased;
+  overscroll-behavior:none;
+}
+.page{max-width:var(--max);margin:0 auto;min-height:100dvh;display:flex;flex-direction:column}
+
+/* ── Progress bar ──────────────────────────────── */
+.prog-bar{
+  height:3px;background:var(--muted);
+  position:fixed;top:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:var(--max);z-index:10;
+}
+.prog-fill{
+  height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));
+  border-radius:0 2px 2px 0;transition:width 0.4s ease;
+}
+
+/* ── Header ────────────────────────────────────── */
+.hdr{
+  padding:calc(env(safe-area-inset-top)+16px) 20px 0;
+  display:flex;align-items:center;gap:12px;
+  position:sticky;top:0;z-index:5;
+  background:linear-gradient(to bottom,var(--bg) 60%,transparent);
+  padding-bottom:12px;
+}
+.back-btn{
+  width:36px;height:36px;border-radius:12px;
+  background:var(--elevated);border:1px solid var(--subtle);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;cursor:pointer;border:none;color:var(--text3);
+  flex-shrink:0;transition:transform 0.15s;
+}
+.back-btn:active{transform:scale(0.9)}
+.back-btn:disabled{opacity:0.3;cursor:default}
+.step-label{font-size:12px;font-weight:600;color:var(--text3);letter-spacing:0.04em}
+
+/* ── Content ───────────────────────────────────── */
+.content{flex:1;padding:8px 24px 100px;overflow-y:auto}
+.content::-webkit-scrollbar{display:none}
+
+/* ── Steps ─────────────────────────────────────── */
+.step{display:none;animation:step-in 0.3s ease}
+.step.active{display:block}
+@keyframes step-in{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+
+.step-title{
+  font-size:28px;font-weight:900;letter-spacing:-0.04em;
+  line-height:1.15;margin-bottom:10px;margin-top:16px;
+}
+.step-title span{
+  background:linear-gradient(135deg,var(--plight),var(--accent));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.step-sub{font-size:14px;color:var(--text3);margin-bottom:28px;line-height:1.6}
+
+/* ── Option cards ──────────────────────────────── */
+.opt-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.opt{
+  display:flex;align-items:center;gap:14px;
+  padding:16px;border-radius:16px;
+  background:var(--card);border:1.5px solid var(--subtle);
+  cursor:pointer;transition:all 0.15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.opt:active{transform:scale(0.98)}
+.opt.selected{
+  border-color:var(--primary);
+  background:rgba(124,58,237,0.1);
+  box-shadow:0 0 0 1px rgba(124,58,237,0.2);
+}
+.opt-icon{font-size:28px;flex-shrink:0}
+.opt-info{}
+.opt-name{font-size:15px;font-weight:700;letter-spacing:-0.01em}
+.opt-desc{font-size:12px;color:var(--text3);margin-top:2px}
+.opt-check{
+  margin-left:auto;width:22px;height:22px;flex-shrink:0;
+  border-radius:50%;border:1.5px solid var(--muted);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;transition:all 0.15s;
+}
+.opt.selected .opt-check{
+  background:var(--primary);border-color:transparent;color:#fff;
+}
+
+/* ── Gender picker ─────────────────────────────── */
+.gender-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.gender-opt{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  padding:20px 16px;border-radius:16px;
+  background:var(--card);border:1.5px solid var(--subtle);
+  cursor:pointer;transition:all 0.15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.gender-opt:active{transform:scale(0.97)}
+.gender-opt.selected{border-color:var(--primary);background:rgba(124,58,237,0.1)}
+.gender-icon{font-size:32px}
+.gender-label{font-size:14px;font-weight:700}
+
+/* ── Inputs ────────────────────────────────────── */
+.fields-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.fields-grid.single{grid-template-columns:1fr}
+.field{}
+.field-label{
+  display:block;margin-bottom:6px;font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.07em;color:var(--text3);
+}
+.iw{
+  display:flex;align-items:center;
+  height:52px;background:var(--input);
+  border:1.5px solid var(--subtle);border-radius:14px;
+  overflow:hidden;transition:border-color 0.2s,box-shadow 0.2s;
+}
+.iw:focus-within{
+  border-color:rgba(124,58,237,0.5);
+  box-shadow:0 0 0 3px rgba(124,58,237,0.1);
+}
+.iw input{
+  flex:1;min-width:0;width:100%;height:100%;
+  background:transparent!important;border:none;outline:none;
+  font-family:var(--font);font-size:17px;font-weight:600;
+  color:var(--text);text-align:center;padding:0;
+  -webkit-appearance:none;appearance:none;
+}
+.iw input::placeholder{color:var(--muted);font-weight:400;font-size:14px}
+.iw input:-webkit-autofill,
+.iw input:-webkit-autofill:focus{
+  -webkit-box-shadow:0 0 0 1000px var(--input) inset!important;
+  -webkit-text-fill-color:var(--text)!important;
+  caret-color:var(--text)!important;
+}
+.iw-unit{
+  padding:0 12px;font-size:12px;font-weight:700;
+  color:var(--text3);flex-shrink:0;border-left:1px solid var(--subtle);
+  height:100%;display:flex;align-items:center;
+}
+
+/* ── Nivel / lugar grids ───────────────────────── */
+.nivel-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.lugar-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+
+/* ── Resumen (step 4) ──────────────────────────── */
+.summary-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:20px;padding:20px;margin-bottom:20px;
+}
+.summary-title{font-size:13px;font-weight:700;color:var(--text3);margin-bottom:14px;text-transform:uppercase;letter-spacing:0.06em}
+.summary-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:9px 0;border-bottom:1px solid var(--subtle);font-size:14px;
+}
+.summary-row:last-child{border-bottom:none}
+.summary-key{color:var(--text3);font-weight:500}
+.summary-val{font-weight:700;color:var(--text2)}
+
+.macros-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.macro-card{
+  background:var(--elevated);border:1px solid var(--subtle);
+  border-radius:14px;padding:14px 10px;text-align:center;
+}
+.macro-val{font-size:22px;font-weight:800;letter-spacing:-0.04em;color:var(--text)}
+.macro-unit{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em}
+.macro-label{font-size:11px;color:var(--text3);margin-top:2px}
+
+.msg{
+  border-radius:12px;padding:11px 14px;font-size:13px;
+  font-weight:500;margin-bottom:14px;display:none;line-height:1.5;
+}
+.msg.err{display:block;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.25);color:#fca5a5}
+.msg.ok {display:block;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);color:#6ee7b7}
+
+/* ── Footer CTA ────────────────────────────────── */
+.footer{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:var(--max);
+  padding:12px 24px calc(12px + env(safe-area-inset-bottom));
+  background:linear-gradient(to top,var(--bg) 70%,transparent);
+  z-index:10;
+}
+.btn{
+  width:100%;padding:16px;border-radius:18px;border:none;
+  background:linear-gradient(135deg,var(--primary),#9333ea);
+  color:#fff;font-family:var(--font);font-size:16px;font-weight:700;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;
+  transition:transform 0.15s,opacity 0.15s,box-shadow 0.15s;
+  box-shadow:0 4px 24px rgba(124,58,237,0.42);
+  position:relative;overflow:hidden;
+}
+.btn::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.1),transparent);
+  pointer-events:none;
+}
+.btn:active{transform:scale(0.97)}
+.btn:disabled{opacity:0.55;cursor:not-allowed;transform:none!important}
+.spn{
+  width:20px;height:20px;flex-shrink:0;border-radius:50%;
+  border:2.5px solid rgba(255,255,255,0.3);border-top-color:#fff;
+  display:none;animation:spin 0.65s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Loader */
+.ldr{
+  position:fixed;inset:0;background:var(--bg);z-index:999;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+  transition:opacity 0.35s,visibility 0.35s;
+}
+.ldr.off{opacity:0;visibility:hidden;pointer-events:none}
+</style>
+  <link rel="stylesheet" href="/assets/visual-system.css">
+</head>
+<body style="overflow-x:hidden">
+
+<div class="ldr" id="ldr">
+  <div style="font-size:46px;animation:afloat 1.8s ease-in-out infinite">🏋️</div>
+  <div style="font-size:13px;font-weight:600;color:var(--text3)">Verificando sesión...</div>
+</div>
+<style>@keyframes afloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}</style>
+
+<!-- Progress bar -->
+<div class="prog-bar"><div class="prog-fill" id="progFill" style="width:25%"></div></div>
+
+<div class="page">
+  <!-- Header -->
+  <div class="hdr">
+    <button class="back-btn" id="backBtn" onclick="prevStep()" disabled>←</button>
+    <span class="step-label" id="stepLabel">1 / 6</span>
+  </div>
+
+  <div class="content">
+
+    <!-- ══ PASO 1: ELIGE CÓMO EMPEZAR ══════════════════════ -->
+    <div class="step active" id="step1">
+      <div class="step-title">Elige tu<br><span>reto o plan</span></div>
+      <div class="step-sub">Puedes cambiar en cualquier momento.</div>
+
+      <!-- Retos — 7 días gratis -->
+      <div style="margin-bottom:6px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+          color:rgba(52,211,153,.6);margin-bottom:10px;display:flex;align-items:center;gap:8px">
+          <span style="background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.3);
+            padding:3px 9px;border-radius:10px;font-size:10px">7 días gratis</span>
+          Retos
+        </div>
+        <div class="opt" data-reto="gluteos" data-tipo="reto" onclick="selectOpt(this,'reto')" style="border-color:rgba(139,92,246,.4);background:rgba(139,92,246,.06)">
+          <span style="position:absolute;top:-1px;right:12px;font-size:9px;font-weight:800;
+            padding:2px 8px;background:linear-gradient(135deg,#8b5cf6,#ec4899);
+            color:white;border-radius:0 0 8px 8px;letter-spacing:.05em;text-transform:uppercase">Más popular</span>
+          <div class="opt-icon">🍑</div>
+          <div class="opt-info"><div class="opt-name">Reto de glúteos</div><div class="opt-desc">Glúteos más firmes con progresión clara y técnica</div></div>
+          <div class="opt-check"></div>
+        </div>
+        <div class="opt" style="margin-top:8px" data-reto="pancita" data-tipo="reto" onclick="selectOpt(this,'reto')">
+          <div class="opt-icon">🔥</div>
+          <div class="opt-info"><div class="opt-name">Reto para bajar la pancita</div><div class="opt-desc">Entreno + nutrición para reducir abdomen sin complicarte</div><div style="font-size:10px;color:rgba(52,211,153,.6);margin-top:2px;font-weight:600">7 días gratis · luego $32 USD</div></div>
+          <div class="opt-check"></div>
+        </div>
+      </div>
+
+      <!-- Planes personalizados -->
+      <div style="margin-top:20px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+          color:rgba(196,181,253,.5);margin-bottom:10px;display:flex;align-items:center;gap:8px">
+          <span style="background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.3);
+            padding:3px 9px;border-radius:10px;font-size:10px">$72 USD/mes</span>
+          Planes personalizados
+        </div>
+        <div class="opt" data-reto="masa" data-tipo="plan" onclick="selectOpt(this,'plan')" style="opacity:.8">
+          <div class="opt-icon">💪</div>
+          <div class="opt-info"><div class="opt-name">Aumento de masa muscular</div><div class="opt-desc">Rutina y nutrición 100% adaptadas · $72 USD/mes</div></div>
+          <div class="opt-check"></div>
+        </div>
+        <div class="opt" style="margin-top:8px" data-reto="definicion" data-tipo="plan" onclick="selectOpt(this,'plan')">
+          <div class="opt-icon">⚡</div>
+          <div class="opt-info"><div class="opt-name">Reducción de porcentaje graso</div><div style="font-size:10px;color:rgba(196,181,253,.6);margin-top:1px;font-weight:600">$72 USD/mes · pago inmediato · sin prueba gratis</div><div class="opt-desc">Reducción de grasa corporal personalizada · $72 USD/mes</div></div>
+          <div class="opt-check"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PASO 2: DÓNDE ENTRENAS ══════════════════ -->
+    <div class="step" id="step2">
+      <div class="step-title">¿Dónde<br><span>vas a entrenar?</span></div>
+      <div class="step-sub">Adaptamos los ejercicios a tu espacio.</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="opt" data-lugar="gym" onclick="selectOpt(this,'lugar')">
+          <div class="opt-icon">🏋️</div>
+          <div class="opt-info"><div class="opt-name">Gym</div><div class="opt-desc">Acceso a máquinas y pesas</div></div>
+          <div class="opt-check"></div>
+        </div>
+        <div class="opt" data-lugar="casa" onclick="selectOpt(this,'lugar')">
+          <div class="opt-icon">🏠</div>
+          <div class="opt-info"><div class="opt-name">Casa</div><div class="opt-desc">Sin equipo o con mancuernas</div></div>
+          <div class="opt-check"></div>
+        </div>
+        <div class="opt" data-lugar="ambos" onclick="selectOpt(this,'lugar')">
+          <div class="opt-icon">🔄</div>
+          <div class="opt-info"><div class="opt-name">Los dos</div><div class="opt-desc">Alterno según el día</div></div>
+          <div class="opt-check"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PASO 3: DÍAS Y NIVEL ══════════════════════ -->
+    <div class="step" id="step3">
+      <div class="step-title">¿Cuántos días<br><span>puedes entrenar?</span></div>
+      <div class="step-sub">No tiene que ser perfecto. Elige algo que puedas sostener.</div>
+      <div style="display:flex;gap:10px;margin-bottom:24px">
+        <div class="opt" data-dias="3" onclick="selectOpt(this,'dias')" style="flex:1;flex-direction:column;align-items:center;padding:18px 8px;text-align:center">
+          <div class="opt-name" style="font-size:26px;font-weight:800">3</div>
+          <div class="opt-desc">días/sem</div><div class="opt-check"></div>
+        </div>
+        <div class="opt" data-dias="4" onclick="selectOpt(this,'dias')" style="flex:1;flex-direction:column;align-items:center;padding:18px 8px;text-align:center">
+          <div class="opt-name" style="font-size:26px;font-weight:800">4</div>
+          <div class="opt-desc">días/sem</div><div class="opt-check"></div>
+        </div>
+        <div class="opt" data-dias="5" onclick="selectOpt(this,'dias')" style="flex:1;flex-direction:column;align-items:center;padding:18px 8px;text-align:center">
+          <div class="opt-name" style="font-size:26px;font-weight:800">5</div>
+          <div class="opt-desc">días/sem</div><div class="opt-check"></div>
+        </div>
+      </div>
+
+      <div class="step-title" style="font-size:20px;margin-bottom:8px">¿Cómo te sientes<br><span>entrenando?</span></div>
+      <div class="step-sub" style="margin-bottom:16px">Ser honesta ayuda a Arju a calibrar mejor.</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="opt" data-nivel="principiante" onclick="selectOpt(this,'nivel')">
+          <div class="opt-icon">🌱</div>
+          <div class="opt-info"><div class="opt-name">Estoy empezando</div><div class="opt-desc">Nunca o casi nunca he entrenado</div></div>
+          <div class="opt-check"></div>
+        </div>
+        <div class="opt" data-nivel="intermedio" onclick="selectOpt(this,'nivel')">
+          <div class="opt-icon">⚡</div>
+          <div class="opt-info"><div class="opt-name">Entrené antes, pero me falta constancia</div><div class="opt-desc">Sé los movimientos básicos</div></div>
+          <div class="opt-check"></div>
+        </div>
+        <div class="opt" data-nivel="avanzado" onclick="selectOpt(this,'nivel')">
+          <div class="opt-icon">🔥</div>
+          <div class="opt-info"><div class="opt-name">Entreno bien, quiero más dirección</div><div class="opt-desc">Tengo rutina regular</div></div>
+          <div class="opt-check"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PASO 4: LIMITACIONES / CUIDADOS ════════════ -->
+    <div class="step" id="step4">
+      <div class="step-title">¿Hay algo que<br><span>debamos cuidar?</span></div>
+      <div class="step-sub">Esto no te limita. Solo nos ayuda a entrenar con más inteligencia.</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="opt" data-cuidado="ninguna" onclick="selectOpt(this,'cuidado')">
+          <div class="opt-icon">✅</div>
+          <div class="opt-info"><div class="opt-name">Ninguna por ahora</div><div class="opt-desc">Sin molestias ni zonas a cuidar</div></div>
+          <div class="opt-check"></div>
+        </div>
+        <div class="opt" data-cuidado="rodilla" onclick="selectOpt(this,'cuidado')">
+          <div class="opt-icon">🦵</div>
+          <div class="opt-info"><div class="opt-name">Rodilla</div><div class="opt-desc">Sensibilidad o historial de molestia</div></div>
+          <div class="opt-check"></div>
+        </div>
+        <div class="opt" data-cuidado="espalda" onclick="selectOpt(this,'cuidado')">
+          <div class="opt-icon">🔙</div>
+          <div class="opt-info"><div class="opt-name">Espalda baja</div><div class="opt-desc">Tensión o historial lumbar</div></div>
+          <div class="opt-check"></div>
+        </div>
+        <div class="opt" data-cuidado="hombro" onclick="selectOpt(this,'cuidado')">
+          <div class="opt-icon">💪</div>
+          <div class="opt-info"><div class="opt-name">Hombro</div><div class="opt-desc">Lesión o sensibilidad</div></div>
+          <div class="opt-check"></div>
+        </div>
+        <div class="opt" data-cuidado="cuello" onclick="selectOpt(this,'cuidado')">
+          <div class="opt-icon">🫀</div>
+          <div class="opt-info"><div class="opt-name">Cuello</div><div class="opt-desc">Tensión o incomodidad</div></div>
+          <div class="opt-check"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PASO 5: NUTRICIÓN / DIFICULTAD ═════════════ -->
+    <div class="step" id="step5">
+      <div class="step-title">¿Qué se te<br><span>complica más con la comida?</span></div>
+      <div class="step-sub">Arju usa esto para ayudarte a decidir menos y comer mejor.</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="opt" data-nutri="no_se_cocinar" onclick="selectOpt(this,'nutri')">
+          <div class="opt-icon">🍳</div>
+          <div class="opt-info"><div class="opt-name">No sé qué cocinar</div><div class="opt-desc">Necesito ideas simples y rápidas</div></div>
+          <div class="opt-check"></div>
+        </div>
+        <div class="opt" data-nutri="como_por_afan" onclick="selectOpt(this,'nutri')">
+          <div class="opt-icon">⏱️</div>
+          <div class="opt-info"><div class="opt-name">Como por afán</div><div class="opt-desc">Poco tiempo para preparar comida</div></div>
+          <div class="opt-check"></div>
+        </div>
+        <div class="opt" data-nutri="salto_comidas" onclick="selectOpt(this,'nutri')">
+          <div class="opt-icon">😕</div>
+          <div class="opt-info"><div class="opt-name">Me salto comidas</div><div class="opt-desc">A veces olvido o no tengo tiempo</div></div>
+          <div class="opt-check"></div>
+        </div>
+        <div class="opt" data-nutri="subir_proteina" onclick="selectOpt(this,'nutri')">
+          <div class="opt-icon">💪</div>
+          <div class="opt-info"><div class="opt-name">Me cuesta subir proteína</div><div class="opt-desc">No sé qué comer para llegar al objetivo</div></div>
+          <div class="opt-check"></div>
+        </div>
+        <div class="opt" data-nutri="pido_afuera" onclick="selectOpt(this,'nutri')">
+          <div class="opt-icon">📦</div>
+          <div class="opt-info"><div class="opt-name">Pido mucha comida afuera</div><div class="opt-desc">Domicilios o restaurantes frecuentes</div></div>
+          <div class="opt-check"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PASO 6: ARJU PREPARÓ TU DÍA ════════════════ -->
+    <div class="step" id="step6">
+      <div style="text-align:center;padding:20px 0 16px">
+        <div style="width:72px;height:72px;border-radius:22px;
+          background:linear-gradient(135deg,#7c3aed,#ec4899);
+          display:flex;align-items:center;justify-content:center;
+          margin:0 auto 16px;box-shadow:0 0 32px rgba(124,58,237,.4)">
+          <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
+            <circle cx="18" cy="22" r="2.5" fill="white"/>
+            <circle cx="30" cy="22" r="2.5" fill="white"/>
+            <path d="M16 31c2-3.5 4.5-5.5 8-5.5s6 2 8 5.5" stroke="white" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+            <path d="M20 13h8M24 13v4" stroke="rgba(255,255,255,.6)" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div style="font-size:22px;font-weight:800;color:#f1f0f4;margin-bottom:8px;letter-spacing:-.02em">
+          Listo. Arju preparó<br>tu primer día.
+        </div>
+        <div style="font-size:14px;color:rgba(240,238,248,.55);line-height:1.6;max-width:280px;margin:0 auto">
+          Vamos paso a paso. No necesitas hacerlo perfecto.
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div id="onbSummary" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:16px;margin-bottom:14px">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.25);margin-bottom:12px">Tu configuración</div>
+        <div id="summaryItems" style="display:flex;flex-direction:column;gap:8px"></div>
+      </div>
+
+      <!-- Trial badge -->
+      <div id="trialSummaryBadge" style="background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.25);border-radius:14px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#6ee7b7" id="trialSummaryReto">Reto de glúteos</div>
+          <div style="font-size:12px;color:rgba(240,238,248,.5);margin-top:2px">7 días gratis · sin tarjeta</div>
+        </div>
+        <div style="font-size:10px;font-weight:800;padding:4px 10px;border-radius:10px;background:rgba(52,211,153,.15);color:#6ee7b7;letter-spacing:.06em;text-transform:uppercase">Trial activo</div>
+      </div>
+
+      <div id="saveMsg" style="color:rgba(255,255,255,.4);font-size:12px;text-align:center;margin-bottom:8px"></div>
+    </div>
+
+  </div><!-- /content -->
+
+  <div class="nav-bar">
+    <button class="btn-sec" id="btnBack" onclick="prevStep()" disabled>← Atrás</button>
+    <button class="btn-pri" id="btnNext" onclick="nextStep()">Continuar →</button>
+  </div>
+
+</div><!-- /wrap -->
+
+<script src="/js/core/ops-config.js"></script>
+<script src="/js/core/analytics.js"></script>
+<script src="/js/core/experiment-config.js"></script>
+  <script src="/js/core/supabase-client.js"></script>
+<script src="/js/core/auth-bootstrap.js"></script>
+<script src="/js/core/auth-guard.js"></script>
+<script src="/js/core/commerce-config.js"></script>
+  <script src="/js/core/trial-guard.js"></script>
+<script>
+// ═══════════════════════════════════════════
+// ArjunaFit — Onboarding Engine v1
+// ═══════════════════════════════════════════
+
+const TOTAL_STEPS = 6;
+let currentStep = 1;
+
+// User answers
+let answers = {
+  reto: '', tipo: '',
+  lugar: '', dias: '', nivel: '',
+  cuidado: '', nutri: ''
+};
+
+// Save partial state on every change
+function savePartial() {
+  const step = parseInt(localStorage.getItem('af-onboarding-step') || '0');
+  if (currentStep > step) localStorage.setItem('af-onboarding-step', String(currentStep));
+  localStorage.setItem('af-onboarding-partial', JSON.stringify(answers));
+}
+
+// Restore partial state
+function restorePartial() {
+  try {
+    const saved = localStorage.getItem('af-onboarding-partial');
+    if (saved) {
+      const a = JSON.parse(saved);
+      Object.assign(answers, a);
+      // Re-select options that were chosen
+      if (a.reto) document.querySelector('[data-reto="' + a.reto + '"]')?.classList.add('selected');
+      if (a.lugar) document.querySelector('[data-lugar="' + a.lugar + '"]')?.classList.add('selected');
+      if (a.dias) document.querySelector('[data-dias="' + a.dias + '"]')?.classList.add('selected');
+      if (a.nivel) document.querySelector('[data-nivel="' + a.nivel + '"]')?.classList.add('selected');
+      if (a.cuidado) document.querySelector('[data-cuidado="' + a.cuidado + '"]')?.classList.add('selected');
+      if (a.nutri) document.querySelector('[data-nutri="' + a.nutri + '"]')?.classList.add('selected');
+    }
+    const savedStep = parseInt(localStorage.getItem('af-onboarding-step') || '1');
+    if (savedStep > 1 && savedStep < TOTAL_STEPS) {
+      // Ask to resume
+      if (confirm('Terminemos de preparar tu primer dia. Paso ' + savedStep + ' de ' + TOTAL_STEPS)) {
+        goToStep(savedStep);
+      }
+    }
+  } catch(e) {}
+}
+
+function selectOpt(el, type) {
+  // Deselect same type within step
+  const parent = el.closest('.step');
+  parent.querySelectorAll('[data-' + type + ']').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+
+  // Save answer
+  if (type === 'reto' || type === 'plan') {
+    answers.reto = el.dataset.reto;
+    answers.tipo = el.dataset.tipo;
+  } else if (type === 'lugar') {
+    answers.lugar = el.dataset.lugar;
+  } else if (type === 'dias') {
+    answers.dias = el.dataset.dias;
+  } else if (type === 'nivel') {
+    answers.nivel = el.dataset.nivel;
+  } else if (type === 'cuidado') {
+    answers.cuidado = el.dataset.cuidado;
+  } else if (type === 'nutri') {
+    answers.nutri = el.dataset.nutri;
+  }
+
+  // For reto/plan type, also handle the different button group
+  if (type === 'reto' || type === 'plan') {
+    // Deselect ALL opts in step1
+    parent.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    answers.reto = el.dataset.reto;
+    answers.tipo = el.dataset.tipo;
+  }
+
+  savePartial();
+  updateNav();
+}
+
+function canProceed() {
+  switch(currentStep) {
+    case 1: return !!answers.reto;
+    case 2: return !!answers.lugar;
+    case 3: return !!answers.dias && !!answers.nivel;
+    case 4: return !!answers.cuidado;
+    case 5: return !!answers.nutri;
+    case 6: return true;
+    default: return true;
+  }
+}
+
+function updateNav() {
+  const btn = document.getElementById('btnNext');
+  const backBtn = document.getElementById('btnBack');
+  if (btn) btn.disabled = !canProceed();
+  if (backBtn) backBtn.disabled = currentStep <= 1;
+
+  // Update label
+  const lbl = document.getElementById('stepLabel');
+  if (lbl) lbl.textContent = currentStep + ' / ' + TOTAL_STEPS;
+
+  // Progress bar
+  const fill = document.getElementById('progFill') || document.querySelector('.prog-fill');
+  if (fill) fill.style.width = Math.round((currentStep / TOTAL_STEPS) * 100) + '%';
+
+  // Last step CTA
+  if (currentStep === TOTAL_STEPS) {
+    if (btn) { btn.textContent = 'Entrar a mi día →'; btn.disabled = false; }
+    buildSummary();
+  } else {
+    if (btn) btn.textContent = 'Continuar →';
+  }
+}
+
+function buildSummary() {
+  const LUGAR = {gym:'Gym', casa:'Casa', ambos:'Gym y Casa'};
+  const NIVEL = {principiante:'Estoy empezando', intermedio:'Entreñé antes', avanzado:'Entreno bien'};
+  const NUTRI = {no_se_cocinar:'No sé qué cocinar', como_por_afan:'Como por afán', salto_comidas:'Me salto comidas', subir_proteina:'Subir proteína', pido_afuera:'Pido afuera'};
+  const CUIDADO = {ninguna:'Sin cuidados especiales', rodilla:'Rodilla', espalda:'Espalda baja', hombro:'Hombro', cuello:'Cuello'};
+  const RETO = {gluteos:'Reto de glúteos', pancita:'Reto para bajar la pancita', masa:'Aumento de masa muscular', definicion:'Reducción de % graso'};
+
+  const items = [
+    ['🎯', RETO[answers.reto] || 'Sin seleccionar'],
+    ['🏋️', LUGAR[answers.lugar] || 'Sin seleccionar'],
+    ['📅', (answers.dias || '?') + ' días por semana'],
+    ['⚡', NIVEL[answers.nivel] || 'Sin seleccionar'],
+    ['❤️', CUIDADO[answers.cuidado] || 'Sin cuidados'],
+    ['🍳', NUTRI[answers.nutri] || 'Sin seleccionar']
+  ];
+
+  const container = document.getElementById('summaryItems');
+  if (!container) return;
+  container.innerHTML = items.map(([icon, text]) =>
+    '<div style="display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(240,238,248,.7)">' +
+    '<span style="font-size:16px;flex-shrink:0">' + icon + '</span><span>' + text + '</span></div>'
+  ).join('');
+
+  // Update reto badge
+  const badge = document.getElementById('trialSummaryReto');
+  if (badge) badge.textContent = RETO[answers.reto] || 'Reto';
+  const trialBadge = document.getElementById('trialSummaryBadge');
+  if (trialBadge && answers.tipo === 'plan') {
+    trialBadge.style.background = 'rgba(139,92,246,.1)';
+    trialBadge.style.borderColor = 'rgba(139,92,246,.25)';
+    trialBadge.querySelector('#trialSummaryReto').style.color = '#c4b5fd';
+    trialBadge.querySelector('[style*="margin-top"]').textContent = '$72 USD/mes · Pago inmediato';
+    trialBadge.querySelector('[style*="text-transform:uppercase"]').textContent = 'Plan activo';
+    trialBadge.querySelector('[style*="text-transform:uppercase"]').style.color = '#c4b5fd';
+    trialBadge.querySelector('[style*="text-transform:uppercase"]').style.background = 'rgba(139,92,246,.15)';
+  }
+}
+
+function goToStep(n) {
+  document.getElementById('step' + currentStep)?.classList.remove('active');
+  currentStep = n;
+  document.getElementById('step' + currentStep)?.classList.add('active');
+  updateNav();
+  window.scrollTo(0,0);
+}
+
+function nextStep() {
+  if (currentStep === TOTAL_STEPS) {
+    saveAndGo();
+    return;
+  }
+  if (!canProceed()) return;
+  goToStep(currentStep + 1);
+}
+
+function prevStep() {
+  if (currentStep <= 1) return;
+  goToStep(currentStep - 1);
+}
+
+// Save to localStorage + Supabase + go to dashboard
+async function saveAndGo() {
+  const btn = document.getElementById('btnNext');
+  if (btn) { btn.disabled = true; btn.textContent = 'Guardando...'; }
+
+  const msg = document.getElementById('saveMsg');
+  if (msg) msg.textContent = 'Preparando tu primer día...';
+
+  // Save to localStorage
+  const AF_KEYS = {
+    'af-selected-reto':       answers.reto,
+    'af-product-tipo':        answers.tipo,
+    'af-product-type':        answers.tipo === 'plan'
+                               ? (answers.reto === 'masa' ? 'custom_muscle_gain' : 'custom_fat_loss')
+                               : (answers.reto === 'pancita' ? 'challenge_belly' : 'challenge_glutes'),
+    'af-training-location':   answers.lugar,
+    'af-training-days':       answers.dias,
+    'af-training-level':      answers.nivel,
+    'af-constraint':          answers.cuidado,
+    'af-nutrition-challenge': answers.nutri,
+  };
+
+  Object.entries(AF_KEYS).forEach(([k,v]) => { if(v) localStorage.setItem(k, v); });
+  localStorage.removeItem('af-onboarding-partial');
+  localStorage.removeItem('af-onboarding-step');
+
+  // Init trial for retos
+  if (window.AF_Trial && answers.tipo === 'reto') {
+    window.AF_Trial.initTrial();
+    localStorage.setItem('af-trial-start', Date.now().toString());
+    localStorage.setItem('af-trial-ends', String(Date.now() + 7*24*60*60*1000));
+  }
+
+  // Save to Supabase
+  try {
+    const _sb = window.sb || (window.supabase?.createClient
+      ? window.supabase.createClient('https://egswsqymkxmbtcpnozcq.supabase.co',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM',
+          {auth:{persistSession:true,storageKey:'arjunafit-auth'}})
+      : null);
+
+    if (_sb) {
+      // Get session with timeout — don't hang if slow
+      var sessionResult = await Promise.race([
+        _sb.auth.getSession(),
+        new Promise(function(_, rej) { setTimeout(function() { rej(new Error('session_timeout')); }, 4000); })
+      ]).catch(function() { return { data: { session: null } }; });
+      var session = sessionResult?.data?.session || null;
+      console.log('[AuthGuard] onboarding save — session:', session ? 'ok' : 'null');
+
+      if (session?.user?.id) {
+        var uid = session.user.id;
+        // ONLY use confirmed columns from the profiles table
+        var payload = {
+          id:                  uid,
+          product_type:        localStorage.getItem('af-product-type') || null,
+          onboarding_completed: true,
+          updated_at:          new Date().toISOString()
+        };
+        // Save with timeout — don't block redirect if Supabase is slow
+        await Promise.race([
+          _sb.from('profiles').upsert(payload, { onConflict: 'id' }),
+          new Promise(function(_, rej) { setTimeout(function() { rej(new Error('save_timeout')); }, 4000); })
+        ]).catch(function(e) { console.warn('[AuthGuard] profile save timeout/error:', e.message); });
+
+        console.log('[AuthGuard] onboarding_completed saved to Supabase');
+      } else {
+        console.warn('[AuthGuard] onboarding save — no session, using localStorage only');
+      }
+    }
+    // ALWAYS set localStorage regardless of Supabase result
+    localStorage.setItem('af-onboarding-completed', '1');
+    console.log('[AuthGuard] onboarding_completed set in localStorage');
+  } catch(e) { console.warn('Onboarding Supabase save:', e.message); }
+
+  // Microvictoria
+  if (msg) msg.textContent = 'Listo. Arju ya sabe cómo ayudarte mejor.';
+
+  // Go to dashboard
+  setTimeout(() => {
+    window.location.replace('/pages/dashboard.html');
+  }, 800);
+}
+
+// ── resolveOnboardingRoute — session check + product routing ──────
+// ── Hard visual timeout: 5s → show error on screen ─────────────
+var _authStep = 'init';
+function _setStep(step) {
+  _authStep = step;
+  console.log('[AuthDebug]', step);
+  var ldrEl = document.getElementById('ldr');
+  if (ldrEl && !ldrEl.classList.contains('off')) {
+    var txt = ldrEl.querySelector('div:last-child') || ldrEl;
+    var stepLabel = {
+      'session_loading':     'Verificando sesión...',
+      'session_found':       'Sesión encontrada...',
+      'profile_loading':     'Cargando tu perfil...',
+      'profile_missing':     'Creando tu perfil...',
+      'profile_created':     'Perfil creado...',
+      'product_resolving':   'Detectando tu plan...',
+      'trial_creating':      'Preparando tu reto...',
+      'custom_payment':      'Configurando tu plan...',
+      'redirecting':         'Redirigiendo...',
+    };
+    txt.textContent = stepLabel[step] || step;
+  }
+}
+
+var _cancelOnbTimeout = setTimeout(function() {
+  var ldr = document.getElementById('ldr');
+  if (!ldr || ldr.classList.contains('off')) return; // already resolved
+  console.error('[AuthDebug] TIMEOUT 5s at step:', _authStep);
+  var wa = (window.AF_Support && AF_Support.whatsappUrl) || 'https://wa.link/hteek6';
+  ldr.innerHTML =
+    '<div style="font-size:36px;margin-bottom:12px">😓</div>' +
+    '<div style="font-size:15px;font-weight:700;color:#f1f0f4;text-align:center;padding:0 24px;margin-bottom:6px">No pudimos cargar tu sesión.</div>' +
+    '<div style="font-size:12px;color:rgba(255,255,255,.45);text-align:center;padding:0 24px;line-height:1.6;margin-bottom:4px">Tu cuenta puede estar creada, pero algo no cargó bien.</div>' +
+    '<div style="font-size:11px;color:rgba(255,255,255,.25);text-align:center;margin-bottom:18px">Último paso: ' + _authStep + '</div>' +
+    '<button onclick="location.reload()" style="padding:12px 24px;background:linear-gradient(135deg,#8b5cf6,#ec4899);border:none;border-radius:12px;color:#fff;font-family:Outfit,sans-serif;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:10px;display:block;width:200px">🔄 Intentar de nuevo</button>' +
+    '<a href="/" style="font-size:12px;color:rgba(255,255,255,.35);text-decoration:none;display:block;text-align:center;margin-bottom:8px">Ir al inicio</a>' +
+    '<a href="' + wa + '" target="_blank" style="font-size:12px;color:rgba(139,92,246,.6);text-decoration:none;display:block;text-align:center">💬 Hablar con Arjuna</a>';
+}, 5000);
+function _cancelOnbTimeoutFn() { clearTimeout(_cancelOnbTimeout); }
+
+async function resolveOnboardingRoute() {
+  const ldr    = document.getElementById('ldr');
+  const ldrTxt = ldr ? ldr.querySelector('div:last-child') : null;
+  const TIMEOUT_MS = 5000;
+
+  function hideLdr() { if (typeof _cancelOnbTimeoutFn === 'function') _cancelOnbTimeoutFn(); if (ldr) ldr.classList.add('off'); }
+
+  function showError(msg) {
+    if (ldr) {
+      ldr.innerHTML =
+        '<div style="font-size:36px;margin-bottom:12px">⚠️</div>' +
+        '<div style="font-size:15px;font-weight:700;color:#f1f0f4;text-align:center;padding:0 24px;margin-bottom:8px">No pudimos cargar tu sesión.</div>' +
+        '<div style="font-size:12px;color:rgba(255,255,255,.45);text-align:center;padding:0 24px;line-height:1.6;margin-bottom:20px">Tu cuenta puede estar creada, pero algo no cargó bien. Intenta de nuevo.</div>' +
+        '<button onclick="location.reload()" style="padding:12px 24px;background:rgba(124,58,237,.25);border:1px solid rgba(196,181,253,.3);border-radius:12px;color:#c4b5fd;font-family:Outfit,sans-serif;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:10px;display:block;width:200px">Intentar de nuevo</button>' +
+        '<a href="/" style="font-size:12px;color:rgba(255,255,255,.35);text-decoration:none;display:block;text-align:center">Ir al inicio</a>';
+    }
+    console.error('[Onboarding] Error:', msg);
+  }
+
+  try {
+    // ── Step 1: Supabase session with timeout ──────────────────────
+    if (ldrTxt) ldrTxt.textContent = 'Verificando sesión...';
+    _setStep('session_loading');
+    console.log('[AuthDebug] page loaded');
+    console.log('[AuthDebug] checking session');
+
+    let session = null;
+    try {
+      const sessionPromise = (window.supabase
+        ? window.supabase.createClient(
+            'https://egswsqymkxmbtcpnozcq.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM',
+            {auth:{persistSession:true,storageKey:'arjunafit-auth'}}
+          ).auth.getSession()
+        : Promise.resolve({data:{session:null}}));
+      const timeout = new Promise((_, rej) => setTimeout(() => rej(new Error('session_timeout')), TIMEOUT_MS));
+      const { data } = await Promise.race([sessionPromise, timeout]);
+      session = data?.session || null;
+    } catch(e) {
+      if (e.message === 'session_timeout') {
+        console.warn('[Auth] Session check timed out — proceeding with localStorage');
+      } else {
+        console.warn('[Auth] getSession error:', e.message);
+      }
+    }
+
+    // If no Supabase session but came straight from signup, it's OK — 
+    // signup already set localStorage. Proceed.
+    const isJustRegistered = !!localStorage.getItem('af-user-name');
+    if (!session && !isJustRegistered) {
+      console.log('[Auth] No session, no recent signup → login');
+      window.location.replace('/?redirect=onboarding');
+      return;
+    }
+    _setStep(session ? 'session_found' : 'session_loading');
+    console.log('[AuthDebug] session result:', session ? 'found' : 'null (using localStorage)');
+    if (session) console.log('[AuthDebug] user id:', session.user?.id?.substring(0,8));
+    console.log('[Auth] Session OK or just registered');
+
+    // ── Step 2: Read pending product ──────────────────────────────
+    const pending = localStorage.getItem('af-pending-product') || '';
+    const productType = localStorage.getItem('af-product-type') || '';
+    const selectedReto = localStorage.getItem('af-selected-reto') || '';
+    const productTipo = localStorage.getItem('af-product-tipo') || '';
+
+    const CUSTOM_PLANS = ['custom_muscle_gain', 'custom_fat_loss'];
+    const RETO_PLANS   = ['challenge_glutes', 'challenge_belly'];
+
+    const effectiveProduct = pending || productType;
+    _setStep('product_resolving');
+    console.log('[AuthDebug] product from localStorage:', productType);
+    console.log('[AuthDebug] product from pending:', pending);
+    console.log('[AuthDebug] resolved product:', effectiveProduct);
+    console.log('[Product] effectiveProduct:', effectiveProduct, '| pending:', pending, '| tipo:', productTipo);
+
+    // ── Step 3: Route by product type ────────────────────────────
+    if (CUSTOM_PLANS.includes(effectiveProduct)) {
+      // Custom plans → payment/intake, never free onboarding
+      console.log('[AuthDebug] redirect target: /pages/custom-plan-intake.html');
+      console.log('[Route] Custom plan → custom-plan-intake');
+      window.location.replace('/pages/custom-plan-intake.html');
+      return;
+    }
+
+    // Already completed onboarding → dashboard
+    const onbDone = localStorage.getItem('af-onboarding-completed') === '1';
+    if (onbDone && !pending) {
+      console.log('[Route] Onboarding complete → dashboard');
+      window.location.replace('/pages/dashboard.html');
+      return;
+    }
+
+    // ── Step 4: Show onboarding with correct product pre-selected ─
+    // Clear loader and show onboarding UI
+    hideLdr();
+    console.log('[AuthDebug] redirect target: showing onboarding form');
+    console.log('[AuthDebug] finally stop loading');
+    console.log('[Route] Showing onboarding form');
+
+    // Auto-select reto from pending product
+    if (pending && RETO_PLANS.includes(pending)) {
+      const retoMap = {challenge_glutes:'gluteos', challenge_belly:'pancita'};
+      const retoVal = retoMap[pending];
+      if (retoVal) {
+        setTimeout(function() {
+          var btn = document.querySelector('[data-reto="' + retoVal + '"]');
+          if (btn) {
+            btn.click();
+            console.log('[Product] Auto-selected reto:', retoVal);
+            if (window.AF) AF.track('pending_product_saved', { product: pending });
+          }
+        }, 300);
+      }
+    } else if (selectedReto && !pending) {
+      // Restore from localStorage (user returning)
+      setTimeout(function() {
+        var btn = document.querySelector('[data-reto="' + selectedReto + '"]');
+        if (btn) btn.click();
+      }, 300);
+    }
+
+    updateNav();
+    restorePartial();
+    if (window.AF) AF.track('onboarding_started', { product: effectiveProduct });
+
+  } catch(err) {
+    console.error('[Error] onboarding route failed:', err.message);
+    showError(err.message);
+  }
+}
+
+// ── Init ──────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  resolveOnboardingRoute();
+});
+</script>
+</body>
+</html>

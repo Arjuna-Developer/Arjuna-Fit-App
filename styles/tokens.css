@@ -1,0 +1,27 @@
+/* ArjunaFit — Design Tokens */
+:root {
+  --bg-base: #0c0714;
+  --bg-card: #130d22;
+  --bg-elevated: #1a1030;
+  --bg-input: #1f1438;
+  --primary: #7c3aed;
+  --primary-light: #c4b5fd;
+  --primary-dark: #5b21b6;
+  --accent: #ec4899;
+  --accent-light: #f9a8d4;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --text-primary: #f1f0f4;
+  --text-secondary: #c4b5fd;
+  --text-tertiary: #7c6fa0;
+  --text-muted: #3d3258;
+  --border-base: rgba(124,58,237,0.2);
+  --border-subtle: rgba(255,255,255,0.06);
+  --font-display: 'Outfit', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+  --max-w: 430px;
+  --nav-h: 68px;
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px;
+  --r-xl: 20px; --r-2xl: 24px;
+}

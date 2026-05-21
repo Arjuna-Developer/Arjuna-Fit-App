@@ -1,0 +1,3616 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32-v2.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#6D28FF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ArjunaFit">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="af-version" content="mini-beta-day1-war-room-v1">
+<title>ArjunaFit · Nutrición</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0c0714;--card:#130d22;--el:#1a1030;
+  --pri:#7c3aed;--pl:#c4b5fd;--acc:#ec4899;
+  --ok:#10b981;--warn:#f59e0b;
+  --t:#f1f0f4;--t2:rgba(240,238,248,.7);--t3:rgba(240,238,248,.35);--t4:rgba(255,255,255,.06);
+  --font:'Outfit',sans-serif;--max:430px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
+  font-family:var(--font);-webkit-font-smoothing:antialiased}
+.page{max-width:var(--max);margin:0 auto;
+  height:100dvh;overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-y:contain;
+  scrollbar-width:none;
+  padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+.page::-webkit-scrollbar{display:none}
+
+/* ── Header ── */
+.hdr{padding:calc(env(safe-area-inset-top,14px) + 14px) 16px 0;
+  background:linear-gradient(to bottom,var(--bg) 70%,transparent);
+  position:sticky;top:0;z-index:20}
+.hdr-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.hdr-title{font-size:22px;font-weight:800;letter-spacing:-.03em}
+.hdr-sub{font-size:12px;color:var(--t3);margin-top:1px}
+.log-btn{padding:8px 16px;border-radius:11px;border:none;
+  background:linear-gradient(135deg,var(--pri),#9333ea);
+  color:#fff;font-family:var(--font);font-size:13px;font-weight:700;cursor:pointer;
+  box-shadow:0 2px 12px rgba(124,58,237,.35)}
+
+/* ── Tabs ── */
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:10px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:7px 15px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;
+  border:1.5px solid rgba(255,255,255,.06);font-family:var(--font);
+  background:rgba(255,255,255,.04);color:var(--t3);white-space:nowrap;flex-shrink:0;
+  transition:all .15s;-webkit-tap-highlight-color:transparent}
+.tab.on{background:linear-gradient(135deg,var(--pri),#9333ea);color:#fff;
+  border-color:transparent;box-shadow:0 2px 12px rgba(124,58,237,.3)}
+
+/* ── Tab content ── */
+.tc{display:none;padding:12px 16px 24px;flex-direction:column;gap:12px}
+.tc.on{display:flex;animation:fi .2s ease both}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ── Nutrición del día ── */
+.macros-card{background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(236,72,153,.05));
+  border:1px solid rgba(124,58,237,.22);border-radius:22px;padding:18px}
+.cr-wrap{position:relative;width:76px;height:76px;flex-shrink:0}
+.cr-wrap svg{transform:rotate(-90deg)}
+.cr-track{fill:none;stroke:rgba(255,255,255,.08);stroke-width:6}
+.cr-fill{fill:none;stroke:url(#cg);stroke-width:6;stroke-linecap:round;
+  stroke-dasharray:201.1;stroke-dashoffset:201.1;transition:stroke-dashoffset .8s ease}
+.cr-center{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center}
+.macro-bar{height:5px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden;flex:1}
+.macro-bar-fill{height:100%;border-radius:3px;transition:width .8s ease;width:0%}
+
+/* ── Log empty ── */
+.log-empty{display:flex;flex-direction:column;align-items:center;gap:10px;
+  padding:24px 16px;text-align:center;background:var(--card);
+  border:1.5px dashed rgba(124,58,237,.25);border-radius:18px}
+
+/* ── Meal log buttons ── */
+.meal-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.meal-btn{display:flex;align-items:center;gap:10px;padding:12px 14px;
+  border-radius:14px;border:1px solid rgba(255,255,255,.07);
+  background:rgba(255,255,255,.03);cursor:pointer;font-family:var(--font);
+  -webkit-tap-highlight-color:transparent;transition:background .15s}
+.meal-btn:active{background:rgba(124,58,237,.1)}
+.meal-btn-icon{font-size:22px}
+.meal-btn-text{text-align:left}
+.meal-btn-name{font-size:13px;font-weight:600;color:var(--t)}
+.meal-btn-sub{font-size:11px;color:var(--t3)}
+
+/* ── Recipes ── */
+.recipe-filters{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.recipe-filters::-webkit-scrollbar{display:none}
+.rf{padding:6px 12px;border-radius:16px;font-size:11px;font-weight:700;cursor:pointer;
+  border:1px solid rgba(255,255,255,.08);font-family:var(--font);
+  background:rgba(255,255,255,.04);color:var(--t3);white-space:nowrap;flex-shrink:0;
+  -webkit-tap-highlight-color:transparent}
+.rf.on{background:rgba(124,58,237,.2);color:var(--pl);border-color:rgba(124,58,237,.3)}
+.recipe-grid{display:flex;flex-direction:column;gap:10px}
+.rc{display:flex;align-items:center;gap:12px;padding:14px 15px;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+  border-radius:18px;cursor:pointer;transition:border-color .15s}
+.rc:active{border-color:rgba(124,58,237,.3)}
+.rc.hidden{display:none}
+.rc-emoji{font-size:34px;line-height:1;flex-shrink:0}
+.rc-body{flex:1;min-width:0}
+.rc-name{font-size:14px;font-weight:700;letter-spacing:-.01em;margin-bottom:5px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc-pills{display:flex;gap:5px;flex-wrap:wrap}
+.pill{font-size:10px;font-weight:700;padding:2px 8px;border-radius:12px}
+.pill-p{background:rgba(139,92,246,.18);color:#c4b5fd;font-weight:700}
+.pill-c{background:rgba(245,158,11,.15);color:#fcd34d}
+.pill-t{background:rgba(16,185,129,.15);color:#6ee7b7}
+.pill-tag{background:rgba(255,255,255,.06);color:var(--t3)}
+
+/* ── Featured recipe ── */
+.featured{position:relative;overflow:hidden;border-radius:22px;
+  background:linear-gradient(145deg,#1c0935,#0d0620);
+  border:1px solid rgba(124,58,237,.3);padding:20px;cursor:pointer;
+  margin-bottom:4px}
+.featured::before{content:'';position:absolute;top:-40px;right:-40px;
+  width:160px;height:160px;border-radius:50%;
+  background:rgba(236,72,153,.2);filter:blur(60px);pointer-events:none}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.featured-emoji{font-size:44px;margin-bottom:10px;display:block;
+  filter:drop-shadow(0 0 14px rgba(124,58,237,.5));animation:float 3s ease-in-out infinite}
+.badge{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(249,168,212,.7);background:rgba(236,72,153,.1);
+  border:1px solid rgba(249,168,212,.15);padding:3px 10px;border-radius:20px;
+  display:inline-block;margin-bottom:12px}
+
+/* ── Shop ── */
+.shop-cat-title{font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--t3);margin-bottom:8px;margin-top:4px;
+  display:flex;align-items:center;gap:8px}
+.shop-item{display:flex;align-items:center;gap:10px;padding:10px 13px;
+  background:var(--card);border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;margin-bottom:6px;cursor:pointer;
+  transition:all .15s;-webkit-tap-highlight-color:transparent}
+.shop-item.ck{opacity:.5}
+.shop-item.ck .si-name{text-decoration:line-through;color:var(--t3)}
+.si-check{width:22px;height:22px;border-radius:6px;border:1.5px solid rgba(255,255,255,.15);
+  display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;
+  transition:all .15s;color:transparent}
+.shop-item.ck .si-check{background:var(--ok);border-color:transparent;color:#fff}
+.si-name{font-size:13px;font-weight:500;flex:1;color:var(--t)}
+.si-qty{font-size:11px;color:var(--t3)}
+
+/* ── Guide ── */
+.guide-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+  border-radius:18px;padding:16px;cursor:pointer}
+.gc-title{font-size:15px;font-weight:700;margin-bottom:10px;
+  display:flex;align-items:center;justify-content:space-between}
+.gc-body{font-size:13px;color:var(--t2);line-height:1.75;display:none}
+.gc-body.open{display:block;animation:fi .2s ease both}
+.gc-body b{color:var(--pl);font-weight:600}
+.gc-body ul{list-style:none;padding:0}
+.gc-body li{padding:4px 0;padding-left:16px;position:relative}
+.gc-body li::before{content:'·';position:absolute;left:4px;color:var(--pl)}
+.guide-tip{background:rgba(124,58,237,.06);border:1px solid rgba(196,181,253,.1);
+  border-radius:14px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;
+  margin-top:8px}
+
+/* ── Smart suggest ── */
+#smartSuggestions .ss-label{font-size:11px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:rgba(196,181,253,.4);margin-bottom:8px}
+
+/* ── Nav ── */
+.bnav{
+  position:fixed;
+  bottom:calc(12px + env(safe-area-inset-bottom));
+  left:50%;transform:translateX(-50%);
+  width:min(calc(100vw - 24px), 406px);
+  height:64px;
+  background:rgba(14,8,26,.96);
+  backdrop-filter:blur(32px) saturate(1.5);
+  -webkit-backdrop-filter:blur(32px) saturate(1.5);
+  border:1px solid rgba(196,181,253,.12);
+  border-radius:22px;
+  box-shadow:0 8px 32px rgba(0,0,0,.5),0 0 0 1px rgba(139,92,246,.08);
+  display:flex;align-items:flex-start;z-index:100;
+  padding-bottom:0;
+}
+.nav-items{width:100%;display:flex;justify-content:space-around;padding-top:8px}
+.ni{display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:4px 10px;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.ni-icon{font-size:22px;line-height:1}
+.ni-lbl{font-family:var(--font);font-size:10px;font-weight:600;letter-spacing:.04em;
+  color:rgba(255,255,255,.25)}
+.ni.active .ni-lbl,.ni.active .ni-icon{opacity:1}
+.ni.active .ni-lbl{color:var(--pl)}
+.nc{display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:0 10px;padding-top:4px;text-decoration:none}
+.nc-icon{width:46px;height:46px;border-radius:16px;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+  box-shadow:0 0 20px rgba(124,58,237,.5),0 0 40px rgba(236,72,153,.2),
+             0 0 0 8px rgba(124,58,237,.08);
+  margin-top:-14px;
+  animation:cam-breathe-n 3s ease-in-out infinite}
+@keyframes cam-breathe-n{
+  0%,100%{box-shadow:0 0 20px rgba(124,58,237,.5),0 0 40px rgba(236,72,153,.2),0 0 0 8px rgba(124,58,237,.08);}
+  50%{box-shadow:0 0 32px rgba(124,58,237,.7),0 0 60px rgba(236,72,153,.35),0 0 0 12px rgba(124,58,237,.12);}
+}
+.nc-lbl{font-family:var(--font);font-size:10px;font-weight:600;color:var(--pl)}
+
+.ldr{position:fixed;inset:0;background:var(--bg);z-index:999;
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .3s,visibility .3s}
+.ldr.off{opacity:0;visibility:hidden;pointer-events:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes card-pulse{0%,100%{box-shadow:0 0 0 rgba(124,58,237,0)}50%{box-shadow:0 0 24px rgba(124,58,237,.2)}}
+@keyframes meal-check{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}
+
+/* Macro card living states */
+.macros-card{background:linear-gradient(135deg,rgba(124,58,237,.1),rgba(236,72,153,.05));
+  border:1px solid rgba(124,58,237,.22);border-radius:22px;padding:18px;
+  transition:all .5s ease}
+.macros-card.state-empty{
+  background:rgba(255,255,255,.02);
+  border-color:rgba(255,255,255,.06);
+  box-shadow:none}
+.macros-card.state-partial{
+  background:linear-gradient(135deg,rgba(124,58,237,.07),rgba(236,72,153,.03));
+  border-color:rgba(124,58,237,.18);
+  box-shadow:0 0 16px rgba(124,58,237,.07)}
+.macros-card.state-good{
+  background:linear-gradient(135deg,rgba(124,58,237,.12),rgba(236,72,153,.06));
+  border-color:rgba(124,58,237,.3);
+  box-shadow:0 0 28px rgba(124,58,237,.12)}
+.macros-card.state-complete{
+  background:linear-gradient(135deg,rgba(124,58,237,.18),rgba(236,72,153,.1));
+  border-color:rgba(196,181,253,.4);
+  box-shadow:0 0 40px rgba(124,58,237,.2),0 0 0 1px rgba(196,181,253,.08);
+  animation:card-pulse 3s ease-in-out infinite}
+
+/* Meal rhythm */
+.meal-slot{display:flex;align-items:center;gap:12px;padding:11px 14px;
+  border-radius:14px;border:1px solid;transition:all .3s ease;cursor:pointer}
+.meal-slot.empty{background:rgba(255,255,255,.02);border-color:rgba(255,255,255,.05)}
+.meal-slot.done{background:rgba(16,185,129,.06);border-color:rgba(16,185,129,.18)}
+.meal-slot.current{background:rgba(124,58,237,.06);border-color:rgba(124,58,237,.25);
+  box-shadow:0 0 12px rgba(124,58,237,.08)}
+.meal-slot-icon{font-size:22px;line-height:1;flex-shrink:0}
+.meal-slot-body{flex:1;min-width:0}
+.meal-slot-name{font-size:13px;font-weight:600;transition:color .3s}
+.meal-slot.empty .meal-slot-name{color:rgba(240,238,248,.35)}
+.meal-slot.done .meal-slot-name{color:rgba(240,238,248,.8)}
+.meal-slot.current .meal-slot-name{color:#f1f0f4}
+.meal-slot-sub{font-size:11px;margin-top:2px}
+.meal-slot.empty .meal-slot-sub{color:rgba(240,238,248,.2)}
+.meal-slot.done .meal-slot-sub{color:rgba(110,231,183,.6)}
+.meal-slot.current .meal-slot-sub{color:rgba(196,181,253,.6)}
+.meal-slot-check{width:24px;height:24px;border-radius:8px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:12px;
+  transition:all .3s ease}
+.meal-slot.empty .meal-slot-check{border:1.5px solid rgba(255,255,255,.1);color:transparent}
+.meal-slot.done .meal-slot-check{background:rgba(16,185,129,.2);border:1.5px solid rgba(16,185,129,.4);
+  color:#6ee7b7;animation:meal-check .3s cubic-bezier(.34,1.2,.64,1)}
+.meal-slot.current .meal-slot-check{border:1.5px solid rgba(124,58,237,.4);
+  background:rgba(124,58,237,.1);color:rgba(196,181,253,.5)}
+</style>
+  <link rel="stylesheet" href="/assets/visual-system.css">
+  <script src="/js/core/auth-bootstrap.js"></script>
+<script src="/js/core/auth-guard.js"></script>
+<script src="/js/core/ops-config.js"></script>
+<script src="/js/core/analytics.js"></script>
+
+  <style>
+  .nav-ambient{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100vw,430px);height:140px;background:radial-gradient(ellipse at 50% 100%,rgba(124,58,237,.18) 0%,rgba(168,85,247,.1) 30%,transparent 70%);filter:blur(20px);z-index:99;pointer-events:none}
+  nav[style*="position:fixed"]{background:rgba(12,7,22,.88)!important;backdrop-filter:blur(40px) saturate(1.8)!important;-webkit-backdrop-filter:blur(40px) saturate(1.8)!important;border-radius:26px!important;border-color:rgba(196,181,253,.08)!important;box-shadow:0 -1px 0 rgba(255,255,255,.04) inset,0 12px 40px rgba(0,0,0,.55),0 0 60px rgba(124,58,237,.06)!important}
+  </style>
+  <link rel="stylesheet" href="/assets/visual-polish.css">
+</head>
+<body>
+<div class="ldr" id="ldr"><div style="width:36px;height:36px;border-radius:50%;border:3px solid rgba(124,58,237,.2);border-top-color:#7c3aed;animation:spin .7s linear infinite"></div></div>
+
+<div class="page">
+  <!-- Header -->
+  <div class="hdr">
+    <div class="hdr-row">
+      <div>
+        <div class="hdr-title">Nutrición</div>
+        <div class="hdr-sub" id="hdrDate"></div>
+      </div>
+      <button class="log-btn" onclick="openQuickLog()">+ Registrar</button>
+    </div>
+    <div class="tabs">
+      <button class="tab on" onclick="sw('hoy')"     id="t-hoy">📊 Hoy</button>
+      <button class="tab"    onclick="sw('recetas')" id="t-recetas">🍽️ Recetario</button>
+      <button class="tab"    onclick="sw('mercado')" id="t-mercado">🛒 Mercado</button>
+      <button class="tab"    onclick="sw('fuera')"   id="t-fuera">🍽️ Fuera</button>
+      <button class="tab"    onclick="sw('guia')"    id="t-guia">📖 Guía</button>
+    </div>
+  </div>
+
+  <!-- ══════════════ TAB: HOY ══════════════ -->
+  <div class="tc on" id="tc-hoy">
+
+    <!-- Living macro card — state changes with progress -->
+    <div id="macroCard" class="macros-card state-empty">
+      <!-- State label -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div id="dayStateLabel" style="font-size:10px;font-weight:700;letter-spacing:.1em;
+          text-transform:uppercase;color:rgba(196,181,253,.35)">Tu nutrición aún no empieza</div>
+        <div id="dayStreakPill" style="display:none;font-size:10px;font-weight:700;
+          padding:2px 10px;border-radius:20px;background:rgba(124,58,237,.15);
+          color:rgba(196,181,253,.6)"></div>
+      </div>
+
+      <!-- Ring + percentage -->
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+        <div class="cr-wrap">
+          <svg width="76" height="76" viewBox="0 0 76 76">
+            <defs>
+              <linearGradient id="cg" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#7c3aed"/>
+                <stop offset="100%" stop-color="#ec4899"/>
+              </linearGradient>
+            </defs>
+            <circle class="cr-track" cx="38" cy="38" r="32"/>
+            <circle class="cr-fill" cx="38" cy="38" r="32" id="crFill"/>
+          </svg>
+          <div class="cr-center">
+            <div style="font-size:16px;font-weight:900;letter-spacing:-.04em;line-height:1" id="crNum">0</div>
+            <div style="font-size:9px;color:var(--t3);font-weight:700;text-transform:uppercase;letter-spacing:.06em">kcal</div>
+          </div>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:28px;font-weight:900;letter-spacing:-.05em;line-height:1;
+            transition:color .4s ease" id="calPct">0%</div>
+          <div style="font-size:12px;color:var(--t3);margin-top:3px" id="calDesc">de 2000 kcal meta</div>
+        </div>
+      </div>
+
+      <!-- Macro bars -->
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:52px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--t3)">Prot.</div>
+          <div class="nutri-bar"><div class="nutri-bar-fill" id="bProt" style="background:var(--pl)"></div></div>
+          <div style="width:44px;text-align:right;font-size:13px;font-weight:700;color:var(--pl)" id="vProt">—</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:52px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--t3)">Carbs</div>
+          <div class="nutri-bar"><div class="nutri-bar-fill" id="bCarb" style="background:#fcd34d"></div></div>
+          <div style="width:44px;text-align:right;font-size:13px;font-weight:700;color:#fcd34d" id="vCarb">—</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:52px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--t3)">Grasas</div>
+          <div class="nutri-bar"><div class="nutri-bar-fill" id="bFat" style="background:#6ee7b7"></div></div>
+          <div style="width:44px;text-align:right;font-size:13px;font-weight:700;color:#6ee7b7" id="vFat">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Meal rhythm — visual structure of the day -->
+    <div id="mealRhythm"><!-- rendered by renderMealRhythm() --></div>
+
+    <!-- Coach tip — contextual, updates with progress -->
+    <div id="coachTipCard" style="background:linear-gradient(135deg,rgba(124,58,237,.08),rgba(236,72,153,.04));
+      border:1px solid rgba(196,181,253,.12);border-radius:18px;
+      padding:14px 16px;display:flex;align-items:flex-start;gap:12px;
+      transition:all .4s ease">
+      <div style="width:36px;height:36px;border-radius:12px;flex-shrink:0;
+        background:linear-gradient(135deg,#7c3aed,#ec4899);
+        display:flex;align-items:center;justify-content:center;
+        box-shadow:0 0 12px rgba(124,58,237,.3);font-size:16px">🤖</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:11px;font-weight:600;color:rgba(196,181,253,.5);
+          letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px">Coach Arju</div>
+        <div id="emptyStateIll" style="display:none;text-align:center;padding:8px 0 4px">
+      <img src="/assets/empty-states/empty-nutrition.svg" 
+        width="72" height="72" alt="" 
+        style="opacity:.6;display:inline-block"
+        onerror="this.style.display='none'">
+    </div>
+    <div id="nutriTip" style="font-size:13px;color:var(--t2);line-height:1.65;
+          transition:opacity .3s ease">
+          Tu nutrición de hoy aún no comienza.
+        </div>
+      </div>
+    </div>
+
+    <!-- Smart suggestions -->
+    <div id="smartSuggestions"></div>
+
+    <!-- Log buttons — Foto IA PRIMARY, others secondary -->
+    <div>
+      <button onclick="openPhotoLog()" style="
+        width:100%;padding:14px 16px;border-radius:16px;border:none;cursor:pointer;
+        background:linear-gradient(135deg,#8b5cf6,#ec4899);
+        color:#fff;font-family:var(--font);font-size:15px;font-weight:800;
+        display:flex;align-items:center;justify-content:center;gap:10px;
+        box-shadow:0 4px 24px rgba(139,92,246,.4),0 0 0 1px rgba(255,255,255,.1) inset;
+        margin-bottom:9px;letter-spacing:-.01em">
+        📷 <span id="photoMainLabel">Registrar con foto</span>
+      </button>
+      <div style="display:flex;gap:8px">
+        <button onclick="openQuickLog()" style="flex:1;padding:9px;border-radius:12px;
+          border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);
+          color:rgba(240,238,248,.6);font-family:var(--font);font-size:12px;
+          font-weight:600;cursor:pointer>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="opacity:.7"><path d="M3 3h18M3 9h18M3 15h18M3 21h18"/></svg>
+      Recetas</button>
+        <button onclick="openUSDASearch()" style="flex:1;padding:9px;border-radius:12px;
+          border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);
+          color:rgba(240,238,248,.6);font-family:var(--font);font-size:12px;
+          font-weight:600;cursor:pointer>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="opacity:.7"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+      Buscar</button>
+        <button onclick="openManualLog()" style="flex:1;padding:9px;border-radius:12px;
+          border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);
+          color:rgba(240,238,248,.6);font-family:var(--font);font-size:12px;
+          font-weight:600;cursor:pointer>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="opacity:.7"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4z"/></svg>
+      Manual</button>
+      </div>
+    </div>
+
+    <!-- Logged meals list -->
+    <div id="logList" style="display:none;flex-direction:column;gap:6px"></div>
+  </div>
+
+  <!-- ══════════════ TAB: RECETARIO ══════════════ -->
+  <div class="tc" id="tc-recetas">
+
+    <!-- Dynamic "¿Qué como ahora?" recommendation -->
+    <div id="recipeRec" style="
+      background:linear-gradient(145deg,rgba(249,115,22,.14),rgba(245,158,11,.07));
+      border:1.5px solid rgba(249,115,22,.3);border-radius:22px;
+      padding:16px 18px;cursor:pointer;
+      box-shadow:0 0 24px rgba(249,115,22,.08)"
+      onclick="openRecipeFromRec()">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.1em;
+        text-transform:uppercase;color:rgba(253,186,116,.6);margin-bottom:10px"
+        id="recTimeLabel">Arju recomienda</div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <div id="recEmoji" style="font-size:42px;line-height:1;
+          filter:drop-shadow(0 4px 10px rgba(249,115,22,.3))">🍳</div>
+        <div style="flex:1;min-width:0">
+          <div id="recName" style="font-size:17px;font-weight:800;
+            color:#f1f0f4;letter-spacing:-.02em;margin-bottom:4px;line-height:1.2">—</div>
+          <div id="recDesc" style="font-size:12px;color:rgba(253,186,116,.65);
+            line-height:1.5">—</div>
+          <div style="display:flex;gap:7px;margin-top:8px" id="recPills"></div>
+        </div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button onclick="event.stopPropagation();openRecipeFromRec()" style="
+          flex:1;padding:10px;border-radius:12px;border:none;cursor:pointer;
+          background:linear-gradient(135deg,#f97316,#f59e0b);
+          color:#fff;font-family:var(--font);font-size:13px;font-weight:700">
+          Ver receta →
+        </button>
+        <button onclick="event.stopPropagation();saveRecipeAsMeal()" style="
+          padding:10px 14px;border-radius:12px;
+          border:1px solid rgba(249,115,22,.3);
+          background:rgba(249,115,22,.1);
+          color:rgba(253,186,116,.8);font-family:var(--font);
+          font-size:12px;font-weight:600;cursor:pointer">
+          + Agregar
+        </button>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div style="position:relative;margin-bottom:4px">
+      <input id="recipeSearch" type="search" placeholder="Busca: huevo, pollo, arepa, avena…"
+        oninput="searchRecipes(this.value)"
+        style="width:100%;padding:11px 16px 11px 38px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#f1f0f4;font-family:var(--font);font-size:13px;box-sizing:border-box;-webkit-appearance:none;outline:none">
+      <div style="position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:15px;pointer-events:none;opacity:.4">🔍</div>
+    </div>
+
+    <!-- Filters -->
+    <div class="recipe-filters" id="recipeFilters">
+      <button class="rf on" data-cat="all" onclick="filterRecipes('all',this)">Todo</button>
+      <button class="rf" data-cat="desayuno" onclick="filterRecipes('desayuno',this)">🌅 Desayuno</button>
+      <button class="rf" data-cat="almuerzo" onclick="filterRecipes('almuerzo',this)">🌞 Almuerzo</button>
+      <button class="rf" data-cat="cena" onclick="filterRecipes('cena',this)">🌙 Cena</button>
+      <button class="rf" data-cat="snack" onclick="filterRecipes('snack',this)">🍎 Snack</button>
+      <button class="rf" data-cat="rapido" onclick="filterRecipes('rapido',this)">⚡ Rápido</button>
+      <button class="rf" data-cat="alto-prot" onclick="filterRecipes('alto-prot',this)">💪 Alta proteína</button>
+      <button class="rf" data-cat="economico" onclick="filterRecipes('economico',this)">💰 Económico</button>
+      <button class="rf" data-cat="colombiano" onclick="filterRecipes('colombiano',this)">🇨🇴 Colombiano</button>
+      <button class="rf" data-cat="mamas" onclick="filterRecipes('mamas',this)">👩‍👧 Mamás</button>
+    </div>
+
+    <!-- Recipe cards — static HTML, all visible by default -->
+    <div class="recipe-grid">
+      <!-- data-tags used by JS filter -->
+      <div class="rc" data-tags="desayuno rapido" onclick="openRecipeDetail('huevos-aguacate')">
+        <span class="rc-emoji">🍳</span>
+        <div class="rc-body">
+          <div class="rc-name">Bowl de huevos y aguacate</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">28g prot.</span>
+            <span class="pill pill-c">380 cal</span>
+            <span class="pill pill-t">10 min</span>
+            <span class="pill pill-tag">desayuno</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc" data-tags="almuerzo completo alto-prot" onclick="openRecipeDetail('pechuga-arroz')">
+        <span class="rc-emoji">🍗</span>
+        <div class="rc-body">
+          <div class="rc-name">Pechuga con arroz y brócoli</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">45g prot.</span>
+            <span class="pill pill-c">420 cal</span>
+            <span class="pill pill-t">20 min</span>
+            <span class="pill pill-tag">almuerzo</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc" data-tags="almuerzo rapido economico" onclick="openRecipeDetail('atun-frijoles')">
+        <span class="rc-emoji">🥗</span>
+        <div class="rc-body">
+          <div class="rc-name">Atún con fríjoles negros</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">35g prot.</span>
+            <span class="pill pill-c">310 cal</span>
+            <span class="pill pill-t">5 min</span>
+            <span class="pill pill-tag">sin cocción</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc" data-tags="desayuno snack post-entreno rapido" onclick="openRecipeDetail('batido-banano')">
+        <span class="rc-emoji">🥤</span>
+        <div class="rc-body">
+          <div class="rc-name">Batido de banano y avena</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">30g prot.</span>
+            <span class="pill pill-c">350 cal</span>
+            <span class="pill pill-t">3 min</span>
+            <span class="pill pill-tag">pre-entreno</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc" data-tags="almuerzo cena economico" onclick="openRecipeDetail('carne-papa')">
+        <span class="rc-emoji">🥩</span>
+        <div class="rc-body">
+          <div class="rc-name">Carne molida con papa</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">32g prot.</span>
+            <span class="pill pill-c">480 cal</span>
+            <span class="pill pill-t">20 min</span>
+            <span class="pill pill-tag">familiar</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc" data-tags="desayuno rapido" onclick="openRecipeDetail('omelette')">
+        <span class="rc-emoji">🥚</span>
+        <div class="rc-body">
+          <div class="rc-name">Omelette de proteína</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">25g prot.</span>
+            <span class="pill pill-c">280 cal</span>
+            <span class="pill pill-t">8 min</span>
+            <span class="pill pill-tag">ligero</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc" data-tags="cena economico" onclick="openRecipeDetail('lentejas')">
+        <span class="rc-emoji">🍲</span>
+        <div class="rc-body">
+          <div class="rc-name">Sopa de lentejas</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">22g prot.</span>
+            <span class="pill pill-c">290 cal</span>
+            <span class="pill pill-t">30 min</span>
+            <span class="pill pill-tag">económico</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc" data-tags="almuerzo" onclick="openRecipeDetail('arroz-pollo')">
+        <span class="rc-emoji">🍲</span>
+        <div class="rc-body">
+          <div class="rc-name">Arroz con pollo</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">38g prot.</span>
+            <span class="pill pill-c">450 cal</span>
+            <span class="pill pill-t">35 min</span>
+            <span class="pill pill-tag">familiar</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc" data-tags="desayuno snack" onclick="openRecipeDetail('yogur-fruta')">
+        <span class="rc-emoji">🫙</span>
+        <div class="rc-body">
+          <div class="rc-name">Yogur griego con frutas</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">15g prot.</span>
+            <span class="pill pill-c">180 cal</span>
+            <span class="pill pill-t">2 min</span>
+            <span class="pill pill-tag">snack</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc" data-tags="cena rapido alto-prot colombiano" onclick="openRecipeDetail('tortilla-vegetal')">
+        <span class="rc-emoji">🥚</span>
+        <div class="rc-body">
+          <div class="rc-name">Tortilla de huevo con vegetales</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">22g prot.</span>
+            <span class="pill pill-c">250 cal</span>
+            <span class="pill pill-t">10 min</span>
+            <span class="pill pill-tag">cena ligera</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc" data-tags="desayuno rapido colombiano mamas" onclick="openRecipeDetail('arepa-queso-huevo')">
+        <span class="rc-emoji">🫓</span>
+        <div class="rc-body">
+          <div class="rc-name">Arepa con queso y huevos</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">24g prot.</span>
+            <span class="pill pill-c">340 cal</span>
+            <span class="pill pill-t">8 min</span>
+            <span class="pill pill-tag">colombiana</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc" data-tags="snack rapido alto-prot economico" onclick="openRecipeDetail('huevos-cocidos')">
+        <span class="rc-emoji">🥚</span>
+        <div class="rc-body">
+          <div class="rc-name">Huevos cocidos con sal y limón</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">18g prot.</span>
+            <span class="pill pill-c">150 cal</span>
+            <span class="pill pill-t">12 min</span>
+            <span class="pill pill-tag">snack</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc" data-tags="almuerzo cena economico" onclick="openRecipeDetail('frijoles-arroz')">
+        <span class="rc-emoji">🫘</span>
+        <div class="rc-body">
+          <div class="rc-name">Fríjoles con arroz y plátano</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">18g prot.</span>
+            <span class="pill pill-c">430 cal</span>
+            <span class="pill pill-t">10 min</span>
+            <span class="pill pill-tag">colombiano</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc" data-tags="snack rapido economico" onclick="openRecipeDetail('huevos-cocidos')">
+        <span class="rc-emoji">🥚</span>
+        <div class="rc-body">
+          <div class="rc-name">Huevos cocidos</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">12g prot.</span>
+            <span class="pill pill-c">140 cal</span>
+            <span class="pill pill-t">10 min</span>
+            <span class="pill pill-tag">snack</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc" data-tags="post-entreno almuerzo" onclick="openRecipeDetail('arroz-huevos')">
+        <span class="rc-emoji">🍚</span>
+        <div class="rc-body">
+          <div class="rc-name">Arroz con huevos revueltos</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">22g prot.</span>
+            <span class="pill pill-c">370 cal</span>
+            <span class="pill pill-t">12 min</span>
+            <span class="pill pill-tag">post-entreno</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc" data-tags="cena economico" onclick="openRecipeDetail('caldo-papa')">
+        <span class="rc-emoji">🍵</span>
+        <div class="rc-body">
+          <div class="rc-name">Caldo de papa con pollo</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">25g prot.</span>
+            <span class="pill pill-c">280 cal</span>
+            <span class="pill pill-t">30 min</span>
+            <span class="pill pill-tag">reconfortante</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc" data-tags="desayuno post-entreno rapido" onclick="openRecipeDetail('tostadas-aguacate')">
+        <span class="rc-emoji">🥑</span>
+        <div class="rc-body">
+          <div class="rc-name">Tostadas de aguacate con huevo</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">18g prot.</span>
+            <span class="pill pill-c">310 cal</span>
+            <span class="pill pill-t">8 min</span>
+            <span class="pill pill-tag">post-entreno</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc" data-tags="snack rapido" onclick="openRecipeDetail('banano-mani')">
+        <span class="rc-emoji">🍌</span>
+        <div class="rc-body">
+          <div class="rc-name">Banano con mantequilla de maní</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">8g prot.</span>
+            <span class="pill pill-c">220 cal</span>
+            <span class="pill pill-t">2 min</span>
+            <span class="pill pill-tag">pre-entreno</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc" data-tags="almuerzo alto-prot" onclick="openRecipeDetail('tortilla-atun')">
+        <span class="rc-emoji">🌮</span>
+        <div class="rc-body">
+          <div class="rc-name">Tortilla de atún</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">30g prot.</span>
+            <span class="pill pill-c">350 cal</span>
+            <span class="pill pill-t">12 min</span>
+            <span class="pill pill-tag">almuerzo</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc" data-tags="desayuno avena economico" onclick="openRecipeDetail('avena-banano')">
+        <span class="rc-emoji">🥣</span>
+        <div class="rc-body">
+          <div class="rc-name">Avena con banano y canela</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">12g prot.</span>
+            <span class="pill pill-c">310 cal</span>
+            <span class="pill pill-t">8 min</span>
+            <span class="pill pill-tag">económico</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rc" data-tags="alto-prot desayuno rapido" onclick="openRecipeFromJSON('arepa-huevo-aguacate')">
+        <span class="rc-emoji">🌅</span>
+        <div class="rc-body">
+          <div class="rc-name">Arepa con huevo y aguacate</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">24g prot.</span>
+            <span class="pill pill-c">460 cal</span>
+            <span class="pill pill-t">10 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot desayuno rapido" onclick="openRecipeFromJSON('huevos-pericos-arepa')">
+        <span class="rc-emoji">🌅</span>
+        <div class="rc-body">
+          <div class="rc-name">Huevos pericos con arepa</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">26g prot.</span>
+            <span class="pill pill-c">420 cal</span>
+            <span class="pill pill-t">10 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot desayuno rapido" onclick="openRecipeFromJSON('yogur-banano-avena')">
+        <span class="rc-emoji">🌅</span>
+        <div class="rc-body">
+          <div class="rc-name">Yogur griego con banano y avena</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">20g prot.</span>
+            <span class="pill pill-c">380 cal</span>
+            <span class="pill pill-t">5 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot desayuno rapido" onclick="openRecipeFromJSON('omelette-espinaca')">
+        <span class="rc-emoji">🌅</span>
+        <div class="rc-body">
+          <div class="rc-name">Omelette de espinaca y queso</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">28g prot.</span>
+            <span class="pill pill-c">340 cal</span>
+            <span class="pill pill-t">10 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot desayuno rapido" onclick="openRecipeFromJSON('avena-proteina-fresas')">
+        <span class="rc-emoji">🌅</span>
+        <div class="rc-body">
+          <div class="rc-name">Avena con proteína y fresas</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">30g prot.</span>
+            <span class="pill pill-c">420 cal</span>
+            <span class="pill pill-t">10 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot desayuno rapido" onclick="openRecipeFromJSON('tostadas-huevo')">
+        <span class="rc-emoji">🌅</span>
+        <div class="rc-body">
+          <div class="rc-name">Tostadas integrales con huevo</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">20g prot.</span>
+            <span class="pill pill-c">360 cal</span>
+            <span class="pill pill-t">8 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('bowl-pollo-aguacate')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Bowl de arroz con pollo y aguacate</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">42g prot.</span>
+            <span class="pill pill-c">580 cal</span>
+            <span class="pill pill-t">20 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('pollo-desmechado-papa')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Pollo desmechado con papa criolla</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">44g prot.</span>
+            <span class="pill pill-c">490 cal</span>
+            <span class="pill pill-t">25 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('lentejas-arroz-huevo')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Lentejas con arroz y huevo</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">34g prot.</span>
+            <span class="pill pill-c">560 cal</span>
+            <span class="pill pill-t">30 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('frijoles-arroz-carne')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Frijoles con arroz y carne magra</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">45g prot.</span>
+            <span class="pill pill-c">610 cal</span>
+            <span class="pill pill-t">35 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('carne-molida-papa')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Carne molida magra con papa</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">42g prot.</span>
+            <span class="pill pill-c">520 cal</span>
+            <span class="pill pill-t">20 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('pescado-yuca-ensalada')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Pescado con yuca y ensalada</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">40g prot.</span>
+            <span class="pill pill-c">470 cal</span>
+            <span class="pill pill-t">25 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo rapido" onclick="openRecipeFromJSON('atun-arepa-tomate')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Atún con arepa y tomate</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">36g prot.</span>
+            <span class="pill pill-c">400 cal</span>
+            <span class="pill pill-t">8 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo rapido" onclick="openRecipeFromJSON('ensalada-pollo-aguacate')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Ensalada de pollo con aguacate</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">34g prot.</span>
+            <span class="pill pill-c">380 cal</span>
+            <span class="pill pill-t">15 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo rapido" onclick="openRecipeFromJSON('wrap-pollo')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Wrap integral de pollo</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">36g prot.</span>
+            <span class="pill pill-c">440 cal</span>
+            <span class="pill pill-t">12 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('sopa-pollo-verduras')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Sopa de pollo con papa y verduras</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">36g prot.</span>
+            <span class="pill pill-c">420 cal</span>
+            <span class="pill pill-t">35 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot cena" onclick="openRecipeFromJSON('pechuga-pure-papa')">
+        <span class="rc-emoji">🌙</span>
+        <div class="rc-body">
+          <div class="rc-name">Pechuga con puré de papa y ensalada</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">44g prot.</span>
+            <span class="pill pill-c">520 cal</span>
+            <span class="pill pill-t">25 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot cena" onclick="openRecipeFromJSON('salmon-arroz-vegetales')">
+        <span class="rc-emoji">🌙</span>
+        <div class="rc-body">
+          <div class="rc-name">Salmón con arroz y vegetales</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">46g prot.</span>
+            <span class="pill pill-c">560 cal</span>
+            <span class="pill pill-t">20 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot cena" onclick="openRecipeFromJSON('tilapia-patacon')">
+        <span class="rc-emoji">🌙</span>
+        <div class="rc-body">
+          <div class="rc-name">Tilapia al horno con patacón</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">40g prot.</span>
+            <span class="pill pill-c">480 cal</span>
+            <span class="pill pill-t">25 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot cena rapido" onclick="openRecipeFromJSON('cena-huevos-vegetales')">
+        <span class="rc-emoji">🌙</span>
+        <div class="rc-body">
+          <div class="rc-name">Cena ligera de huevos con vegetales</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">26g prot.</span>
+            <span class="pill pill-c">320 cal</span>
+            <span class="pill pill-t">12 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot cena" onclick="openRecipeFromJSON('pollo-al-curry')">
+        <span class="rc-emoji">🌙</span>
+        <div class="rc-body">
+          <div class="rc-name">Pollo al curry ligero</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">42g prot.</span>
+            <span class="pill pill-c">520 cal</span>
+            <span class="pill pill-t">20 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('bowl-platano-pollo')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Bowl de plátano maduro con pollo</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">38g prot.</span>
+            <span class="pill pill-c">490 cal</span>
+            <span class="pill pill-t">20 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot cena" onclick="openRecipeFromJSON('crema-ahuyama')">
+        <span class="rc-emoji">🌙</span>
+        <div class="rc-body">
+          <div class="rc-name">Crema de ahuyama con pollo</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">34g prot.</span>
+            <span class="pill pill-c">380 cal</span>
+            <span class="pill pill-t">30 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot cena rapido" onclick="openRecipeFromJSON('tortilla-vegetales')">
+        <span class="rc-emoji">🌙</span>
+        <div class="rc-body">
+          <div class="rc-name">Tortilla española de vegetales</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">28g prot.</span>
+            <span class="pill pill-c">380 cal</span>
+            <span class="pill pill-t">15 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo rapido" onclick="openRecipeFromJSON('ensalada-atun-garbanzos')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Ensalada de atún con garbanzos</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">36g prot.</span>
+            <span class="pill pill-c">400 cal</span>
+            <span class="pill pill-t">8 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('garbanzos-salteados-pollo')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Garbanzos salteados con pollo</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">42g prot.</span>
+            <span class="pill pill-c">480 cal</span>
+            <span class="pill pill-t">18 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('bowl-quinoa-pollo')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Bowl de quinoa con pollo</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">40g prot.</span>
+            <span class="pill pill-c">510 cal</span>
+            <span class="pill pill-t">20 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('pasta-integral-pollo')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Pasta integral con pollo</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">40g prot.</span>
+            <span class="pill pill-c">520 cal</span>
+            <span class="pill pill-t">20 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo rapido" onclick="openRecipeFromJSON('pasta-atun-tomate')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Pasta con atún y tomate</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">36g prot.</span>
+            <span class="pill pill-c">460 cal</span>
+            <span class="pill pill-t">15 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot rapido snack" onclick="openRecipeFromJSON('batido-proteina-banano')">
+        <span class="rc-emoji">🍎</span>
+        <div class="rc-body">
+          <div class="rc-name">Batido de proteína con banano</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">35g prot.</span>
+            <span class="pill pill-c">380 cal</span>
+            <span class="pill pill-t">3 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="rapido snack" onclick="openRecipeFromJSON('smoothie-frutos-rojos')">
+        <span class="rc-emoji">🍎</span>
+        <div class="rc-body">
+          <div class="rc-name">Smoothie de frutos rojos y yogur</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">18g prot.</span>
+            <span class="pill pill-c">280 cal</span>
+            <span class="pill pill-t">5 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot desayuno rapido" onclick="openRecipeFromJSON('panquecas-avena')">
+        <span class="rc-emoji">🌅</span>
+        <div class="rc-body">
+          <div class="rc-name">Panquecas de avena y banano</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">22g prot.</span>
+            <span class="pill pill-c">420 cal</span>
+            <span class="pill pill-t">15 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo rapido" onclick="openRecipeFromJSON('arepa-rellena-pollo')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Arepa rellena de pollo</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">38g prot.</span>
+            <span class="pill pill-c">480 cal</span>
+            <span class="pill pill-t">15 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot cena" onclick="openRecipeFromJSON('hamburguesa-casera-fit')">
+        <span class="rc-emoji">🌙</span>
+        <div class="rc-body">
+          <div class="rc-name">Hamburguesa casera fit</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">42g prot.</span>
+            <span class="pill pill-c">560 cal</span>
+            <span class="pill pill-t">20 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('burrito-bowl')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Burrito bowl saludable</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">42g prot.</span>
+            <span class="pill pill-c">580 cal</span>
+            <span class="pill pill-t">20 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('arroz-paisa')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Arroz paisa saludable</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">45g prot.</span>
+            <span class="pill pill-c">650 cal</span>
+            <span class="pill pill-t">30 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot cena" onclick="openRecipeFromJSON('picada-fit')">
+        <span class="rc-emoji">🌙</span>
+        <div class="rc-body">
+          <div class="rc-name">Picada saludable alta en proteína</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">44g prot.</span>
+            <span class="pill pill-c">580 cal</span>
+            <span class="pill pill-t">25 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot desayuno rapido" onclick="openRecipeFromJSON('tostada-aguacate-huevo')">
+        <span class="rc-emoji">🌅</span>
+        <div class="rc-body">
+          <div class="rc-name">Tostada de aguacate con huevo</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">22g prot.</span>
+            <span class="pill pill-c">420 cal</span>
+            <span class="pill pill-t">8 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot cena" onclick="openRecipeFromJSON('albondigas-arroz')">
+        <span class="rc-emoji">🌙</span>
+        <div class="rc-body">
+          <div class="rc-name">Albóndigas magras con arroz</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">42g prot.</span>
+            <span class="pill pill-c">520 cal</span>
+            <span class="pill pill-t">25 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot cena" onclick="openRecipeFromJSON('pechuga-tomate-natural')">
+        <span class="rc-emoji">🌙</span>
+        <div class="rc-body">
+          <div class="rc-name">Pechuga en salsa de tomate natural</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">44g prot.</span>
+            <span class="pill pill-c">380 cal</span>
+            <span class="pill pill-t">20 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('ensalada-quinoa-atun')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Ensalada de quinoa y atún</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">36g prot.</span>
+            <span class="pill pill-c">440 cal</span>
+            <span class="pill pill-t">20 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot cena rapido" onclick="openRecipeFromJSON('caldo-huevo-arepa')">
+        <span class="rc-emoji">🌙</span>
+        <div class="rc-body">
+          <div class="rc-name">Caldo de huevo con arepa</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">22g prot.</span>
+            <span class="pill pill-c">300 cal</span>
+            <span class="pill pill-t">12 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('bowl-post-entreno')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Bowl post-entreno de arroz, pollo y aguacate</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">44g prot.</span>
+            <span class="pill pill-c">600 cal</span>
+            <span class="pill pill-t">20 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('papa-rellena-saludable')">
+        <span class="rc-emoji">🌞</span>
+        <div class="rc-body">
+          <div class="rc-name">Papa rellena saludable</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">38g prot.</span>
+            <span class="pill pill-c">520 cal</span>
+            <span class="pill pill-t">30 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot cena rapido" onclick="openRecipeFromJSON('quesadilla-pollo')">
+        <span class="rc-emoji">🌙</span>
+        <div class="rc-body">
+          <div class="rc-name">Quesadilla saludable de pollo</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">38g prot.</span>
+            <span class="pill pill-c">460 cal</span>
+            <span class="pill pill-t">12 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot cena rapido" onclick="openRecipeFromJSON('tacos-pollo-saludables')">
+        <span class="rc-emoji">🌙</span>
+        <div class="rc-body">
+          <div class="rc-name">Tacos saludables de pollo</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">36g prot.</span>
+            <span class="pill pill-c">480 cal</span>
+            <span class="pill pill-t">15 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+      <div class="rc" data-tags="alto-prot cena" onclick="openRecipeFromJSON('cazuela-pollo-verduras')">
+        <span class="rc-emoji">🌙</span>
+        <div class="rc-body">
+          <div class="rc-name">Cazuela ligera de pollo y verduras</div>
+          <div class="rc-pills">
+            <span class="pill pill-p">38g prot.</span>
+            <span class="pill pill-c">420 cal</span>
+            <span class="pill pill-t">30 min</span>
+          </div>
+        </div><span class="rc-arr">›</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════ TAB: MERCADO ══════════════ -->
+  <div class="tc" id="tc-mercado">
+    <div>
+      <div style="font-size:16px;font-weight:800;letter-spacing:-.02em;margin-bottom:3px">
+        Lista del Mercado 🛒</div>
+      <div style="font-size:13px;color:var(--t3)">Toca para marcar lo que ya compraste</div>
+    </div>
+
+    <!-- Reset button -->
+    <button onclick="resetShop()" style="
+      align-self:flex-start;padding:6px 14px;border-radius:10px;
+      border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);
+      color:var(--t3);font-family:var(--font);font-size:12px;cursor:pointer;">
+      🔄 Reiniciar lista</button>
+
+    <!-- Proteínas -->
+    <div>
+      <div class="shop-cat-title">🥩 Proteínas</div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-p1')">
+        <div class="si-check">✓</div><div class="si-name">Pechuga de pollo</div><div class="si-qty">500g</div>
+      </div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-p2')">
+        <div class="si-check">✓</div><div class="si-name">Huevos</div><div class="si-qty">12 uds</div>
+      </div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-p3')">
+        <div class="si-check">✓</div><div class="si-name">Atún en agua</div><div class="si-qty">4 latas</div>
+      </div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-p4')">
+        <div class="si-check">✓</div><div class="si-name">Yogur griego</div><div class="si-qty">500g</div>
+      </div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-p5')">
+        <div class="si-check">✓</div><div class="si-name">Fríjoles negros</div><div class="si-qty">1 libra</div>
+      </div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-p6')">
+        <div class="si-check">✓</div><div class="si-name">Carne molida (res)</div><div class="si-qty">400g</div>
+      </div>
+    </div>
+
+    <!-- Carbohidratos -->
+    <div>
+      <div class="shop-cat-title">🌾 Carbohidratos</div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-c1')">
+        <div class="si-check">✓</div><div class="si-name">Arroz blanco</div><div class="si-qty">1 kg</div>
+      </div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-c2')">
+        <div class="si-check">✓</div><div class="si-name">Avena en hojuelas</div><div class="si-qty">500g</div>
+      </div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-c3')">
+        <div class="si-check">✓</div><div class="si-name">Papa criolla</div><div class="si-qty">1 kg</div>
+      </div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-c4')">
+        <div class="si-check">✓</div><div class="si-name">Lentejas</div><div class="si-qty">500g</div>
+      </div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-c5')">
+        <div class="si-check">✓</div><div class="si-name">Pan integral</div><div class="si-qty">1 paquete</div>
+      </div>
+    </div>
+
+    <!-- Frutas y verduras -->
+    <div>
+      <div class="shop-cat-title">🥦 Frutas y Verduras</div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-v1')">
+        <div class="si-check">✓</div><div class="si-name">Brócoli</div><div class="si-qty">1 cabeza</div>
+      </div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-v2')">
+        <div class="si-check">✓</div><div class="si-name">Espinacas</div><div class="si-qty">1 bolsa</div>
+      </div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-v3')">
+        <div class="si-check">✓</div><div class="si-name">Tomate</div><div class="si-qty">4 uds</div>
+      </div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-v4')">
+        <div class="si-check">✓</div><div class="si-name">Cebolla</div><div class="si-qty">3 uds</div>
+      </div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-v5')">
+        <div class="si-check">✓</div><div class="si-name">Banano</div><div class="si-qty">6 uds</div>
+      </div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-v6')">
+        <div class="si-check">✓</div><div class="si-name">Aguacate</div><div class="si-qty">3 uds</div>
+      </div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-v7')">
+        <div class="si-check">✓</div><div class="si-name">Limones</div><div class="si-qty">6 uds</div>
+      </div>
+    </div>
+
+    <!-- Básicos -->
+    <div>
+      <div class="shop-cat-title">🧄 Básicos de Cocina</div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-b1')">
+        <div class="si-check">✓</div><div class="si-name">Aceite de oliva</div><div class="si-qty">1 botella</div>
+      </div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-b2')">
+        <div class="si-check">✓</div><div class="si-name">Ajo</div><div class="si-qty">1 cabeza</div>
+      </div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-b3')">
+        <div class="si-check">✓</div><div class="si-name">Comino y sal</div><div class="si-qty">al gusto</div>
+      </div>
+    </div>
+
+    <!-- Snacks -->
+    <div>
+      <div class="shop-cat-title">🥜 Snacks</div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-s1')">
+        <div class="si-check">✓</div><div class="si-name">Nueces mixtas</div><div class="si-qty">200g</div>
+      </div>
+      <div class="shop-item" onclick="toggleShop(this,'sh-s2')">
+        <div class="si-check">✓</div><div class="si-name">Mantequilla de maní</div><div class="si-qty">1 frasco</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ TAB: GUÍA ══════════════ -->
+  <div class="tc" 
+<!-- ══════════════ TAB: COMER FUERA ══════════════ -->
+<div class="tc" id="tc-fuera">
+
+  <div style="font-size:17px;font-weight:800;color:#f5f3ff;margin-bottom:4px;padding:4px 0">
+    🍽️ Comer fuera
+  </div>
+  <p style="font-size:13px;color:rgba(255,255,255,.45);margin:0 0 18px;line-height:1.5">
+    Elige el tipo de comida y Arju te recomienda la mejor opción según tu objetivo.
+    Los macros son estimaciones aproximadas.
+  </p>
+
+  <!-- Restaurant grid -->
+  <div id="restaurantGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px"></div>
+
+  <!-- Selected restaurant options -->
+  <div id="restaurantOptions" style="display:none">
+    <button onclick="closeRestaurantOptions()"
+      style="display:flex;align-items:center;gap:6px;background:none;border:none;color:rgba(196,181,253,.6);
+             font-size:13px;font-weight:600;cursor:pointer;margin-bottom:14px;padding:0;font-family:var(--font)">
+      ← Volver
+    </button>
+    <div id="restaurantOptionsTitle" style="font-size:16px;font-weight:800;color:#f5f3ff;margin-bottom:14px"></div>
+    <div id="restaurantOptionsList"></div>
+  </div>
+
+  <!-- Arju suggestion strip -->
+  <div style="background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.18);border-radius:16px;padding:14px 16px;margin-top:8px">
+    <div style="font-size:11px;font-weight:700;color:#a78bfa;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">
+      Arju te recomienda
+    </div>
+    <div id="restaurantArjuTip" style="font-size:13px;color:rgba(240,238,248,.75);line-height:1.6">
+      Elige el tipo de comida y te doy una sugerencia según tu objetivo.
+    </div>
+  </div>
+
+</div>
+
+id="tc-guia">
+    <div>
+      <div style="font-size:16px;font-weight:800;letter-spacing:-.02em;margin-bottom:3px">
+        Guía Nutricional 📖</div>
+      <div style="font-size:13px;color:var(--t3)">Toca para expandir. Principios que funcionan.</div>
+    </div>
+
+    <!-- Quick stats row -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+      <div style="background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.2);
+        border-radius:14px;padding:12px 8px;text-align:center">
+        <div style="font-size:20px;font-weight:800;color:var(--pl)">1.6g</div>
+        <div style="font-size:10px;color:rgba(196,181,253,.5);font-weight:600;
+          margin-top:2px;line-height:1.3">prot/kg<br>de peso</div>
+      </div>
+      <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);
+        border-radius:14px;padding:12px 8px;text-align:center">
+        <div style="font-size:20px;font-weight:800;color:#fcd34d">2L</div>
+        <div style="font-size:10px;color:rgba(252,211,77,.5);font-weight:600;
+          margin-top:2px;line-height:1.3">agua<br>mínimo</div>
+      </div>
+      <div style="background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.15);
+        border-radius:14px;padding:12px 8px;text-align:center">
+        <div style="font-size:20px;font-weight:800;color:#6ee7b7">3+1</div>
+        <div style="font-size:10px;color:rgba(110,231,183,.5);font-weight:600;
+          margin-top:2px;line-height:1.3">comidas<br>al día</div>
+      </div>
+    </div>
+
+    <div class="guide-card" onclick="toggleGuide(this)">
+      <div class="gc-title">🥩 Proteína — tu prioridad #1 <span>›</span></div>
+      <div class="gc-body">
+        Come proteína en <b>cada comida</b>. Es lo más importante del reto.
+        <br><br>
+        <b>Fuentes LATAM:</b> pollo, huevos, atún, fríjoles, lentejas, yogur griego, carne.
+        <br><br>
+        Meta: <b>1.6–2g por kg de peso</b> al día. Sin obsesionarte con el número exacto.
+        <div class="guide-tip">
+          <span style="font-size:16px">💡</span>
+          <span style="font-size:12px;color:var(--t2)">Si no llegas al número no hay drama. Solo intenta agregar proteína en cada plato.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="guide-card" onclick="toggleGuide(this)">
+      <div class="gc-title">⚡ Qué comer post-entreno <span>›</span></div>
+      <div class="gc-body">
+        En los <b>45 minutos</b> después del entreno consume:
+        <br><br>
+        <b>Proteína + carbohidratos</b> = recuperación óptima.
+        <br><br>
+        <ul>
+          <li>Arroz con huevos revueltos</li>
+          <li>Batido banano + avena</li>
+          <li>Pechuga con arroz</li>
+          <li>Yogur griego + fruta</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="guide-card" onclick="toggleGuide(this)">
+      <div class="gc-title">🍌 Snacks inteligentes <span>›</span></div>
+      <div class="gc-body">
+        Los mejores snacks son simples y fáciles de preparar:
+        <ul>
+          <li>Yogur griego + fruta</li>
+          <li>2 huevos cocidos</li>
+          <li>Banano + mantequilla de maní</li>
+          <li>Puñado de nueces</li>
+          <li>Avena con leche</li>
+        </ul>
+        <br>
+        <b>Tip:</b> prepáralos el domingo para tenerlos listos toda la semana.
+      </div>
+    </div>
+
+    <div class="guide-card" onclick="toggleGuide(this)">
+      <div class="gc-title">🍽️ Comer sin obsesión <span>›</span></div>
+      <div class="gc-body">
+        <b>No hay alimentos prohibidos.</b> Hay porciones más inteligentes.
+        <br><br>
+        Come despacio. Para al 80% de saciedad. Come sin pantallas.
+        <br><br>
+        Una comida "mala" no rompe el progreso. <b>La consistencia gana.</b>
+        <div class="guide-tip">
+          <span style="font-size:16px"><span style="display:inline-flex;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#7c3aed,#ec4899);vertical-align:middle;margin-right:5px"></span>
+          <span style="font-size:12px;color:var(--t2)">"El plato perfecto no existe. El plato consistente sí." — Arju</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="guide-card" onclick="toggleGuide(this)">
+      <div class="gc-title">💧 Hidratación <span>›</span></div>
+      <div class="gc-body">
+        Toma <b>al menos 2L de agua</b> al día. Más si entrenas fuerte.
+        <br><br>
+        El hambre entre comidas <b>a veces es sed</b>. Antes de comer, toma agua primero.
+        <br><br>
+        Si entrenas: +500ml por cada hora de ejercicio.
+      </div>
+    </div>
+
+    <div class="guide-card" onclick="toggleGuide(this)">
+      <div class="gc-title">🛒 Ideas de desayuno rápido <span>›</span></div>
+      <div class="gc-body">
+        <ul>
+          <li>Avena + banano + canela (8 min)</li>
+          <li>3 huevos + aguacate (10 min)</li>
+          <li>Yogur griego + granola + fresas (2 min)</li>
+          <li>Batido avena + banano + leche (3 min)</li>
+          <li>Tostadas integrales + aguacate + huevo (8 min)</li>
+        </ul>
+        <br>
+        <b>Truco:</b> Prepara la avena la noche anterior. En la mañana solo calienta.
+      </div>
+    </div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/js/core/coach-context.js"></script>
+<script src="/js/core/arju-prompts.js"></script>
+<script src="/js/core/icons.js"></script>
+<script src="/js/core/food-db.js"></script>
+<script src="/js/core/microvictorias.js"></script>
+<script src="/js/core/arju-assistant.js"></script>
+<script>
+// ── Dynamic photo CTA label by hour ─────────────
+(function() {
+  const h = new Date().getHours();
+  const lbl = h<11?'Registrar desayuno con foto':
+              h<15?'Registrar almuerzo con foto':
+              h<19?'Registrar cena con foto':
+              h<21?'Registrar snack con foto':'Registrar comida con foto';
+  const el = document.getElementById('photoMainLabel');
+  if (el) el.textContent = lbl;
+})();
+
+// ── Date header ──────────────────────────────────
+const days  = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+const months= ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const now   = new Date();
+document.getElementById('hdrDate').textContent =
+  `${days[now.getDay()]}, ${now.getDate()} de ${months[now.getMonth()]}`;
+
+// ── Supabase ──────────────────────────────────────
+let _sb = null, _uid = null;
+try {
+  _sb = window.supabase?.createClient(
+    'https://egswsqymkxmbtcpnozcq.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM',
+    { auth: { persistSession:true, storageKey:'arjunafit-auth' } }
+  );
+} catch(e) {}
+
+// ── Rotating tips ─────────────────────────────────
+const TIPS = [
+  'Prioriza proteína en cada comida. Es lo más importante para el reto.',
+  'Agua primero. El hambre entre comidas a veces es sed disfrazada.',
+  'El arroz, fríjoles y aguacate son tus aliados sin exagerar.',
+  'No hay alimentos prohibidos. Hay porciones más inteligentes.',
+  'Come despacio. La saciedad llega 15 minutos después del primer bocado.',
+  'Un batido de banano + avena + proteína es el desayuno del reto.',
+  'Preparar la comida el domingo cambia toda la semana.',
+];
+document.getElementById('nutriTip').textContent = TIPS[now.getDay() % TIPS.length];
+
+// ── Tab switching ─────────────────────────────────
+// ── Dynamic recipe recommendation by time ────────
+const REC_BY_TIME = {
+  desayuno: [
+    { id:'huevos-aguacate', emoji:'🍳', name:'Desayuno que sí llena', desc:'Rápido, proteína real, sin complicarse.' },
+    { id:'avena-banano',    emoji:'🥣', name:'Avena que te sostiene',  desc:'La energía que necesitas para empezar.' },
+    { id:'omelette',        emoji:'🥚', name:'Omelette en 8 minutos',  desc:'Alta proteína antes de que empiece el día.' },
+  ],
+  almuerzo: [
+    { id:'pechuga-arroz',  emoji:'🍗', name:'Almuerzo base del reto',  desc:'Simple, completo y listo en 20 minutos.' },
+    { id:'atun-frijoles',  emoji:'🥗', name:'Sin cocción y listo',      desc:'5 minutos. Proteína alta. Sin excusas.' },
+    { id:'arroz-pollo',    emoji:'🍲', name:'El clásico que funciona',  desc:'Rendidor, proteína suficiente, económico.' },
+  ],
+  cena: [
+    { id:'lentejas',       emoji:'🍲', name:'Cena ligera que reconforta', desc:'Caliente, saciante y sin pasarte.' },
+    { id:'caldo-papa',     emoji:'🍵', name:'Caldo para cerrar bien',     desc:'Para noches de recuperación y descanso.' },
+    { id:'omelette',       emoji:'🥚', name:'Cena rápida y proteica',     desc:'Lo que necesitas sin complicarte la noche.' },
+  ],
+  snack: [
+    { id:'yogur-fruta',    emoji:'🫙', name:'Snack que no te arrepientes', desc:'Dulce, proteico y listo en 2 minutos.' },
+    { id:'banano-mani',    emoji:'🍌', name:'Para no llegar con hambre',   desc:'Carbohidratos + proteína. Combinación ganadora.' },
+    { id:'huevos-cocidos', emoji:'🥚', name:'Snack prep del domingo',      desc:'Cocina 6 hoy y tienes para toda la semana.' },
+  ],
+};
+
+let _currentRecId = 'pechuga-arroz';
+
+function initRecipeRec() {
+  const h = new Date().getHours();
+  const meal = h < 11 ? 'desayuno' : h < 15 ? 'almuerzo' : h < 19 ? 'cena' : 'snack';
+  const labels = { desayuno:'¿Qué desayunar hoy?', almuerzo:'¿Qué almorzar hoy?',
+                   cena:'¿Qué cenar hoy?', snack:'¿Qué comer ahora?' };
+  const pool = REC_BY_TIME[meal] || REC_BY_TIME.almuerzo;
+  const rec  = pool[new Date().getDay() % pool.length];
+
+  _currentRecId = rec.id;
+
+  const el = id => document.getElementById(id);
+  if (el('recTimeLabel')) el('recTimeLabel').textContent = labels[meal];
+  if (el('recEmoji'))     el('recEmoji').textContent = rec.emoji;
+  if (el('recName'))      el('recName').textContent  = rec.name;
+  if (el('recDesc'))      el('recDesc').textContent  = rec.desc;
+
+  // Pills from RECIPES data
+  const r = RECIPES[rec.id];
+  const pills = el('recPills');
+  if (pills && r) {
+    pills.innerHTML = `
+      <span style="font-size:10px;background:rgba(124,58,237,.15);color:#c4b5fd;
+        padding:2px 9px;border-radius:12px;font-weight:600">💪 ${r.prot}g prot</span>
+      <span style="font-size:10px;background:rgba(245,158,11,.1);color:#fcd34d;
+        padding:2px 9px;border-radius:12px;font-weight:600">⏱ ${r.time} min</span>
+      <span style="font-size:10px;background:rgba(255,255,255,.07);color:rgba(240,238,248,.4);
+        padding:2px 9px;border-radius:12px">Fácil</span>
+    `;
+  }
+}
+
+function openRecipeFromRec() {
+  // Microvictory
+  if (window.MV) window.MV.show('Comer mejor empieza por hacerlo más fácil.',
+    { emoji:'🍳', color:'rgba(249,115,22,.35)' });
+  openRecipeDetail(_currentRecId);
+}
+
+// Meal type selector before saving recipe
+function saveRecipeAsMeal(presetMeal) {
+  const r = RECIPES[_currentRecId || _currentDetailId];
+  if (!r) return;
+  if (presetMeal) { _doSaveRecipe(r, presetMeal); return; }
+  const h = new Date().getHours();
+  const suggested = h<11?'desayuno':h<15?'almuerzo':h<19?'snack':'cena';
+  const MEAL_LABELS = { desayuno:'🌅 Desayuno', almuerzo:'🌞 Almuerzo', snack:'🍎 Snack', cena:'🌙 Cena' };
+  const ov = document.createElement('div');
+  ov.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(8,5,17,.92);display:flex;align-items:flex-end;justify-content:center;padding:0 0 env(safe-area-inset-bottom)';
+  ov.innerHTML = '<div style="width:100%;max-width:430px;background:#130d22;border:1px solid rgba(255,255,255,.08);border-radius:24px 24px 0 0;padding:24px 20px">' +
+    '<div style="font-size:15px;font-weight:700;color:#f1f0f4;margin-bottom:16px;text-align:center">¿A qué comida vas a agregar?</div>' +
+
+  document.body.appendChild(ov);
+  ov.addEventListener('click', function(e) {
+    var btn = e.target.closest('.meal-sel-btn');
+    var cancel = e.target.closest('.meal-sel-cancel');
+    if (btn) { document.body.removeChild(ov); saveRecipeAsMeal(btn.dataset.meal); }
+    if (cancel) { document.body.removeChild(ov); }
+  });
+}
+
+function _doSaveRecipe(r, meal) {
+  const portions = parseFloat(localStorage.getItem('af-recipe-portions') || '1');
+  const pCal  = Math.round((r.cal  || 0) * portions);
+  const pProt = Math.round((r.prot || 0) * portions);
+  const pCarb = Math.round((r.carb || 0) * portions);
+  const pFat  = Math.round((r.fat  || 0) * portions);
+  saveFood(r.name, pCal, pProt, pFat, meal);
+  if (window.AF) AF.track('recipe_added_to_day', { recipe_id: _currentRecId || _currentDetailId, meal, cal: pCal, protein: pProt, product: localStorage.getItem('af-product-type') || '' });
+  if (window.MV) window.MV.show('Ya tienes una decisión menos que pensar hoy.',
+    { emoji:'✅', color:'rgba(34,197,94,.35)' });
+  localStorage.removeItem('af-recipe-portions');
+}
+
+// Recipe favorites
+var _favs = [];
+(function loadFavs() {
+  try { _favs = JSON.parse(localStorage.getItem('af-recipe-favs') || '[]'); } catch(e) {}
+})();
+function toggleFavorite(id) {
+  var idx = _favs.indexOf(id);
+  if (idx >= 0) { _favs.splice(idx,1); } else { _favs.push(id); }
+  localStorage.setItem('af-recipe-favs', JSON.stringify(_favs));
+  var btn = document.getElementById('fav-btn-' + id);
+  if (btn) btn.textContent = _favs.includes(id) ? '⭐' : '☆';
+  if (window.AF) AF.track(_favs.includes(id) ? 'recipe_favorited' : 'recipe_unfavorited', { recipe_id: id });
+}
+
+// Get recommended recipe by product + time
+function getRecommendedRecipe() {
+  var productType = localStorage.getItem('af-product-type') || '';
+  var reto = localStorage.getItem('af-selected-reto') || '';
+  var h = new Date().getHours();
+  var mealTime = h<11 ? 'desayuno' : h<15 ? 'almuerzo' : h<19 ? 'snack' : 'cena';
+  
+  // Product-aware priority tags
+  var priorityTags = ['high_protein'];
+  if (reto === 'gluteos' || productType === 'custom_muscle_gain')    priorityTags = ['high_protein','muscle','post_workout'];
+  if (reto === 'pancita' || productType === 'custom_fat_loss')       priorityTags = ['light','satiety','vegetarian'];
+  
+  var candidates = Object.entries(RECIPES).filter(function(entry) {
+    var r = entry[1];
+    if (!r || !r.tags) return true;
+    // Match meal time
+    if (mealTime === 'desayuno' && r.tags.includes('almuerzo') && !r.tags.includes('desayuno')) return false;
+    if (mealTime === 'cena'     && r.tags.includes('almuerzo') && !r.tags.includes('cena'))     return false;
+    return true;
+  });
+  
+  // Prefer high protein for any reto/plan
+  candidates.sort(function(a, b) { return (b[1].prot || 0) - (a[1].prot || 0); });
+  return candidates[0] ? candidates[0][0] : 'pechuga-arroz';
+}
+
+function sw(id) {
+  ['hoy','recetas','mercado','fuera','guia'].forEach(k => {
+    document.getElementById(`t-${k}`)?.classList.toggle('on', k === id);
+    document.getElementById(`tc-${k}`)?.classList.toggle('on', k === id);
+  });
+  // Build dynamic content per tab
+  if (id === 'recetas') { initRecipeRec(); setTimeout(renderRecetario, 50); }
+  if (id === 'mercado') setTimeout(buildShop, 50);
+  if (id === 'hoy')     loadToday();
+  // Scroll tab content to top
+  const tc = document.getElementById(`tc-${id}`);
+  if (tc) tc.scrollTop = 0;
+}
+
+
+// ── Recetario render + search ─────────────────────────
+function renderRecetario() {
+  // No-op if grid already in DOM (static HTML)
+  // Just ensure filters reset and search is cleared
+  var searchEl = document.getElementById('recipeSearch');
+  if (searchEl) searchEl.value = '';
+  document.querySelectorAll('.rc').forEach(function(c) { c.classList.remove('hidden'); });
+  document.querySelectorAll('.rf').forEach(function(b) { b.classList.toggle('on', b.dataset.cat === 'all'); });
+}
+
+function searchRecipes(val) {
+  var q = val.toLowerCase().trim();
+  document.querySelectorAll('.rc').forEach(function(card) {
+    var name = (card.querySelector('.rc-name')?.textContent || '').toLowerCase();
+    var tags = (card.dataset.tags || '').toLowerCase();
+    var visible = !q || name.includes(q) || tags.includes(q);
+    card.classList.toggle('hidden', !visible);
+  });
+  var visible = document.querySelectorAll('.rc:not(.hidden)').length;
+  var emptyEl = document.getElementById('recEmptyState');
+  if (emptyEl) emptyEl.style.display = visible === 0 ? 'block' : 'none';
+}
+
+// ── Recipe filters ────────────────────────────────
+function filterRecipes(cat, btn) {
+  // Update filter buttons
+  document.querySelectorAll('.rf').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  // Show/hide recipe cards
+  document.querySelectorAll('.rc').forEach(card => {
+    const tags = card.dataset.tags || '';
+    if (cat === 'all' || tags.includes(cat)) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+}
+
+// ── Recipe detail overlay ─────────────────────────
+const RECIPES = {
+  'pechuga-arroz': {
+    emoji:'🍗', name:'Pechuga con arroz y brócoli',
+    prot:45, cal:420, time:20, dif:'Fácil',
+    ingredients:['150g pechuga de pollo','½ taza arroz blanco','1 taza brócoli','ajo, sal, aceite, limón'],
+    steps:['Sazona la pechuga con ajo, sal y limón. Deja marinar 5 min.',
+           'Cocina en sartén a fuego medio-alto, 7 minutos por lado.',
+           'Cocina el arroz según instrucciones (aprox 18 min).',
+           'Cocina el brócoli al vapor 4 minutos.',
+           'Sirve todo junto. Agrega limón extra al gusto.'],
+    tip:'Prepara 4–5 pechugas a la vez y guarda en la nevera para toda la semana.'
+  },
+  'huevos-aguacate': {
+    emoji:'🍳', name:'Bowl de huevos y aguacate',
+    prot:28, cal:380, time:10, dif:'Fácil',
+    ingredients:['3 huevos','½ aguacate maduro','sal y pimienta','opcional: tomate cherry'],
+    steps:['Cocina los huevos a tu gusto (estrellados, revueltos o cocidos).',
+           'Corta el aguacate en rodajas o cubos.',
+           'Sirve junto con sal, pimienta y limón al gusto.'],
+    tip:'Agrega limón al aguacate inmediatamente para que no se oxide.'
+  },
+  'atun-frijoles': {
+    emoji:'🥗', name:'Atún con fríjoles negros',
+    prot:35, cal:310, time:5, dif:'Sin cocción',
+    ingredients:['1 lata atún en agua (150g)','½ taza fríjoles negros cocidos',
+                 'cebolla morada picada','cilantro, limón, sal'],
+    steps:['Escurre bien el atún.','Mezcla con los fríjoles, cebolla y cilantro.',
+           'Agrega jugo de limón y sal al gusto.','Sirve frío. Listo en 5 minutos.'],
+    tip:'Los fríjoles pueden ser de lata. Enjuágalos antes de usar.'
+  },
+  'batido-banano': {
+    emoji:'🥤', name:'Batido de banano y avena',
+    prot:30, cal:350, time:3, dif:'Sin cocción',
+    ingredients:['1 banano maduro','½ taza avena en hojuelas',
+                 '1 taza leche o bebida vegetal','opcional: 1 cdta miel'],
+    steps:['Licúa todos los ingredientes por 60 segundos.',
+           'Sirve de inmediato, frío o a temperatura ambiente.',
+           'Consume preferiblemente dentro de 30 minutos del entreno.'],
+    tip:'Congela el banano la noche anterior para textura más cremosa.'
+  },
+  'carne-papa': {
+    emoji:'🥩', name:'Carne molida con papa',
+    prot:32, cal:480, time:20, dif:'Fácil',
+    ingredients:['150g carne molida de res','2 papas medianas',
+                 'tomate, cebolla, ajo','comino, sal, aceite'],
+    steps:['Sofríe cebolla y ajo en aceite caliente hasta dorar.',
+           'Agrega la carne molida y cocina 8 minutos revolviendo.',
+           'Agrega tomate picado, comino y sal. Cocina 3 minutos más.',
+           'Cocina las papas aparte hasta que estén suaves (15 min).',
+           'Sirve junto con la carne.'],
+    tip:'Agrega zanahoria rallada a la carne — más nutrientes sin cambiar el sabor.'
+  },
+  'omelette': {
+    emoji:'🥚', name:'Omelette de proteína',
+    prot:25, cal:280, time:8, dif:'Fácil',
+    ingredients:['3 huevos','¼ taza queso rallado (opcional)',
+                 'sal, pimienta, hierbas al gusto','aceite o mantequilla'],
+    steps:['Bate los huevos con sal y pimienta.',
+           'Calienta sartén a fuego medio con un poco de aceite.',
+           'Vierte los huevos. Deja cuajar 2–3 min sin revolver.',
+           'Agrega queso y doblá a la mitad cuando el centro cuaje.'],
+    tip:'No revuelvas — deja que cuaje solo para que quede omelette y no huevos revueltos.'
+  },
+  'lentejas': {
+    emoji:'🍲', name:'Sopa de lentejas',
+    prot:22, cal:290, time:30, dif:'Fácil',
+    ingredients:['½ taza lentejas','zanahoria en rodajas','cebolla, ajo',
+                 'tomate, comino, sal, cilantro'],
+    steps:['Sofríe cebolla, ajo y zanahoria en aceite 3 minutos.',
+           'Agrega las lentejas y cubre con 2 tazas de agua.',
+           'Agrega tomate, comino y sal. Cocina 25 minutos a fuego medio.',
+           'Sirve caliente con cilantro fresco.'],
+    tip:'Las lentejas no necesitan remojo previo a diferencia de otros granos.'
+  },
+  'arroz-pollo': {
+    emoji:'🍲', name:'Arroz con pollo',
+    prot:38, cal:450, time:35, dif:'Fácil',
+    ingredients:['150g pollo (pechuga o muslo)','½ taza arroz',
+                 'cebolla, pimentón, ajo','comino, color, cilantro, sal'],
+    steps:['Sofríe cebolla, pimentón y ajo en aceite caliente.',
+           'Agrega el pollo en trozos. Dora bien por todos lados.',
+           'Añade agua, arroz, comino, color y sal.',
+           'Cocina a fuego bajo 20 minutos con tapa.',
+           'Sirve con aguacate si tienes.'],
+    tip:'El muslo de pollo es más económico y jugoso que la pechuga en este plato.'
+  },
+  'yogur-fruta': {
+    emoji:'🫙', name:'Yogur griego con frutas',
+    prot:15, cal:180, time:2, dif:'Sin cocción',
+    ingredients:['1 taza yogur griego natural','fresas, banano o mango',
+                 'granola (opcional)','miel opcional'],
+    steps:['Sirve el yogur en un bol.','Agrega la fruta cortada encima.',
+           'Añade granola para textura si tienes.',
+           'Opcional: un hilo de miel.'],
+    tip:'El yogur griego tiene el doble de proteína que el yogur normal.'
+  },
+  'frijoles-arroz': {
+    emoji:'🫘', name:'Fríjoles con arroz y plátano',
+    prot:18, cal:430, time:10, dif:'Fácil',
+    ingredients:['½ taza fríjoles cocidos (o de lata)','½ taza arroz cocido',
+                 '½ plátano maduro','hogao (tomate + cebolla sofritos)'],
+    steps:['Calienta los fríjoles con un poco de hogao o guiso.',
+           'Sirve con arroz blanco.','Asa o fríe el plátano maduro.',
+           'La combinación clásica colombiana lista para servir.'],
+    tip:'Fríjoles + arroz = proteína completa con todos los aminoácidos esenciales.'
+  },
+  'huevos-cocidos': {
+    emoji:'🥚', name:'Huevos cocidos',
+    prot:12, cal:140, time:10, dif:'Sin cocción',
+    ingredients:['2 huevos','agua','sal y pimienta al gusto'],
+    steps:['Hierve suficiente agua en una olla pequeña.',
+           'Agrega los huevos con cuidado.',
+           '10 minutos para yema firme, 7 para yema suave.',
+           'Enfría en agua fría. Pela y sazona.'],
+    tip:'Prepara 6–8 huevos el domingo para tener snack listo toda la semana.'
+  },
+  'arroz-huevos': {
+    emoji:'🍚', name:'Arroz con huevos revueltos',
+    prot:22, cal:370, time:12, dif:'Fácil',
+    ingredients:['½ taza arroz cocido','3 huevos','cebolla, ajo, sal, aceite'],
+    steps:['Sofríe cebolla y ajo en aceite 2 minutos.',
+           'Agrega el arroz cocido, mezcla 2 minutos.',
+           'Haz un espacio en el centro y agrega los huevos batidos.',
+           'Mezcla todo hasta que los huevos estén cocidos.'],
+    tip:'Ideal dentro de los 45 minutos post-entreno para recuperación.'
+  },
+  'caldo-papa': {
+    emoji:'🍵', name:'Caldo de papa con pollo',
+    prot:25, cal:280, time:30, dif:'Fácil',
+    ingredients:['1 muslo de pollo','2 papas medianas',
+                 'cebolla, ajo, cilantro','sal, comino'],
+    steps:['Cocina el pollo en agua con cebolla y ajo (20 min).',
+           'Saca el pollo, desmecha y regresa a la olla.',
+           'Agrega papa en cubos. Cocina 10 minutos más.',
+           'Agrega cilantro fresco y sirve caliente.'],
+    tip:'Excelente para días de recuperación muscular. Reconfortante y ligero.'
+  },
+  'tostadas-aguacate': {
+    emoji:'🥑', name:'Tostadas de aguacate con huevo',
+    prot:18, cal:310, time:8, dif:'Fácil',
+    ingredients:['2 tostadas integrales','½ aguacate maduro',
+                 '2 huevos (estrellados)','sal, pimienta, limón'],
+    steps:['Tuesta el pan.',
+           'Aplasta el aguacate con limón, sal y pimienta.',
+           'Unta sobre las tostadas generosamente.',
+           'Cocina los huevos estrellados y pon encima.'],
+    tip:'Simple, rápido y cargado de nutrientes. Perfecto post-entreno.'
+  },
+  'banano-mani': {
+    emoji:'🍌', name:'Banano con mantequilla de maní',
+    prot:8, cal:220, time:2, dif:'Sin cocción',
+    ingredients:['1 banano maduro','1–2 cdtas mantequilla de maní natural'],
+    steps:['Parte el banano por la mitad a lo largo.',
+           'Unta la mantequilla de maní sobre cada mitad.',
+           'Come inmediatamente.'],
+    tip:'Carbohidratos + proteína + grasa buena = snack perfecto 30 min antes del entreno.'
+  },
+  'tortilla-atun': {
+    emoji:'🌮', name:'Tortilla de atún',
+    prot:30, cal:350, time:12, dif:'Fácil',
+    ingredients:['1 lata atún en agua','2 huevos','cebolla picada fina',
+                 'sal, perejil, aceite'],
+    steps:['Escurre el atún y mezcla con los huevos batidos.',
+           'Agrega cebolla picada, sal y perejil.',
+           'Cocina en sartén con un poco de aceite como tortilla.',
+           '4 minutos por lado a fuego medio.'],
+    tip:'Sirve con ensalada verde para una comida completa y balanceada.'
+  },
+  'avena-banano': {
+    emoji:'🥣', name:'Avena con banano y canela',
+    prot:12, cal:310, time:8, dif:'Fácil',
+    ingredients:['½ taza avena en hojuelas','1 taza leche','1 banano','canela al gusto'],
+    steps:['Cocina la avena con la leche a fuego medio revolviendo (5 min).',
+           'Agrega el banano en rodajas y la canela.',
+           'Opcional: un poco de miel o panela.',
+           'Sirve caliente.'],
+    tip:'Prepara la avena la noche anterior en la nevera con leche fría — overnight oats.'
+  },
+'tortilla-vegetal': {
+    emoji:'🥚', name:'Tortilla de huevo con vegetales', time:10, cal:250, prot:22, carb:8, fat:14,
+    tip:'Si tienes espinacas o tomate, agrégalos — más sabor y más vitaminas sin calorías extra.',
+    ingredients:['3 huevos','30g espinaca o pimentón picado','1/4 cebolla cabezona','Sal y pimienta al gusto','1 cdita aceite'],
+    steps:['Bate los huevos con sal y pimienta.','Saltea los vegetales en aceite 2 minutos.','Agrega los huevos y deja cuajar sin mover.','Dobla a la mitad y sirve caliente.']
+  },
+  'arepa-queso-huevo': {
+    emoji:'🫓', name:'Arepa con queso y huevos', time:8, cal:340, prot:24, carb:28, fat:14,
+    tip:'Si tienes aguacate, úsalo en vez de mantequilla — grasas mejores y más saciante.',
+    ingredients:['2 huevos','1 arepa mediana','40g queso campesino','1/2 cdita aceite o mantequilla','Sal al gusto'],
+    steps:['Calienta la arepa en sartén o tostadora.','Revuelve o fríe los huevos al gusto.','Sirve la arepa con huevos y queso encima.','Listo en menos de 10 minutos.']
+  },
+  'huevos-cocidos': {
+    emoji:'🥚', name:'Huevos cocidos con sal y limón', time:12, cal:150, prot:18, carb:1, fat:10,
+    tip:'Prepara 4 o 6 a la vez y guárdalos en la nevera para toda la semana. Snack listo siempre.',
+    ingredients:['3 huevos duros','Sal al gusto','1/4 limón','Pimienta negra opcional'],
+    steps:['Cocina los huevos en agua hirviendo 10–12 minutos.','Enfría en agua fría y pela.','Corta a la mitad, agrega sal, limón y pimienta.','Come solo o acompañado de fruta o arepa.']
+  },
+
+};
+
+function openRecipeDetail(id) {
+  const r = RECIPES[id];
+  if (!r) return;
+
+  // Remove any existing overlay
+  document.getElementById('recipe-detail-ov')?.remove();
+
+  const ov = document.createElement('div');
+  ov.id = 'recipe-detail-ov';
+  ov.style.cssText = `
+    position:fixed;inset:0;z-index:300;
+    background:var(--bg);overflow-y:auto;overflow-x:hidden;
+    -webkit-overflow-scrolling:touch;
+    padding:0;font-family:var(--font);
+  `;
+
+  // Prevent body scroll while overlay is open
+  document.body.style.overflow = 'hidden';
+
+  function closeDetail() {
+    document.getElementById('recipe-detail-ov')?.remove();
+    document.body.style.overflow = '';
+  }
+
+  ov.innerHTML = `
+    <!-- Sticky back bar -->
+    <div style="position:sticky;top:0;z-index:10;
+      background:rgba(8,5,17,.95);backdrop-filter:blur(12px);
+      padding:calc(env(safe-area-inset-top,12px) + 8px) 16px 10px;
+      display:flex;align-items:center;gap:12px;
+      border-bottom:1px solid rgba(255,255,255,.06)">
+      <button onclick="document.getElementById('recipe-detail-ov')?.remove();document.body.style.overflow=''" style="
+        display:flex;align-items:center;gap:6px;padding:8px 12px;
+        border-radius:12px;border:1px solid rgba(255,255,255,.1);
+        background:rgba(255,255,255,.05);color:rgba(240,238,248,.7);
+        font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer">
+        ← Volver</button>
+      <div style="font-size:14px;font-weight:700;color:#f1f0f4;
+        flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.name}</div>
+    </div>
+
+    <!-- Content -->
+    <div style="max-width:430px;margin:0 auto;padding:20px 16px calc(40px + env(safe-area-inset-bottom))">
+      <div style="font-size:52px;margin-bottom:12px">${r.emoji}</div>
+      <div style="font-size:22px;font-weight:800;color:#f1f0f4;letter-spacing:-.02em;
+        margin-bottom:16px">${r.name}</div>
+      <div style="display:flex;gap:8px;margin-bottom:24px">
+        <div style="flex:1;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.2);
+          border-radius:12px;padding:12px;text-align:center">
+          <div style="font-size:20px;font-weight:800;color:#c4b5fd">${r.prot}g</div>
+          <div style="font-size:9px;color:rgba(196,181,253,.4);font-weight:700;
+            text-transform:uppercase;letter-spacing:.05em;margin-top:2px">Proteína</div>
+        </div>
+        <div style="flex:1;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);
+          border-radius:12px;padding:12px;text-align:center">
+          <div style="font-size:20px;font-weight:800;color:#fcd34d">${r.cal}</div>
+          <div style="font-size:9px;color:rgba(252,211,77,.4);font-weight:700;
+            text-transform:uppercase;letter-spacing:.05em;margin-top:2px">Calorías</div>
+        </div>
+        <div style="flex:1;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.15);
+          border-radius:12px;padding:12px;text-align:center">
+          <div style="font-size:20px;font-weight:800;color:#6ee7b7">${r.time}</div>
+          <div style="font-size:9px;color:rgba(110,231,183,.4);font-weight:700;
+            text-transform:uppercase;letter-spacing:.05em;margin-top:2px">Minutos</div>
+        </div>
+      </div>
+
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+        color:rgba(240,238,248,.35);margin-bottom:10px">Ingredientes</div>
+      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+        border-radius:14px;padding:14px;margin-bottom:20px">
+        ${r.ingredients.map(i=>`
+          <div style="display:flex;align-items:center;gap:10px;padding:5px 0;
+            font-size:13px;color:rgba(240,238,248,.8)">
+            <div style="width:6px;height:6px;border-radius:50%;
+              background:rgba(124,58,237,.6);flex-shrink:0"></div>${i}
+          </div>`).join('')}
+      </div>
+
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+        color:rgba(240,238,248,.35);margin-bottom:10px">Preparación</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
+        ${r.steps.map((s,i)=>`
+          <div style="display:flex;gap:12px;background:rgba(255,255,255,.03);
+            border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:12px">
+            <div style="width:24px;height:24px;border-radius:8px;flex-shrink:0;
+              background:rgba(124,58,237,.2);display:flex;align-items:center;
+              justify-content:center;font-size:11px;font-weight:700;color:#c4b5fd">${i+1}</div>
+            <div style="font-size:13px;color:rgba(240,238,248,.8);line-height:1.6;
+              padding-top:2px">${s}</div>
+          </div>`).join('')}
+      </div>
+
+      <div style="background:rgba(124,58,237,.06);border:1px solid rgba(196,181,253,.12);
+        border-radius:14px;padding:14px;display:flex;gap:10px;margin-bottom:20px">
+        <span style="font-size:20px">💡</span>
+        <span style="font-size:13px;color:rgba(196,181,253,.7);line-height:1.6">
+          <b style="color:#c4b5fd">Tip:</b> ${r.tip}</span>
+      </div>
+
+      <!-- Add to meal -->
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+        color:rgba(240,238,248,.35);margin-bottom:10px">Agregar a mi día</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        ${['Desayuno','Almuerzo','Cena','Snack'].map(m=>`
+          <button onclick="saveFood('${r.name}',${r.cal},${r.prot},0,'${m.toLowerCase()}');
+            document.getElementById('recipe-detail-ov')?.remove();
+            document.body.style.overflow='';
+            showGuardardToast('${r.name}')" style="
+            padding:11px;border-radius:12px;border:1px solid rgba(255,255,255,.1);
+            background:rgba(255,255,255,.04);color:rgba(240,238,248,.7);
+            font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer">
+            ${m==='Desayuno'?'🌅':m==='Almuerzo'?'🌞':m==='Cena'?'🌙':'🍎'} ${m}
+          </button>`).join('')}
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(ov);
+  ov.scrollTop = 0;
+}
+
+// ── Guide accordion ───────────────────────────────
+function toggleGuide(card) {
+  const body = card.querySelector('.gc-body');
+  const arrow = card.querySelector('.gc-title span');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  if (arrow) arrow.textContent = isOpen ? '›' : '‹';
+}
+
+// ── Shopping list ─────────────────────────────────
+function toggleShop(el, key) {
+  el.classList.toggle('ck');
+  localStorage.setItem(key, el.classList.contains('ck') ? '1' : '0');
+}
+function resetShop() {
+  document.querySelectorAll('.shop-item').forEach(el => {
+    el.classList.remove('ck');
+  });
+  Object.keys(localStorage).filter(k => k.startsWith('sh-')).forEach(k => localStorage.removeItem(k));
+}
+// Restore checkmarks from localStorage on load
+document.querySelectorAll('.shop-item').forEach(el => {
+  const key = el.getAttribute('onclick')?.match(/'(sh-[^']+)'/)?.[1];
+  if (key && localStorage.getItem(key) === '1') el.classList.add('ck');
+});
+
+// ── Registro del díaging ──────────────────────────────────
+const QUICK_FOODS = {
+  'Desayuno': [
+    {name:'Bowl de huevos y aguacate',     cal:380, prot:28, id:'huevos-aguacate',   emoji:'🍳'},
+    {name:'Avena con banano y canela',      cal:310, prot:12, id:'avena-banano',      emoji:'🥣'},
+    {name:'Batido banano + avena',          cal:350, prot:30, id:'batido-banano',     emoji:'🥤'},
+    {name:'Omelette de proteína',           cal:280, prot:25, id:'omelette',          emoji:'🥚'},
+    {name:'Tostadas aguacate + huevo',      cal:310, prot:18, id:'tostadas-aguacate', emoji:'🥑'},
+  ],
+  'Almuerzo': [
+    {name:'Pechuga con arroz y brócoli',   cal:420, prot:45, id:'pechuga-arroz',   emoji:'🍗'},
+    {name:'Atún con fríjoles negros',       cal:310, prot:35, id:'atun-frijoles',   emoji:'🥗'},
+    {name:'Carne molida con papa',          cal:480, prot:32, id:'carne-papa',      emoji:'🥩'},
+    {name:'Arroz con pollo',                cal:450, prot:38, id:'arroz-pollo',     emoji:'🍲'},
+    {name:'Tortilla de atún',               cal:350, prot:30, id:'tortilla-atun',   emoji:'🌮'},
+  ],
+  'Cena': [
+    {name:'Sopa de lentejas',               cal:290, prot:22, id:'lentejas',        emoji:'🍲'},
+    {name:'Pechuga + ensalada',             cal:320, prot:38, id:'pechuga-arroz',   emoji:'🥗'},
+    {name:'Caldo de papa con pollo',        cal:280, prot:25, id:'caldo-papa',      emoji:'🍵'},
+    {name:'Fríjoles con arroz y plátano',   cal:430, prot:18, id:'frijoles-arroz',  emoji:'🫘'},
+    {name:'Arroz con huevos revueltos',     cal:370, prot:22, id:'arroz-huevos',    emoji:'🍚'},
+  ],
+  'Snack': [
+    {name:'Yogur griego con frutas',        cal:180, prot:15, id:'yogur-fruta',     emoji:'🫙'},
+    {name:'Huevos cocidos',                 cal:140, prot:12, id:'huevos-cocidos',  emoji:'🥚'},
+    {name:'Banano + mantequilla de maní',   cal:220, prot:8,  id:'banano-mani',     emoji:'🍌'},
+    {name:'Nueces mixtas',                  cal:190, prot:6,  id:null,             emoji:'🥜'},
+  ],
+};
+
+function openQuickLog(meal) {
+  const h = new Date().getHours();
+  if (!meal) meal = h < 11 ? 'Desayuno' : h < 15 ? 'Almuerzo' : h < 19 ? 'Cena' : 'Snack';
+  const icon = {Desayuno:'🌅',Almuerzo:'🌞',Cena:'🌙',Snack:'🍎'}[meal] || '🍽️';
+  const options = QUICK_FOODS[meal] || [];
+
+  const ov = document.createElement('div');
+  ov.style.cssText = `position:fixed;inset:0;z-index:300;
+    background:rgba(8,5,17,.88);backdrop-filter:blur(16px);
+    display:flex;align-items:flex-end;font-family:var(--font);`;
+  ov.innerHTML = `
+    <div style="width:100%;max-width:430px;margin:0 auto;
+      padding:20px 16px calc(20px + env(safe-area-inset-bottom));
+      background:rgba(14,7,26,.98);border-radius:24px 24px 0 0;
+      border-top:1px solid rgba(255,255,255,.08)">
+      <div style="display:flex;justify-content:space-between;
+        align-items:center;margin-bottom:16px">
+        <div style="font-size:17px;font-weight:700;color:#f1f0f4">
+          ${icon} ${meal}</div>
+        <button onclick="this.closest('[style*=inset]').remove()" style="
+          padding:6px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.1);
+          background:rgba(255,255,255,.04);color:rgba(240,238,248,.5);
+          font-family:var(--font);font-size:12px;cursor:pointer">Cerrar</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:7px">
+        ${options.map(r => `
+          <button onclick="saveFood('${r.name}',${r.cal},${r.prot},0,'${meal.toLowerCase()}');
+            this.closest('[style*=inset]').remove()" style="
+            display:flex;align-items:center;gap:12px;padding:12px 14px;
+            border-radius:14px;border:1px solid rgba(255,255,255,.07);
+            background:rgba(255,255,255,.03);width:100%;text-align:left;
+            cursor:pointer;-webkit-tap-highlight-color:transparent">
+            <span style="font-size:26px">${r.emoji}</span>
+            <div style="flex:1">
+              <div style="font-size:13px;font-weight:600;color:#f1f0f4">${r.name}</div>
+              <div style="font-size:11px;color:rgba(240,238,248,.4);margin-top:2px">
+                ${r.prot}g prot · ${r.cal} cal</div>
+            </div>
+          </button>`).join('')}
+      </div>
+    </div>
+  `;
+  ov.addEventListener('click', e => { if (e.target === ov) ov.remove(); });
+  document.body.appendChild(ov);
+}
+
+function logThisRecipe(id) {
+  const entry = Object.values(QUICK_FOODS).flat().find(f => f.id === id);
+  if (!entry) return;
+  const h = new Date().getHours();
+  const meal = h < 11 ? 'desayuno' : h < 15 ? 'almuerzo' : h < 19 ? 'cena' : 'snack';
+  saveFood(entry.name, entry.cal, entry.prot, 0, meal);
+}
+
+// ── Default macro goals (overridden by Supabase profile) ─
+// ── Local date (not UTC — fixes timezone bug) ─────
+function localDateKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+const GOALS = { cal: 2000, prot: 120, carbs: 200, fat: 55 };
+
+// ── Macro status messages (human, not obsessive) ──────────
+function macroMessage(protPct) {
+  if (protPct >= 90) return '✓ Proteína cubierta hoy. Buen trabajo.';
+  if (protPct >= 60) return 'Vas bien en proteína. Sigue así.';
+  if (protPct >= 30) return 'Hoy podemos sumar algo más en proteína.';
+  return 'Te faltan opciones altas en proteína hoy.';
+}
+
+// ── Render macros from today's log ───────────────────────
+// ── Meal rhythm visualization ──────────────────────
+const MEAL_CONFIG = [
+  { key:'desayuno', icon:'🌅', name:'Desayuno',  start:6,  end:11 },
+  { key:'almuerzo', icon:'🌞', name:'Almuerzo',  start:11, end:15 },
+  { key:'cena',     icon:'🌙', name:'Cena',      start:15, end:21 },
+  { key:'snack',    icon:'🍎', name:'Snack',     start:0,  end:24 },
+];
+
+// Microcopy by state
+const EMPTY_COPIES = [
+  'Hoy todavía no hay comidas registradas. Empecemos.',
+  'Tu progreso también necesita energía. Registra tu primera comida.',
+  'La constancia empieza por una primera decisión simple.',
+  'Arju puede ayudarte mejor si registras lo que comes hoy.',
+];
+
+function renderMealRhythm(entries) {
+  const el = document.getElementById('mealRhythm');
+  if (!el) return;
+  const h = new Date().getHours();
+  const loggedMeals = new Set(entries.map(e => e.meal));
+
+  el.innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:7px">
+      ${MEAL_CONFIG.map(m => {
+        const done = loggedMeals.has(m.key);
+        const current = !done && h >= m.start && h < m.end;
+        const foods = entries.filter(e=>e.meal===m.key);
+        const totProt = foods.reduce((s,f)=>s+(f.prot||0),0);
+        const totCal  = foods.reduce((s,f)=>s+(f.cal||0),0);
+        const cls = done?'done':current?'current':'empty';
+        const sub = done
+          ? `${Math.round(totProt)}g prot · ${Math.round(totCal)} kcal`
+          : current
+          ? 'Momento ideal para comer'
+          : m.start > h ? 'Más tarde' : 'Sin registrar';
+        return `
+          <div class="meal-slot ${cls}" onclick="openQuickLog('${m.name}')">
+            <div class="meal-slot-icon">${m.icon}</div>
+            <div class="meal-slot-body">
+              <div class="meal-slot-name">${m.name}</div>
+              <div class="meal-slot-sub">${sub}</div>
+            </div>
+            <div class="meal-slot-check">${done?'✓':current?'·':''}</div>
+          </div>`;
+      }).join('')}
+    </div>
+  `;
+}
+
+// ── Update card visual state ──────────────────────
+function updateCardState(calPct, proteinPct, mealsCount) {
+  const card = document.getElementById('macroCard');
+  const label = document.getElementById('dayStateLabel');
+  const calPctEl = document.getElementById('calPct');
+  const tip = document.getElementById('nutriTip');
+
+  let state, stateText, tipText;
+
+  if (mealsCount === 0) {
+    state = 'state-empty';
+    stateText = 'Tu nutrición aún no empieza';
+    tipText = EMPTY_COPIES[new Date().getDay() % EMPTY_COPIES.length];
+    // Show empty state illustration
+    const emptyIll = document.getElementById('emptyStateIll');
+    if (emptyIll) emptyIll.style.display = 'block';
+  } else if (calPct < 30) {
+    state = 'state-partial';
+    stateText = 'Ya empezaste. Sigamos simple.';
+    tipText = 'Buen inicio. Mantener proteína alta hoy puede ayudarte a controlar el hambre.';
+  } else if (calPct < 70) {
+    state = 'state-partial';
+    stateText = 'HOY · EN PROGRESO';
+    tipText = 'Tu constancia esta semana está mejorando. Sigue así.';
+  } else if (calPct < 95) {
+    state = 'state-good';
+    stateText = 'HOY · CASI COMPLETO';
+    tipText = proteinPct >= 80
+      ? 'Proteína cubierta. Excelente decisión nutricional hoy.'
+      : 'Ya casi. Suma algo de proteína para cerrar bien el día.';
+  } else {
+    state = 'state-complete';
+    stateText = '✓ HOY COMPLETO';
+    tipText = 'Tu cuerpo responde mejor cuando comes con más regularidad. Hoy lo lograste.';
+  }
+
+  if (card) {
+    card.className = 'macros-card ' + state;
+  }
+  if (label) label.textContent = stateText;
+  if (tip && mealsCount >= 0) {
+    tip.style.opacity = '0';
+    setTimeout(() => { tip.textContent = tipText; tip.style.opacity = '1'; }, 150);
+  }
+
+  // Streak pill
+  const streak = parseInt(localStorage.getItem('af-streak')||'0');
+  const streakEl = document.getElementById('dayStreakPill');
+  if (streakEl && streak >= 3) {
+    streakEl.style.display = 'block';
+    streakEl.textContent = streak + ' días seguidos';
+  }
+}
+
+function updateMacroUI(entries) {
+  const totCal  = entries.reduce((s,e) => {
+    // Use stored cal, or estimate from macros if cal is 0/missing
+    const cal = e.cal || Math.round((e.prot||0)*4 + (e.carb||0)*4 + (e.fat||0)*9);
+    return s + cal;
+  }, 0);
+  const totProt = entries.reduce((s,e) => s + (e.prot||0), 0);
+  const totCarb = entries.reduce((s,e) => s + (e.carb||0), 0);
+  const totFat  = entries.reduce((s,e) => s + (e.fat||0), 0);
+  const calPct  = GOALS.cal > 0 ? Math.min(100, Math.round((totCal / GOALS.cal) * 100)) : 0;
+  const calDescEl = document.getElementById('calDesc');
+  if (calDescEl) calDescEl.textContent = GOALS.cal > 0 ? `de ${GOALS.cal} kcal meta` : 'Completa tu perfil';
+
+  // Ring
+  // Update ring
+  const crNumEl = document.getElementById('crNum');
+  if (crNumEl) crNumEl.textContent = Math.round(totCal) || '0';
+  document.getElementById('calPct').textContent  = calPct + '%';
+  document.getElementById('calDesc').textContent = `de ${GOALS.cal} kcal meta`;
+  setTimeout(() => {
+    document.getElementById('crFill').style.strokeDashoffset =
+      201.1 - (calPct / 100) * 201.1;
+    document.getElementById('bProt').style.width =
+      Math.min(100, Math.round((totProt / GOALS.prot) * 100)) + '%';
+    document.getElementById('bCarb').style.width =
+      Math.min(100, Math.round((totCarb / GOALS.carbs) * 100)) + '%';
+    document.getElementById('bFat').style.width =
+      Math.min(100, Math.round((totFat / GOALS.fat) * 100)) + '%';
+  }, 100);
+
+  // Macro values
+  document.getElementById('vProt').textContent = Math.round(totProt) + 'g';
+  document.getElementById('vCarb').textContent = Math.round(totCarb) + 'g';
+  document.getElementById('vFat').textContent  = Math.round(totFat)  + 'g';
+
+  // Coach tip based on progress
+  const tip = document.getElementById('nutriTip');
+  if (tip) {
+    const h = new Date().getHours();
+    const mealLabel = h<11?'desayuno':h<15?'almuerzo':h<19?'cena':'snack';
+    
+    let msg, showBtns;
+    if (entries.length === 0) {
+      msg = 'Tu nutrición aún no empieza. Empecemos con algo simple.';
+      showBtns = true;
+    } else {
+      msg = macroMessage(Math.round((totProt / GOALS.prot) * 100));
+      showBtns = totProt < GOALS.prot * 0.5; // show action if protein < 50%
+    }
+    
+    if (showBtns) {
+      tip.innerHTML = `<div style="margin-bottom:10px">${msg}</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button onclick="openPhotoLog()" style="
+            padding:8px 14px;border-radius:11px;border:none;cursor:pointer;
+            background:linear-gradient(135deg,#8b5cf6,#ec4899);
+            color:#fff;font-family:var(--font);font-size:12px;font-weight:700">
+            📷 Registrar con foto
+          </button>
+          <button onclick="sw('recetas')" style="
+            padding:8px 14px;border-radius:11px;cursor:pointer;
+            border:1px solid rgba(249,115,22,.3);background:rgba(249,115,22,.08);
+            color:rgba(253,186,116,.8);font-family:var(--font);font-size:12px;font-weight:600">
+            Ver receta
+          </button>
+        </div>`;
+    } else {
+      tip.textContent = msg;
+    }
+  }
+
+  // Smart suggestions
+  showSmartSuggestions(Math.max(0, GOALS.prot - totProt), Math.max(0, GOALS.cal - totCal));
+
+  // Render log list
+  renderLogList(entries);
+  renderMealRhythm(entries);
+  updateCardState(calPct, Math.min(100, Math.round((totProt/GOALS.prot)*100)), entries.length);
+}
+
+// ── Smart recipe suggestions ──────────────────────────────
+function showSmartSuggestions(remProt, remCal) {
+  const el = document.getElementById('smartSuggestions');
+  if (!el) return;
+  if (remProt < 10 && remCal < 100) {
+    el.innerHTML = `<div style="font-size:12px;color:rgba(196,181,253,.4);
+      text-align:center;padding:8px">✓ Nutrición del día cubiertos para hoy.</div>`;
+    return;
+  }
+  const h = new Date().getHours();
+  const timeHint = h < 11 ? 'desayuno' : h < 15 ? 'almuerzo' : 'cena';
+  const suggestions = Object.values(QUICK_FOODS).flat()
+    .filter(r => r.prot <= remProt + 15)
+    .sort((a,b) => b.prot - a.prot)
+    .slice(0, 2);
+  if (!suggestions.length) return;
+  el.innerHTML = `
+    <div style="font-size:11px;font-weight:700;letter-spacing:.06em;
+      text-transform:uppercase;color:rgba(196,181,253,.35);margin-bottom:8px">
+      <span style="display:inline-flex;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#7c3aed,#ec4899);vertical-align:middle;margin-right:5px"></span>Arju sugiere para completar tu día
+    </div>
+    ${suggestions.map(r => `
+      <div style="display:flex;align-items:center;gap:11px;padding:11px 13px;
+        background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+        border-radius:14px;margin-bottom:6px;cursor:pointer"
+        onclick="saveFood('${r.name}',${r.cal},${r.prot},0,'${timeHint}')">
+        <div style="font-size:24px">${r.emoji}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:600;color:#f1f0f4">${r.name}</div>
+          <div style="display:flex;gap:5px;margin-top:4px">
+            <span style="font-size:10px;background:rgba(124,58,237,.15);
+              color:#c4b5fd;padding:2px 8px;border-radius:12px;font-weight:600">
+              ${r.prot}g prot</span>
+            <span style="font-size:10px;background:rgba(245,158,11,.1);
+              color:#fcd34d;padding:2px 8px;border-radius:12px;font-weight:600">
+              ${r.cal} cal</span>
+          </div>
+        </div>
+        <span style="font-size:11px;color:rgba(196,181,253,.5);font-weight:600">+ Agregar</span>
+      </div>`).join('')}
+  `;
+}
+
+// ── Render today's food log ───────────────────────────────
+function renderLogList(entries) {
+  const el = document.getElementById('logList');
+  if (!el) return;
+  if (!entries.length) { el.style.display = 'none'; return; }
+  el.style.display = 'flex';
+
+  const MEAL_ICONS = { desayuno:'🌅', almuerzo:'🌞', cena:'🌙', snack:'🍎' };
+  el.innerHTML = `
+    <div style="font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+      color:var(--t3);margin-bottom:4px">Registrado hoy</div>
+    ${entries.map((e, i) => `
+      <div style="display:flex;align-items:center;gap:10px;padding:11px 13px;
+        background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+        border-radius:14px">
+        <span style="font-size:20px">${MEAL_ICONS[e.meal] || '🍽️'}</span>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:600;color:#f1f0f4;
+            white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${e.name}</div>
+          <div style="font-size:11px;color:var(--t3);margin-top:2px">
+            ${e.prot}g prot · ${e.cal} cal ·
+            <span style="text-transform:capitalize">${e.meal}</span> ·
+            ${new Date(e.ts).toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'})}
+          </div>
+        </div>
+        <button onclick="deleteFood(${i})" style="
+          width:28px;height:28px;border-radius:8px;border:1px solid rgba(255,255,255,.08);
+          background:rgba(255,255,255,.04);color:rgba(240,238,248,.35);
+          font-size:13px;cursor:pointer;flex-shrink:0;
+          display:flex;align-items:center;justify-content:center">×</button>
+      </div>`).join('')}
+  `;
+}
+
+// ── Guardar food (cal, prot, carb, fat) ──────────────────────
+async function saveFood(name, cal, prot, fat = 0, meal) {
+  // Track first meal and meal confirmed
+  try {
+    var _fk = 'af-food-' + new Date().toISOString().split('T')[0];
+    var _fe = JSON.parse(localStorage.getItem(_fk) || '[]');
+    if (_fe.length === 0) {
+      if (window.AF) AF.track('first_meal_logged', { source: meal || 'entry', name: name });
+      if (window.MV && window.MV.onFirstMealLogged) window.MV.onFirstMealLogged();
+    }
+    if (window.AF) AF.track('meal_confirmed', { name: name, meal: meal });
+  } catch(e) {}
+  // Ensure calories are never 0 — estimate from macros if missing
+  const safeCal  = cal > 0 ? Math.round(cal) : Math.round((prot||0)*4 + (fat||0)*9 + 50); // 50 baseline for carbs
+  const safeProt = Math.round(prot || 0);
+  const safeFat  = Math.round(fat  || 0);
+  const carb     = Math.max(0, Math.round((safeCal - safeProt*4 - safeFat*9) / 4));
+
+  const key  = `af-food-${localDateKey()}`;
+  const local = JSON.parse(localStorage.getItem(key) || '[]');
+  local.push({ name, cal:safeCal, prot:safeProt, carb, fat:safeFat, meal, ts:Date.now() });
+  localStorage.setItem(key, JSON.stringify(local));
+
+  // Update UI immediately — all surfaces
+  updateMacroUI(local);
+
+  // Save to Supabase nutrition_logs (non-blocking)
+  (async function() {
+    try {
+      var _sb2 = window.supabase ? window.supabase.createClient(
+        'https://egswsqymkxmbtcpnozcq.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM'
+      ) : null;
+      if (!_sb2) return;
+      var { data:{ session } } = await _sb2.auth.getSession();
+      if (!session?.user?.id) return;
+      await _sb2.from('nutrition_logs').insert({
+        user_id:        session.user.id,
+        date:           new Date().toISOString().split('T')[0],
+        meal_type:      meal || 'otro',
+        source_type:    'manual',
+        food_items_json: JSON.stringify([{ name, cal:safeCal, prot:safeProt, carb, fat:safeFat }]),
+        total_calories: safeCal,
+        total_protein:  safeProt,
+        total_carbs:    carb,
+        total_fat:      safeFat,
+        created_at:     new Date().toISOString(),
+        updated_at:     new Date().toISOString(),
+      });
+    } catch(e) { console.warn('[Nutrition] Supabase log failed:', e.message); }
+  })();
+
+  // ── Arju feedback ────────────────────────────────────────────────
+  (function() {
+    var retoCurrent = localStorage.getItem('af-selected-reto') || '';
+    var productType = localStorage.getItem('af-product-type') || '';
+    var msgs = [];
+    if (safeProt < 10) msgs.push('En la próxima comida podemos subir un poco la proteína sin complicarnos.');
+    if (retoCurrent === 'gluteos' || productType === 'custom_muscle_gain')
+      msgs.push('Buena base. La proteína y la recuperación también cuentan para glúteos y masa.');
+    if (retoCurrent === 'pancita' || productType === 'custom_fat_loss')
+      msgs.push('Buen paso. Buscamos comida clara y sostenible, no castigo.');
+    if (!msgs.length) msgs.push(safeProt >= 20 ? 'Buena proteína en esta comida. Eso ayuda.' : 'Registrado. Una comida anotada ya nos da dirección.');
+    var bubble = document.querySelector('[data-arju-bubble]') || document.getElementById('arjuNutBubble');
+    if (bubble) { bubble.textContent = msgs[0]; bubble.style.display = 'block'; }
+    if (window.AF) AF.track('nutrition_microvictory_shown', { product: productType, reto: retoCurrent, protein: safeProt });
+  })();
+  showGuardardToast(name, meal);
+  if (window.CoachCtx) window.CoachCtx.afterFoodLogged(name, meal);
+  if (window.MV) window.MV.onFoodLogged(meal);
+
+  // Sync to Supabase in background (non-blocking)
+  if (_sb && _uid) {
+    _sb.from('day_logs').insert({
+      user_id:    _uid,
+      meal_type:  meal,
+      food_name:  name,
+      calories:   safeCal,
+      protein_g:  safeProt,
+      created_at: new Date().toISOString(),
+    }).catch(e => console.warn('[Nutrition] Supabase:', e.message));
+  }
+}
+
+// ── Delete food ───────────────────────────────────────────
+function deleteFood(idx) {
+  const today = localDateKey();
+  const key   = `af-food-${today}`;
+  const local = JSON.parse(localStorage.getItem(key) || '[]');
+  local.splice(idx, 1);
+  localStorage.setItem(key, JSON.stringify(local));
+  updateMacroUI(local);
+}
+
+// ── USDA FoodData Central Search ─────────────────
+const USDA_KEY = 'DEMO_KEY'; // Replace with real key from api.nal.usda.gov
+
+function openUSDASearch() {
+  // Upgrade: show local LATAM search first, USDA as fallback
+  const ov = document.createElement('div');
+  ov.id = 'usda-ov';
+  ov.style.cssText = `position:fixed;inset:0;z-index:400;
+    background:rgba(8,5,17,.9);backdrop-filter:blur(20px);
+    display:flex;align-items:flex-end;font-family:var(--font)`;
+
+  const h = new Date().getHours();
+  const meal = h<11?'desayuno':h<15?'almuerzo':h<19?'cena':'snack';
+
+  ov.innerHTML = `
+    <div style="width:100%;max-width:430px;margin:0 auto;
+      padding:20px 16px calc(24px + env(safe-area-inset-bottom));
+      background:rgba(12,6,24,.99);border-radius:28px 28px 0 0;
+      border-top:1px solid rgba(255,255,255,.08)">
+
+      <div style="font-size:16px;font-weight:800;color:#f1f0f4;margin-bottom:14px">
+        🔍 Buscar alimento</div>
+
+      <input id="foodSearchInput" type="text" placeholder="Ej: huevo, arroz, pechuga..."
+        style="width:100%;padding:12px 14px;border-radius:14px;
+          border:1px solid rgba(255,255,255,.12);
+          background:rgba(255,255,255,.06);
+          color:#f1f0f4;font-family:var(--font);font-size:14px;
+          outline:none;margin-bottom:10px;box-sizing:border-box"
+        oninput="searchFoodInput(this.value,'${meal}')">
+
+      <div id="foodSearchResults" style="display:flex;flex-direction:column;gap:6px;
+        max-height:280px;overflow-y:auto;scrollbar-width:none"></div>
+
+      <button onclick="document.getElementById('usda-ov').remove()" style="
+        width:100%;margin-top:12px;padding:12px;border-radius:12px;
+        border:1px solid rgba(255,255,255,.08);background:transparent;
+        color:rgba(240,238,248,.3);font-family:var(--font);font-size:13px;cursor:pointer">
+        Cancelarar</button>
+    </div>`;
+
+  ov.addEventListener('click', e => { if(e.target===ov) ov.remove(); });
+  document.body.appendChild(ov);
+  setTimeout(()=>document.getElementById('foodSearchInput')?.focus(), 200);
+}
+
+function searchFoodInput(query, meal) {
+  const res = document.getElementById('foodSearchResults');
+  if (!res) return;
+
+  if (!query.trim()) { res.innerHTML = ''; return; }
+
+  // Local DB first
+  const local = window.FoodDB ? window.FoodDB.searchLocal(query, 8) : [];
+
+  if (!local.length) {
+    res.innerHTML = `<div style="font-size:13px;color:rgba(255,255,255,.3);text-align:center;padding:20px 0">
+      No encontrado. Prueba con otro nombre.</div>`;
+    return;
+  }
+
+  res.innerHTML = local.map(f => `
+    <button onclick="addFoodFromDB('${f.id}',1,'${meal}')" style="
+      display:flex;align-items:center;justify-content:space-between;
+      padding:11px 14px;border-radius:13px;
+      border:1px solid rgba(255,255,255,.07);
+      background:rgba(255,255,255,.03);
+      width:100%;text-align:left;cursor:pointer;
+      -webkit-tap-highlight-color:transparent">
+      <div>
+        <div style="font-size:14px;font-weight:600;color:#f1f0f4">${f.name}</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:2px">
+          ${f.cal} kcal · ${f.prot}g prot · por ${f.srv}${f.unit}</div>
+      </div>
+      <span style="font-size:12px;color:rgba(196,181,253,.5);font-weight:600">+ Agregar</span>
+    </button>`).join('');
+}
+
+function addFoodFromDB(id, qty, meal) {
+  if (!window.FoodDB) return;
+  const food = window.FoodDB.LOCAL_DB.find(f => f.id === id);
+  if (!food) return;
+  const macros = window.FoodDB.calcMacros(food, qty);
+  document.getElementById('usda-ov')?.remove();
+  saveFood(food.name, macros.cal, macros.prot, macros.fat, meal);
+}
+
+function openUSDAItem(nameEnc, cal100, prot100, carb100, fat100) {
+  const name = decodeURIComponent(nameEnc);
+  const ov = mkOverlay('usda-item-ov');
+  ov.innerHTML = `
+    ${stickyBack('usda-item-ov', name.slice(0,30) + '...')}
+    <div style="padding:20px 16px;max-width:430px;margin:0 auto">
+      <div style="font-size:16px;font-weight:700;color:#f1f0f4;margin-bottom:16px">${name}</div>
+      <div style="font-size:12px;color:var(--t3);margin-bottom:8px">Valores por 100g</div>
+      <div style="display:flex;gap:8px;margin-bottom:20px">
+        <div style="flex:1;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.2);
+          border-radius:12px;padding:10px;text-align:center">
+          <div style="font-size:18px;font-weight:800;color:#c4b5fd">${prot100}g</div>
+          <div style="font-size:9px;color:rgba(196,181,253,.4);font-weight:700;
+            text-transform:uppercase;margin-top:2px">Prot.</div>
+        </div>
+        <div style="flex:1;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);
+          border-radius:12px;padding:10px;text-align:center">
+          <div style="font-size:18px;font-weight:800;color:#fcd34d">${cal100}</div>
+          <div style="font-size:9px;color:rgba(252,211,77,.4);font-weight:700;
+            text-transform:uppercase;margin-top:2px">Cal.</div>
+        </div>
+        <div style="flex:1;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.15);
+          border-radius:12px;padding:10px;text-align:center">
+          <div style="font-size:18px;font-weight:800;color:#6ee7b7">${carb100}g</div>
+          <div style="font-size:9px;color:rgba(110,231,183,.4);font-weight:700;
+            text-transform:uppercase;margin-top:2px">Carbs</div>
+        </div>
+      </div>
+
+      <div style="font-size:13px;font-weight:600;color:#f1f0f4;margin-bottom:8px">
+        ¿Cuántos gramos?</div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+        <input id="usda-grams" type="number" value="150" min="1" max="2000" step="10"
+          inputmode="numeric" style="
+            width:100px;background:rgba(255,255,255,.06);
+            border:1.5px solid rgba(124,58,237,.4);border-radius:12px;
+            padding:11px 14px;font-family:var(--font);font-size:18px;
+            font-weight:700;color:#f1f0f4;outline:none;text-align:center;"
+          oninput="updateUSDACalc(${cal100},${prot100},${carb100},${fat100})">
+        <div style="flex:1" id="usda-calc">
+          <div style="font-size:13px;color:var(--t2)" id="usda-calc-text">150g = ${Math.round(cal100*1.5)} cal · ${Math.round(prot100*1.5)}g prot</div>
+        </div>
+      </div>
+
+      <div style="font-size:13px;font-weight:600;color:#f1f0f4;margin-bottom:8px">Agregar a:</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        ${['Desayuno','Almuerzo','Cena','Snack'].map(m=>`
+          <button onclick="addUSDAFood('${nameEnc}',${cal100},${prot100},${carb100},${fat100},'${m.toLowerCase()}')"
+            style="padding:11px;border-radius:12px;border:1px solid rgba(255,255,255,.1);
+              background:rgba(255,255,255,.04);color:rgba(240,238,248,.7);
+              font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer">
+            ${m==='Desayuno'?'🌅':m==='Almuerzo'?'🌞':m==='Cena'?'🌙':'🍎'} ${m}
+          </button>`).join('')}
+      </div>
+    </div>
+  `;
+  document.body.appendChild(ov);
+}
+
+function updateUSDACalc(cal100, prot100, carb100, fat100) {
+  const g = parseFloat(document.getElementById('usda-grams')?.value) || 100;
+  const f = g / 100;
+  const el = document.getElementById('usda-calc-text');
+  if (el) el.textContent = `${g}g = ${Math.round(cal100*f)} cal · ${Math.round(prot100*f)}g prot`;
+}
+
+function addUSDAFood(nameEnc, cal100, prot100, carb100, fat100, meal) {
+  const name = decodeURIComponent(nameEnc);
+  const g = parseFloat(document.getElementById('usda-grams')?.value) || 100;
+  const f = g / 100;
+  saveFood(name + ` (${g}g)`, Math.round(cal100*f), Math.round(prot100*f),
+           Math.round(fat100*f), meal);
+  document.getElementById('usda-item-ov')?.remove();
+  document.getElementById('usda-ov')?.remove();
+  document.body.style.overflow = '';
+}
+
+function usda_localFallback(q) {
+  const lower = q.toLowerCase();
+  const matches = Object.values(QUICK_FOODS).flat()
+    .filter(f => f.name.toLowerCase().includes(lower))
+    .slice(0, 3);
+  if (!matches.length) return '<div style="color:var(--t3);font-size:12px">Sin coincidencias locales</div>';
+  return matches.map(r => `
+    <div onclick="saveFood('${r.name}',${r.cal},${r.prot},0,'almuerzo')" style="
+      padding:11px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+      border-radius:12px;cursor:pointer;text-align:left;margin-bottom:6px">
+      <div style="font-size:13px;font-weight:600;color:#f1f0f4">${r.emoji} ${r.name}</div>
+      <div style="font-size:11px;color:var(--t3)">${r.prot}g prot · ${r.cal} cal</div>
+    </div>`).join('');
+}
+
+// ── Photo food logging ────────────────────────────
+function openPhotoLog() {
+  const ov = mkOverlay('photo-ov');
+  ov.innerHTML = `
+    ${stickyBack('photo-ov', 'Foto de Comida')}
+    <div style="padding:20px 16px;max-width:430px;margin:0 auto">
+      <div style="text-align:center;margin-bottom:20px">
+        <div style="font-size:48px;margin-bottom:12px">📷</div>
+        <div style="font-size:16px;font-weight:700;color:#f1f0f4;margin-bottom:6px">
+          Arju analiza tu comida</div>
+        <div style="font-size:13px;color:var(--t3);line-height:1.6;max-width:280px;margin:0 auto">
+          Toma una foto o sube una imagen. La IA estima los macros automáticamente.</div>
+      </div>
+
+      <!-- Upload area -->
+      <label for="food-img-input" style="
+        display:flex;flex-direction:column;align-items:center;justify-content:center;
+        gap:12px;border:2px dashed rgba(124,58,237,.3);border-radius:20px;
+        padding:32px 16px;cursor:pointer;background:rgba(124,58,237,.04);
+        margin-bottom:16px;-webkit-tap-highlight-color:transparent">
+        <div id="photo-preview" style="font-size:40px">🍽️</div>
+        <div id="photo-label" style="font-size:13px;color:rgba(196,181,253,.6);
+          font-weight:500">Toca para subir foto</div>
+        <input type="file" id="food-img-input" accept="image/*" capture="environment"
+          style="display:none" onchange="handleFoodPhoto(this)">
+      </label>
+
+      <div id="photo-result" style="display:none;flex-direction:column;gap:10px">
+        <!-- filled by handleFoodPhoto -->
+      </div>
+
+      <div style="font-size:11px;color:rgba(240,238,248,.25);text-align:center;
+        margin-top:12px;line-height:1.5">
+        ⚠️ Estimación aproximada. Siempre puedes ajustar antes de guardar.
+      </div>
+    </div>
+  `;
+  document.body.appendChild(ov);
+}
+
+async function handleFoodPhoto(input) {
+  const file = input.files?.[0];
+  if (!file) return;
+
+  // Preview
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    const base64 = e.target.result.split(',')[1];
+    const mimeType = file.type || 'image/jpeg';
+
+    // Show preview
+    const preview = document.getElementById('photo-preview');
+    const label   = document.getElementById('photo-label');
+    if(label) label.style.transition = 'opacity .15s';
+    const result  = document.getElementById('photo-result');
+    if (preview) {
+      preview.innerHTML = `<img src="${e.target.result}" style="
+        width:140px;height:140px;object-fit:cover;border-radius:16px">`;
+    }
+    if (label) {
+      label.textContent = 'Arju está revisando tu comida…';
+      const msgs = ['Detectando alimentos…','Estimando porciones…','Calculando proteína y energía…','Preparando recomendación…'];
+      let mi = 0;
+      const _mt = setInterval(() => {
+        mi = (mi+1) % msgs.length;
+        if(label) { label.style.opacity='0'; setTimeout(()=>{if(label){label.textContent=msgs[mi];label.style.opacity='1';}},150); }
+        else clearInterval(_mt);
+      }, 1800);
+      window._photoMsgTimer = _mt;
+    }
+    if (result) { result.style.display = 'none'; }
+
+    try {
+      // 5s slow warning
+      const _slowTimer = setTimeout(() => {
+        if(label) label.textContent = 'Tardando un poco más de lo normal…';
+      }, 5000);
+
+      const res = await fetch('/.netlify/functions/food-photo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: base64, mimeType }),
+        signal: AbortSignal.timeout(20000),
+      });
+      if (!res.ok) throw new Error('Error ' + res.status);
+      clearTimeout(_slowTimer);
+      const data = await res.json();
+
+      if (data.error && data.fallback) {
+        if (label) label.textContent = 'No pude analizar bien. Ingresa manualmente.';
+        if (result) {
+          result.style.display = 'flex';
+          result.innerHTML = `<div style="text-align:center;padding:16px 0">
+            <div style="font-size:13px;color:rgba(240,238,248,.5);margin-bottom:12px">
+              No pude identificar los alimentos. Puedes registrarlo manualmente.</div>
+            <button onclick="document.getElementById('photo-ov')?.remove();openManualLog()"
+              style="padding:10px 20px;border-radius:12px;border:none;cursor:pointer;
+              background:rgba(124,58,237,.15);color:#c4b5fd;
+              font-family:var(--font);font-size:13px;font-weight:600">
+              Ingresar manualmente</button></div>`;
+        }
+        return;
+      }
+
+      if (label) label.textContent = '✓ Análisis completado';
+      if(window._photoMsgTimer) clearInterval(window._photoMsgTimer);
+      renderPhotoResult(data);
+
+    } catch(e) {
+      if (label) label.textContent = 'Error — agrega manualmente';
+      console.warn('[photo]', e.message);
+      showManualAfterPhotoFail();
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function renderPhotoResult(data) {
+  const el = document.getElementById('photo-result');
+  if (!el) return;
+  el.style.display = 'flex';
+
+  const foods = data.foods || [];
+  const total = data.total || { cal: 0, prot: 0, carb: 0, fat: 0 };
+  const h = new Date().getHours();
+  const defaultMeal = h<11?'desayuno':h<15?'almuerzo':h<19?'cena':'snack';
+
+  // Human feedback first
+  const humanMsg = (total.prot||0) >= 25
+    ? 'Buen aporte de proteína. Esta comida sostiene tu energía.'
+    : (total.prot||0) >= 12
+    ? 'En la próxima agrega un poco más de proteína si puedes.'
+    : 'Registrado. Intenta agregar algo de proteína en la próxima comida.';
+
+  el.innerHTML = `
+    <!-- Human feedback -->
+    <div style="background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.15);
+      border-radius:14px;padding:12px 14px;display:flex;align-items:flex-start;gap:10px">
+      <span style="font-size:18px;flex-shrink:0">✨</span>
+      <div style="font-size:13px;color:rgba(219,234,254,.8);line-height:1.5">${humanMsg}</div>
+    </div>
+
+    <!-- Detected foods - EDITABLE -->
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;
+      letter-spacing:.06em;color:rgba(255,255,255,.25);margin-bottom:2px">Detectado</div>
+    ${foods.map((f,i) => `
+      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+        border-radius:14px;padding:11px 14px">
+        <div style="font-size:13px;font-weight:600;color:#f1f0f4;margin-bottom:6px">${f.name}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div>
+            <div style="font-size:10px;color:rgba(255,255,255,.3);margin-bottom:3px">Proteína (g)</div>
+            <input type="number" id="fp-prot-${i}" value="${f.prot||0}" min="0"
+              style="width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+              border-radius:9px;padding:7px 10px;color:#f1f0f4;font-family:var(--font);
+              font-size:13px;outline:none;text-align:center">
+          </div>
+          <div>
+            <div style="font-size:10px;color:rgba(255,255,255,.3);margin-bottom:3px">Calorías</div>
+            <input type="number" id="fp-cal-${i}" value="${f.cal||0}" min="0"
+              style="width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+              border-radius:9px;padding:7px 10px;color:#f1f0f4;font-family:var(--font);
+              font-size:13px;outline:none;text-align:center">
+          </div>
+        </div>
+      </div>`).join('')}
+
+    <!-- Warning -->
+    <div style="font-size:11px;color:rgba(255,255,255,.2);text-align:center">
+      ⚠️ Estimación aproximada — puedes ajustar antes de guardar</div>
+
+    <!-- Meal selection + confirm -->
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;
+      letter-spacing:.06em;color:rgba(255,255,255,.25)">Asignar a</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      ${['desayuno','almuerzo','cena','snack'].map(m=>`
+        <button id="pfm-${m}" onclick="selectPhotoMeal('${m}')" style="
+          padding:9px;border-radius:12px;cursor:pointer;font-family:var(--font);
+          font-size:12px;font-weight:600;
+          border:1px solid ${m===defaultMeal?'rgba(139,92,246,.5)':'rgba(255,255,255,.1)'};
+          background:${m===defaultMeal?'rgba(139,92,246,.2)':'rgba(255,255,255,.04)'};
+          color:${m===defaultMeal?'#c4b5fd':'rgba(240,238,248,.5)'};
+          -webkit-tap-highlight-color:transparent">
+          ${m==='desayuno'?'🌅':m==='almuerzo'?'🌞':m==='cena'?'🌙':'🍎'}
+          ${m.charAt(0).toUpperCase()+m.slice(1)}
+        </button>`).join('')}
+    </div>
+
+    <button onclick="confirmPhotoGuardar(${foods.length})" style="
+      width:100%;padding:13px;border-radius:14px;border:none;cursor:pointer;
+      background:linear-gradient(135deg,#8b5cf6,#ec4899);
+      color:#fff;font-family:var(--font);font-size:14px;font-weight:800;
+      box-shadow:0 4px 20px rgba(139,92,246,.4)">
+      ✓ Guardar comida
+    </button>
+  `;
+
+  window._photoMeal = defaultMeal;
+  window._photoFoodsCount = foods.length;
+}
+
+function selectPhotoMeal(meal) {
+  window._photoMeal = meal;
+  ['desayuno','almuerzo','cena','snack'].forEach(m => {
+    const btn = document.getElementById(`pfm-${m}`);
+    if (!btn) return;
+    const active = m === meal;
+    btn.style.borderColor = active ? 'rgba(139,92,246,.5)' : 'rgba(255,255,255,.1)';
+    btn.style.background  = active ? 'rgba(139,92,246,.2)' : 'rgba(255,255,255,.04)';
+    btn.style.color       = active ? '#c4b5fd' : 'rgba(240,238,248,.5)';
+  });
+}
+
+function confirmPhotoGuardar(foodCount) {
+  const meal = window._photoMeal || 'almuerzo';
+  let totCal = 0, totProt = 0;
+  const names = [];
+  for (let i = 0; i < foodCount; i++) {
+    totCal  += parseFloat(document.getElementById(`fp-cal-${i}`)?.value  || 0);
+    totProt += parseFloat(document.getElementById(`fp-prot-${i}`)?.value || 0);
+    const item = document.querySelectorAll('[id^="fp-cal-"]')[i];
+    if (item) names.push(item.closest('div')?.querySelector('.food-name')?.textContent || '');
+  }
+  const name = `Foto IA · ${meal}`;
+  document.getElementById('photo-ov')?.remove();
+  document.body.style.overflow = '';
+  saveFood(name, totCal, totProt, 0, meal);
+}
+
+function showManualAfterPhotoFail() {
+  const el = document.getElementById('photo-result');
+  if (!el) return;
+  el.style.display = 'flex';
+  el.innerHTML = `
+    <div style="text-align:center;padding:10px">
+      <div style="font-size:13px;color:var(--t3);margin-bottom:12px">
+        No pude analizar la foto. Agrega manualmente:</div>
+      <button onclick="document.getElementById('photo-ov')?.remove();
+        document.body.style.overflow='';openManualLog()" style="
+        padding:12px 24px;border-radius:14px;border:none;
+        background:linear-gradient(135deg,#7c3aed,#9333ea);color:#fff;
+        font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer">
+        Agregar manualmente</button>
+    </div>
+  `;
+}
+
+// ── Manual log ────────────────────────────────────
+function openManualLog() {
+  const ov = mkOverlay('manual-ov');
+  const h = new Date().getHours();
+  const defaultMeal = h<11?'desayuno':h<15?'almuerzo':h<19?'cena':'snack';
+  ov.innerHTML = `
+    ${stickyBack('manual-ov', 'Registrar comida')}
+    <div style="padding:20px 16px;max-width:430px;margin:0 auto;
+      display:flex;flex-direction:column;gap:14px">
+
+      <!-- Text parser — natural language input -->
+      <div>
+        <label style="font-size:12px;font-weight:600;color:rgba(196,181,253,.5);
+          text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px">
+          ¿Qué comiste?</label>
+        <input id="m-text-parse" type="text" placeholder="Ej: 2 huevos y una arepa" style="
+          width:100%;background:rgba(124,58,237,.08);
+          border:1.5px solid rgba(124,58,237,.3);border-radius:14px;
+          padding:12px 14px;font-family:var(--font);font-size:14px;
+          color:#f1f0f4;outline:none;-webkit-appearance:none;box-sizing:border-box"
+          oninput="liveParseFood(this.value)">
+        <div id="parse-preview" style="margin-top:8px;display:flex;flex-direction:column;gap:6px"></div>
+        <div style="font-size:11px;color:rgba(255,255,255,.2);margin-top:6px">
+          Escribe en español natural — Arju lo interpreta</div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:10px;margin:2px 0">
+        <div style="flex:1;height:1px;background:rgba(255,255,255,.07)"></div>
+        <span style="font-size:10px;color:rgba(255,255,255,.2);font-weight:600;text-transform:uppercase">O manualmente</span>
+        <div style="flex:1;height:1px;background:rgba(255,255,255,.07)"></div>
+      </div>
+
+      <div>
+        <label style="font-size:12px;font-weight:600;color:var(--t3);
+          text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px">
+          Nombre</label>
+        <input id="m-name" type="text" placeholder="Ej: Arroz con pollo" style="
+          width:100%;background:rgba(255,255,255,.06);
+          border:1.5px solid rgba(255,255,255,.1);border-radius:12px;
+          padding:11px 14px;font-family:var(--font);font-size:14px;
+          color:#f1f0f4;outline:none;-webkit-appearance:none;box-sizing:border-box">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--t3);
+            text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px">
+            Calorías</label>
+          <input id="m-cal" type="number" placeholder="350" inputmode="numeric"
+            min="0" step="10" style="width:100%;background:rgba(255,255,255,.06);
+            border:1.5px solid rgba(255,255,255,.1);border-radius:12px;
+            padding:11px 14px;font-family:var(--font);font-size:14px;
+            color:#f1f0f4;outline:none;text-align:center;">
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--t3);
+            text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px">
+            Proteína (g)</label>
+          <input id="m-prot" type="number" placeholder="25" inputmode="decimal"
+            min="0" step="1" style="width:100%;background:rgba(255,255,255,.06);
+            border:1.5px solid rgba(255,255,255,.1);border-radius:12px;
+            padding:11px 14px;font-family:var(--font);font-size:14px;
+            color:#f1f0f4;outline:none;text-align:center;">
+        </div>
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:600;color:var(--t3);
+          text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:6px">
+          Comida</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          ${['desayuno','almuerzo','cena','snack'].map(m=>`
+            <button id="mb-${m}" onclick="selectMeal('${m}')" style="
+              padding:8px 16px;border-radius:12px;font-family:var(--font);
+              font-size:13px;font-weight:600;cursor:pointer;
+              border:1px solid ${m===defaultMeal?'rgba(124,58,237,.5)':'rgba(255,255,255,.1)'};
+              background:${m===defaultMeal?'rgba(124,58,237,.2)':'rgba(255,255,255,.04)'};
+              color:${m===defaultMeal?'#c4b5fd':'rgba(240,238,248,.6)'};
+              ">
+              ${m.charAt(0).toUpperCase()+m.slice(1)}</button>`).join('')}
+        </div>
+      </div>
+      <button onclick="submitManual()" style="
+        width:100%;padding:14px;border-radius:14px;border:none;
+        background:linear-gradient(135deg,#7c3aed,#9333ea);color:#fff;
+        font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;
+        margin-top:4px">Agregar</button>
+    </div>
+  `;
+  window._selectedMeal = defaultMeal;
+  document.body.appendChild(ov);
+  setTimeout(() => document.getElementById('m-name')?.focus(), 200);
+}
+
+function selectMeal(meal) {
+  window._selectedMeal = meal;
+  ['desayuno','almuerzo','cena','snack'].forEach(m => {
+    const btn = document.getElementById(`mb-${m}`);
+    if (!btn) return;
+    btn.style.borderColor = m===meal ? 'rgba(124,58,237,.5)' : 'rgba(255,255,255,.1)';
+    btn.style.background  = m===meal ? 'rgba(124,58,237,.2)' : 'rgba(255,255,255,.04)';
+    btn.style.color       = m===meal ? '#c4b5fd' : 'rgba(240,238,248,.6)';
+  });
+}
+
+// Live food text parser
+function liveParseFood(text) {
+  const preview = document.getElementById('parse-preview');
+  if (!preview || !window.FoodDB) return;
+  if (!text.trim()) { preview.innerHTML = ''; return; }
+
+  const results = window.FoodDB.parseText(text);
+  if (!results.length) {
+    preview.innerHTML = `<div style="font-size:12px;color:rgba(255,255,255,.3);padding:8px 0">
+      No reconocí ese alimento. Puedes ingresar los datos manualmente.</div>`;
+    return;
+  }
+
+  // Show parsed items and fill form
+  const totals = results.reduce((acc, r) => {
+    const m = window.FoodDB.calcMacros(r.food, r.qty);
+    acc.cal += m.cal; acc.prot += m.prot; acc.carb += m.carb; acc.fat += m.fat;
+    return acc;
+  }, { cal:0, prot:0, carb:0, fat:0 });
+
+  preview.innerHTML = results.map(r => {
+    const m = window.FoodDB.calcMacros(r.food, r.qty);
+    return `<div style="display:flex;justify-content:space-between;align-items:center;
+      padding:8px 12px;border-radius:11px;background:rgba(34,197,94,.07);
+      border:1px solid rgba(34,197,94,.15)">
+      <div style="font-size:13px;font-weight:600;color:#f1f0f4">
+        ${r.qty > 1 ? r.qty + ' × ' : ''}${r.food.name}</div>
+      <div style="font-size:11px;color:rgba(52,211,153,.7)">
+        ${m.prot}g prot · ${m.cal} kcal</div>
+    </div>`;
+  }).join('') + `
+  <div style="display:flex;justify-content:space-between;padding:6px 12px;
+    font-size:12px;font-weight:700">
+    <span style="color:rgba(255,255,255,.5)">Total estimado</span>
+    <span style="color:#c4b5fd">${totals.prot}g prot · ${totals.cal} kcal</span>
+  </div>
+  <button onclick="saveFromParser()" style="width:100%;padding:11px;border-radius:13px;
+    border:none;cursor:pointer;background:linear-gradient(135deg,#22c55e,#16a34a);
+    color:#fff;font-family:var(--font);font-size:13px;font-weight:700;margin-top:2px">
+    ✓ Guardar ${results.length > 1 ? results.length + ' alimentos' : results[0].food.name}
+  </button>`;
+
+  // Fill numeric fields
+  const calEl = document.getElementById('m-cal');
+  const protEl = document.getElementById('m-prot');
+  const nameEl = document.getElementById('m-name');
+  if (calEl)  calEl.value  = totals.cal;
+  if (protEl) protEl.value = totals.prot;
+  if (nameEl) nameEl.value = results.map(r=>`${r.qty>1?r.qty+'× ':''}${r.food.name}`).join(', ');
+  window._parsedFoodFat = totals.fat;
+}
+
+function saveFromParser() {
+  const h = new Date().getHours();
+  const meal = document.querySelector('[id^="mb-"][style*="rgba(124"]')?.id.replace('mb-','')
+    || (h<11?'desayuno':h<15?'almuerzo':h<19?'cena':'snack');
+  const name = document.getElementById('m-name')?.value;
+  const cal  = parseFloat(document.getElementById('m-cal')?.value) || 0;
+  const prot = parseFloat(document.getElementById('m-prot')?.value) || 0;
+  const fat  = window._parsedFoodFat || 0;
+  if (!name) return;
+  document.getElementById('manual-ov')?.remove();
+  saveFood(name, cal, prot, fat, meal);
+}
+
+function submitManual() {
+  const name = document.getElementById('m-name')?.value?.trim();
+  const cal  = parseFloat(document.getElementById('m-cal')?.value)  || 0;
+  const prot = parseFloat(document.getElementById('m-prot')?.value) || 0;
+  if (!name) { document.getElementById('m-name').focus(); return; }
+  saveFood(name, cal, prot, 0, window._selectedMeal || 'snack');
+  document.getElementById('manual-ov')?.remove();
+  document.body.style.overflow = '';
+}
+
+// ── Overlay helpers ───────────────────────────────
+function mkOverlay(id) {
+  document.getElementById(id)?.remove();
+  const ov = document.createElement('div');
+  ov.id = id;
+  ov.style.cssText = `position:fixed;inset:0;z-index:300;background:var(--bg);
+    overflow-y:auto;-webkit-overflow-scrolling:touch;font-family:var(--font);`;
+  document.body.style.overflow = 'hidden';
+  ov.addEventListener('click', e => { if (e.target===ov) { ov.remove(); document.body.style.overflow=''; } });
+  return ov;
+}
+
+function stickyBack(ovId, title) {
+  return `<div style="position:sticky;top:0;z-index:10;
+    background:rgba(8,5,17,.96);backdrop-filter:blur(12px);
+    padding:calc(env(safe-area-inset-top,12px) + 8px) 16px 10px;
+    display:flex;align-items:center;gap:12px;
+    border-bottom:1px solid rgba(255,255,255,.06)">
+    <button onclick="document.getElementById('${ovId}')?.remove();document.body.style.overflow=''" style="
+      display:flex;align-items:center;gap:6px;padding:7px 12px;
+      border-radius:12px;border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.05);color:rgba(240,238,248,.7);
+      font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer">
+      ← Volver</button>
+    <div style="font-size:14px;font-weight:700;color:#f1f0f4;
+      flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${title}</div>
+  </div>`;
+}
+// ── Load today's data ────────────────────────────
+function loadToday() {
+  const localKey = `af-food-${localDateKey()}`;
+  const utcKey   = `af-food-${new Date().toISOString().split('T')[0]}`;
+  // Try local date first, fall back to UTC key (handles old saved data)
+  let local = JSON.parse(localStorage.getItem(localKey) || '[]');
+  if (!local.length && localKey !== utcKey) {
+    local = JSON.parse(localStorage.getItem(utcKey) || '[]');
+  }
+  updateMacroUI(local);
+}
+
+function showGuardardToast(name, meal) {
+  const MEAL_LABELS = { desayuno:'desayuno', almuerzo:'almuerzo', cena:'cena', snack:'snack' };
+  const t = document.createElement('div');
+  t.style.cssText = `position:fixed;bottom:calc(84px + env(safe-area-inset-bottom));
+    left:50%;transform:translateX(-50%);z-index:400;
+    background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);
+    border-radius:14px;padding:10px 18px;font-family:var(--font);
+    font-size:13px;font-weight:600;color:#6ee7b7;
+    box-shadow:0 4px 20px rgba(0,0,0,.3);white-space:nowrap;`;
+  t.textContent = `✓ Agregado a tu ${MEAL_LABELS[meal] || meal}`;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2500);
+}
+
+// ── Init — loader hides immediately ───────────────────────
+// 1. Hide spinner RIGHT NOW, no waiting
+const _ldr = document.getElementById('ldr');
+if (_ldr) _ldr.classList.add('off');
+
+// Init recipe recommendation on load
+initRecipeRec();
+
+// Dynamic photo CTA on load
+(function(){
+  const h = new Date().getHours();
+  const lbl = h<11?'Registrar desayuno con foto':
+              h<15?'Registrar almuerzo con foto':
+              h<19?'Registrar cena con foto':
+              h<21?'Registrar snack con foto':'Registrar comida con foto';
+  const el = document.getElementById('photoMainLabel');
+  if (el) el.textContent = lbl;
+})();
+
+// Auto-open camera if navigated from home with ?camera=1
+if (location.search.includes('camera=1')) {
+  setTimeout(() => { if(typeof openPhotoLog==='function') openPhotoLog(); }, 500);
+  history.replaceState({}, '', location.pathname);
+}
+
+// Auto-open recipe if navigated from home with ?recipe=id
+const _recipeParam = new URLSearchParams(location.search).get('recipe');
+if (_recipeParam) {
+  setTimeout(() => { if(typeof openRecipeDetail==='function') openRecipeDetail(_recipeParam); }, 500);
+  history.replaceState({}, '', location.pathname);
+}
+
+// 2. Load local data immediately
+loadToday();
+
+// 3. Supabase loads in background — never blocks UI
+(async () => {
+  try {
+    const authRes = await Promise.race([
+      _sb?.auth.getSession(),
+      new Promise(r => setTimeout(() => r({ data:{ session:null } }), 3000))
+    ]) || { data:{ session:null } };
+    const session = authRes?.data?.session;
+    if (!session?.user) return;
+    _uid = session.user.id;
+
+    const profileRes = await Promise.race([
+      _sb.from('profiles').select('*').eq('id',_uid).single(),
+      new Promise(r => setTimeout(() => r({ data: null }), 2000))
+    ]);
+    if (profileRes?.data) {
+      const p = profileRes.data;
+      if (p.calorias_objetivo) GOALS.cal   = p.calorias_objetivo;
+      if (p.proteina_g)        GOALS.prot  = p.proteina_g;
+      if (p.carbs_g)           GOALS.carbs = p.carbs_g;
+      if (p.grasas_g)          GOALS.fat   = p.grasas_g;
+    }
+    const today = localDateKey();
+    // Use created_at range (works even if 'date' column doesn't exist)
+    // Colombia is UTC-5, so today starts at 05:00 UTC
+    let logsRes = { data: [] };
+    try {
+      const startUTC = `${today}T00:00:00`;
+      const endUTC   = `${today}T23:59:59`;
+      const r = await Promise.race([
+        _sb.from('day_logs').select('*')
+          .eq('user_id', _uid)
+          .gte('created_at', startUTC)
+          .lte('created_at', endUTC),
+        new Promise(res => setTimeout(() => res({ data:[] }), 3000))
+      ]);
+      if (r?.data) logsRes = r;
+    } catch(e) {
+      console.warn('[Nutrition] day_logs query skipped:', e.message);
+    }
+    if (logsRes?.data?.length) {
+      const entries = logsRes.data.map(r => ({
+        name: r.food_name, cal: r.calories||0, prot: r.protein_g||0,
+        carb: 0, fat: 0, meal: r.meal_type, ts: new Date(r.created_at).getTime()
+      }));
+      updateMacroUI(entries);
+    } else {
+      loadToday();
+    }
+  } catch(e) {
+    console.warn('[Nutrition] Background init error:', e.message);
+    loadToday();
+  }
+})();
+
+// ── Load recipe from /data/recipes/recipes.json by id ─────────────
+async function openRecipeFromJSON(recipeId) {
+  try {
+    if (!window._AF_RECIPES_CACHE) {
+      var res = await fetch('/data/recipes/recipes.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      window._AF_RECIPES_CACHE = await res.json();
+    }
+    var recipes = Array.isArray(window._AF_RECIPES_CACHE)
+      ? window._AF_RECIPES_CACHE
+      : (window._AF_RECIPES_CACHE.recipes || []);
+    var recipe = recipes.find(function(r) { return r.id === recipeId; });
+    if (!recipe) { openRecipeDetail(recipeId); return; }
+
+    // Map JSON recipe to existing modal format
+    var m = recipe.approx_macros || {};
+    var mapped = {
+      emoji: '🍽️',
+      name:  recipe.name || 'Receta ArjunaFit',
+      prot:  m.protein_g  || 0,
+      cal:   m.calories   || 0,
+      time:  recipe.prep_time_minutes || 15,
+      dif:   recipe.difficulty  || 'Fácil',
+      ingredients: recipe.ingredients || [],
+      steps:       recipe.steps       || [],
+      tip:         recipe.arju_tip    || 'Una comida simple también cuenta.',
+      meal:        recipe.category    || 'comida',
+    };
+    RECIPES[recipeId] = mapped;
+    openRecipeDetail(recipeId);
+  } catch(e) {
+    console.warn('[Recipes] openRecipeFromJSON failed:', e.message);
+    openRecipeDetail(recipeId);
+  }
+}
+
+
+
+
+// ── Comer fuera — Restaurant MVP ──────────────────────────────────────────
+var _restaurants = null;
+var _selRest = null;
+
+async function loadRestaurants() {
+  if (_restaurants) return _restaurants;
+  try {
+    var res = await fetch('/data/nutrition/restaurant-options.json', { cache:'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    _restaurants = await res.json();
+    return _restaurants;
+  } catch(e) {
+    console.warn('[Restaurants] load failed:', e.message);
+    return [];
+  }
+}
+
+async function buildRestaurantGrid() {
+  var grid = document.getElementById('restaurantGrid');
+  if (!grid || grid.children.length > 0) return;
+  var data = await loadRestaurants();
+  if (!data.length) {
+    grid.innerHTML = '<p style="color:rgba(255,255,255,.35);font-size:13px;text-align:center;grid-column:1/-1">No se cargaron opciones.</p>';
+    return;
+  }
+  var html = data.map(function(r, idx) {
+    return '<button onclick="openRestaurant(' + idx + ')" ' +
+      'style="background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);border-radius:16px;' +
+      'padding:16px 12px;text-align:center;cursor:pointer;font-family:var(--font)">' +
+      '<div style="font-size:28px;margin-bottom:6px">' + r.emoji + '</div>' +
+      '<div style="font-size:12px;font-weight:700;color:#f5f3ff;line-height:1.3">' + r.name + '</div>' +
+      '</button>';
+  }).join('');
+  grid.innerHTML = html;
+}
+
+async function openRestaurant(idx) {
+  var data = await loadRestaurants();
+  var restaurant = data[idx];
+  if (!restaurant) return;
+  _selRest = { restaurant: restaurant, idx: idx };
+
+  var grid = document.getElementById('restaurantGrid');
+  var optPanel = document.getElementById('restaurantOptions');
+  var title = document.getElementById('restaurantOptionsTitle');
+  var list = document.getElementById('restaurantOptionsList');
+  var tip = document.getElementById('restaurantArjuTip');
+
+  if (grid) grid.style.display = 'none';
+  if (optPanel) optPanel.style.display = 'block';
+  if (title) title.textContent = restaurant.emoji + ' ' + restaurant.name;
+
+  var product = localStorage.getItem('af-product-type') || '';
+  if (tip) tip.textContent = getRestTip(restaurant, product);
+
+  if (list) {
+    list.innerHTML = restaurant.common_options.map(function(opt, oi) {
+      return '<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);' +
+        'border-radius:16px;padding:14px 16px;margin-bottom:10px">' +
+        '<div style="font-size:14px;font-weight:700;color:#f5f3ff;margin-bottom:4px">' + opt.name + '</div>' +
+        '<div style="display:flex;gap:12px;margin-bottom:8px">' +
+          '<span style="font-size:11px;color:rgba(196,181,253,.7)">~' + opt.calories + ' cal</span>' +
+          '<span style="font-size:11px;color:rgba(196,181,253,.7)">~' + opt.protein_g + 'g prot.</span>' +
+        '</div>' +
+        '<div style="font-size:12px;color:rgba(240,238,248,.45);margin-bottom:10px;font-style:italic">' + (opt.arju_tip || '') + '</div>' +
+        '<button onclick="addRestMeal(' + idx + ',' + oi + ')" ' +
+          'style="width:100%;padding:11px;background:linear-gradient(135deg,#8b5cf6,#a855f7,#ec4899);' +
+          'border:none;border-radius:12px;color:#fff;font-size:13px;font-weight:700;cursor:pointer">' +
+          'Agregar a mi día' +
+        '</button>' +
+      '</div>';
+    }).join('');
+  }
+}
+
+function closeRestaurantOptions() {
+  var grid = document.getElementById('restaurantGrid');
+  var optPanel = document.getElementById('restaurantOptions');
+  if (grid) grid.style.display = 'grid';
+  if (optPanel) optPanel.style.display = 'none';
+  _selRest = null;
+}
+
+function getRestTip(r, product) {
+  if (product === 'challenge_glutes')   return 'Reto glúteos: elige ' + r.name + ' con buena proteína y carbohidratos para energía.';
+  if (product === 'challenge_belly')    return 'Reto pancita: proteína + vegetales, porción moderada de carbohidratos. Sin bebidas azucaradas.';
+  if (product === 'custom_muscle_gain') return 'Masa muscular: elige la opción más completa. Necesitas comer suficiente.';
+  if (product === 'custom_fat_loss')    return 'Reducción grasa: proteína magra + ensalada + carbohidrato moderado. Sin extras calóricos.';
+  return 'Elige proteína + carbohidrato + vegetal. Macros son estimaciones. Lo importante es mantener el hábito.';
+}
+
+async function addRestMeal(restaurantIdx, optIdx) {
+  var data = await loadRestaurants();
+  var r = data[restaurantIdx];
+  var opt = r && r.common_options[optIdx];
+  if (!r || !opt) return;
+
+  var meals = ['desayuno','almuerzo','cena','snack'];
+  var mealLabels = ['Desayuno','Almuerzo','Cena','Snack'];
+  var picked = prompt('¿Agregar como? Escribe: desayuno, almuerzo, cena o snack', 'almuerzo');
+  var mealKey = (picked || '').toLowerCase().trim();
+  if (!meals.includes(mealKey)) mealKey = 'almuerzo';
+  var mealLabel = mealLabels[meals.indexOf(mealKey)];
+
+  var tip = document.getElementById('restaurantArjuTip');
+
+  var entry = {
+    meal_type: mealKey,
+    food_name: opt.name + ' (' + r.name + ')',
+    portion_description: 'Comer fuera — estimación aproximada',
+    calories:  opt.calories  || 0,
+    protein_g: opt.protein_g || 0,
+    carbs_g:   opt.carbs_g   || 0,
+    fat_g:     opt.fat_g     || 0,
+    source:    'restaurant',
+    log_date:  new Date().toISOString().split('T')[0],
+  };
+
+  // Try save via Supabase
+  var sb = window._sb;
+  var uid = localStorage.getItem('af-uid');
+  if (sb && uid) {
+    sb.from('nutrition_logs').insert(Object.assign({ user_id: uid }, entry))
+      .then(function() {
+        if (tip) { tip.style.color='#86efac'; tip.textContent = mealLabel + ' registrado ✓ — comer fuera también suma al proceso.'; }
+      }).catch(function() {
+        if (tip) { tip.style.color='#86efac'; tip.textContent = mealLabel + ' registrado ✓ (modo offline).'; }
+      });
+  } else {
+    if (tip) { tip.style.color='#86efac'; tip.textContent = mealLabel + ' registrado ✓ — comer fuera también suma al proceso.'; }
+  }
+
+  if (window.AF) window.AF.track('restaurant_meal_added', { restaurant: r.id, meal: mealKey });
+  setTimeout(function() {
+    if (tip) { tip.style.color=''; tip.textContent='Selecciona otra opción o tipo de restaurante.'; }
+  }, 4000);
+}
+
+// Hook sw() to load grid when fuera tab is opened
+(function() {
+  var _origSw2 = window.sw;
+  if (_origSw2) {
+    window.sw = function(id) {
+      _origSw2(id);
+      if (id === 'fuera') buildRestaurantGrid();
+    };
+  }
+})();
+
+</script>
+
+<div class="nav-ambient" aria-hidden="true"></div>
+<nav style="  position:fixed;
+  bottom:calc(12px + env(safe-area-inset-bottom));
+  left:50%;transform:translateX(-50%);
+  width:min(calc(100vw - 24px), 406px);
+  height:64px;
+  background:rgba(14,8,26,.96);
+  backdrop-filter:blur(32px) saturate(1.5);
+  -webkit-backdrop-filter:blur(32px) saturate(1.5);
+  border:1px solid rgba(196,181,253,.12);
+  border-radius:22px;
+  box-shadow:0 8px 32px rgba(0,0,0,.5),0 0 0 1px rgba(139,92,246,.08);
+  display:flex;align-items:center;justify-content:space-around;
+  z-index:200;padding:0 8px">
+  <a href="/pages/dashboard.html" style="
+    display:flex;flex-direction:column;align-items:center;gap:2px;
+    padding:8px 10px;text-decoration:none;
+    -webkit-tap-highlight-color:transparent;position:relative">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(240,238,248,.45)"
+      stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/>
+    </svg>
+    <span style="font-family:'Outfit',sans-serif;font-size:10px;
+      font-weight:500;color:rgba(240,238,248,.45)">Inicio</span>
+    
+  </a>
+  <a href="/pages/workout.html" style="
+    display:flex;flex-direction:column;align-items:center;gap:2px;
+    padding:8px 10px;text-decoration:none;
+    -webkit-tap-highlight-color:transparent;position:relative">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(240,238,248,.45)"
+      stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 5v14M18 5v14"/><path d="M2 9h4M18 9h4M2 15h4M18 15h4"/><path d="M6 12h12"/>
+    </svg>
+    <span style="font-family:'Outfit',sans-serif;font-size:10px;
+      font-weight:500;color:rgba(240,238,248,.45)">Entrena</span>
+    
+  </a>
+  <button onclick="openPhotoLog()" style="
+    background:none;border:none;cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;gap:2px;
+    padding:4px 8px;-webkit-tap-highlight-color:transparent">
+    <div style="
+      width:46px;height:46px;border-radius:16px;
+      background:linear-gradient(135deg,#8b5cf6,#ec4899);
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 0 20px rgba(139,92,246,.5),0 0 40px rgba(236,72,153,.2),
+                 0 0 0 8px rgba(139,92,246,.08);
+      margin-top:-16px;
+      animation:cam-breathe 3s ease-in-out infinite">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/>
+        <circle cx="12" cy="13" r="4"/>
+      </svg>
+    </div>
+    <span style="font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;
+      color:rgba(196,181,253,.8)">Registrar</span>
+  </button>
+  <a href="/pages/coach.html" style="
+    display:flex;flex-direction:column;align-items:center;gap:2px;
+    padding:8px 10px;text-decoration:none;
+    -webkit-tap-highlight-color:transparent;position:relative">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(240,238,248,.45)"
+      stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2a8 8 0 018 8c0 3-1.7 5.6-4.2 7L12 22l-3.8-5C5.7 15.6 4 13 4 10a8 8 0 018-8z"/><circle cx="12" cy="10" r="2" fill="currentColor" stroke="none"/>
+    </svg>
+    <span style="font-family:'Outfit',sans-serif;font-size:10px;
+      font-weight:500;color:rgba(240,238,248,.45)">Coach</span>
+    
+  </a>
+  <a href="/pages/nutrition.html" style="
+    display:flex;flex-direction:column;align-items:center;gap:2px;
+    padding:8px 10px;text-decoration:none;
+    -webkit-tap-highlight-color:transparent;position:relative">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7"
+      stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2C8 2 4 5.5 4 10c0 4 3 7 6 8v4h4v-4c3-1 6-4 6-8 0-4.5-4-8-8-8z"/><path d="M9 10c0-1.7 1.3-3 3-3"/>
+    </svg>
+    <span style="font-family:'Outfit',sans-serif;font-size:10px;
+      font-weight:700;color:#6ee7b7">Nutrición</span>
+    <div style="position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:#6ee7b7"></div>
+  </a>
+</nav>
+</body>
+</html>

@@ -1,0 +1,4 @@
+/* ArjunaFit — Shared Components */
+/* Las páginas nuevas tienen estilos inline. Este archivo es para compatibilidad. */
+.hidden { display: none !important; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }

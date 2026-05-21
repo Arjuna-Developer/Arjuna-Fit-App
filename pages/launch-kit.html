@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32-v2.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#6D28FF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ArjunaFit">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="af-version" content="mini-beta-day1-war-room-v1">
+<title>Lanzamiento Público · ArjunaFit</title>
+<link rel="stylesheet" href="/assets/visual-system.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Outfit',sans-serif;background:#08050f;color:#f1f0f4;padding:20px;max-width:700px;margin:0 auto}
+h1{font-size:22px;font-weight:800;margin-bottom:4px}
+.sub{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:24px}
+.card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:18px;margin-bottom:14px}
+h2{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(196,181,253,.5);margin-bottom:14px}
+.check-item{display:flex;align-items:flex-start;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px}
+.check-item:last-child{border:none}
+.check-item input[type=checkbox]{width:18px;height:18px;flex-shrink:0;cursor:pointer;margin-top:1px}
+.check-item label{flex:1;cursor:pointer;color:rgba(240,238,248,.75)}
+.check-item.done label{color:rgba(52,211,153,.6);text-decoration:line-through}
+.copy-box{background:rgba(124,58,237,.07);border:1px solid rgba(196,181,253,.12);border-radius:12px;padding:14px;font-size:13px;color:rgba(240,238,248,.8);line-height:1.8;white-space:pre-wrap;margin-bottom:10px}
+.btn{padding:8px 14px;border-radius:10px;border:none;cursor:pointer;background:rgba(124,58,237,.2);color:#c4b5fd;font-family:Outfit,sans-serif;font-size:12px;font-weight:700;margin-right:6px}
+.story-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.story{background:rgba(124,58,237,.07);border:1px solid rgba(196,181,253,.12);border-radius:12px;padding:14px;font-size:12px;color:rgba(240,238,248,.75);line-height:1.7}
+.story-num{font-size:10px;font-weight:700;color:rgba(196,181,253,.5);margin-bottom:8px}
+</style>
+</head>
+<body>
+<h1>ArjunaFit — Kit de Lanzamiento Público</h1>
+<p class="sub">Panel privado · No compartir con usuarios · v public-launch-v1</p>
+
+<!-- Pre-launch checklist -->
+<div class="card">
+  <h2>Checklist pre-lanzamiento</h2>
+  <div id="checklist">
+    <div class="check-item" id="ci0"><input type="checkbox" id="c0" onchange="saveChecks()"><label for="c0">Login funciona (crear cuenta + iniciar sesión)</label></div>
+    <div class="check-item" id="ci1"><input type="checkbox" id="c1" onchange="saveChecks()"><label for="c1">Selección de reto funciona (glúteos + pancita + planes)</label></div>
+    <div class="check-item" id="ci2"><input type="checkbox" id="c2" onchange="saveChecks()"><label for="c2">Trial se crea al elegir reto (7 días)</label></div>
+    <div class="check-item" id="ci3"><input type="checkbox" id="c3" onchange="saveChecks()"><label for="c3">Onboarding 6 pasos completo</label></div>
+    <div class="check-item" id="ci4"><input type="checkbox" id="c4" onchange="saveChecks()"><label for="c4">Home carga con día activo y reto correcto</label></div>
+    <div class="check-item" id="ci5"><input type="checkbox" id="c5" onchange="saveChecks()"><label for="c5">Registrar comida con foto funciona</label></div>
+    <div class="check-item" id="ci6"><input type="checkbox" id="c6" onchange="saveChecks()"><label for="c6">Registrar comida por texto funciona</label></div>
+    <div class="check-item" id="ci7"><input type="checkbox" id="c7" onchange="saveChecks()"><label for="c7">Nutrición suma correctamente</label></div>
+    <div class="check-item" id="ci8"><input type="checkbox" id="c8" onchange="saveChecks()"><label for="c8">Recetario carga y se puede agregar al día</label></div>
+    <div class="check-item" id="ci9"><input type="checkbox" id="c9" onchange="saveChecks()"><label for="c9">Entrenamiento abre y guarda series</label></div>
+    <div class="check-item" id="ci10"><input type="checkbox" id="c10" onchange="saveChecks()"><label for="c10">Progreso muestra heatmap y stats</label></div>
+    <div class="check-item" id="ci11"><input type="checkbox" id="c11" onchange="saveChecks()"><label for="c11">Cierre del día funciona entre 8–10pm</label></div>
+    <div class="check-item" id="ci12"><input type="checkbox" id="c12" onchange="saveChecks()"><label for="c12">Trial badge visible (Día X de 7 gratis)</label></div>
+    <div class="check-item" id="ci13"><input type="checkbox" id="c13" onchange="saveChecks()"><label for="c13">Paywall día 8 funciona y no rompe app</label></div>
+    <div class="check-item" id="ci14"><input type="checkbox" id="c14" onchange="saveChecks()"><label for="c14">Consola sin errores rojos críticos</label></div>
+    <div class="check-item" id="ci15"><input type="checkbox" id="c15" onchange="saveChecks()"><label for="c15">Mobile 390px sin overflow</label></div>
+    <div class="check-item" id="ci16"><input type="checkbox" id="c16" onchange="saveChecks()"><label for="c16">Landing sin precios viejos ni "8 semanas"</label></div>
+    <div class="check-item" id="ci17"><input type="checkbox" id="c17" onchange="saveChecks()"><label for="c17">WhatsApp de soporte activo y número configurado</label></div>
+  </div>
+  <div id="checkProgress" style="margin-top:14px;font-size:13px;color:rgba(255,255,255,.4)"></div>
+</div>
+
+<!-- Launch messages -->
+<div class="card">
+  <h2>Mensaje de lanzamiento — Principal</h2>
+  <div class="copy-box" id="launchMsg1">Ya abrimos ArjunaFit. 🎉
+
+Una app para organizar tu entrenamiento, nutrición, recetas y acompañamiento diario con Arju IA.
+
+Puedes empezar con 7 días gratis en uno de nuestros retos:
+
+🍑 Reto de glúteos
+🔥 Reto para bajar la pancita
+
+No tienes que hacerlo perfecto. Solo empezar y volver mañana.
+
+👉 arjunafit.app</div>
+  <button class="btn" onclick="copyText('launchMsg1')">📋 Copiar</button>
+</div>
+
+<div class="card">
+  <h2>Mensaje de lanzamiento — Emocional</h2>
+  <div class="copy-box" id="launchMsg2">Si has empezado muchas veces y has abandonado, no significa que no puedas.
+
+A veces solo falta saber qué entrenar, qué comer y cómo volver cuando un día no sale perfecto.
+
+Hoy abrimos ArjunaFit con 7 días gratis para empezar.
+
+Sin tarjeta. Sin compromiso.
+
+👉 arjunafit.app</div>
+  <button class="btn" onclick="copyText('launchMsg2')">📋 Copiar</button>
+</div>
+
+<!-- Instagram stories -->
+<div class="card">
+  <h2>Secuencia Instagram — Lanzamiento público</h2>
+  <div class="story-grid">
+    <div class="story"><div class="story-num">HISTORIA 1</div>Ya abrimos ArjunaFit. 🍑</div>
+    <div class="story"><div class="story-num">HISTORIA 2</div>Entreno + nutrición + recetas + Coach IA. Todo organizado.</div>
+    <div class="story"><div class="story-num">HISTORIA 3</div>Dos retos con 7 días gratis:<br>🍑 Glúteos<br>🔥 Pancita</div>
+    <div class="story"><div class="story-num">HISTORIA 4</div>Arju organiza tu día para que no lo tengas que pensar solo.</div>
+    <div class="story"><div class="story-num">HISTORIA 5</div>Sin tarjeta. Sin compromiso. Solo empieza.</div>
+    <div class="story"><div class="story-num">HISTORIA 6</div>Reto de glúteos — Técnica, forma y progresión desde el día 1.</div>
+    <div class="story"><div class="story-num">HISTORIA 7 — CTA</div>[Sticker "¿Quieres probarlo?" o link arjunafit.app]</div>
+  </div>
+</div>
+
+<!-- Links útiles -->
+<div class="card">
+  <h2>Links del lanzamiento</h2>
+  <table style="font-size:13px;width:100%;border-collapse:collapse">
+    <tr><td style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);width:160px;color:rgba(255,255,255,.4)">App</td><td style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)">https://arjunafit.app</td><td style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)"><button class="btn" onclick="navigator.clipboard.writeText('https://arjunafit.app')">Copiar</button></td></tr>
+    <tr><td style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);color:rgba(255,255,255,.4)">Landing</td><td style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)">https://arjunafit.com</td><td style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)"><button class="btn" onclick="navigator.clipboard.writeText('https://arjunafit.com')">Copiar</button></td></tr>
+    <tr><td style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);color:rgba(255,255,255,.4)">Glúteos</td><td style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)">https://arjunafit.app?reto=gluteos&ref=launch</td><td style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)"><button class="btn" onclick="navigator.clipboard.writeText('https://arjunafit.app?reto=gluteos&ref=launch')">Copiar</button></td></tr>
+    <tr><td style="padding:8px 0;color:rgba(255,255,255,.4)">Pancita</td><td style="padding:8px 0">https://arjunafit.app?reto=pancita&ref=launch</td><td style="padding:8px 0"><button class="btn" onclick="navigator.clipboard.writeText('https://arjunafit.app?reto=pancita&ref=launch')">Copiar</button></td></tr>
+  </table>
+</div>
+
+<script src="/js/core/auth-bootstrap.js"></script>
+<script src="/js/core/ops-config.js"></script>
+<script src="/js/core/analytics.js"></script>
+<script>
+function copyText(id) {
+  var text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).catch(function() {});
+  alert('Copiado.');
+}
+function saveChecks() {
+  var state = {};
+  for (var i = 0; i < 18; i++) {
+    var el = document.getElementById('c' + i);
+    if (el) {
+      state['c'+i] = el.checked;
+      document.getElementById('ci'+i).classList.toggle('done', el.checked);
+    }
+  }
+  localStorage.setItem('af-launch-checks', JSON.stringify(state));
+  var done = Object.values(state).filter(Boolean).length;
+  document.getElementById('checkProgress').textContent = done + ' / 18 ítems completados' + (done===18 ? ' — ✅ LISTO PARA LANZAR' : '');
+}
+(function() {
+  var saved = JSON.parse(localStorage.getItem('af-launch-checks') || '{}');
+  Object.entries(saved).forEach(function([k,v]) {
+    var el = document.getElementById(k);
+    if (el) { el.checked = v; document.getElementById('ci'+k.slice(1)).classList.toggle('done', v); }
+  });
+  saveChecks();
+  if(window.AF) AF.track('launch_kit_viewed');
+})();
+</script>
+</body>
+</html>

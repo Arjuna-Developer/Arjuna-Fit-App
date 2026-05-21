@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32-v2.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#6D28FF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ArjunaFit">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="af-version" content="mini-beta-day1-war-room-v1">
+<title>Ayuda · ArjunaFit</title>
+<link rel="stylesheet" href="/assets/visual-system.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0c0714;--bg-card:#130d22;--primary:#7c3aed;--pri-glow:rgba(124,58,237,.35);--pri-lite:#c4b5fd;--accent:#ec4899;--text-1:#f1f0f4;--text-2:rgba(240,238,248,.7);--text-3:rgba(240,238,248,.45);--r:16px;--ease:cubic-bezier(0.34,1.12,0.64,1)}
+html,body{background:var(--bg);color:var(--text-1);font-family:'Outfit',sans-serif;min-height:100dvh;overflow-x:hidden}
+.page{max-width:430px;margin:0 auto;padding:0 0 80px}
+
+/* Header */
+.help-hero{padding:24px 20px 20px;border-bottom:1px solid rgba(255,255,255,.06)}
+.back-btn{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-3);text-decoration:none;margin-bottom:16px;background:none;border:none;cursor:pointer;font-family:'Outfit',sans-serif}
+h1{font-size:22px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
+.help-sub{font-size:14px;color:var(--text-3);line-height:1.6}
+
+/* Category tabs */
+.cat-scroll{display:flex;gap:8px;padding:16px 20px 4px;overflow-x:auto;scrollbar-width:none}
+.cat-scroll::-webkit-scrollbar{display:none}
+.cat-chip{padding:8px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:var(--text-3);font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .18s}
+.cat-chip.active{background:rgba(124,58,237,.15);border-color:rgba(196,181,253,.35);color:var(--pri-lite)}
+
+/* FAQ items */
+.faq-section{padding:0 20px;margin-top:16px}
+.faq-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:12px}
+.faq-item{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:13px;margin-bottom:8px;overflow:hidden}
+.faq-q{width:100%;padding:14px 16px;background:none;border:none;color:var(--text-1);font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.faq-q .fq-arrow{font-size:16px;color:rgba(255,255,255,.25);flex-shrink:0;transition:transform .2s}
+.faq-item.open .fq-arrow{transform:rotate(90deg);color:var(--pri-lite)}
+.faq-a{display:none;padding:0 16px 14px;font-size:13px;color:var(--text-3);line-height:1.75}
+.faq-item.open .faq-a{display:block}
+.faq-a a{color:var(--pri-lite);text-decoration:none}
+
+/* Support form */
+.support-section{margin:20px;background:rgba(124,58,237,.06);border:1px solid rgba(196,181,253,.15);border-radius:var(--r);padding:20px}
+.support-section h3{font-size:16px;font-weight:700;margin-bottom:6px}
+.support-section p{font-size:13px;color:var(--text-3);line-height:1.6;margin-bottom:18px}
+.field-label{font-size:12px;font-weight:600;color:var(--text-3);display:block;margin-bottom:6px;margin-top:12px}
+select,textarea{width:100%;padding:11px 14px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:11px;color:var(--text-1);font-family:'Outfit',sans-serif;font-size:13px;outline:none;transition:border .2s;-webkit-appearance:none}
+select option{background:#130d22}
+select:focus,textarea:focus{border-color:var(--primary)}
+textarea{min-height:100px;resize:vertical}
+.btn-submit{width:100%;padding:14px;border-radius:var(--r);border:none;cursor:pointer;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;font-family:'Outfit',sans-serif;font-size:14px;font-weight:800;box-shadow:0 6px 24px var(--pri-glow);margin-top:16px;transition:opacity .2s}
+.btn-submit:disabled{opacity:.4;cursor:not-allowed}
+.form-msg{font-size:12px;padding:10px 13px;border-radius:10px;margin-top:10px;display:none}
+.form-msg.ok{background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.2);color:rgba(110,231,183,.9)}
+.form-msg.err{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:rgba(252,165,165,.9)}
+
+/* Contact links */
+.contact-section{margin:0 20px 16px;display:flex;flex-direction:column;gap:8px}
+.contact-link{display:flex;align-items:center;gap:12px;padding:13px 16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:13px;text-decoration:none;color:var(--text-1);font-size:13px;font-weight:600;transition:border-color .2s}
+.contact-link .cl-icon{font-size:20px}
+.contact-link small{font-size:11px;color:var(--text-3);font-weight:400;display:block}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="help-hero">
+    <a href="javascript:history.back()" class="back-btn">← Volver</a>
+    <h1>¿Cómo podemos ayudarte?</h1>
+    <p class="help-sub">Encuentra respuestas rápidas o cuéntanos lo que pasó.</p>
+  </div>
+
+  <!-- Category filter -->
+  <div class="cat-scroll">
+    <button class="cat-chip active" onclick="filterCat('all')">Todo</button>
+    <button class="cat-chip" onclick="filterCat('acceso')">Acceso</button>
+    <button class="cat-chip" onclick="filterCat('trial')">Prueba gratis</button>
+    <button class="cat-chip" onclick="filterCat('pagos')">Pagos</button>
+    <button class="cat-chip" onclick="filterCat('retos')">Retos</button>
+    <button class="cat-chip" onclick="filterCat('personalizados')">Personalizados</button>
+    <button class="cat-chip" onclick="filterCat('nutricion')">Nutrición</button>
+    <button class="cat-chip" onclick="filterCat('entreno')">Entrenamiento</button>
+    <button class="cat-chip" onclick="filterCat('comunidad')">Comunidad</button>
+  </div>
+
+  <!-- FAQ sections -->
+  <div id="faqContainer" class="faq-section"></div>
+
+  <!-- Support form -->
+  <div class="support-section" id="supportForm">
+    <h3>¿No encontraste lo que buscas?</h3>
+    <p>Cuéntanos qué pasó y lo revisamos.</p>
+    <label class="field-label">¿Qué tipo de problema tienes?</label>
+    <select id="sfCat">
+      <option value="">Selecciona una categoría</option>
+      <option value="no_puedo_entrar">No puedo entrar</option>
+      <option value="no_puedo_registrarme">No puedo registrarme</option>
+      <option value="problema_pago">Tengo problema con pago</option>
+      <option value="pague_sin_acceso">Pagué y no tengo acceso</option>
+      <option value="no_entiendo_reto">No entiendo mi reto</option>
+      <option value="problema_nutricion">Problema con nutrición</option>
+      <option value="problema_entreno">Problema con entrenamiento</option>
+      <option value="coach_raro">Coach respondió raro</option>
+      <option value="comunidad">Comunidad</option>
+      <option value="otro">Otro</option>
+    </select>
+    <label class="field-label">Cuéntanos qué pasó</label>
+    <textarea id="sfMsg" placeholder="Describe el problema con detalle. Mientras más info, más rápido lo resolvemos."></textarea>
+    <label class="field-label">Tu correo (para responderte)</label>
+    <input id="sfEmail" type="email" placeholder="tucorreo@gmail.com" style="width:100%;padding:11px 14px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:11px;color:#f1f0f4;font-family:Outfit,sans-serif;font-size:13px;outline:none;margin-bottom:4px">
+    <button class="btn-submit" id="sfBtn" onclick="submitTicket()">Enviar solicitud</button>
+    <div class="form-msg" id="sfFormMsg"></div>
+  </div>
+
+  <!-- Contact -->
+  <div style="padding:0 20px;margin-bottom:12px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.25)">Contacto directo</div>
+  <div class="contact-section">
+    <a id="waLink" href="#" class="contact-link" onclick="trackWa()">
+      <div class="cl-icon">💬</div>
+      <div><div>Hablar con Arjuna</div><small>WhatsApp — respuesta rápida</small></div>
+    </a>
+    <a href="/pages/payment-status.html" class="contact-link">
+      <div class="cl-icon">💳</div>
+      <div><div>Estado de mi pago</div><small>Verifica si tu pago está aprobado</small></div>
+    </a>
+    <a href="/reset-password.html" class="contact-link">
+      <div class="cl-icon">🔑</div>
+      <div><div>Recuperar contraseña</div><small>Recibe un enlace por correo</small></div>
+    </a>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/js/core/auth-bootstrap.js"></script>
+<script src="/js/core/ops-config.js"></script>
+<script src="/js/core/analytics.js"></script>
+<script>
+'use strict';
+
+var WA_NUMBER = window.AF_Support ? AF_Support.whatsappNumber : '573209497919';
+
+// ── FAQ data ─────────────────────────────────────────────────────
+var FAQ = [
+  { cat:'acceso', q:'¿Cómo creo mi cuenta?', a:'Desde la landing o directo en <a href="/signup">/signup</a>. Elige tu reto o plan y llena nombre, correo y contraseña.' },
+  { cat:'acceso', q:'¿Qué hago si olvidé mi contraseña?', a:'Toca <a href="/reset-password.html">"Olvidé mi contraseña"</a> en el login. Te enviamos un enlace por correo.' },
+  { cat:'acceso', q:'¿Por qué no puedo entrar?', a:'Verifica tu correo y contraseña. Si el correo no tiene cuenta, ve a <a href="/signup">crear cuenta</a>. Si el problema persiste, usa el formulario de abajo.' },
+  { cat:'trial', q:'¿Qué incluye la prueba de 7 días?', a:'Acceso completo al reto elegido: entrenamiento, nutrición, recetas, Coach Arju y progreso inicial. Sin pagar ni poner tarjeta.' },
+  { cat:'trial', q:'¿Qué pasa después de los 7 días?', a:'Puedes desbloquear el reto completo por $32 USD y seguir desde donde vas. Tu progreso siempre se guarda.' },
+  { cat:'trial', q:'¿Los 7 días son gratis de verdad?', a:'Sí. Sin tarjeta de crédito, sin cobro automático. Solo creas cuenta y eliges tu reto.' },
+  { cat:'pagos', q:'Pagué, pero no veo mi acceso. ¿Qué hago?', a:'Primero revisa <a href="/pages/payment-status.html">Estado de pago</a>. Si dice aprobado pero no tienes acceso, usa el formulario de abajo o habla con Arjuna — lo revisamos con prioridad.' },
+  { cat:'pagos', q:'¿Cuánto tarda en llegar el acceso después de pagar?', a:'Suele ser inmediato. Máximo unos minutos. Si después de 10 minutos no ves acceso, repórtalo.' },
+  { cat:'pagos', q:'¿Qué hago si mi pago falló?', a:'Intenta de nuevo con otro método. Si el problema persiste, habla con Arjuna.' },
+  { cat:'retos', q:'¿Cuál es la diferencia entre los dos retos?', a:'Reto de glúteos — enfocado en técnica, fuerza y conexión músculo-mente en glúteos. Reto para bajar la pancita — foco en hábitos, core, nutrición y reducción de grasa sin castigo. Ambos duran 37 días y cuestan $32 USD.' },
+  { cat:'retos', q:'¿Cuánto duran los retos?', a:'37 días. Los primeros 7 son gratis.' },
+  { cat:'retos', q:'¿Puedo continuar desde donde quedé?', a:'Sí. Tu progreso se guarda siempre, incluso si pausas o pagas tarde.' },
+  { cat:'personalizados', q:'¿Los planes personalizados tienen prueba gratis?', a:'No. Son planes premium ($72 USD/mes) y requieren pago para iniciar. No hay periodo de prueba.' },
+  { cat:'personalizados', q:'¿Por qué cuestan $72 USD/mes?', a:'Son planes con enfoque más específico según tu objetivo, nivel y disponibilidad. Incluyen seguimiento de progreso y acceso a la comunidad gratuita.' },
+  { cat:'personalizados', q:'¿Qué pasa después de pagar el plan personalizado?', a:'Se activa tu acceso, completas un intake personalizado y entras a tu Home con el plan activo.' },
+  { cat:'nutricion', q:'¿La foto de comida es exacta?', a:'Es una estimación útil y editable. Puedes ajustar cantidades antes de guardar. Úsala como guía, no como dato exacto.' },
+  { cat:'nutricion', q:'¿Qué hago si no sé qué comí exactamente?', a:'Escribe la comida manualmente con la función de texto. Pon el nombre aproximado y ajusta las cantidades.' },
+  { cat:'nutricion', q:'¿Puedo editar cantidades?', a:'Sí. Después de que la foto o texto analice la comida, puedes editar el nombre y cantidades antes de guardar.' },
+  { cat:'entreno', q:'¿Qué hago si un ejercicio me molesta o duele?', a:'No fuerces. Baja intensidad, cambia el ejercicio o descansa. Si el dolor es fuerte o persiste, consulta a un profesional de salud.' },
+  { cat:'entreno', q:'¿Puedo entrenar en casa?', a:'Sí. En el onboarding puedes indicar dónde entrenas y el plan se adapta. También puedes cambiar de lugar en tu perfil.' },
+  { cat:'entreno', q:'¿Qué hago si no puedo entrenar hoy?', a:'No pasa nada. Un descanso también forma parte del proceso. Regresa mañana — volver también cuenta.' },
+  { cat:'comunidad', q:'¿Cómo entro a la comunidad gratuita?', a:'La comunidad se activa automáticamente cuando tu pago es aprobado. Ve a la pestaña Comunidad en la app.' },
+  { cat:'comunidad', q:'¿La comunidad está incluida con el reto/plan?', a:'Sí. Con cualquier reto pagado o plan personalizado activo, tienes acceso a la comunidad gratuita de ArjunaFit.' },
+  { cat:'comunidad', q:'¿Qué hay en la comunidad?', a:'Recursos, guías, recordatorios y próximamente un espacio de chat para compartir avances y resolver dudas.' },
+];
+
+// ── Render FAQ ────────────────────────────────────────────────────
+var currentCat = 'all';
+
+function filterCat(cat) {
+  currentCat = cat;
+  document.querySelectorAll('.cat-chip').forEach(function(c) { c.classList.remove('active'); });
+  event.target.classList.add('active');
+  renderFaq();
+  if (window.AF) AF.track('help_category_clicked', { category: cat });
+}
+
+function renderFaq() {
+  var filtered = currentCat === 'all' ? FAQ : FAQ.filter(function(f) { return f.cat === currentCat; });
+  var grouped = {};
+  filtered.forEach(function(f) {
+    if (!grouped[f.cat]) grouped[f.cat] = [];
+    grouped[f.cat].push(f);
+  });
+  var cats = {
+    acceso:'Acceso y cuenta', trial:'Prueba gratis', pagos:'Pagos y activación',
+    retos:'Retos', personalizados:'Planes personalizados', nutricion:'Nutrición',
+    entreno:'Entrenamiento', comunidad:'Comunidad',
+  };
+  var html = '';
+  Object.keys(grouped).forEach(function(cat) {
+    html += '<div class="faq-label" style="margin-top:16px">' + (cats[cat] || cat) + '</div>';
+    grouped[cat].forEach(function(f, i) {
+      var id = 'faq-' + cat + i;
+      html += '<div class="faq-item" id="' + id + '">' +
+        '<button class="faq-q" onclick="toggleFaq(\'' + id + '\')">' +
+          '<span>' + f.q + '</span><span class="fq-arrow">›</span>' +
+        '</button>' +
+        '<div class="faq-a">' + f.a + '</div>' +
+      '</div>';
+    });
+  });
+  document.getElementById('faqContainer').innerHTML = html || '<p style="font-size:13px;color:rgba(255,255,255,.3);padding:20px 0">Sin resultados en esta categoría.</p>';
+}
+
+function toggleFaq(id) {
+  var item = document.getElementById(id);
+  var wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(i) { i.classList.remove('open'); });
+  if (!wasOpen) item.classList.add('open');
+}
+
+// ── Support ticket submission ─────────────────────────────────────
+async function submitTicket() {
+  var cat   = document.getElementById('sfCat').value;
+  var msg   = document.getElementById('sfMsg').value.trim();
+  var email = document.getElementById('sfEmail').value.trim();
+  var formMsg = document.getElementById('sfFormMsg');
+
+  if (!cat) { showFormMsg('Elige una categoría.', 'err'); return; }
+  if (!msg)  { showFormMsg('Cuéntanos qué pasó.', 'err'); return; }
+
+  var btn = document.getElementById('sfBtn');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  // Priority mapping
+  var priority = { no_puedo_entrar:'urgent', no_puedo_registrarme:'high', problema_pago:'high', pague_sin_acceso:'urgent', no_entiendo_reto:'medium', problema_nutricion:'medium', problema_entreno:'medium', coach_raro:'low', comunidad:'medium', otro:'low' };
+
+  try {
+    var sb = window.supabase ? window.supabase.createClient(
+      'https://egswsqymkxmbtcpnozcq.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM'
+    ) : null;
+
+    var userId = null;
+    if (sb) {
+      try { var { data: { session } } = await sb.auth.getSession(); userId = session?.user?.id || null; } catch(e) {}
+    }
+
+    var ticket = {
+      category:            cat,
+      message:             msg,
+      email:               email || localStorage.getItem('af-user-email') || '',
+      user_id:             userId,
+      route:               window.location.pathname + window.location.search,
+      product_type:        localStorage.getItem('af-product-type') || '',
+      subscription_status: localStorage.getItem('af-subscription-status') || '',
+      access_level:        localStorage.getItem('af-paid') === '1' ? 'full' : 'trial',
+      priority:            priority[cat] || 'medium',
+      status:              'open',
+      created_at:          new Date().toISOString(),
+      updated_at:          new Date().toISOString(),
+    };
+
+    if (sb) {
+      var { error } = await sb.from('support_tickets').insert(ticket);
+      if (error) throw error;
+    }
+
+    if (window.AF) AF.track('support_ticket_created', { category: cat, priority: ticket.priority });
+    showFormMsg('✅ Recibimos tu mensaje. Arjuna lo revisará pronto.', 'ok');
+    document.getElementById('sfCat').value = '';
+    document.getElementById('sfMsg').value = '';
+  } catch(e) {
+    if (window.AF) AF.track('support_ticket_failed', { category: cat, error: e.message });
+    showFormMsg('No pudimos enviar tu solicitud. Habla directamente con Arjuna por WhatsApp.', 'err');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Enviar solicitud';
+  }
+}
+
+function showFormMsg(text, type) {
+  var el = document.getElementById('sfFormMsg');
+  el.textContent = text; el.className = 'form-msg ' + type; el.style.display = 'block';
+}
+
+// ── WhatsApp link ─────────────────────────────────────────────────
+function trackWa() {
+  if (window.AF) AF.track('support_contact_clicked', { method: 'whatsapp' });
+}
+// Support: use email if no WhatsApp configured
+var waEl = document.getElementById('waLink');
+if (WA_NUMBER && WA_NUMBER !== '573209497919') {
+  waEl.href = (window.AF_Support ? AF_Support.whatsappUrl : 'https://wa.link/hteek6') + '?text=' + encodeURIComponent('Hola Arjuna, necesito ayuda con ArjunaFit.');
+} else {
+  waEl.href = 'mailto:arjuna.desarrollador@gmail.com?subject=Ayuda+ArjunaFit';
+  waEl.querySelector('small').textContent = 'Correo — respuesta en 24h';
+} + '?text=' + encodeURIComponent('Hola Arjuna, necesito ayuda con ArjunaFit.');
+
+// ── Pre-fill from URL param ─────────────────────────────────────
+var params = new URLSearchParams(window.location.search);
+var precat = params.get('cat');
+if (precat && document.getElementById('sfCat')) {
+  document.getElementById('sfCat').value = precat;
+  document.getElementById('supportForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Pre-fill email from localStorage ─────────────────────────────
+var storedEmail = localStorage.getItem('af-user-email') || '';
+if (storedEmail) document.getElementById('sfEmail').value = storedEmail;
+
+// ── Init ─────────────────────────────────────────────────────────
+renderFaq();
+if (window.AF) AF.track('help_opened', {
+  product: localStorage.getItem('af-product-type') || '',
+  source: document.referrer,
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32-v2.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#6D28FF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ArjunaFit">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="af-version" content="mini-beta-day1-war-room-v1">
+<title>Preventa · ArjunaFit</title>
+<link rel="stylesheet" href="/assets/visual-system.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Outfit',sans-serif;background:#08050f;color:#f1f0f4;padding:20px;max-width:700px;margin:0 auto}
+h1{font-size:20px;font-weight:800;margin-bottom:4px}
+.sub{font-size:12px;color:rgba(255,255,255,.35);margin-bottom:24px}
+.card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:18px;margin-bottom:14px}
+h2{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(196,181,253,.5);margin-bottom:14px}
+.metric{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px}
+.metric:last-child{border:none}
+.num{font-size:22px;font-weight:800;color:#f1f0f4}
+.badge{padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700}
+.b-ok{background:rgba(52,211,153,.12);color:#6ee7b7}
+.b-warn{background:rgba(245,158,11,.1);color:rgba(253,186,116,.8)}
+.b-err{background:rgba(239,68,68,.1);color:rgba(252,165,165,.8)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:6px 10px;color:rgba(255,255,255,.3);font-weight:600;border-bottom:1px solid rgba(255,255,255,.06)}
+td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.04);color:rgba(240,238,248,.7);vertical-align:top}
+.btn{padding:8px 14px;border-radius:10px;border:none;cursor:pointer;background:rgba(124,58,237,.2);color:#c4b5fd;font-family:Outfit,sans-serif;font-size:12px;font-weight:700;margin-right:6px}
+input,textarea{padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#f1f0f4;font-family:Outfit,sans-serif;font-size:13px;width:100%;outline:none;margin-bottom:8px}
+.copy-box{background:rgba(124,58,237,.07);border:1px solid rgba(196,181,253,.15);border-radius:12px;padding:14px;font-size:13px;color:rgba(240,238,248,.8);line-height:1.8;white-space:pre-wrap;margin-bottom:10px}
+.funnel-bar{height:8px;border-radius:4px;background:rgba(255,255,255,.06);margin-top:6px;overflow:hidden}
+.funnel-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,#7c3aed,#ec4899);transition:width .4s}
+</style>
+</head>
+<body>
+<h1>ArjunaFit — Control Preventa</h1>
+<p class="sub">Panel privado para gestionar la preventa controlada. No compartir.</p>
+
+<!-- Funnel overview -->
+<div class="card">
+  <h2>Funnel de preventa</h2>
+  <div id="funnelMetrics">Cargando...</div>
+</div>
+
+<!-- Invite tracker -->
+<div class="card">
+  <h2>Personas invitadas — Registrar manualmente</h2>
+  <table>
+    <tr><th>Nombre</th><th>Reto</th><th>Estado</th><th>Nota</th></tr>
+    <tbody id="inviteTable"></tbody>
+  </table>
+  <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+    <input id="invName" placeholder="Nombre" style="flex:1;margin:0">
+    <select id="invReto" style="padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#f1f0f4;font-family:Outfit,sans-serif;font-size:13px;flex:1">
+      <option value="gluteos">Reto glúteos</option>
+      <option value="pancita">Reto pancita</option>
+      <option value="masa">Masa muscular</option>
+      <option value="definicion">Reducción grasa</option>
+    </select>
+    <select id="invStatus" style="padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#f1f0f4;font-family:Outfit,sans-serif;font-size:13px;flex:1">
+      <option value="invited">Invitada</option>
+      <option value="entered">Entró a la app</option>
+      <option value="onboarding">Completó onboarding</option>
+      <option value="active">Activa</option>
+      <option value="day2">Volvió día 2</option>
+      <option value="interested_pay">Interesada en pagar</option>
+      <option value="paid">Pagó</option>
+      <option value="dropped">Abandonó</option>
+    </select>
+    <input id="invNote" placeholder="Nota (objeción, feedback)" style="flex:2;margin:0">
+    <button class="btn" onclick="addInvite()">+ Agregar</button>
+  </div>
+</div>
+
+<!-- Invite links -->
+<div class="card">
+  <h2>Links de invitación rastreados</h2>
+  <table>
+    <tr><th>Reto</th><th>Link</th><th>Acciones</th></tr>
+    <tr><td>Glúteos</td><td><code style="font-size:11px">https://arjunafit.app?reto=gluteos&ref=presale</code></td><td><button class="btn" onclick="copyLink('gluteos')">Copiar</button></td></tr>
+    <tr><td>Pancita</td><td><code style="font-size:11px">https://arjunafit.app?reto=pancita&ref=presale</code></td><td><button class="btn" onclick="copyLink('pancita')">Copiar</button></td></tr>
+    <tr><td>General</td><td><code style="font-size:11px">https://arjunafit.app?ref=presale</code></td><td><button class="btn" onclick="copyLink('')">Copiar</button></td></tr>
+  </table>
+</div>
+
+<!-- Message templates -->
+<div class="card">
+  <h2>Mensajes de WhatsApp listos</h2>
+  <div style="font-size:11px;color:rgba(255,255,255,.3);margin-bottom:10px">Para personas cálidas / antiguas clientas</div>
+  <div class="copy-box" id="msg1">Hola [nombre] 👋
+
+Estoy abriendo un grupo pequeño para probar ArjunaFit antes del lanzamiento.
+
+Es una app que te organiza el entrenamiento, la nutrición y el acompañamiento diario para que no lo tengas que hacer sola.
+
+Dos retos con 7 días gratis:
+🍑 Reto de glúteos
+🔥 Reto para bajar la pancita
+
+¿Te animas a probarlo? Te mando el acceso hoy.</div>
+  <button class="btn" onclick="copyText('msg1')">📋 Copiar</button>
+
+  <div style="font-size:11px;color:rgba(255,255,255,.3);margin:16px 0 10px">Para personas que han abandonado antes</div>
+  <div class="copy-box" id="msg2">Sé que muchas veces no se abandona porque no se quiera cambiar, sino porque no se sabe qué entrenar, qué comer ni cómo sostenerlo.
+
+Estoy probando ArjunaFit con un grupo pequeño. La app te organiza el día: entreno, nutrición, recetas y Coach IA.
+
+Puedes probar un reto 7 días gratis, sin tarjeta.
+
+¿Quieres que te mande el acceso?</div>
+  <button class="btn" onclick="copyText('msg2')">📋 Copiar</button>
+</div>
+
+<!-- Objections log -->
+<div class="card">
+  <h2>Objeciones encontradas — Registrar</h2>
+  <div id="objectionsList" style="margin-bottom:12px"></div>
+  <div style="display:flex;gap:8px">
+    <input id="objInput" placeholder="Escribe la objeción que escuchaste..." style="flex:1;margin:0">
+    <button class="btn" onclick="addObjection()">+ Guardar</button>
+  </div>
+</div>
+
+<script src="/js/core/auth-bootstrap.js"></script>
+<script src="/js/core/ops-config.js"></script>
+<script src="/js/core/analytics.js"></script>
+<script>
+// ── Invite tracker ────────────────────────────────────
+var _invites = JSON.parse(localStorage.getItem('af-presale-invites') || '[]');
+var STATUS_LABELS = {invited:'Invitada',entered:'Entró',onboarding:'Onboarding ✓',active:'Activa',day2:'Día 2 ✓',interested_pay:'Quiere pagar',paid:'Pagó ✅',dropped:'Abandonó'};
+var STATUS_CLASS = {invited:'b-warn',entered:'b-warn',onboarding:'b-warn',active:'b-ok',day2:'b-ok',interested_pay:'b-ok',paid:'b-ok',dropped:'b-err'};
+
+function renderInvites() {
+  var tbody = document.getElementById('inviteTable');
+  if (!_invites.length) { tbody.innerHTML = '<tr><td colspan="4" style="color:rgba(255,255,255,.25);text-align:center">Aún sin personas registradas.</td></tr>'; return; }
+  tbody.innerHTML = _invites.map(function(inv, i) {
+    return '<tr><td>' + inv.name + '</td><td>' + inv.reto + '</td>' +
+      '<td><select onchange="updateStatus(' + i + ',this.value)" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:4px;color:#f1f0f4;font-family:Outfit,sans-serif;font-size:11px">' +
+        Object.entries(STATUS_LABELS).map(function([v,l]) { return '<option value="' + v + '"' + (inv.status===v?' selected':'') + '>' + l + '</option>'; }).join('') +
+      '</select></td>' +
+      '<td style="font-size:11px;color:rgba(255,255,255,.4)">' + (inv.note||'—') + '</td></tr>';
+  }).join('');
+}
+
+function addInvite() {
+  var name = document.getElementById('invName').value.trim();
+  if (!name) { alert('Escribe un nombre.'); return; }
+  _invites.push({name, reto: document.getElementById('invReto').value, status: document.getElementById('invStatus').value, note: document.getElementById('invNote').value.trim(), ts: Date.now()});
+  localStorage.setItem('af-presale-invites', JSON.stringify(_invites));
+  document.getElementById('invName').value = '';
+  document.getElementById('invNote').value = '';
+  renderInvites();
+  updateFunnel();
+}
+
+function updateStatus(i, status) {
+  _invites[i].status = status;
+  localStorage.setItem('af-presale-invites', JSON.stringify(_invites));
+  updateFunnel();
+}
+
+function updateFunnel() {
+  var total = _invites.length;
+  var metrics = [
+    ['Personas invitadas', total, total],
+    ['Entraron a la app', _invites.filter(function(i){return ['entered','onboarding','active','day2','interested_pay','paid'].includes(i.status)}).length, total],
+    ['Completaron onboarding', _invites.filter(function(i){return ['onboarding','active','day2','interested_pay','paid'].includes(i.status)}).length, total],
+    ['Activas (día 2+)', _invites.filter(function(i){return ['active','day2','interested_pay','paid'].includes(i.status)}).length, total],
+    ['Intención de pago', _invites.filter(function(i){return ['interested_pay','paid'].includes(i.status)}).length, total],
+    ['Pagaron', _invites.filter(function(i){return i.status==='paid'}).length, total],
+  ];
+  var funnelEl = document.getElementById('funnelMetrics');
+  funnelEl.innerHTML = metrics.map(function([label, count, base]) {
+    var pct = base > 0 ? Math.round(count / base * 100) : 0;
+    return '<div class="metric"><div><div style="font-weight:600">' + label + '</div>' +
+      '<div class="funnel-bar"><div class="funnel-fill" style="width:' + pct + '%"></div></div></div>' +
+      '<div style="text-align:right"><div class="num">' + count + '</div>' +
+      '<div style="font-size:11px;color:rgba(255,255,255,.3)">' + pct + '%</div></div></div>';
+  }).join('');
+}
+
+// ── Objections ────────────────────────────────────────
+var _objs = JSON.parse(localStorage.getItem('af-presale-objections') || '[]');
+function renderObjections() {
+  var el = document.getElementById('objectionsList');
+  el.innerHTML = _objs.length
+    ? _objs.map(function(o) { return '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px;color:rgba(240,238,248,.65)">' + o + '</div>'; }).join('')
+    : '<div style="font-size:12px;color:rgba(255,255,255,.25)">Sin objeciones registradas.</div>';
+}
+function addObjection() {
+  var val = document.getElementById('objInput').value.trim();
+  if (!val) return;
+  _objs.push(val);
+  localStorage.setItem('af-presale-objections', JSON.stringify(_objs));
+  document.getElementById('objInput').value = '';
+  renderObjections();
+}
+
+// ── Helpers ───────────────────────────────────────────
+function copyLink(reto) {
+  var base = 'https://arjunafit.app?ref=presale';
+  var url = reto ? base + '&reto=' + reto : base;
+  navigator.clipboard.writeText(url).catch(function() {});
+  alert('Link copiado: ' + url);
+}
+function copyText(id) {
+  var text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).catch(function() {});
+  alert('Mensaje copiado al portapapeles.');
+}
+
+// ── Init ──────────────────────────────────────────────
+// Load metrics
+function saveM(){var d={};[1,2,3,4,5,6,7,8].forEach(function(i){d['m'+i]=document.getElementById('m'+i).value});localStorage.setItem('af-sl-metrics',JSON.stringify(d));}
+(function(){var d=JSON.parse(localStorage.getItem('af-sl-metrics')||'{}');Object.keys(d).forEach(function(k){var el=document.getElementById(k);if(el)el.value=d[k];});})();
+
+renderInvites();
+renderObjections();
+updateFunnel();
+if(window.AF) AF.track('presale_admin_viewed');
+</script>
+
+<!-- Instagram stories copy -->
+<div class="card">
+  <h2>Secuencia de historias Instagram</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px">
+    <div style="background:rgba(124,58,237,.07);border:1px solid rgba(196,181,253,.12);border-radius:12px;padding:14px;font-size:12px;color:rgba(240,238,248,.75);line-height:1.7">
+      <div style="font-size:10px;font-weight:700;color:rgba(196,181,253,.5);margin-bottom:8px">HISTORIA 1</div>
+      Estoy abriendo ArjunaFit para un grupo pequeño. 🍑
+    </div>
+    <div style="background:rgba(124,58,237,.07);border:1px solid rgba(196,181,253,.12);border-radius:12px;padding:14px;font-size:12px;color:rgba(240,238,248,.75);line-height:1.7">
+      <div style="font-size:10px;font-weight:700;color:rgba(196,181,253,.5);margin-bottom:8px">HISTORIA 2</div>
+      Dos retos disponibles:<br>🍑 Reto de glúteos<br>🔥 Bajar la pancita
+    </div>
+    <div style="background:rgba(124,58,237,.07);border:1px solid rgba(196,181,253,.12);border-radius:12px;padding:14px;font-size:12px;color:rgba(240,238,248,.75);line-height:1.7">
+      <div style="font-size:10px;font-weight:700;color:rgba(196,181,253,.5);margin-bottom:8px">HISTORIA 3</div>
+      7 días gratis para probar la app. Sin tarjeta. Sin compromiso.
+    </div>
+    <div style="background:rgba(124,58,237,.07);border:1px solid rgba(196,181,253,.12);border-radius:12px;padding:14px;font-size:12px;color:rgba(240,238,248,.75);line-height:1.7">
+      <div style="font-size:10px;font-weight:700;color:rgba(196,181,253,.5);margin-bottom:8px">HISTORIA 4</div>
+      Entreno + nutrición + recetas + Coach IA. Todo organizado para que no lo hagas sola.
+    </div>
+    <div style="background:rgba(124,58,237,.07);border:1px solid rgba(196,181,253,.12);border-radius:12px;padding:14px;font-size:12px;color:rgba(240,238,248,.75);line-height:1.7">
+      <div style="font-size:10px;font-weight:700;color:rgba(196,181,253,.5);margin-bottom:8px">HISTORIA 5 — CTA</div>
+      ¿Quieres acceso? [sticker de pregunta o "Escríbeme"]
+    </div>
+  </div>
+</div>
+
+<!-- Message templates 2 & 3 -->
+<div class="card">
+  <h2>Mensaje — Emocional (personas que han abandonado)</h2>
+  <div class="copy-box" id="msg3">Si has empezado muchas veces y has abandonado, no significa que no puedas.
+
+A veces solo falta saber qué entrenar, qué comer y cómo volver cuando un día no sale perfecto.
+
+Estoy abriendo ArjunaFit para un grupo pequeño con 7 días gratis.
+
+¿Quieres probarlo?</div>
+  <button class="btn" onclick="copyText('msg3')">📋 Copiar</button>
+</div>
+
+<div class="card">
+  <h2>Mensaje — Nutrición (no saben qué comer)</h2>
+  <div class="copy-box" id="msg4">Estoy probando una app que no solo te da entreno, también te ayuda con la comida: qué registrar, qué comer y qué cocinar.
+
+Puedes entrar 7 días gratis a un reto. Sin tarjeta.
+
+¿Te mando el acceso?</div>
+  <button class="btn" onclick="copyText('msg4')">📋 Copiar</button>
+</div>
+
+<!-- Support FAQ quick-replies -->
+<div class="card">
+  <h2>Respuestas rápidas de soporte</h2>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <div style="background:rgba(255,255,255,.03);border-radius:12px;padding:12px">
+      <div style="font-size:11px;font-weight:700;color:rgba(196,181,253,.5);margin-bottom:5px">¿Qué incluye la prueba?</div>
+      <div class="copy-box" id="faq1" style="margin:0;font-size:12px">Durante 7 días puedes probar un reto desde la app: entrenamiento, nutrición, recetas y acompañamiento de Arju. Sin tarjeta de crédito.</div>
+      <button class="btn" onclick="copyText('faq1')" style="margin-top:8px">📋 Copiar respuesta</button>
+    </div>
+    <div style="background:rgba(255,255,255,.03);border-radius:12px;padding:12px">
+      <div style="font-size:11px;font-weight:700;color:rgba(196,181,253,.5);margin-bottom:5px">¿Qué pasa después de los 7 días?</div>
+      <div class="copy-box" id="faq2" style="margin:0;font-size:12px">Puedes desbloquear el reto completo y seguir desde donde vas. Tu progreso se guarda.</div>
+      <button class="btn" onclick="copyText('faq2')" style="margin-top:8px">📋 Copiar respuesta</button>
+    </div>
+    <div style="background:rgba(255,255,255,.03);border-radius:12px;padding:12px">
+      <div style="font-size:11px;font-weight:700;color:rgba(196,181,253,.5);margin-bottom:5px">¿Los personalizados tienen prueba?</div>
+      <div class="copy-box" id="faq3" style="margin:0;font-size:12px">No. Los planes personalizados son premium y se activan con pago mensual de $72 USD. Sin prueba gratis.</div>
+      <button class="btn" onclick="copyText('faq3')" style="margin-top:8px">📋 Copiar respuesta</button>
+    </div>
+    <div style="background:rgba(255,255,255,.03);border-radius:12px;padding:12px">
+      <div style="font-size:11px;font-weight:700;color:rgba(196,181,253,.5);margin-bottom:5px">¿Puedo hacerlo desde casa?</div>
+      <div class="copy-box" id="faq4" style="margin:0;font-size:12px">Sí. La app pregunta dónde entrenas y adapta la experiencia a gym, casa o ambos.</div>
+      <button class="btn" onclick="copyText('faq4')" style="margin-top:8px">📋 Copiar respuesta</button>
+    </div>
+    <div style="background:rgba(255,255,255,.03);border-radius:12px;padding:12px">
+      <div style="font-size:11px;font-weight:700;color:rgba(196,181,253,.5);margin-bottom:5px">¿La foto de comida es exacta?</div>
+      <div class="copy-box" id="faq5" style="margin:0;font-size:12px">Es una estimación útil y editable. Puedes ajustar cantidades antes de guardar. No prometemos exactitud médica.</div>
+      <button class="btn" onclick="copyText('faq5')" style="margin-top:8px">📋 Copiar respuesta</button>
+    </div>
+    <div style="background:rgba(255,255,255,.03);border-radius:12px;padding:12px">
+      <div style="font-size:11px;font-weight:700;color:rgba(196,181,253,.5);margin-bottom:5px">Ya he abandonado antes.</div>
+      <div class="copy-box" id="faq6" style="margin:0;font-size:12px">Eso no significa que no puedas. ArjunaFit existe para los días donde normalmente abandonarías. Arju organiza lo que normalmente tienes que improvisar.</div>
+      <button class="btn" onclick="copyText('faq6')" style="margin-top:8px">📋 Copiar respuesta</button>
+    </div>
+  </div>
+</div>
+
+<!-- Soft launch metrics targets -->
+<div class="card">
+  <h2>Métricas objetivo — Lanzamiento suave</h2>
+  <table>
+    <tr><th>Métrica</th><th>Objetivo</th><th>Real (manual)</th></tr>
+    <tr><td>Personas contactadas</td><td>30–100</td><td><input id="m1" type="number" placeholder="0" style="width:70px;padding:4px;margin:0" oninput="saveM()"></td></tr>
+    <tr><td>Respuestas positivas</td><td>50%+</td><td><input id="m2" type="number" placeholder="0" style="width:70px;padding:4px;margin:0" oninput="saveM()"></td></tr>
+    <tr><td>Cuentas creadas</td><td>30–40%</td><td><input id="m3" type="number" placeholder="0" style="width:70px;padding:4px;margin:0" oninput="saveM()"></td></tr>
+    <tr><td>Onboarding completados</td><td>50%+</td><td><input id="m4" type="number" placeholder="0" style="width:70px;padding:4px;margin:0" oninput="saveM()"></td></tr>
+    <tr><td>Comidas registradas</td><td>30%+</td><td><input id="m5" type="number" placeholder="0" style="width:70px;padding:4px;margin:0" oninput="saveM()"></td></tr>
+    <tr><td>Entrenos iniciados</td><td>20–30%</td><td><input id="m6" type="number" placeholder="0" style="width:70px;padding:4px;margin:0" oninput="saveM()"></td></tr>
+    <tr><td>Volvieron día 2</td><td>30%+</td><td><input id="m7" type="number" placeholder="0" style="width:70px;padding:4px;margin:0" oninput="saveM()"></td></tr>
+    <tr><td>Intención de pago</td><td>3–5 mínimo</td><td><input id="m8" type="number" placeholder="0" style="width:70px;padding:4px;margin:0" oninput="saveM()"></td></tr>
+  </table>
+</div>
+
+</body>
+</html>
