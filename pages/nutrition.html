@@ -4577,6 +4577,47 @@ function addSuggestion(id) {
 function goToRecipe() {
   sw('recetas');
 }
+
+// ── Missing functions (audit fix) ─────────────────
+function openMealDetail(meal) {
+  // Open quick log for specific meal
+  if (typeof openQuickLog === 'function') {
+    window._quickLogMeal = meal;
+    openQuickLog();
+  }
+}
+
+function openCreateRecipe() {
+  var modal = document.createElement('div');
+  modal.style.cssText = 'position:fixed;inset:0;z-index:500;background:rgba(8,4,18,.95);display:flex;align-items:flex-end;justify-content:center;backdrop-filter:blur(10px)';
+  modal.innerHTML = '<div style="width:100%;max-width:430px;background:#130d22;border:1px solid rgba(124,58,237,.2);border-radius:24px 24px 0 0;padding:24px 20px calc(24px + env(safe-area-inset-bottom));font-family:Outfit,sans-serif">' +
+    '<div style="width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.15);margin:0 auto 20px"></div>' +
+    '<div style="font-size:18px;font-weight:800;color:#fff;margin-bottom:6px">✨ Crear receta con tus ingredientes</div>' +
+    '<div style="font-size:13px;color:rgba(255,255,255,.4);margin-bottom:16px">Escribe lo que tienes disponible</div>' +
+    '<textarea id="ingredientInput" placeholder="Ej: pollo, arroz, brócoli, aceite de oliva..." style="width:100%;min-height:90px;padding:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:#fff;font-family:Outfit,sans-serif;font-size:13px;outline:none;resize:none;box-sizing:border-box;margin-bottom:14px"></textarea>' +
+    '<button onclick="generateRecipeFromIngredients()" style="width:100%;padding:14px;border-radius:14px;border:none;cursor:pointer;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-family:Outfit,sans-serif;font-size:14px;font-weight:800;margin-bottom:10px">🤖 Generar receta</button>' +
+    '<button onclick="this.closest('[style*=fixed]').remove()" style="width:100%;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.5);font-family:Outfit,sans-serif;font-size:13px;cursor:pointer">Cancelar</button>' +
+    '</div>';
+  document.body.appendChild(modal);
+  modal.addEventListener('click', function(e){ if(e.target===modal) modal.remove(); });
+}
+
+function generateRecipeFromIngredients() {
+  var input = document.getElementById('ingredientInput');
+  if (!input || !input.value.trim()) return;
+  var msg = encodeURIComponent('Con estos ingredientes: ' + input.value + ' — crea una receta fitness alta en proteína con macros estimados');
+  window.location.href = '/pages/coach.html?msg=' + msg;
+}
+
+function addFeaturedToLog() {
+  if (typeof openQuickLog === 'function') openQuickLog();
+}
+function addSuggestion(id) {
+  if (typeof openQuickLog === 'function') openQuickLog();
+}
+function goToRecipe() {
+  if (typeof sw === 'function') sw('recetas');
+}
 </script>
 </body>
 </html>
