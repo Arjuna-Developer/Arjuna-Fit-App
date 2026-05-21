@@ -105,6 +105,13 @@ body{background:var(--bg);color:var(--t);font-family:var(--font);-webkit-font-sm
 // Safety timeout
 setTimeout(function(){var l=document.getElementById("ldr");if(l&&l.style.display!=="none"&&!l.classList.contains("off")){l.style.display="none";}},6000);
 </script>
+<script>
+// Scroll to top on load
+document.addEventListener('DOMContentLoaded', function() {
+  window.scrollTo(0, 0);
+  document.querySelector('.page')?.scrollTo(0, 0);
+});
+</script>
 </head>
 <body style="overflow-x:hidden">
 
