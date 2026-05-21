@@ -1357,13 +1357,6 @@ function sw(id) {
       }
     }
   });
-  // Update dot
-  var dot = document.getElementById('tab-dot-hoy');
-  if (dot) {
-    var dotColors = {hoy:'#a78bfa',recetas:'#fb923c',mercado:'#34d399',fuera:'#60a5fa'};
-    dot.style.background = dotColors[id] || '#a78bfa';
-    dot.style.boxShadow = '0 0 6px '+(dotColors[id]||'#a78bfa');
-  }
   // Build dynamic content per tab
   if (id === 'recetas') { initRecipeRec(); setTimeout(renderRecetario, 50); }
   if (id === 'mercado') setTimeout(buildShop, 50);
