@@ -3053,7 +3053,7 @@ function renderLogList(entries) {
 }
 
 // ── Guardar food (cal, prot, carb, fat) ──────────────────────
-async function saveFood(name, cal, prot, fat = 0, meal) {
+async function saveFood(name, cal, prot, fat = 0, meal, carb = 0) {
   // Track first meal and meal confirmed
   try {
     var _fk = 'af-food-' + new Date().toISOString().split('T')[0];
@@ -4629,6 +4629,31 @@ function renderRestaurants(){var list=document.getElementById('restaurantList');
 // Hook into sw() 
 (function(){var _origSw=window.sw;if(typeof _origSw==='function'){window.sw=function(id){_origSw(id);if(id==='fuera')setTimeout(function(){renderRestaurants();},60);};}})();
 setTimeout(function(){if(document.getElementById('tc-fuera')&&document.getElementById('tc-fuera').classList.contains('on'))renderRestaurants();},300);
+
+function addToLog(rid) {
+  // Find recipe data
+  var RECIPE_DATA = {
+    'bowl-huevos':    {name:'Bowl de huevos y aguacate',  cal:380, prot:28, fat:18, carb:22},
+    'pechuga-arroz':  {name:'Pechuga con arroz y brócoli',cal:420, prot:45, fat:8,  carb:40},
+    'atun-frijoles':  {name:'Atún con frijoles negros',   cal:310, prot:35, fat:4,  carb:28},
+    'huevos-espinaca':{name:'Huevos revueltos con espinaca',cal:280,prot:22,fat:16, carb:8},
+    'lentejas':       {name:'Lentejas con vegetales',     cal:320, prot:18, fat:3,  carb:52},
+    'batido':         {name:'Batido proteína y banana',   cal:290, prot:30, fat:4,  carb:38},
+    'avena-proteina': {name:'Avena con proteína y banana',cal:350, prot:30, fat:6,  carb:52},
+    'salmon-espinaca':{name:'Salmón con espinaca',        cal:390, prot:42, fat:20, carb:8},
+  };
+  var r = RECIPE_DATA[rid];
+  if (!r) { if(typeof openQuickLog==='function') openQuickLog(); return; }
+  
+  var h = new Date().getHours();
+  var meal = h < 11 ? 'desayuno' : h < 15 ? 'almuerzo' : h < 20 ? 'cena' : 'snack';
+  
+  if (typeof saveFood === 'function') {
+    saveFood(r.name, r.cal, r.prot, r.fat || 0, meal);
+    var modal = document.querySelector('[style*="inset:0"]');
+    if (modal) modal.remove();
+  }
+}
 </script>
 </body>
 </html>
