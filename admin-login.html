@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32-v2.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#6D28FF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ArjunaFit">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="af-version" content="mini-beta-day1-war-room-v1">
+<title>Admin Login · ArjunaFit</title>
+<link rel="stylesheet" href="/assets/visual-system.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--af-bg,#07020f);color:var(--af-text,#f5f3ff);font-family:'Outfit',sans-serif;min-height:100dvh;display:flex;align-items:center;justify-content:center}
+.card{width:min(380px,92vw);padding:36px 28px;background:rgba(16,7,29,.95);border:1px solid rgba(167,139,250,.18);border-radius:24px;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.logo{font-size:28px;margin-bottom:4px;text-align:center}
+h1{font-size:20px;font-weight:800;text-align:center;margin-bottom:6px}
+.sub{font-size:13px;color:rgba(255,255,255,.42);text-align:center;margin-bottom:28px;line-height:1.5}
+label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.35);display:block;margin-bottom:7px}
+.af-input{width:100%;padding:13px 16px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.1);border-radius:14px;color:#f5f3ff;font-family:'Outfit',sans-serif;font-size:14px;outline:none;transition:border-color .2s;-webkit-appearance:none}
+.af-input:focus{border-color:rgba(139,92,246,.6)}
+.field{margin-bottom:16px}
+.af-button-primary{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:50px;padding:13px 20px;border:none;border-radius:14px;cursor:pointer;background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;box-shadow:0 6px 28px rgba(139,92,246,.3);margin-top:8px}
+.af-button-primary:disabled{opacity:.4;cursor:not-allowed}
+.msg{margin-top:12px;font-size:12px;text-align:center;padding:10px 14px;border-radius:10px;display:none}
+.msg.error{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:rgba(252,165,165,.85)}
+.msg.info{background:rgba(139,92,246,.08);border:1px solid rgba(167,139,250,.2);color:#ddd6fe}
+.back{display:block;text-align:center;margin-top:18px;font-size:12px;color:rgba(255,255,255,.3);text-decoration:none}
+.back:hover{color:rgba(167,139,250,.7)}
+.loader{display:none;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+<script src="/js/core/auth-bootstrap.js"></script>
+</head>
+<body>
+<div class="card">
+  <div class="logo">⚙️</div>
+  <h1>Panel Admin ArjunaFit</h1>
+  <p class="sub">Inicia sesión con tu cuenta administradora.</p>
+
+  <div class="field">
+    <label>Correo</label>
+    <input class="af-input" type="email" id="email" placeholder="arjuna.desarrollador@gmail.com" autocomplete="username">
+  </div>
+  <div class="field">
+    <label>Contraseña</label>
+    <input class="af-input" type="password" id="pwd" placeholder="••••••••" autocomplete="current-password">
+  </div>
+
+  <button class="af-button-primary" id="loginBtn" onclick="doAdminLogin()">
+    <div class="loader" id="loader"></div>
+    <span id="btnTxt">Entrar al panel</span>
+  </button>
+
+  <div class="msg" id="msg"></div>
+  <a class="back" href="/index.html">← Login normal de la app</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+'use strict';
+
+const SUPABASE_URL = 'https://egswsqymkxmbtcpnozcq.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM';
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+function setMsg(text, type) {
+  var el = document.getElementById('msg');
+  el.textContent = text;
+  el.className = 'msg ' + type;
+  el.style.display = 'block';
+}
+
+function setLoading(on) {
+  document.getElementById('loginBtn').disabled = on;
+  document.getElementById('loader').style.display = on ? 'block' : 'none';
+  document.getElementById('btnTxt').textContent = on ? 'Verificando…' : 'Entrar al panel';
+}
+
+// Check if already logged in as admin
+(async function() {
+  try {
+    var { data: { session } } = await sb.auth.getSession();
+    if (session?.user?.id) {
+      var { data: prof } = await sb.from('profiles').select('is_admin, role').eq('id', session.user.id).maybeSingle();
+      if (prof?.is_admin === true || prof?.role === 'admin') {
+        window.location.replace('/pages/admin-beta.html');
+      }
+    }
+  } catch(e) {}
+})();
+
+async function doAdminLogin() {
+  var email = document.getElementById('email').value.trim();
+  var pwd   = document.getElementById('pwd').value;
+  if (!email || !pwd) { setMsg('Completa el correo y la contraseña.', 'error'); return; }
+
+  setLoading(true);
+  document.getElementById('msg').style.display = 'none';
+
+  try {
+    // Authenticate — password never stored in code
+    var { data, error } = await sb.auth.signInWithPassword({ email, password: pwd });
+    if (error) throw error;
+
+    // Load profile to verify admin role
+    var { data: prof } = await sb
+      .from('profiles')
+      .select('is_admin, role, name, onboarding_completed')
+      .eq('id', data.user.id)
+      .maybeSingle();
+
+    var isAdmin = prof?.is_admin === true || prof?.role === 'admin';
+
+    if (!isAdmin) {
+      await sb.auth.signOut();
+      setLoading(false);
+      setMsg('No tienes acceso al panel admin.', 'error');
+      return;
+    }
+
+    // Store admin state
+    localStorage.setItem('af-is-admin', '1');
+    localStorage.setItem('af-role', 'admin');
+    localStorage.setItem('af-user-id', data.user.id);
+    localStorage.setItem('af-user-email', email);
+
+    setMsg('Acceso confirmado. Entrando al panel…', 'info');
+    setTimeout(function() { window.location.replace('/pages/admin-beta.html'); }, 600);
+
+  } catch(e) {
+    setLoading(false);
+    var msg = e.message || 'Error al iniciar sesión.';
+    if (msg.includes('Invalid login')) msg = 'Correo o contraseña incorrectos.';
+    if (msg.includes('Email not confirmed')) msg = 'Confirma tu correo antes de entrar.';
+    setMsg(msg, 'error');
+  }
+}
+
+// Enter key support
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') doAdminLogin();
+});
+</script>
+<div style="text-align:center;padding:16px;font-size:12px;color:rgba(255,255,255,.25)"><a href="https://wa.link/hteek6" target="_blank" style="color:rgba(255,255,255,.25);text-decoration:none">¿Necesitas ayuda? Hablar con Arjuna →</a></div>
+</body>
+</html>

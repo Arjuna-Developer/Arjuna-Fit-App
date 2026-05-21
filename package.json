@@ -1,0 +1,13 @@
+{
+  "name": "arjunafit-app",
+  "version": "1.0.0",
+  "description": "ArjunaFit \u2014 Companion Wellness App",
+  "private": true,
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /pages/admin-beta.html
+Disallow: /pages/dashboard.html
+Disallow: /pages/onboarding.html
+Disallow: /pages/workout.html
+Disallow: /pages/nutrition.html
+Disallow: /pages/coach.html
+Disallow: /pages/profile.html
+Disallow: /pages/progress.html
+
+Sitemap: https://arjunafit.com/sitemap.xml

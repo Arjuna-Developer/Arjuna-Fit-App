@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32-v2.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#6D28FF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ArjunaFit">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="af-version" content="mini-beta-day1-war-room-v1">
+<title>Crear cuenta · ArjunaFit</title>
+<link rel="stylesheet" href="/assets/visual-system.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0c0714;--bg-card:#130d22;--bg-input:#16092e;--bg-inp-h:#1c0e3a;
+  --primary:#7c3aed;--pri-glow:rgba(124,58,237,0.35);--pri-lite:#c4b5fd;
+  --accent:#ec4899;--text-1:#f1f0f4;--text-2:rgba(240,238,248,.7);
+  --text-3:rgba(240,238,248,.45);--border-s:rgba(255,255,255,.08);
+  --r:14px;--r-sm:10px;
+}
+html,body{background:var(--bg);color:var(--text-1);font-family:'Outfit',sans-serif;min-height:100dvh;overflow-x:hidden}
+.page{max-width:430px;margin:0 auto;padding:24px 20px 48px;min-height:100dvh;display:flex;flex-direction:column}
+/* Product badge */
+.product-badge{background:rgba(124,58,237,.1);border:1px solid rgba(196,181,253,.2);border-radius:16px;padding:14px 16px;margin-bottom:24px;display:flex;align-items:center;gap:12px}
+.product-badge .pb-icon{font-size:24px;flex-shrink:0}
+.product-badge .pb-name{font-size:14px;font-weight:700;color:var(--text-1);margin-bottom:2px}
+.product-badge .pb-price{font-size:11px;font-weight:600;color:rgba(52,211,153,.7)}
+/* Product selection (no product) */
+.product-sel{margin-bottom:24px}
+.ps-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:10px}
+.ps-option{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;background:rgba(255,255,255,.03);border:1.5px solid rgba(255,255,255,.08);border-radius:14px;margin-bottom:8px;cursor:pointer;transition:all .2s}
+.ps-option:hover,.ps-option.sel{background:rgba(124,58,237,.1);border-color:rgba(196,181,253,.3)}
+.ps-option .ps-name{font-size:13px;font-weight:700;color:var(--text-1)}
+.ps-option .ps-sub{font-size:11px;color:rgba(52,211,153,.7);margin-top:2px;font-weight:600}
+.ps-option .ps-sub.plan{color:rgba(196,181,253,.7)}
+/* Form */
+h1{font-size:22px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
+.sub{font-size:14px;color:var(--text-3);margin-bottom:24px}
+.field{margin-bottom:14px}
+.field-label{font-size:12px;font-weight:600;color:var(--text-3);display:block;margin-bottom:6px}
+.inp-wrap{position:relative;display:flex;align-items:center}
+.inp-icon{position:absolute;left:14px;font-size:14px;pointer-events:none;z-index:1}
+input[type=text],input[type=email],input[type=password]{
+  width:100%;padding:13px 14px 13px 40px;
+  background:var(--bg-input);border:1.5px solid var(--border-s);
+  border-radius:var(--r-sm);color:var(--text-1);font-family:'Outfit',sans-serif;
+  font-size:14px;outline:none;transition:border .2s;-webkit-appearance:none}
+input:focus{border-color:var(--primary);background:var(--bg-inp-h)}
+.btn-main{width:100%;padding:15px;border-radius:var(--r);border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--primary),var(--accent));
+  color:#fff;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;
+  box-shadow:0 6px 24px var(--pri-glow);margin-top:6px;transition:opacity .2s}
+.btn-main:disabled{opacity:.5;cursor:not-allowed}
+.divider{display:flex;align-items:center;gap:12px;margin:18px 0}
+.divider-line{flex:1;height:1px;background:var(--border-s)}
+.divider-text{font-size:11px;color:var(--text-3);font-weight:600;letter-spacing:.06em}
+.login-link{text-align:center;font-size:13px;color:var(--text-3)}
+.login-link a{color:var(--pri-lite);font-weight:700;text-decoration:none}
+.msg{font-size:12px;margin-top:10px;padding:10px 13px;border-radius:10px;display:none}
+.msg.err{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.2);color:rgba(252,165,165,.9)}
+.msg.ok{background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.2);color:rgba(110,231,183,.9)}
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.back-link{font-size:12px;color:var(--text-3);text-decoration:none;display:flex;align-items:center;gap:6px;margin-bottom:20px}
+.terms{font-size:11px;color:var(--text-3);text-align:center;margin-top:12px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <a href="/" class="back-link">← Inicio</a>
+
+  <!-- Product badge or selection -->
+  <div id="productDisplay"></div>
+
+  <h1 id="pageTitle">Crea tu cuenta</h1>
+  <p class="sub" id="pageSub">Estás a un paso de empezar en ArjunaFit.</p>
+
+  <form id="signupForm" novalidate>
+    <div class="field">
+      <label class="field-label" for="sfName">Tu nombre</label>
+      <div class="inp-wrap">
+        <div class="inp-icon">👤</div>
+        <input id="sfName" type="text" placeholder="¿Cómo te llamas?" autocomplete="given-name" required>
+      </div>
+    </div>
+    <div class="field">
+      <label class="field-label" for="sfEmail">Correo electrónico</label>
+      <div class="inp-wrap">
+        <div class="inp-icon">📧</div>
+        <input id="sfEmail" type="email" class="af-input" placeholder="tucorreo@gmail.com" autocomplete="email" inputmode="email" required>
+      </div>
+    </div>
+    <div class="field">
+      <label class="field-label" for="sfPass">Contraseña</label>
+      <div class="inp-wrap">
+        <div class="inp-icon">🔒</div>
+        <input id="sfPass" type="password" class="af-input" placeholder="Mínimo 8 caracteres" autocomplete="new-password" minlength="8" required>
+      </div>
+    </div>
+
+    <button class="btn-main" type="submit" id="sfBtn">
+      <span id="sfBtnText">Crear cuenta y empezar</span>
+    </button>
+    <div class="msg" id="sfMsg"></div>
+  </form>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-text">O</div><div class="divider-line"></div></div>
+  <div class="login-link">¿Ya tienes cuenta? <a href="/" id="loginLink">Iniciar sesión</a></div>
+  <div class="terms">Al crear cuenta aceptas que ArjunaFit guarde tu progreso de forma segura.</div>
+  <div style="text-align:center;margin-top:12px"><a href="/pages/help.html?cat=no_puedo_registrarme" style="font-size:12px;color:rgba(255,255,255,.25);text-decoration:none">¿Tienes problemas? <a href="https://wa.link/hteek6" target="_blank">Hablar con Arjuna →</a></a></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/js/core/auth-bootstrap.js"></script>
+<script src="/js/core/ops-config.js"></script>
+<script src="/js/core/analytics.js"></script>
+<script src="/js/core/experiment-config.js"></script>
+<script src="/js/core/supabase-client.js"></script>
+<script src="/js/core/commerce-config.js"></script>
+<script>
+'use strict';
+
+const SUPABASE_URL = 'https://egswsqymkxmbtcpnozcq.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM';
+const _sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: true, storageKey: 'arjunafit-auth' } });
+
+// ── Product meta — reads from AF_Commerce if available ────────
+// Fallback for when commerce-config loads async
+var PRODUCTS_FALLBACK = {
+  challenge_glutes:   { icon:'🍑', name:'Reto de glúteos',              price:'7 días gratis · luego $32 USD',  hasTrial:true,  cta:'Crear cuenta y empezar gratis' },
+  challenge_belly:    { icon:'🔥', name:'Reto para bajar la pancita',   price:'7 días gratis · luego $32 USD',  hasTrial:true,  cta:'Crear cuenta y empezar gratis' },
+  custom_muscle_gain: { icon:'💪', name:'Aumento de masa muscular',     price:'$72 USD/mes · pago inmediato',   hasTrial:false, cta:'Crear cuenta y continuar al pago' },
+  custom_fat_loss:    { icon:'⚡', name:'Reducción de porcentaje graso', price:'$72 USD/mes · pago inmediato',   hasTrial:false, cta:'Crear cuenta y continuar al pago' },
+};
+
+function getProductMeta(id) {
+  if (window.AF_Commerce && window.AF_Commerce.getProductConfig) {
+    var cfg = window.AF_Commerce.getProductConfig(id);
+    if (cfg) return { icon: cfg.icon, name: cfg.name, price: cfg.billingLabel, hasTrial: cfg.trialDays > 0, cta: cfg.ctaLabel };
+  }
+  return PRODUCTS_FALLBACK[id] || null;
+}
+
+function isValid(id) {
+  if (window.AF_Commerce) return window.AF_Commerce.isValidProduct(id);
+  return !!PRODUCTS_FALLBACK[id];
+}
+
+// Map for renderOpt — uses PRODUCTS_FALLBACK as base
+var PRODUCTS = PRODUCTS_FALLBACK;
+
+// ── Capture UTM params ───────────────────────────────────────────
+(function() {
+  var qp = new URLSearchParams(window.location.search);
+  var utms = ['utm_source','utm_campaign','utm_content','utm_medium'];
+  var got = {};
+  utms.forEach(function(k) { var v = qp.get(k); if (v) { localStorage.setItem('af-' + k.replace('_','-'), v); got[k] = v; }});
+  if (!got.utm_source && document.referrer) {
+    var ref = document.referrer;
+    var src = ref.includes('instagram') ? 'instagram' : (ref.includes('wa.me') || ref.includes('whatsapp')) ? 'whatsapp' : 'referral';
+    localStorage.setItem('af-utm-source', src); got.utm_source = src;
+  }
+  if (Object.keys(got).length && window.AF) AF.track('utm_captured', got);
+})();
+
+// ── Capture product from URL ──────────────────────────────────────
+const params    = new URLSearchParams(window.location.search);
+let pendingProd = params.get('product') || localStorage.getItem('af-pending-product') || '';
+
+if (pendingProd && !isValid(pendingProd)) {
+  if (window.AF) AF.track('invalid_product_param', { product: pendingProd });
+  // Show friendly message
+  setTimeout(function() {
+    var display = document.getElementById('productDisplay');
+    if (display) {
+      display.innerHTML = '<div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:14px;padding:14px 16px;font-size:13px;color:rgba(253,186,116,.8);margin-bottom:16px">No encontramos esa selección. Elige cómo quieres empezar abajo.</div>';
+    }
+  }, 200);
+  pendingProd = '';
+}
+
+if (pendingProd) {
+  localStorage.setItem('af-pending-product', pendingProd);
+  console.log('[Signup] URL product:', pendingProd);
+  if (window.AF) AF.track('signup_page_viewed', { product: pendingProd });
+}
+
+// ── Render product badge or selection ─────────────────────────
+(function renderProduct() {
+    // Update headline for no-product state
+    if (!pendingProd) {
+      var titleEl = document.getElementById('pageTitle');
+      var subEl   = document.getElementById('pageSub');
+      if (titleEl) titleEl.textContent = 'Elige cómo quieres empezar';
+      if (subEl)   subEl.textContent = 'Selecciona un reto o plan y luego crea tu cuenta.';
+    }
+  const display = document.getElementById('productDisplay');
+  const btnText = document.getElementById('sfBtnText');
+  const loginLink = document.getElementById('loginLink');
+
+  // Pass product through to login link
+  const loginHref = pendingProd ? '/?product=' + pendingProd : '/';
+  loginLink.href = loginHref;
+
+  if (pendingProd) {
+    const p = getProductMeta(pendingProd) || PRODUCTS[pendingProd];
+    display.innerHTML =
+      '<div class="product-badge">' +
+        '<div class="pb-icon">' + p.icon + '</div>' +
+        '<div><div class="pb-name">' + p.name + '</div>' +
+        '<div class="pb-price">' + p.price + '</div></div>' +
+      '</div>';
+    if (btnText) btnText.textContent = p.cta;
+  } else {
+    // No product — show selection
+    display.innerHTML =
+      '<div class="product-sel">' +
+        '<div class="ps-label">Elige cómo quieres empezar</div>' +
+        '<div class="ps-label" style="color:rgba(52,211,153,.6);margin-top:14px;margin-bottom:8px">7 días gratis</div>' +
+        renderOpt('challenge_glutes') + renderOpt('challenge_belly') +
+        '<div class="ps-label" style="color:rgba(196,181,253,.5);margin-top:14px;margin-bottom:8px">Planes personalizados</div>' +
+        renderOpt('custom_muscle_gain') + renderOpt('custom_fat_loss') +
+      '</div>';
+    document.querySelectorAll('.ps-option').forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        document.querySelectorAll('.ps-option').forEach(function(o) { o.classList.remove('sel'); o.classList.remove('selected'); });
+        opt.classList.add('sel'); opt.classList.add('selected');
+        pendingProd = opt.dataset.product;
+        localStorage.setItem('af-pending-product', pendingProd);
+        var p = PRODUCTS[pendingProd];
+        if (btnText) btnText.textContent = p.cta;
+        if (window.AF) AF.track('product_context_saved', { product: pendingProd, source: 'signup_selection' });
+      });
+    });
+  }
+})();
+
+function renderOpt(type) {
+  var p = PRODUCTS[type];
+  var tagHtml = p.hasTrial
+    ? '<span class="af-product-tag">7 días gratis incluidos</span>'
+    : '<span class="af-product-tag premium">Plan premium · sin prueba</span>';
+  return '<div class="ps-option af-product-card" data-product="' + type + '">' +
+    '<div class="af-product-icon">' + p.icon + '</div>' +
+    '<div style="flex:1">' +
+      '<div class="af-product-name">' + p.name + '</div>' +
+      '<div class="af-product-price">' + p.price + '</div>' +
+      tagHtml +
+    '</div>' +
+    '<div style="color:rgba(255,255,255,.2);font-size:18px">›</div>' +
+  '</div>';
+}
+
+// ── Signup submit ─────────────────────────────────────────────
+function setMsg(text, type) {
+  const el = document.getElementById('sfMsg');
+  el.textContent = text;
+  el.className = 'msg ' + type;
+  el.style.display = 'block';
+}
+
+function friendlyError(msg) {
+  if (!msg) return 'Algo no funcionó. Intenta de nuevo.';
+  if (msg.includes('already registered') || msg.includes('already in use') || msg.includes('already exists')) return 'Ese correo ya tiene cuenta. ¿Quieres iniciar sesión?';
+  if (msg.includes('invalid email') || msg.includes('Invalid email')) return 'El correo no tiene el formato correcto.';
+  if (msg.includes('Password') || msg.includes('password') || msg.includes('least')) return 'La contraseña debe tener al menos 8 caracteres.';
+  if (msg.includes('network') || msg.includes('fetch') || msg.includes('Failed')) return 'Sin conexión. Revisa tu internet e intenta de nuevo.';
+  if (msg.includes('rate') || msg.includes('Too many')) return 'Demasiados intentos. Espera unos minutos.';
+  return 'No pudimos crear tu cuenta ahora. Intenta de nuevo.';
+}
+
+document.getElementById('signupForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const product = pendingProd;
+  if (!product) {
+    setMsg('Elige un reto o plan antes de continuar.', 'err');
+    return;
+  }
+
+  const name   = document.getElementById('sfName').value.trim();
+  const email  = document.getElementById('sfEmail').value.trim();
+  const pass   = document.getElementById('sfPass').value;
+
+  if (!name)         { setMsg('¿Cómo te llamas?', 'err'); return; }
+  if (!email)        { setMsg('Necesitamos tu correo.', 'err'); return; }
+  if (pass.length < 8) { setMsg('La contraseña debe tener al menos 8 caracteres.', 'err'); return; }
+
+  const btn = document.getElementById('sfBtn');
+  const txt = document.getElementById('sfBtnText');
+  btn.disabled = true;
+  txt.innerHTML = '<span class="spinner"></span>Preparando tu reto...';
+  if (window.AF) AF.track('signup_started', { product });
+
+  try {
+    const { data, error } = await _sb.auth.signUp({
+      email,
+      password: pass,
+      options: { data: { full_name: name, display_name: name } }
+    });
+
+    if (error) throw error;
+
+    const uid = data?.user?.id;
+
+    // Save name
+    localStorage.setItem('af-user-name', name);
+    localStorage.setItem('af-product-type', product);
+
+    // Set up trial for retos
+    const _pMeta = getProductMeta(product) || PRODUCTS[product];
+    if (_pMeta && _pMeta.hasTrial) {
+      const now = Date.now();
+      localStorage.setItem('af-selected-reto',  product === 'challenge_glutes' ? 'gluteos' : 'pancita');
+      localStorage.setItem('af-product-tipo',    'reto');
+      localStorage.setItem('af-trial-start',     String(now));
+      localStorage.setItem('af-trial-ends',      String(now + 7 * 86400000));
+      localStorage.removeItem('af-paid');
+    } else {
+      localStorage.setItem('af-product-tipo',          'plan');
+      localStorage.setItem('af-subscription-status',   'payment_required');
+      const retoMap = { custom_muscle_gain:'masa', custom_fat_loss:'definicion' };
+      localStorage.setItem('af-selected-reto', retoMap[product] || '');
+    }
+
+    // Remove pending
+    localStorage.removeItem('af-pending-product');
+
+    // Save to Supabase profiles
+    if (uid) {
+      try {
+        await _sb.from('profiles').upsert({
+          id: uid,
+          full_name: name,
+          product_type: product,
+          subscription_status: PRODUCTS[product].hasTrial ? 'trialing' : 'payment_required',
+          trial_started_at: PRODUCTS[product].hasTrial ? new Date().toISOString() : null,
+          trial_ends_at: PRODUCTS[product].hasTrial ? new Date(Date.now() + 7*86400000).toISOString() : null,
+          updated_at: new Date().toISOString()
+        }, { onConflict: 'id' });
+      } catch(err) { /* profile save non-critical */ }
+    }
+
+    if (window.AF) {
+      AF.track('signup_completed_with_product', { product });
+      if (PRODUCTS[product].hasTrial) AF.track('challenge_trial_created', { product });
+      else AF.track('custom_plan_payment_required', { product });
+    }
+
+    setMsg('✅ Cuenta creada. Redirigiendo...', 'ok');
+
+    // Route: reto → onboarding | plan → activation
+    setTimeout(function() {
+      if (PRODUCTS[product].hasTrial) {
+        window.location.href = '/pages/onboarding.html';
+    } else {
+        // Personalizados: open payment then go to onboarding
+        var hotmartUrls = {
+          custom_muscle_gain: 'https://pay.hotmart.com/M105694336W?bid=1777962608286',
+          custom_fat_loss:    'https://pay.hotmart.com/M105694336W'
+        };
+        var payUrl = hotmartUrls[product];
+        if (payUrl) {
+          // Open payment in new tab, continue to custom intake
+          window.open(payUrl, '_blank');
+        } else if (window.AF_Commerce) {
+          window.AF_Commerce.showActivationModal(product);
+          return; // don't navigate yet
+        }
+        // Custom plans go to their own intake
+        window.location.href = '/pages/custom-plan-intake.html';
+      }
+    }, 1200);
+
+  } catch(err) {
+    btn.disabled = false;
+    txt.textContent = PRODUCTS[pendingProd] ? PRODUCTS[pendingProd].cta : 'Crear cuenta y empezar';
+    setMsg(friendlyError(err.message || ''), 'err');
+    if (window.AF) AF.track('signup_error', { product, error: err.message });
+  }
+});
+</script>
+</body>
+</html>

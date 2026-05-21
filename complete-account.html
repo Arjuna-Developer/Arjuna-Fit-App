@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32-v2.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#6D28FF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ArjunaFit">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="af-version" content="mini-beta-day1-war-room-v1">
+<title>Completa tu acceso · ArjunaFit</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0c0714;--bg-card:#130d22;--primary:#7c3aed;--pri-glow:rgba(124,58,237,.35);--pri-lite:#c4b5fd;--accent:#ec4899;--text-1:#f1f0f4;--text-3:rgba(240,238,248,.45)}
+html,body{background:var(--bg);color:var(--text-1);font-family:'Outfit',sans-serif;min-height:100dvh}
+.page{max-width:430px;margin:0 auto;padding:32px 20px 48px;min-height:100dvh;display:flex;flex-direction:column;gap:20px}
+.success-badge{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:18px;padding:20px;text-align:center}
+.success-badge .icon{font-size:40px;margin-bottom:10px}
+.success-badge h2{font-size:17px;font-weight:700;color:rgba(52,211,153,.9);margin-bottom:4px}
+.success-badge p{font-size:13px;color:rgba(255,255,255,.5);line-height:1.6}
+.product-card{background:rgba(124,58,237,.08);border:1px solid rgba(196,181,253,.2);border-radius:16px;padding:16px;display:flex;align-items:center;gap:14px}
+.product-card .pc-icon{font-size:28px}
+.product-card .pc-name{font-size:14px;font-weight:700;color:var(--text-1)}
+.product-card .pc-price{font-size:11px;color:var(--pri-lite);margin-top:2px}
+.community-card{background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.15);border-radius:16px;padding:16px;display:flex;align-items:flex-start;gap:12px}
+.community-card .cc-body h3{font-size:14px;font-weight:700;color:var(--text-1);margin-bottom:4px}
+.community-card .cc-body p{font-size:12px;color:rgba(255,255,255,.5);line-height:1.6}
+h1{font-size:24px;font-weight:800;letter-spacing:-.02em}
+.sub{font-size:14px;color:var(--text-3);line-height:1.6}
+.field{margin-bottom:14px}
+.field-label{font-size:12px;font-weight:600;color:var(--text-3);display:block;margin-bottom:6px}
+.inp-wrap{display:flex;align-items:center;position:relative}
+.inp-icon{position:absolute;left:14px;font-size:14px}
+input[type=text],input[type=password]{width:100%;padding:13px 14px 13px 40px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:12px;color:var(--text-1);font-family:'Outfit',sans-serif;font-size:14px;outline:none;-webkit-appearance:none}
+input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(124,58,237,.15)}
+.btn-main{width:100%;padding:15px;border-radius:14px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;font-family:'Outfit',sans-serif;font-size:15px;font-weight:800;box-shadow:0 6px 24px var(--pri-glow)}
+.btn-main:disabled{opacity:.5;cursor:not-allowed}
+.msg{font-size:12px;padding:10px 13px;border-radius:10px;display:none;margin-top:8px}
+.msg.err{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.2);color:rgba(252,165,165,.9)}
+.msg.ok{background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.2);color:rgba(110,231,183,.9)}
+.login-link{text-align:center;font-size:13px;color:var(--text-3)}
+.login-link a{color:var(--pri-lite);font-weight:700;text-decoration:none}
+.spinner{width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Pago aprobado badge -->
+  <div class="success-badge">
+    <div class="icon">✅</div>
+    <h2>¡Tu pago fue aprobado!</h2>
+    <p>Crea tu acceso para entrar a ArjunaFit y empezar.</p>
+  </div>
+
+  <!-- Producto activo -->
+  <div class="product-card" id="productCard" style="display:none">
+    <div class="pc-icon" id="pcIcon">🍑</div>
+    <div>
+      <div class="pc-name" id="pcName">Tu producto</div>
+      <div class="pc-price" id="pcPrice">Acceso activo</div>
+    </div>
+  </div>
+
+  <!-- Comunidad gratuita -->
+  <div class="community-card">
+    <div style="font-size:22px">🤝</div>
+    <div class="cc-body">
+      <h3>También quedaste en la comunidad gratuita ArjunaFit</h3>
+      <p>Ahí iremos compartiendo apoyo, novedades y recursos para que no hagas el proceso sola.</p>
+    </div>
+  </div>
+
+  <div>
+    <h1>Crea tu acceso</h1>
+    <p class="sub">Ya casi. Elige un nombre y contraseña para entrar a tu app.</p>
+  </div>
+
+  <form id="completeForm" novalidate>
+    <div class="field">
+      <label class="field-label" for="cfName">Tu nombre</label>
+      <div class="inp-wrap">
+        <div class="inp-icon">👤</div>
+        <input id="cfName" type="text" placeholder="¿Cómo te llamas?" autocomplete="given-name" required>
+      </div>
+    </div>
+    <div class="field">
+      <label class="field-label" for="cfPass">Contraseña</label>
+      <div class="inp-wrap">
+        <div class="inp-icon">🔒</div>
+        <input id="cfPass" type="password" placeholder="Mínimo 8 caracteres" autocomplete="new-password" minlength="8" required>
+      </div>
+    </div>
+    <div class="field">
+      <label class="field-label" for="cfPass2">Confirmar contraseña</label>
+      <div class="inp-wrap">
+        <div class="inp-icon">🔒</div>
+        <input id="cfPass2" type="password" placeholder="Repite tu contraseña" autocomplete="new-password" required>
+      </div>
+    </div>
+    <button class="btn-main" type="submit" id="cfBtn"><span id="cfBtnText">Entrar a ArjunaFit</span></button>
+    <div class="msg" id="cfMsg"></div>
+  </form>
+
+  <div class="login-link">¿Ya tienes cuenta? <a href="/">Iniciar sesión</a></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/js/core/auth-bootstrap.js"></script>
+<script src="/js/core/analytics.js"></script>
+<script src="/js/core/commerce-config.js"></script>
+<script>
+'use strict';
+const SUPABASE_URL = 'https://egswsqymkxmbtcpnozcq.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM';
+const _sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Read product from URL
+const params = new URLSearchParams(window.location.search);
+const productId = params.get('product') || localStorage.getItem('af-pending-product') || '';
+
+// Show product card
+if (productId && window.AF_Commerce) {
+  const cfg = window.AF_Commerce.getProductConfig(productId);
+  if (cfg) {
+    document.getElementById('productCard').style.display = 'flex';
+    document.getElementById('pcIcon').textContent = cfg.icon;
+    document.getElementById('pcName').textContent = cfg.name;
+    document.getElementById('pcPrice').textContent = cfg.billingLabel;
+  }
+}
+
+if (window.AF) AF.track('account_completion_started', { product: productId });
+
+function setMsg(text, type) {
+  const el = document.getElementById('cfMsg');
+  el.textContent = text; el.className = 'msg ' + type; el.style.display = 'block';
+}
+
+document.getElementById('completeForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const name = document.getElementById('cfName').value.trim();
+  const pass = document.getElementById('cfPass').value;
+  const pass2 = document.getElementById('cfPass2').value;
+
+  if (!name) { setMsg('¿Cómo te llamas?', 'err'); return; }
+  if (pass.length < 8) { setMsg('Contraseña mínimo 8 caracteres.', 'err'); return; }
+  if (pass !== pass2) { setMsg('Las contraseñas no coinciden.', 'err'); return; }
+
+  const btn = document.getElementById('cfBtn');
+  const txt = document.getElementById('cfBtnText');
+  btn.disabled = true;
+  txt.innerHTML = '<span class="spinner"></span>Activando...';
+
+  try {
+    // Get current session (user came via magic link)
+    const { data: { session } } = await _sb.auth.getSession();
+
+    if (session) {
+      // Update user password and name
+      await _sb.auth.updateUser({ password: pass, data: { full_name: name } });
+      await _sb.from('profiles').update({
+        full_name: name,
+        product_type: productId || undefined,
+        account_status: 'active',
+        updated_at: new Date().toISOString()
+      }).eq('id', session.user.id);
+
+      // Set localStorage for app
+      localStorage.setItem('af-user-name', name);
+      if (productId) {
+        localStorage.setItem('af-product-type', productId);
+        const isChallenge = productId.startsWith('challenge_');
+        localStorage.setItem('af-product-tipo', isChallenge ? 'reto' : 'plan');
+        const retoMap = { challenge_glutes:'gluteos', challenge_belly:'pancita', custom_muscle_gain:'masa', custom_fat_loss:'definicion' };
+        localStorage.setItem('af-selected-reto', retoMap[productId] || '');
+        if (isChallenge) {
+          localStorage.setItem('af-paid', '1');
+          localStorage.removeItem('af-trial-start');
+        }
+        localStorage.setItem('af-subscription-status', 'active');
+      }
+
+      if (window.AF) AF.track('account_completion_completed', { product: productId });
+      setMsg('✅ Acceso activado. Entrando...', 'ok');
+      setTimeout(function() { window.location.href = '/pages/onboarding.html'; }, 1200);
+    } else {
+      setMsg('Sesión no encontrada. Revisa el link que te enviamos por correo.', 'err');
+      btn.disabled = false; txt.textContent = 'Entrar a ArjunaFit';
+    }
+  } catch(err) {
+    btn.disabled = false; txt.textContent = 'Entrar a ArjunaFit';
+    setMsg('Algo no funcionó. Intenta de nuevo.', 'err');
+    console.error(err);
+  }
+});
+</script>
+<div style="text-align:center;padding:16px;font-size:12px;color:rgba(255,255,255,.25)"><a href="https://wa.link/hteek6" target="_blank" style="color:rgba(255,255,255,.25);text-decoration:none">¿Necesitas ayuda? Hablar con Arjuna →</a></div>
+</body>
+</html>

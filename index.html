@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>ArjunaFit — Entrenamiento, nutrición y Coach IA para no abandonar</title>
+  <meta name="description" content="Entrena, organiza tu nutrición, descubre recetas saludables y recibe guía diaria con Arju, el Coach IA de ArjunaFit. Empieza con 7 días gratis en retos seleccionados.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://arjunafit.com/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://arjunafit.com">
+  <meta property="og:title" content="ArjunaFit — Tu coach diario de entrenamiento y nutrición">
+  <meta property="og:description" content="Entrenamiento, nutrición, recetas y Coach IA para ayudarte a no abandonar.">
+  <meta property="og:image" content="https://arjunafit.com/assets/brand/arjunafit-og-image.png">
+  <meta property="og:site_name" content="ArjunaFit">
+  <meta property="og:locale" content="es_CO">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ArjunaFit — Entrena, come mejor y no abandones">
+  <meta name="twitter:description" content="Coach IA, retos, nutrición, recetas y progreso diario.">
+  <meta name="twitter:image" content="https://arjunafit.com/assets/brand/arjunafit-og-image.png">
+
+  <!-- JSON-LD Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "ArjunaFit",
+    "url": "https://arjunafit.com",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Web, iOS, Android",
+    "description": "Entrenamiento, nutrición, recetas y Coach IA para ayudarte a no abandonar.",
+    "offers": [
+      {"@type": "Offer", "name": "Reto de glúteos", "price": "32", "priceCurrency": "USD"},
+      {"@type": "Offer", "name": "Reto para bajar la pancita", "price": "32", "priceCurrency": "USD"},
+      {"@type": "Offer", "name": "Plan personalizado", "price": "72", "priceCurrency": "USD"}
+    ]
+  }
+  </script>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32-v2.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#6D28FF">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ArjunaFit">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta charset="UTF-8">
+<meta name="af-version" content="mini-beta-day1-war-room-v1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="/assets/visual-system.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════ */
+:root {
+  --bg:       #0c0714;
+  --bg-card:  #130d22;
+  --bg-input: #16092e;
+  --bg-inp-h: #1c0e3a;
+  --primary:  #7c3aed;
+  --pri-glow: rgba(124,58,237,0.35);
+  --pri-lite: #c4b5fd;
+  --accent:   #ec4899;
+  --acc-lite: #f9a8d4;
+  --success:  #10b981;
+  --danger:   #ef4444;
+  --text:     #f1f0f4;
+  --text-2:   #c4b5fd;
+  --text-3:   #7c6fa0;
+  --text-4:   #3d3258;
+  --border:   rgba(124,58,237,0.2);
+  --border-s: rgba(255,255,255,0.06);
+  --font:     'Outfit', sans-serif;
+  --r:        16px;
+  --r-lg:     24px;
+}
+
+/* ═══════════════════════════════════════
+   BASE
+═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior: none;
+}
+
+/* ═══════════════════════════════════════
+   BACKGROUND ATMOSPHERE
+═══════════════════════════════════════ */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+/* Top violet glow */
+.bg-layer::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;
+  height: 60%;
+  background: radial-gradient(ellipse at center top,
+    rgba(124,58,237,0.22) 0%,
+    rgba(124,58,237,0.08) 50%,
+    transparent 70%);
+}
+/* Bottom accent glow */
+.bg-layer::after {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  left: 30%;
+  width: 60%;
+  height: 50%;
+  background: radial-gradient(ellipse,
+    rgba(236,72,153,0.1) 0%,
+    transparent 70%);
+}
+
+/* ═══════════════════════════════════════
+   PAGE WRAPPER
+═══════════════════════════════════════ */
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ═══════════════════════════════════════
+   HERO SECTION
+═══════════════════════════════════════ */
+.hero {
+  padding: calc(env(safe-area-inset-top) + 36px) 28px 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: rgba(124,58,237,0.1);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pri-lite);
+  margin-bottom: 20px;
+  animation: fade-up 0.5s ease both;
+}
+
+.hero-icon {
+  font-size: 56px;
+  display: block;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 0 28px rgba(124,58,237,0.7));
+  animation: icon-float 4s ease-in-out infinite, fade-up 0.6s ease 0.1s both;
+}
+@keyframes icon-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%       { transform: translateY(-8px) scale(1.03); }
+}
+
+.hero-title {
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 1.1;
+  margin-bottom: 10px;
+  animation: fade-up 0.6s ease 0.15s both;
+}
+.hero-title em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--pri-lite) 0%, var(--acc-lite) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: 14px;
+  color: var(--text-3);
+  font-weight: 400;
+  line-height: 1.6;
+  max-width: 280px;
+  margin: 0 auto;
+  animation: fade-up 0.6s ease 0.2s both;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════
+   FORM CARD
+═══════════════════════════════════════ */
+.card-wrap {
+  padding: 0 20px calc(env(safe-area-inset-bottom) + 32px);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 28px 24px;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.03),
+    0 20px 60px rgba(0,0,0,0.5),
+    0 0 40px rgba(124,58,237,0.05);
+  animation: fade-up 0.6s ease 0.25s both;
+}
+
+.card-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 4px;
+}
+.card-title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+}
+
+/* ═══════════════════════════════════════
+   PANELS
+═══════════════════════════════════════ */
+.panel { display: none; flex-direction: column; }
+.panel.show { display: flex; animation: fade-up 0.25s ease; }
+
+/* ═══════════════════════════════════════
+   FORM FIELDS
+═══════════════════════════════════════ */
+.field { margin-bottom: 14px; }
+
+.field-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  margin-bottom: 7px;
+}
+
+/* Input wrapper — altura FIJA para evitar todo layout shift */
+.inp-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 52px;                      /* fijo, no cambia nunca */
+  background: var(--bg-input);
+  border: 1.5px solid var(--border-s);
+  border-radius: var(--r);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  overflow: hidden;
+}
+.inp-wrap:focus-within {
+  border-color: rgba(124,58,237,0.6);
+  box-shadow: 0 0 0 4px rgba(124,58,237,0.1);
+  background: var(--bg-inp-h);
+}
+
+.inp-icon {
+  width: 46px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.inp-wrap:focus-within .inp-icon { opacity: 0.8; }
+
+.inp-wrap input {
+  flex: 1;
+  min-width: 0;          /* CRÍTICO — evita overflow en flex */
+  width: 100%;
+  height: 100%;
+  background: transparent !important;
+  border: none;
+  outline: none;
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  padding: 0;
+  /* Elimina estilos nativos del browser */
+  -webkit-appearance: none;
+  appearance: none;
+}
+.inp-wrap input::placeholder {
+  color: var(--text-4);
+  font-weight: 400;
+}
+
+/* ── FIX AUTOFILL — nunca fondo blanco ─────────────
+   Técnica: box-shadow inset opaca el fondo nativo del browser.
+   El transition largo evita el flash amarillo.
+─────────────────────────────────────────────────── */
+.inp-wrap input:-webkit-autofill,
+.inp-wrap input:-webkit-autofill:hover,
+.inp-wrap input:-webkit-autofill:focus,
+.inp-wrap input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 9999px var(--bg-inp-h) inset !important;
+  -webkit-text-fill-color: var(--text) !important;
+  caret-color: var(--text) !important;
+  transition: background-color 99999s ease !important;
+}
+.inp-wrap input:autofill {
+  background: var(--bg-inp-h) !important;
+  color: var(--text) !important;
+}
+
+/* Toggle contraseña — tamaño fijo para no mover layout */
+.pass-toggle {
+  width: 46px;
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-4);
+  transition: color 0.2s;
+}
+.pass-toggle:hover { color: var(--text-2); }
+
+/* ═══════════════════════════════════════
+   FORGOT LINK
+═══════════════════════════════════════ */
+.forgot-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+.forgot-row button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-3);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(124,58,237,0.3);
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+.forgot-row button:hover {
+  color: var(--pri-lite);
+  text-decoration-color: var(--pri-lite);
+}
+
+/* ═══════════════════════════════════════
+   MESSAGES
+═══════════════════════════════════════ */
+.msg-box {
+  border-radius: 12px;
+  padding: 12px 15px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.6;
+  margin-bottom: 14px;
+  display: none;
+  animation: fade-up 0.2s ease;
+}
+.msg-box.err {
+  display: block;
+  background: rgba(239,68,68,0.09);
+  border: 1px solid rgba(239,68,68,0.22);
+  color: #fca5a5;
+}
+.msg-box.ok {
+  display: block;
+  background: rgba(16,185,129,0.09);
+  border: 1px solid rgba(16,185,129,0.22);
+  color: #6ee7b7;
+}
+.msg-box.info {
+  display: block;
+  background: rgba(124,58,237,0.09);
+  border: 1px solid rgba(124,58,237,0.22);
+  color: var(--pri-lite);
+}
+
+/* ═══════════════════════════════════════
+   PRIMARY BUTTON
+═══════════════════════════════════════ */
+.btn-primary {
+  width: 100%;
+  padding: 15px 20px;
+  border-radius: var(--r);
+  border: none;
+  background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.2s ease;
+  box-shadow: 0 4px 24px rgba(124,58,237,0.45), 0 1px 0 rgba(255,255,255,0.1) inset;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+.btn-primary:hover {
+  box-shadow: 0 6px 32px rgba(124,58,237,0.55);
+  transform: translateY(-1px);
+}
+.btn-primary:active {
+  transform: scale(0.97) translateY(0);
+  box-shadow: 0 2px 12px rgba(124,58,237,0.35);
+}
+.btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: 0 2px 12px rgba(124,58,237,0.2);
+}
+
+.btn-spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2.5px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  display: none;
+  flex-shrink: 0;
+  animation: spin 0.6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ═══════════════════════════════════════
+   DIVIDER & REGISTER LINK
+═══════════════════════════════════════ */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border-s);
+}
+.divider-text {
+  font-size: 11px;
+  color: var(--text-4);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.register-row {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-3);
+}
+.register-row a {
+  color: var(--pri-lite);
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.register-row a:hover { color: var(--acc-lite); }
+
+
+/* ═══════════════════════════════════════
+   BACK BUTTON (forgot panel)
+═══════════════════════════════════════ */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-3);
+  padding: 0;
+  margin-bottom: 20px;
+  transition: color 0.2s;
+}
+.back-btn:hover { color: var(--pri-lite); }
+.back-btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════
+   PAGE LOADER
+   Solo visible mientras se verifica sesión.
+   Ocupa TODA la pantalla, oculta el form.
+═══════════════════════════════════════ */
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+.page-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.loader-icon {
+  font-size: 48px;
+  animation: icon-float 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(124,58,237,0.6));
+}
+.loader-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-3);
+}
+.loader-dots {
+  display: flex;
+  gap: 6px;
+}
+.loader-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+  animation: dot-pulse 1.4s ease-in-out infinite;
+}
+.loader-dot:nth-child(2) { animation-delay: 0.2s; }
+.loader-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dot-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50%       { opacity: 1;   transform: scale(1.2); }
+}
+</style>
+<script src="/js/core/auth-bootstrap.js"></script>
+</head>
+<body>
+
+<!-- ── Loader de sesión ── -->
+<div class="page-loader" id="pageLoader">
+  <div class="loader-icon">🏋️</div>
+  <div class="loader-text">Verificando sesión</div>
+  <div class="loader-dots">
+    <div class="loader-dot"></div>
+    <div class="loader-dot"></div>
+    <div class="loader-dot"></div>
+  </div>
+</div>
+
+<!-- ── Background ── -->
+<div class="bg-layer" aria-hidden="true"></div>
+
+<!-- ── Page ── -->
+<div class="page">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-badge">✦ 7 días gratis</div>
+    <div id="product-notice" style="display:none;font-size:12px;font-weight:600;color:rgba(52,211,153,.8);margin-top:6px;text-align:center"></div>
+    <span class="hero-icon">🏋️</span>
+    <h1 class="hero-title">Entra a<br><em>ArjunaFit.</em></h1>
+    <p class="hero-sub">Continúa tu día, tu reto y tu progreso.</p>
+  </div>
+
+  <!-- Card -->
+  <div class="card-wrap">
+    <div class="card">
+
+      <!-- ══ PANEL: LOGIN ══════════════════════ -->
+      <div class="panel show" id="panelLogin">
+        <div class="card-eyebrow">Bienvenida de nuevo</div>
+        <div class="card-title">Entra a ArjunaFit 👋</div>
+
+        <div class="msg-box" id="loginMsg" role="alert"></div>
+
+              <form id="loginForm" novalidate>
+          <div class="field">
+            <label class="field-label" for="loginEmail">Correo electrónico</label>
+            <div class="inp-wrap">
+              <div class="inp-icon">📧</div>
+              <input
+                id="loginEmail"
+                type="email"
+                placeholder="tucorreo@gmail.com"
+                autocomplete="email"
+                inputmode="email"
+                required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="loginPass">Contraseña</label>
+            <div class="inp-wrap">
+              <div class="inp-icon">🔒</div>
+              <input
+                id="loginPass"
+                type="password"
+                placeholder="••••••••"
+                autocomplete="current-password"
+                required>
+              <button
+                type="button"
+                class="pass-toggle"
+                id="passToggleBtn"
+                onclick="togglePass()"
+                aria-label="Mostrar contraseña">
+                👁️
+              </button>
+            </div>
+          </div>
+
+          <div class="forgot-row">
+            <button type="button" onclick="showPanel('panelForgot')">
+              ¿Olvidaste tu contraseña?
+            </button>
+          </div>
+
+          <button type="submit" class="btn-primary" id="loginBtn">
+            <div class="btn-spinner" id="loginSpinner"></div>
+            <span id="loginBtnText">Continuar mi día</span>
+          </button>
+        </form>
+
+        <div class="register-row" style="margin-top:16px">
+          ¿Primera vez? <a href="/signup">Crear cuenta con 7 días gratis →</a>
+        </div>
+        <div style="text-align:center;margin-top:10px"><a href="/pages/help.html?cat=no_puedo_entrar" style="font-size:12px;color:rgba(255,255,255,.3);text-decoration:none">¿Necesitas ayuda para entrar?</a> · <a href="https://wa.link/hteek6" target="_blank" style="color:rgba(255,255,255,.4)">WhatsApp →</a></div>
+      </div>
+
+      <!-- ══ PANEL: RECUPERAR CONTRASEÑA ═══════ -->
+      <div class="panel" id="panelForgot">
+        <button type="button" class="back-btn" onclick="showPanel('panelLogin')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <path d="M19 12H5M12 5l-7 7 7 7"/>
+          </svg>
+          Volver al login
+        </button>
+
+        <div class="card-eyebrow">Recuperar acceso</div>
+        <div class="card-title">¿Olvidaste tu contraseña?</div>
+
+        <div class="msg-box" id="forgotMsg" role="alert"></div>
+
+        <form id="forgotForm" novalidate>
+          <div class="field">
+            <label class="field-label" for="forgotEmail">Tu correo electrónico</label>
+            <div class="inp-wrap">
+              <div class="inp-icon">📧</div>
+              <input
+                id="forgotEmail"
+                type="email"
+                placeholder="tucorreo@gmail.com"
+                autocomplete="email"
+                inputmode="email"
+                required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary" id="forgotBtn">
+            <div class="btn-spinner" id="forgotSpinner"></div>
+            <span id="forgotBtnText">Enviar link de recuperación</span>
+          </button>
+        </form>
+      </div>
+
+    </div><!-- /card -->
+  </div><!-- /card-wrap -->
+</div><!-- /page -->
+
+<!-- Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+<script>
+// ═══════════════════════════════════════════════════
+// ARJUNAFIT — Login Auth
+// Supabase se inicializa aquí directamente.
+// No depende de supabase-client.js para funcionar.
+// ═══════════════════════════════════════════════════
+
+// ── Supabase init ─────────────────────────────────
+let _sb = null;
+try {
+  _sb = window.supabase.createClient(
+    'https://egswsqymkxmbtcpnozcq.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM',
+    {
+      auth: {
+        persistSession:     true,
+        autoRefreshToken:   true,
+        detectSessionInUrl: false,
+        storageKey:         'arjunafit-auth'
+      }
+    }
+  );
+  // Exponerlo globalmente para otras páginas
+  window.sb = _sb;
+} catch (e) {
+  console.error('[Auth] Supabase init failed:', e);
+}
+
+// ── Loader ────────────────────────────────────────
+// ── Handle Supabase auth errors in URL hash ───────────────────
+(function() {
+  var hash = window.location.hash || '';
+  if (!hash || !hash.includes('error')) return;
+  var params = new URLSearchParams(hash.substring(1));
+  var errCode = params.get('error_code') || params.get('error') || '';
+  if (!errCode) return;
+  var errDesc = (params.get('error_description') || '').split('+').join(' ');
+  console.log('[Login] auth error from hash:', errCode, errDesc);
+  history.replaceState(null, '', window.location.pathname);
+  console.log('[Login] hash cleaned');
+  var msgEl = document.getElementById('loginMsg');
+  if (msgEl) {
+    var msg = (errCode === 'otp_expired' || errCode === 'access_denied')
+      ? 'El enlace de acceso expiró. Inicia sesión con tu correo y contraseña.'
+      : (errCode === 'email_not_confirmed')
+      ? 'Tu correo aún no está confirmado. Revisa tu bandeja.'
+      : 'Error de acceso. Inicia sesión con tu correo y contraseña.';
+    msgEl.textContent = msg;
+    msgEl.style.cssText = 'display:block;color:rgba(251,191,36,.9);background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);border-radius:10px;padding:10px 14px;font-size:13px;margin-bottom:12px';
+  }
+})();
+
+let _loaderDone = false;
+// Timeout de seguridad — el loader NUNCA queda colgado
+const _loaderTimer = setTimeout(() => hideLoader('timeout'), 5000);
+
+function hideLoader(reason) {
+  if (_loaderDone) return;
+  _loaderDone = true;
+  clearTimeout(_loaderTimer);
+  if (reason) console.log('[Auth] hideLoader:', reason);
+  document.getElementById('pageLoader').classList.add('hidden');
+}
+
+// ── Un solo redirect ──────────────────────────────
+let _navigating = false;
+function navTo(url) {
+  if (_navigating) return;
+  _navigating = true;
+  window.location.replace(url);
+}
+
+// ── UI helpers ────────────────────────────────────
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+  // Pre-fill forgot email
+  if (id === 'panelForgot') {
+    const v = document.getElementById('loginEmail').value.trim();
+    if (v) document.getElementById('forgotEmail').value = v;
+  }
+}
+
+function setMsg(id, text, type) {
+  const el = document.getElementById(id);
+  el.textContent = text;
+  el.className = `msg-box ${type}`;
+}
+function clearMsg(id) {
+  document.getElementById(id).className = 'msg-box';
+}
+
+function setBtnState(btnId, spinnerId, textId, loading, text) {
+  document.getElementById(btnId).disabled    = loading;
+  document.getElementById(spinnerId).style.display = loading ? 'block' : 'none';
+  document.getElementById(textId).textContent = text;
+}
+
+function togglePass() {
+  const inp = document.getElementById('loginPass');
+  const btn = document.getElementById('passToggleBtn');
+  const isPass = inp.type === 'password';
+  inp.type       = isPass ? 'text' : 'password';
+  btn.textContent = isPass ? '🙈' : '👁️';
+  btn.setAttribute('aria-label', isPass ? 'Ocultar contraseña' : 'Mostrar contraseña');
+}
+
+// Errores Supabase → texto amigable en español
+const ERROR_MAP = {
+  'Invalid login credentials':   'No pudimos iniciar sesión. Revisa tu correo y contraseña.',
+  'Email not confirmed':          'Confirma tu correo antes de entrar.',
+  'Too many requests':            'Demasiados intentos seguidos. Espera unos minutos.',
+  'User not found':               'Ese correo aún no tiene cuenta. ¿Quieres crear una?',
+  'Invalid email':                'El correo no tiene el formato correcto.',
+  'Network request failed':       'Tu conexión parece inestable. Intenta otra vez.',
+  'Failed to fetch':              'Sin conexión. Revisa tu internet e intenta de nuevo.',
+  'Auth session missing':         'Tu sesión expiró. Vuelve a entrar.',
+  'JWT expired':                  'Tu sesión expiró. Vuelve a entrar.',
+  'Password should be at least':  'La contraseña debe tener al menos 8 caracteres.',
+  'already registered':           'Ese correo ya tiene cuenta. ¿Quieres iniciar sesión?',
+};
+function friendlyError(msg) {
+  msg = String(msg || '').toLowerCase();
+  if (msg.includes('otp') || msg.includes('expired') || msg.includes('invalid')) 
+    return 'El enlace expiró. Inicia sesión con tu correo y contraseña.';
+  if (msg.includes('email') && msg.includes('confirm'))
+    return 'Tu correo aún no está confirmado. Revisa tu bandeja.';
+  return ERROR_MAP[msg] || msg || 'Ocurrió un error inesperado.';
+}
+
+// ── Check sesión al cargar ─────────────────────────
+// Solo si hay sesión activa → redirigir sin mostrar el form.
+// ── Auth bootstrap on load ────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  if (!window.AB_boot) return; // auth-bootstrap not loaded yet - will retry
+  AB_boot({
+    ldrId: 'loginOverlay',
+    requireAuth: false, // login page — no auth required
+    autoRedirect: false,
+    onReady: function(session, profile, state) {
+      if (!session) return; // no session → show login form
+      // Already logged in → redirect
+      if (state.isAdmin) {
+        window.location.replace('/pages/admin-beta.html');
+      } else if (state.onboardingCompleted) {
+        window.location.replace('/pages/dashboard.html');
+      } else if (state.isCustom) {
+        window.location.replace('/pages/custom-plan-intake.html');
+      } else if (state.hasProduct) {
+        window.location.replace('/pages/onboarding.html');
+      }
+    }
+  });
+});
+
+(async function checkSession() {
+  if (!_sb) {
+    hideLoader('no-sb');
+    return;
+  }
+
+  try {
+    const { data, error } = await Promise.race([
+      _sb.auth.getSession(),
+      new Promise((_, rej) =>
+        setTimeout(() => rej(new Error('getSession timeout')), 4000)
+      )
+    ]);
+
+    if (error) throw error;
+
+    const user = data?.session?.user;
+    if (!user) {
+      hideLoader('no-session');
+      return;
+    }
+
+    // Hay sesión → revisar si completó onboarding
+    const { data: profile } = await _sb
+      .from('profiles')
+      .select('onboarding_completed, is_admin, role')
+      .eq('id', user.id)
+      .maybeSingle();
+
+    // Store admin status (no password stored — auth is Supabase Auth)
+    if (profile?.is_admin || profile?.role === 'admin') {
+      localStorage.setItem('af-is-admin', '1');
+      localStorage.setItem('af-role', 'admin');
+    } else {
+      localStorage.setItem('af-is-admin', '0');
+      localStorage.setItem('af-role', profile?.role || 'user');
+    }
+
+    // Store admin status
+    var isAdmin = profile?.is_admin === true || profile?.role === 'admin';
+    localStorage.setItem('af-is-admin', isAdmin ? '1' : '0');
+    localStorage.setItem('af-role', profile?.role || 'user');
+
+    if (isAdmin) {
+      navTo('/pages/admin-beta.html');
+    } else {
+      navTo(profile?.onboarding_completed === true
+        ? '/pages/dashboard.html'
+        : '/pages/onboarding.html');
+    }
+
+  } catch (e) {
+    console.warn('[Auth] checkSession error:', e.message);
+    hideLoader('error');
+  }
+}());
+
+// ── FORM: Login ────────────────────────────────────
+document.getElementById('loginForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  clearMsg('loginMsg');
+
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass  = document.getElementById('loginPass').value;
+
+  if (!email) { setMsg('loginMsg', 'Escribe tu correo.', 'err'); return; }
+  if (!pass)  { setMsg('loginMsg', 'Escribe tu contraseña.', 'err'); return; }
+  if (!_sb)   { setMsg('loginMsg', 'Error de conexión. Recarga la página.', 'err'); return; }
+
+  setBtnState('loginBtn', 'loginSpinner', 'loginBtnText', true, 'Entrando...');
+
+  try {
+    const { data, error } = await _sb.auth.signInWithPassword({
+      email, password: pass
+    });
+
+    if (error) {
+      setBtnState('loginBtn', 'loginSpinner', 'loginBtnText', false, 'Continuar mi día');
+      setMsg('loginMsg', friendlyError(error.message), 'err');
+      return;
+    }
+
+    setMsg('loginMsg', '✓ Sesión iniciada. Cargando tu reto...', 'ok');
+
+    const { data: profile } = await _sb
+      .from('profiles')
+      .select('onboarding_completed, is_admin, role')
+      .eq('id', data.user.id)
+      .maybeSingle();
+
+    // Store admin status + redirect
+    var isAdmin = profile?.is_admin === true || profile?.role === 'admin';
+    localStorage.setItem('af-is-admin', isAdmin ? '1' : '0');
+    localStorage.setItem('af-role', profile?.role || 'user');
+    if (profile?.id) localStorage.setItem('af-user-id', data.user.id);
+
+    if (isAdmin) {
+      navTo('/pages/admin-beta.html');
+    } else {
+      navTo(profile?.onboarding_completed === true
+        ? '/pages/dashboard.html'
+        : '/pages/onboarding.html');
+    }
+
+  } catch (e) {
+    setBtnState('loginBtn', 'loginSpinner', 'loginBtnText', false, 'Continuar mi día');
+    setMsg('loginMsg', 'Sin conexión. Verifica tu internet.', 'err');
+    console.error('[Auth] Login error:', e);
+  }
+});
+
+// ── FORM: Recuperar contraseña ─────────────────────
+document.getElementById('forgotForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  clearMsg('forgotMsg');
+
+  const email = document.getElementById('forgotEmail').value.trim();
+  if (!email) { setMsg('forgotMsg', 'Escribe tu correo.', 'err'); return; }
+  if (!_sb)   { setMsg('forgotMsg', 'Error de conexión.', 'err'); return; }
+
+  setBtnState('forgotBtn', 'forgotSpinner', 'forgotBtnText', true, 'Enviando...');
+
+  try {
+    const { error } = await _sb.auth.resetPasswordForEmail(email, {
+      redirectTo: 'https://arjunafit.app/reset-password.html'
+    });
+
+    setBtnState('forgotBtn', 'forgotSpinner', 'forgotBtnText', false, 'Enviar link de recuperación');
+
+    if (error) {
+      setMsg('forgotMsg', friendlyError(error.message), 'err');
+      return;
+    }
+
+    setMsg('forgotMsg',
+      '✓ Link enviado. Revisa tu bandeja de entrada (y la carpeta spam). Expira en 1 hora.',
+      'ok');
+    document.getElementById('forgotBtn').disabled = true;
+
+  } catch (e) {
+    setBtnState('forgotBtn', 'forgotSpinner', 'forgotBtnText', false, 'Enviar link de recuperación');
+    setMsg('forgotMsg', 'Sin conexión. Intenta de nuevo.', 'err');
+  }
+});
+</script>
+<script src="/js/core/transitions.js">  // ── Product + invitation param capture ───────────────
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var ref     = params.get('ref') || params.get('utm_source') || '';
+    var reto    = params.get('reto') || '';
+    var product = params.get('product') || '';
+
+    // Map legacy reto param to product type
+    if (!product && reto) {
+      var retoMap = { gluteos:'challenge_glutes', pancita:'challenge_belly', masa:'custom_muscle_gain', definicion:'custom_fat_loss' };
+      product = retoMap[reto] || '';
+    }
+
+    // Save product selection (survives page reload during auth)
+    if (product && ['challenge_glutes','challenge_belly','custom_muscle_gain','custom_fat_loss'].includes(product)) {
+      localStorage.setItem('af-pending-product', product);
+      // Redirect to signup page if coming with product context
+      if (!window.location.pathname.includes('signup')) { window.location.href = '/signup?product=' + product; return; }
+      if(window.AF) AF.track('signup_opened_with_product', { product, source: ref || 'direct' });
+    }
+
+    if (ref) {
+      localStorage.setItem('af-ref', ref);
+      if(window.AF) AF.track('invite_link_clicked', { ref, product });
+    }
+
+    // Pre-select reto (legacy compat)
+    if (reto) localStorage.setItem('af-preselect-reto', reto);
+
+    // Show selected product notice if product param present
+    var pending = localStorage.getItem('af-pending-product');
+    if (pending) {
+      var names = { challenge_glutes:'Reto de glúteos', challenge_belly:'Reto para bajar la pancita', custom_muscle_gain:'Aumento de masa muscular', custom_fat_loss:'Reducción de porcentaje graso' };
+      var notice = document.getElementById('product-notice');
+      if (notice) {
+        notice.textContent = '✦ Elegiste: ' + (names[pending] || pending);
+        notice.style.display = 'block';
+      }
+    }
+  })();
+</script>
+</body>
+</html>

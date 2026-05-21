@@ -1,0 +1,122 @@
+# ══════════════════════════════════════════════════
+# ArjunaFit — Netlify Configuration
+# ══════════════════════════════════════════════════
+
+[build]
+  publish = "."
+  command = "echo 'No build step needed'"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+  external_node_modules = ["@supabase/supabase-js"]
+
+# ── Redirects ─────────────────────────────────────
+
+# SPA fallback (evita 404 en rutas directas)
+[[redirects]]
+  from   = "/pages/*"
+  to     = "/pages/:splat"
+  status = 200
+
+[[redirects]]
+  from   = "/admin/*"
+  to     = "/admin/:splat"
+  status = 200
+
+# Ruta raíz → index o login
+[[redirects]]
+  from   = "/"
+  to     = "/index.html"
+  status = 200
+
+# Complete account route (post-payment user creation)
+[[redirects]]
+  from   = "/complete-account"
+  to     = "/complete-account.html"
+  status = 200
+
+# Custom plan intake
+[[redirects]]
+  from   = "/pages/custom-plan-intake"
+  to     = "/pages/custom-plan-intake.html"
+  status = 200
+
+# Signup route
+[[redirects]]
+  from   = "/signup"
+  to     = "/signup.html"
+  status = 200
+
+# ── Headers ───────────────────────────────────────
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options       = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy       = "strict-origin-when-cross-origin"
+    Permissions-Policy    = "microphone=(self)"
+
+# Cache para assets estáticos
+[[headers]]
+  for = "/styles/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/*.webmanifest"
+  [headers.values]
+    Content-Type  = "application/manifest+json"
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache, no-store"
+
+# Functions (CORS ya manejado en el handler)
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+[[redirects]]
+  from   = "/pages/payment-status"
+  to     = "/pages/payment-status.html"
+  status = 200
+
+[[redirects]]
+  from   = "/pages/community"
+  to     = "/pages/community.html"
+  status = 200
+
+[[redirects]]
+  from   = "/pages/help"
+  to     = "/pages/help.html"
+  status = 200
+
+[[redirects]]
+  from   = "/help"
+  to     = "/pages/help.html"
+  status = 200
+
+[[redirects]]
+  from   = "/pages/growth"
+  to     = "/pages/growth.html"
+  status = 200
+
+[[redirects]]
+  from   = "/growth"
+  to     = "/pages/growth.html"
+  status = 200
+
+[[redirects]]
+  from   = "/pages/commercial"
+  to     = "/pages/commercial.html"
+  status = 200
