@@ -2090,6 +2090,15 @@ id="tc-guia">
 <script src="/js/core/microvictorias.js"></script>
 <script src="/js/core/arju-assistant.js"></script>
 <script>
+// ── Ensure sw() is always available even if script errors ──
+window.sw = window.sw || function(id) {
+  ['hoy','recetas','mercado','fuera','guia'].forEach(function(k) {
+    var tc  = document.getElementById('tc-'+k);
+    var btn = document.getElementById('t-'+k);
+    if (tc) tc.style.display = (k===id) ? 'flex' : 'none';
+  });
+};
+
 // ── Dynamic photo CTA label by hour ─────────────
 (function() {
   const h = new Date().getHours();
@@ -2105,8 +2114,8 @@ id="tc-guia">
 const days  = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 const months= ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 const now   = new Date();
-document.getElementById('hdrDate').textContent =
-  `${days[now.getDay()]}, ${now.getDate()} de ${months[now.getMonth()]}`;
+var _hdrDate = document.getElementById('hdrDate');
+if (_hdrDate) _hdrDate.textContent = `${days[now.getDay()]}, ${now.getDate()} de ${months[now.getMonth()]}`;
 
 // ── Supabase ──────────────────────────────────────
 let _sb = null, _uid = null;
@@ -2128,7 +2137,7 @@ const TIPS = [
   'Un batido de banano + avena + proteína es el desayuno del reto.',
   'Preparar la comida el domingo cambia toda la semana.',
 ];
-document.getElementById('nutriTip').textContent = TIPS[now.getDay() % TIPS.length];
+var _tip = document.getElementById('nutriTip'); if (_tip) _tip.textContent = TIPS[now.getDay() % TIPS.length];
 
 // ── Tab switching ─────────────────────────────────
 // ── Dynamic recipe recommendation by time ────────
