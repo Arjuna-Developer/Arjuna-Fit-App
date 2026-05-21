@@ -1880,118 +1880,45 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
 
 
 
-  <div class="tc" id="tc-mercado">
-    <div>
-      <div style="font-size:16px;font-weight:800;letter-spacing:-.02em;margin-bottom:3px">
-        Lista del Mercado 🛒</div>
-      <div style="font-size:13px;color:var(--t3)">Toca para marcar lo que ya compraste</div>
+    <div class="tc" id="tc-mercado">
+
+      <!-- Header -->
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px">
+        <div>
+          <div style="font-size:20px;font-weight:900;color:#fff;letter-spacing:-.03em;margin-bottom:3px">
+            Lista del Mercado 🛒</div>
+          <div style="font-size:13px;color:rgba(255,255,255,.4)">Toca para marcar lo que ya compraste</div>
+        </div>
+        <button onclick="resetMarket()" style="
+          display:flex;align-items:center;gap:6px;padding:8px 14px;
+          border-radius:12px;border:1px solid rgba(124,58,237,.3);
+          background:rgba(124,58,237,.1);color:#c4b5fd;cursor:pointer;
+          font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;white-space:nowrap">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          Reiniciar lista
+        </button>
+      </div>
+
+      <!-- Market list -->
+      <div id="marketList" style="display:flex;flex-direction:column;gap:16px">
+        <!-- Rendered by renderMarket() -->
+      </div>
+
+      <!-- Add item button -->
+      <button onclick="addMarketItem()" style="
+        width:100%;padding:14px;border-radius:16px;
+        border:1.5px dashed rgba(124,58,237,.35);
+        background:rgba(124,58,237,.06);
+        color:#a78bfa;cursor:pointer;font-family:'Outfit',sans-serif;
+        font-size:13px;font-weight:700;margin-top:16px;
+        display:flex;align-items:center;justify-content:center;gap:8px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Agregar producto
+      </button>
+
     </div>
 
-    <!-- Reset button -->
-    <button onclick="resetShop()" style="
-      align-self:flex-start;padding:6px 14px;border-radius:10px;
-      border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);
-      color:var(--t3);font-family:var(--font);font-size:12px;cursor:pointer;">
-      🔄 Reiniciar lista</button>
 
-    <!-- Proteínas -->
-    <div>
-      <div class="shop-cat-title">🥩 Proteínas</div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-p1')">
-        <div class="si-check">✓</div><div class="si-name">Pechuga de pollo</div><div class="si-qty">500g</div>
-      </div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-p2')">
-        <div class="si-check">✓</div><div class="si-name">Huevos</div><div class="si-qty">12 uds</div>
-      </div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-p3')">
-        <div class="si-check">✓</div><div class="si-name">Atún en agua</div><div class="si-qty">4 latas</div>
-      </div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-p4')">
-        <div class="si-check">✓</div><div class="si-name">Yogur griego</div><div class="si-qty">500g</div>
-      </div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-p5')">
-        <div class="si-check">✓</div><div class="si-name">Fríjoles negros</div><div class="si-qty">1 libra</div>
-      </div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-p6')">
-        <div class="si-check">✓</div><div class="si-name">Carne molida (res)</div><div class="si-qty">400g</div>
-      </div>
-    </div>
-
-    <!-- Carbohidratos -->
-    <div>
-      <div class="shop-cat-title">🌾 Carbohidratos</div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-c1')">
-        <div class="si-check">✓</div><div class="si-name">Arroz blanco</div><div class="si-qty">1 kg</div>
-      </div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-c2')">
-        <div class="si-check">✓</div><div class="si-name">Avena en hojuelas</div><div class="si-qty">500g</div>
-      </div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-c3')">
-        <div class="si-check">✓</div><div class="si-name">Papa criolla</div><div class="si-qty">1 kg</div>
-      </div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-c4')">
-        <div class="si-check">✓</div><div class="si-name">Lentejas</div><div class="si-qty">500g</div>
-      </div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-c5')">
-        <div class="si-check">✓</div><div class="si-name">Pan integral</div><div class="si-qty">1 paquete</div>
-      </div>
-    </div>
-
-    <!-- Frutas y verduras -->
-    <div>
-      <div class="shop-cat-title">🥦 Frutas y Verduras</div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-v1')">
-        <div class="si-check">✓</div><div class="si-name">Brócoli</div><div class="si-qty">1 cabeza</div>
-      </div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-v2')">
-        <div class="si-check">✓</div><div class="si-name">Espinacas</div><div class="si-qty">1 bolsa</div>
-      </div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-v3')">
-        <div class="si-check">✓</div><div class="si-name">Tomate</div><div class="si-qty">4 uds</div>
-      </div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-v4')">
-        <div class="si-check">✓</div><div class="si-name">Cebolla</div><div class="si-qty">3 uds</div>
-      </div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-v5')">
-        <div class="si-check">✓</div><div class="si-name">Banano</div><div class="si-qty">6 uds</div>
-      </div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-v6')">
-        <div class="si-check">✓</div><div class="si-name">Aguacate</div><div class="si-qty">3 uds</div>
-      </div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-v7')">
-        <div class="si-check">✓</div><div class="si-name">Limones</div><div class="si-qty">6 uds</div>
-      </div>
-    </div>
-
-    <!-- Básicos -->
-    <div>
-      <div class="shop-cat-title">🧄 Básicos de Cocina</div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-b1')">
-        <div class="si-check">✓</div><div class="si-name">Aceite de oliva</div><div class="si-qty">1 botella</div>
-      </div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-b2')">
-        <div class="si-check">✓</div><div class="si-name">Ajo</div><div class="si-qty">1 cabeza</div>
-      </div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-b3')">
-        <div class="si-check">✓</div><div class="si-name">Comino y sal</div><div class="si-qty">al gusto</div>
-      </div>
-    </div>
-
-    <!-- Snacks -->
-    <div>
-      <div class="shop-cat-title">🥜 Snacks</div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-s1')">
-        <div class="si-check">✓</div><div class="si-name">Nueces mixtas</div><div class="si-qty">200g</div>
-      </div>
-      <div class="shop-item" onclick="toggleShop(this,'sh-s2')">
-        <div class="si-check">✓</div><div class="si-name">Mantequilla de maní</div><div class="si-qty">1 frasco</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════ TAB: GUÍA ══════════════ -->
-  <div class="tc" 
-<!-- ══════════════ TAB: COMER FUERA ══════════════ -->
 <div class="tc" id="tc-fuera">
 
   <div style="font-size:17px;font-weight:800;color:#f5f3ff;margin-bottom:4px;padding:4px 0">
@@ -4464,6 +4391,165 @@ setTimeout(function() {
   try { foods = JSON.parse(localStorage.getItem('af-food-' + dateKey) || '[]'); } catch(e){}
   if (typeof updateMacroUI === 'function') updateMacroUI(foods);
 }, 500);
+
+// ══════════════════════════════════════════════
+// MERCADO — Lista de compras
+// ══════════════════════════════════════════════
+var MARKET_DATA = {
+  proteinas: {
+    label: 'PROTEÍNAS', icon: '🥩', color: '#f87171',
+    items: [
+      { id:'p1', name:'Pechuga de pollo',   qty:'500g',    emoji:'🍗' },
+      { id:'p2', name:'Huevos',             qty:'12 uds',  emoji:'🥚' },
+      { id:'p3', name:'Atún en agua',       qty:'4 latas', emoji:'🐟' },
+      { id:'p4', name:'Yogur griego',       qty:'500g',    emoji:'🫙' },
+      { id:'p5', name:'Fríjoles negros',    qty:'1 libra', emoji:'🫘' },
+      { id:'p6', name:'Carne molida (res)', qty:'400g',    emoji:'🥩' },
+    ]
+  },
+  carbohidratos: {
+    label: 'CARBOHIDRATOS', icon: '🌾', color: '#fcd34d',
+    items: [
+      { id:'c1', name:'Arroz blanco',       qty:'1 kg',  emoji:'🍚' },
+      { id:'c2', name:'Avena en hojuelas',  qty:'500g',  emoji:'🥣' },
+      { id:'c3', name:'Papa criolla',       qty:'1 kg',  emoji:'🥔' },
+      { id:'c4', name:'Pan integral',       qty:'1 und', emoji:'🍞' },
+    ]
+  },
+  grasas: {
+    label: 'GRASAS BUENAS', icon: '🥑', color: '#6ee7b7',
+    items: [
+      { id:'g1', name:'Aguacate',           qty:'4 uds', emoji:'🥑' },
+      { id:'g2', name:'Aceite de oliva',    qty:'250ml', emoji:'🫙' },
+      { id:'g3', name:'Almendras',          qty:'200g',  emoji:'🥜' },
+    ]
+  },
+  vegetales: {
+    label: 'VEGETALES', icon: '🥦', color: '#34d399',
+    items: [
+      { id:'v1', name:'Brócoli',            qty:'500g',  emoji:'🥦' },
+      { id:'v2', name:'Espinaca',           qty:'250g',  emoji:'🥬' },
+      { id:'v3', name:'Tomate',             qty:'500g',  emoji:'🍅' },
+      { id:'v4', name:'Zanahoria',          qty:'500g',  emoji:'🥕' },
+      { id:'v5', name:'Pepino',             qty:'2 uds', emoji:'🥒' },
+    ]
+  },
+  lacteos: {
+    label: 'LÁCTEOS', icon: '🥛', color: '#93c5fd',
+    items: [
+      { id:'l1', name:'Leche descremada',   qty:'1 litro', emoji:'🥛' },
+      { id:'l2', name:'Queso cottage',      qty:'250g',    emoji:'🧀' },
+    ]
+  },
+  extras: {
+    label: 'EXTRAS FIT', icon: '✨', color: '#c4b5fd',
+    items: [
+      { id:'e1', name:'Proteína en polvo',  qty:'1 kg',  emoji:'💪' },
+      { id:'e2', name:'Limones',            qty:'6 uds', emoji:'🍋' },
+      { id:'e3', name:'Sal rosa del Himalaya', qty:'250g', emoji:'🧂' },
+    ]
+  }
+};
+
+function getMarketChecked() {
+  try { return JSON.parse(localStorage.getItem('af-market-checked') || '{}'); } catch(e) { return {}; }
+}
+function saveMarketChecked(obj) {
+  localStorage.setItem('af-market-checked', JSON.stringify(obj));
+}
+
+function renderMarket() {
+  var list = document.getElementById('marketList');
+  if (!list) return;
+  var checked = getMarketChecked();
+  
+  list.innerHTML = Object.keys(MARKET_DATA).map(function(catKey) {
+    var cat = MARKET_DATA[catKey];
+    var count = cat.items.length;
+    var doneCount = cat.items.filter(function(it){ return checked[it.id]; }).length;
+    
+    var itemsHtml = cat.items.map(function(item) {
+      var isDone = !!checked[item.id];
+      return '<div onclick="toggleMarketItem('' + item.id + '')" style="' +
+        'display:flex;align-items:center;gap:12px;padding:14px 16px;' +
+        'border-top:1px solid rgba(255,255,255,.05);cursor:pointer;' +
+        '-webkit-tap-highlight-color:transparent;transition:background .12s;' +
+        (isDone ? 'opacity:.45;' : '') + '">' +
+        // Checkbox
+        '<div id="chk-'+item.id+'" style="width:22px;height:22px;border-radius:7px;flex-shrink:0;' +
+          'border:1.5px solid ' + (isDone ? cat.color : 'rgba(124,58,237,.4)') + ';' +
+          'background:' + (isDone ? cat.color.replace(')',', .15)').replace('rgb','rgba') : 'transparent') + ';' +
+          'display:flex;align-items:center;justify-content:center;font-size:11px;color:white">' +
+          (isDone ? '✓' : '') + '</div>' +
+        // Emoji
+        '<div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.06);' +
+          'display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">' +
+          item.emoji + '</div>' +
+        // Name
+        '<div style="flex:1;font-size:14px;font-weight:700;color:' +
+          (isDone ? 'rgba(255,255,255,.4)' : '#fff') + ';' +
+          'text-decoration:' + (isDone ? 'line-through' : 'none') + '">' +
+          item.name + '</div>' +
+        // Qty + chevron
+        '<div style="display:flex;align-items:center;gap:6px">' +
+          '<span style="font-size:13px;color:rgba(255,255,255,.4);font-weight:600">' + item.qty + '</span>' +
+          '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>' +
+        '</div>' +
+        '</div>';
+    }).join('');
+    
+    return '<div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:20px;overflow:hidden">' +
+      // Category header
+      '<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px">' +
+        '<div style="display:flex;align-items:center;gap:8px">' +
+          '<span>' + cat.icon + '</span>' +
+          '<span style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:' + cat.color + '">' + cat.label + '</span>' +
+        '</div>' +
+        '<span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;' +
+          'background:rgba(255,255,255,.07);color:rgba(255,255,255,.4)">' +
+          (doneCount > 0 ? doneCount+'/' : '') + count + ' productos</span>' +
+      '</div>' +
+      itemsHtml +
+      '</div>';
+  }).join('');
+}
+
+function toggleMarketItem(id) {
+  var checked = getMarketChecked();
+  checked[id] = !checked[id];
+  saveMarketChecked(checked);
+  renderMarket();
+}
+
+function resetMarket() {
+  saveMarketChecked({});
+  renderMarket();
+}
+
+function addMarketItem() {
+  var name = prompt('Nombre del producto:');
+  if (!name) return;
+  var qty  = prompt('Cantidad (ej: 500g, 2 uds):') || '—';
+  // Add to extras
+  var id = 'custom-' + Date.now();
+  MARKET_DATA.extras.items.push({ id:id, name:name, qty:qty, emoji:'🛒' });
+  renderMarket();
+}
+
+// Init market when tab opens
+document.addEventListener('DOMContentLoaded', function() {
+  var origSw = window.sw;
+  if (typeof origSw === 'function') {
+    window.sw = function(id) {
+      origSw(id);
+      if (id === 'mercado') setTimeout(renderMarket, 50);
+    };
+  }
+  // Also render if already on mercado
+  if (window.location.hash === '#mercado' || new URLSearchParams(window.location.search).get('tab') === 'mercado') {
+    setTimeout(renderMarket, 300);
+  }
+});
 </script>
 
 
