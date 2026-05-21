@@ -4419,8 +4419,17 @@ function deleteFoodEntry(idx) {
   try { foods = JSON.parse(localStorage.getItem('af-food-' + dateKey) || '[]'); } catch(e){}
   foods.splice(idx, 1);
   localStorage.setItem('af-food-' + dateKey, JSON.stringify(foods));
+  // Refresh food list
   renderTodayFoods();
-  if (typeof updateMacroDisplay === 'function') updateMacroDisplay();
+  // Refresh macros ring + dayStateLabel
+  if (typeof updateMacroUI === 'function') {
+    updateMacroUI(foods);
+  }
+  // Also trigger the full day state update if available
+  if (typeof renderDayState === 'function') renderDayState();
+  if (typeof initHoy === 'function') initHoy();
+  // Refresh meal strip on home if open
+  if (typeof window.refreshMealStrip === 'function') window.refreshMealStrip();
 }
 
 // Run on load and after any save
@@ -4431,7 +4440,13 @@ document.addEventListener('DOMContentLoaded', function() {
   if (typeof origSave === 'function') {
     window.saveFood = function() {
       var result = origSave.apply(this, arguments);
-      setTimeout(renderTodayFoods, 300);
+      setTimeout(function() {
+        renderTodayFoods();
+        var dk = new Date().toISOString().split('T')[0];
+        var fs = [];
+        try { fs = JSON.parse(localStorage.getItem('af-food-' + dk) || '[]'); } catch(e){}
+        if (typeof updateMacroUI === 'function') updateMacroUI(fs);
+      }, 400);
       return result;
     };
   }
@@ -4441,7 +4456,14 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 // Also call directly in case DOMContentLoaded already fired
-setTimeout(renderTodayFoods, 500);
+setTimeout(function() {
+  renderTodayFoods();
+  // Also refresh macros on load
+  var dateKey = new Date().toISOString().split('T')[0];
+  var foods = [];
+  try { foods = JSON.parse(localStorage.getItem('af-food-' + dateKey) || '[]'); } catch(e){}
+  if (typeof updateMacroUI === 'function') updateMacroUI(foods);
+}, 500);
 </script>
 
 
