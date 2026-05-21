@@ -685,51 +685,66 @@ function showProgressionPrompt(exerciseName, lastWeight) {
   <div class="scroll" id="scroll"></div>
 
   <div id="bottomBar" style="
-  display:flex !important;
+  display:flex;
   align-items:center;
-  gap:8px;
-  padding:8px 14px calc(10px + env(safe-area-inset-bottom));
-  background:rgba(10,5,22,.97);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
-  border-top:1px solid rgba(255,255,255,.08);
+  gap:10px;
+  padding:10px 16px calc(12px + env(safe-area-inset-bottom));
+  background:rgba(8,4,18,.96);
+  backdrop-filter:blur(28px);
+  -webkit-backdrop-filter:blur(28px);
+  border-top:1px solid rgba(255,255,255,.07);
+  box-shadow:0 -1px 0 rgba(255,255,255,.04),inset 0 1px 0 rgba(255,255,255,.03);
   flex-shrink:0;
   position:relative;
   z-index:10;
 ">
+  <!-- Volver -->
   <button id="prevBtn" onclick="prevPhase()" style="
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:2px;min-width:64px;height:50px;border-radius:14px;border:none;
-    background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-    color:rgba(255,255,255,.65);cursor:pointer;flex-shrink:0;font-family:Outfit,sans-serif;
-  ">
-    <span style="font-size:18px;line-height:1">←</span>
-    <span style="font-size:10px;font-weight:700;opacity:.8">Anterior</span>
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    width:54px;height:54px;border-radius:16px;cursor:pointer;flex-shrink:0;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.09);
+    color:rgba(255,255,255,.6);
+    font-family:'Outfit',sans-serif;
+    transition:transform .15s,background .15s;
+  " onmousedown="this.style.transform='scale(.93)'" onmouseup="this.style.transform=''">
+    <span style="font-size:20px;line-height:1">←</span>
+    <span style="font-size:9px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;opacity:.7">Anterior</span>
   </button>
 
+  <!-- Siguiente (principal) -->
   <button id="nextBtn" onclick="nextPhase()" style="
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:2px;flex:1;height:50px;border-radius:14px;border:none;
-    background:linear-gradient(135deg,#7c3aed,#a855f7,#ec4899);
-    box-shadow:0 4px 18px rgba(124,58,237,.45),inset 0 1px 0 rgba(255,255,255,.15);
-    color:#fff;cursor:pointer;font-family:Outfit,sans-serif;position:relative;overflow:hidden;
-  ">
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    flex:1;height:54px;border-radius:16px;cursor:pointer;
+    background:linear-gradient(135deg,#7c3aed 0%,#a855f7 50%,#ec4899 100%);
+    border:none;
+    color:#fff;
+    font-family:'Outfit',sans-serif;
+    box-shadow:0 4px 20px rgba(124,58,237,.5),inset 0 1px 0 rgba(255,255,255,.18);
+    position:relative;overflow:hidden;
+    transition:transform .15s,box-shadow .15s;
+  " onmousedown="this.style.transform='scale(.97)'" onmouseup="this.style.transform=''">
+    <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.12),transparent 60%);pointer-events:none"></div>
     <div id="bspn" style="display:none;width:14px;height:14px;border-radius:50%;
       border:2px solid rgba(255,255,255,.3);border-top-color:#fff;
       animation:spin .6s linear infinite;position:absolute"></div>
-    <span id="nextLbl" style="font-size:13px;font-weight:800;letter-spacing:-.01em">Continuar ✓</span>
-    <span id="nextSub" style="font-size:10px;opacity:.75;margin-top:1px"></span>
+    <span id="nextLbl" style="font-size:14px;font-weight:800;letter-spacing:-.02em;position:relative;z-index:1">Continuar ✓</span>
+    <span id="nextSub" style="font-size:10px;font-weight:500;opacity:.75;position:relative;z-index:1;margin-top:1px"></span>
   </button>
 
+  <!-- Arju -->
   <button id="arjuWorkoutBtn" onclick="openArjuWorkout()" style="
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:2px;min-width:56px;height:50px;border-radius:14px;border:none;
-    background:rgba(124,58,237,.2);border:1px solid rgba(124,58,237,.3);
-    color:#c4b5fd;cursor:pointer;flex-shrink:0;font-family:Outfit,sans-serif;
-    box-shadow:0 0 12px rgba(124,58,237,.2);
-  ">
-    <span style="font-size:18px;line-height:1">🤖</span>
-    <span style="font-size:10px;font-weight:700">Arju</span>
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    width:54px;height:54px;border-radius:16px;cursor:pointer;flex-shrink:0;
+    background:linear-gradient(135deg,rgba(124,58,237,.3),rgba(236,72,153,.2));
+    border:1px solid rgba(124,58,237,.35);
+    color:#c4b5fd;
+    font-family:'Outfit',sans-serif;
+    box-shadow:0 0 16px rgba(124,58,237,.2),inset 0 1px 0 rgba(255,255,255,.08);
+    transition:transform .15s;
+  " onmousedown="this.style.transform='scale(.93)'" onmouseup="this.style.transform=''">
+    <span style="font-size:20px;line-height:1">🤖</span>
+    <span style="font-size:9px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;opacity:.85">Arju</span>
   </button>
 </div>
 </div>
