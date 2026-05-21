@@ -1383,6 +1383,13 @@ function afNavRegister() {
     });
   }
 })();
+
+// ── Inject rich context into system prompt ────────────────────
+function buildSystemWithContext() {
+  var base = (window.ARJU_BASE || 'Eres Arju, el coach de ArjunaFit. Eres humano, cercano, directo.');
+  var ctx  = (typeof getArjuRichContext === 'function') ? getArjuRichContext() : '';
+  return ctx ? base + '\n\n' + ctx : base;
+}
 </script>
 </body>
 </html>
