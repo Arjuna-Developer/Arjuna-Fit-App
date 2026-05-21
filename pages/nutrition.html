@@ -1915,41 +1915,38 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
     </div>
 
 
-<div class="tc" id="tc-fuera">
-
-  <div style="font-size:17px;font-weight:800;color:#f5f3ff;margin-bottom:4px;padding:4px 0">
-    🍽️ Comer fuera
-  </div>
-  <p style="font-size:13px;color:rgba(255,255,255,.45);margin:0 0 18px;line-height:1.5">
-    Elige el tipo de comida y Arju te recomienda la mejor opción según tu objetivo.
-    Los macros son estimaciones aproximadas.
-  </p>
-
-  <!-- Restaurant grid -->
-  <div id="restaurantGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px"></div>
-
-  <!-- Selected restaurant options -->
-  <div id="restaurantOptions" style="display:none">
-    <button onclick="closeRestaurantOptions()"
-      style="display:flex;align-items:center;gap:6px;background:none;border:none;color:rgba(196,181,253,.6);
-             font-size:13px;font-weight:600;cursor:pointer;margin-bottom:14px;padding:0;font-family:var(--font)">
-      ← Volver
-    </button>
-    <div id="restaurantOptionsTitle" style="font-size:16px;font-weight:800;color:#f5f3ff;margin-bottom:14px"></div>
-    <div id="restaurantOptionsList"></div>
-  </div>
-
-  <!-- Arju suggestion strip -->
-  <div style="background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.18);border-radius:16px;padding:14px 16px;margin-top:8px">
-    <div style="font-size:11px;font-weight:700;color:#a78bfa;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">
-      Arju te recomienda
+    <div class="tc" id="tc-fuera">
+      <div style="margin-bottom:20px">
+        <div style="font-size:20px;font-weight:900;color:#fff;letter-spacing:-.03em;margin-bottom:4px">Comer fuera 🍽️</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.4)">Arju te dice exactamente qué pedir según tu objetivo</div>
+      </div>
+      <div style="display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-bottom:16px;padding-bottom:2px">
+        <button onclick="selectCity('cali')" id="city-cali" style="padding:8px 16px;border-radius:20px;border:none;cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;flex-shrink:0;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.35)">📍 Cali</button>
+        <button onclick="selectCity('bogota')" id="city-bogota" style="padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.1);cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);flex-shrink:0">Bogotá</button>
+        <button onclick="selectCity('medellin')" id="city-medellin" style="padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.1);cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);flex-shrink:0">Medellín</button>
+        <button onclick="selectCity('barranquilla')" id="city-barranquilla" style="padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.1);cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);flex-shrink:0">Barranquilla</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px">
+        <button onclick="selectMealType('saludable')" id="mt-saludable" style="padding:14px;border-radius:16px;border:1.5px solid rgba(16,185,129,.4);background:rgba(16,185,129,.08);cursor:pointer;font-family:'Outfit',sans-serif;text-align:left">
+          <div style="font-size:20px;margin-bottom:6px">🥗</div><div style="font-size:13px;font-weight:700;color:#34d399">Saludable</div><div style="font-size:11px;color:rgba(52,211,153,.6);margin-top:2px">Bajo en calorías</div>
+        </button>
+        <button onclick="selectMealType('rapida')" id="mt-rapida" style="padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);cursor:pointer;font-family:'Outfit',sans-serif;text-align:left">
+          <div style="font-size:20px;margin-bottom:6px">⚡</div><div style="font-size:13px;font-weight:700;color:rgba(255,255,255,.8)">Rápida</div><div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:2px">Lista en minutos</div>
+        </button>
+        <button onclick="selectMealType('domicilio')" id="mt-domicilio" style="padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);cursor:pointer;font-family:'Outfit',sans-serif;text-align:left">
+          <div style="font-size:20px;margin-bottom:6px">🛵</div><div style="font-size:13px;font-weight:700;color:rgba(255,255,255,.8)">Domicilio</div><div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:2px">A tu puerta</div>
+        </button>
+        <button onclick="selectMealType('cafeteria')" id="mt-cafeteria" style="padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);cursor:pointer;font-family:'Outfit',sans-serif;text-align:left">
+          <div style="font-size:20px;margin-bottom:6px">☕</div><div style="font-size:13px;font-weight:700;color:rgba(255,255,255,.8)">Cafetería</div><div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:2px">Opciones de oficina</div>
+        </button>
+      </div>
+      <div id="restaurantList" style="display:flex;flex-direction:column;gap:10px"></div>
+      <div style="display:flex;align-items:flex-start;gap:12px;padding:14px 16px;margin-top:8px;background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.2);border-radius:18px">
+        <span style="font-size:20px;flex-shrink:0">🤖</span>
+        <div><div style="font-size:11px;font-weight:800;color:#a78bfa;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px">CONSEJO ARJU</div>
+        <div id="arjuFueraTip" style="font-size:13px;color:rgba(255,255,255,.65);line-height:1.6">Cuando comas fuera, prioriza proteína primero. Pide la proteína antes de ver las opciones de carbohidratos.</div></div>
+      </div>
     </div>
-    <div id="restaurantArjuTip" style="font-size:13px;color:rgba(240,238,248,.75);line-height:1.6">
-      Elige el tipo de comida y te doy una sugerencia según tu objetivo.
-    </div>
-  </div>
-
-</div>
 
 id="tc-guia">
     <div>
@@ -4618,6 +4615,20 @@ function addSuggestion(id) {
 function goToRecipe() {
   if (typeof sw === 'function') sw('recetas');
 }
+
+var _selCity='cali',_selMealType='saludable';
+var RESTAURANTS={cali:{saludable:[{n:'Quinoa & Co',d:'Bowls alta proteína',dist:'1.2 km',e:'🥙',p:'Bowl de pollo con quinoa y aguacate. Sin aderezo cremoso.',m:'42g prot · 380 cal'},{n:'Green Bowl',d:'Ensaladas y wraps fit',dist:'0.8 km',e:'🥗',p:'Wrap de pechuga grillada con espinaca. Sin queso.',m:'35g prot · 320 cal'},{n:'Saludable Express',d:'Comida colombiana ligera',dist:'2.1 km',e:'🍱',p:'Bandeja light: pechuga a la plancha + ensalada + arroz integral.',m:'40g prot · 420 cal'}],rapida:[{n:'Subway',d:'Subs personalizados',dist:'0.5 km',e:'🥖',p:'Sub de pechuga pan integral 15cm. Sin mayo, con mostaza y vegetales.',m:'30g prot · 350 cal'},{n:'Sándwich Qbano',d:'Sánduches colombianos',dist:'0.7 km',e:'🥪',p:'Qbano de pollo sin cremas. Tomate y lechuga.',m:'28g prot · 380 cal'}],domicilio:[{n:'Rappi Saludable',d:'Filtro opciones fit',dist:'App',e:'📱',p:'Filtra por "saludable". Busca platos con +30g proteína.',m:'Variable'},{n:'Fresco Market',d:'Mercado fit a domicilio',dist:'App',e:'🛵',p:'Pide proteína lista + vegetales para armar en casa.',m:'Variable'}],cafeteria:[{n:'Cafetería típica',d:'Menú ejecutivo',dist:'Cerca',e:'🍽️',p:'Sopa de verduras + seco de pollo. Evita ensalada de pasta.',m:'35g prot · 450 cal'}]},bogota:{saludable:[{n:'Wok',d:'Cocina asiática saludable',dist:'Varía',e:'🍜',p:'Wok de pollo con vegetales. Pide arroz integral.',m:'38g prot · 360 cal'},{n:'Crepes & Waffles',d:'Opciones ligeras',dist:'Varía',e:'🥗',p:'Ensalada César con pollo grillado. Aderezo al lado.',m:'32g prot · 340 cal'}],rapida:[{n:'El Corral',d:'Sin culpa',dist:'Varía',e:'🍔',p:'Pollo grillado sin pan. En lechuga. Sin salsas cremosas.',m:'30g prot · 350 cal'}],domicilio:[{n:'Rappi',d:'Todo a domicilio',dist:'App',e:'📱',p:'Filtra restaurantes con opción fit o ensaladas.',m:'Variable'}],cafeteria:[{n:'Juan Valdez',d:'Café y snacks',dist:'Varía',e:'☕',p:'Sándwich de pollo integral + café negro. Sin pasteles.',m:'22g prot · 280 cal'}]},medellin:{saludable:[{n:'Verdeo',d:'Restaurante vegetariano-fit',dist:'Varía',e:'🌱',p:'Bowl proteico con legumbres, quinoa y aguacate.',m:'28g prot · 380 cal'}],rapida:[{n:'Presto',d:'Comida rápida local',dist:'Varía',e:'🍗',p:'Pechuga asada sin piel con ensalada. Sin papas fritas.',m:'35g prot · 320 cal'}],domicilio:[{n:'Rappi',d:'Delivery rápido',dist:'App',e:'📱',p:'Busca "saludable" en el filtro de categorías.',m:'Variable'}],cafeteria:[{n:'Oma',d:'Café y snacks',dist:'Varía',e:'☕',p:'Sándwich de atún con pan integral. Sin aderezos cremosos.',m:'25g prot · 290 cal'}]},barranquilla:{saludable:[{n:'Healthy Baq',d:'Comida fit caribeña',dist:'Varía',e:'🥗',p:'Ensalada caribeña con pollo y mango. Sin azúcar añadida.',m:'32g prot · 350 cal'}],rapida:[{n:'El Corral',d:'Opciones sin culpa',dist:'Varía',e:'🍔',p:'Pollo grillado con ensalada. Sin salsas cremosas.',m:'30g prot · 340 cal'}],domicilio:[{n:'Rappi',d:'Delivery en tu zona',dist:'App',e:'📱',p:'Filtra por opciones bajas en calorías.',m:'Variable'}],cafeteria:[{n:'Cafetería local',d:'Menú del día',dist:'Cerca',e:'🍽️',p:'Seco de pescado con ensalada fresca. Sin arroz doble.',m:'38g prot · 430 cal'}]}};
+var ARJU_TIPS={saludable:'Cuando comas fuera saludable, prioriza proteína animal primero. Pide carbohidratos al lado.',rapida:'En restaurantes rápidos: pollo grillado > frito. Sin salsas cremosas. Agua > gaseosa.',domicilio:'Al pedir a domicilio, revisa los macros. Busca platos con al menos 25g de proteína.',cafeteria:'En cafeterías: sopa + proteína + ensalada. Evita el postre y las bebidas azucaradas.'};
+
+function selectCity(c){_selCity=c;['cali','bogota','medellin','barranquilla'].forEach(function(x){var b=document.getElementById('city-'+x);if(!b)return;if(x===c){b.style.background='linear-gradient(135deg,#7c3aed,#a855f7)';b.style.color='#fff';b.style.border='none';b.style.boxShadow='0 3px 10px rgba(124,58,237,.35)';}else{b.style.background='rgba(255,255,255,.05)';b.style.color='rgba(255,255,255,.6)';b.style.border='1px solid rgba(255,255,255,.1)';b.style.boxShadow='none';}});renderRestaurants();}
+
+function selectMealType(t){_selMealType=t;var COLS={saludable:{bg:'rgba(16,185,129,.08)',br:'rgba(16,185,129,.4)',c:'#34d399'},rapida:{bg:'rgba(245,158,11,.08)',br:'rgba(245,158,11,.4)',c:'#fbbf24'},domicilio:{bg:'rgba(59,130,246,.08)',br:'rgba(59,130,246,.4)',c:'#60a5fa'},cafeteria:{bg:'rgba(167,139,250,.08)',br:'rgba(167,139,250,.4)',c:'#c4b5fd'}};['saludable','rapida','domicilio','cafeteria'].forEach(function(x){var b=document.getElementById('mt-'+x);if(!b)return;if(x===t){var col=COLS[x];b.style.background=col.bg;b.style.border='1.5px solid '+col.br;var lbl=b.querySelectorAll('div')[1];if(lbl)lbl.style.color=col.c;}else{b.style.background='rgba(255,255,255,.04)';b.style.border='1px solid rgba(255,255,255,.08)';var lbl=b.querySelectorAll('div')[1];if(lbl)lbl.style.color='rgba(255,255,255,.8)';}});var tip=document.getElementById('arjuFueraTip');if(tip)tip.textContent=ARJU_TIPS[t]||ARJU_TIPS.saludable;renderRestaurants();}
+
+function renderRestaurants(){var list=document.getElementById('restaurantList');if(!list)return;var data=(RESTAURANTS[_selCity]&&RESTAURANTS[_selCity][_selMealType])||[];if(!data.length){list.innerHTML='<div style="text-align:center;padding:24px;font-size:13px;color:rgba(255,255,255,.25)">Próximamente en esta ciudad</div>';return;}list.innerHTML=data.map(function(r){return'<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:18px;overflow:hidden"><div style="display:flex;align-items:center;gap:12px;padding:14px 16px"><div style="width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">'+r.e+'</div><div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:3px">'+r.n+'</div><div style="font-size:12px;color:rgba(255,255,255,.4)">'+r.d+' · '+r.dist+'</div></div></div><div style="padding:0 16px 14px"><div style="font-size:11px;font-weight:700;color:#a78bfa;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px">🤖 Pide:</div><div style="font-size:13px;color:rgba(255,255,255,.7);line-height:1.5;margin-bottom:8px">'+r.p+'</div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(124,58,237,.15);color:#c4b5fd;font-weight:700">'+r.m+'</span><a href="https://www.google.com/maps/search/'+encodeURIComponent(r.n)+'" target="_blank" style="font-size:12px;color:rgba(167,139,250,.6);font-weight:600;text-decoration:none">📍 Ver →</a></div></div></div>';}).join('');}
+
+// Hook into sw() 
+(function(){var _origSw=window.sw;if(typeof _origSw==='function'){window.sw=function(id){_origSw(id);if(id==='fuera')setTimeout(function(){renderRestaurants();},60);};}})();
+setTimeout(function(){if(document.getElementById('tc-fuera')&&document.getElementById('tc-fuera').classList.contains('on'))renderRestaurants();},300);
 </script>
 </body>
 </html>
