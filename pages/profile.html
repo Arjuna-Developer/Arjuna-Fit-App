@@ -99,6 +99,17 @@ body{background:var(--bg);color:var(--t);font-family:var(--font);-webkit-font-sm
   .nav-ambient{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100vw,430px);height:140px;background:radial-gradient(ellipse at 50% 100%,rgba(124,58,237,.18) 0%,rgba(168,85,247,.1) 30%,transparent 70%);filter:blur(20px);z-index:99;pointer-events:none}
   nav[style*="position:fixed"]{background:rgba(12,7,22,.88)!important;backdrop-filter:blur(40px) saturate(1.8)!important;-webkit-backdrop-filter:blur(40px) saturate(1.8)!important;border-radius:26px!important;border-color:rgba(196,181,253,.08)!important;box-shadow:0 -1px 0 rgba(255,255,255,.04) inset,0 12px 40px rgba(0,0,0,.55),0 0 60px rgba(124,58,237,.06)!important}
   </style>
+<script>
+// Safety: si el loader sigue visible después de 6s → mostrar página
+setTimeout(function() {
+  var ldr = document.getElementById('ldr');
+  if (ldr && ldr.style.display !== 'none' && !ldr.classList.contains('off')) {
+    ldr.style.display = 'none';
+    ldr.classList.add('off');
+    console.warn('[AF] Safety timeout triggered on', window.location.pathname);
+  }
+}, 6000);
+</script>
 </head>
 <body style="overflow-x:hidden">
 
