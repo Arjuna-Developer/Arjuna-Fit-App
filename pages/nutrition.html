@@ -259,7 +259,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
   background:rgba(124,58,237,.1);color:rgba(196,181,253,.5)}
 </style>
   <link rel="stylesheet" href="/assets/visual-system.css">
-  <script src="/js/core/auth-bootstrap.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/js/core/auth-bootstrap.js"></script>
 <script src="/js/core/auth-guard.js"></script>
 <script src="/js/core/ops-config.js"></script>
 <script src="/js/core/analytics.js"></script>
@@ -269,6 +270,17 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
   nav[style*="position:fixed"]{background:rgba(12,7,22,.88)!important;backdrop-filter:blur(40px) saturate(1.8)!important;-webkit-backdrop-filter:blur(40px) saturate(1.8)!important;border-radius:26px!important;border-color:rgba(196,181,253,.08)!important;box-shadow:0 -1px 0 rgba(255,255,255,.04) inset,0 12px 40px rgba(0,0,0,.55),0 0 60px rgba(124,58,237,.06)!important}
   </style>
   <link rel="stylesheet" href="/assets/visual-polish.css">
+<script>
+// Safety: si el loader sigue visible después de 6s → mostrar página
+setTimeout(function() {
+  var ldr = document.getElementById('ldr');
+  if (ldr && ldr.style.display !== 'none' && !ldr.classList.contains('off')) {
+    ldr.style.display = 'none';
+    ldr.classList.add('off');
+    console.warn('[AF] Safety timeout triggered on', window.location.pathname);
+  }
+}, 6000);
+</script>
 </head>
 <body>
 <div class="ldr" id="ldr"><div style="width:36px;height:36px;border-radius:50%;border:3px solid rgba(124,58,237,.2);border-top-color:#7c3aed;animation:spin .7s linear infinite"></div></div>
@@ -2071,7 +2083,6 @@ id="tc-guia">
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="/js/core/coach-context.js"></script>
 <script src="/js/core/arju-prompts.js"></script>
 <script src="/js/core/icons.js"></script>
