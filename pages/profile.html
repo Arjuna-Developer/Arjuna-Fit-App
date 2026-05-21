@@ -93,7 +93,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--font);-webkit-font-sm
 .ldr.off{opacity:0;visibility:hidden;pointer-events:none}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-:root.light{--bg:#f8f7fc;--card:#ffffff;--el:#f0eef8;--t:#1a0a2e;--t2:rgba(26,10,46,.65);--t3:rgba(26,10,46,.42);--t4:rgba(26,10,46,.18);--border:rgba(0,0,0,.08);--pri:#7c3aed;--pl:#5b21b6;--acc:#db2777}
+:root.light{--bg:#f8f7fc;--card:#ffffff;--el:#f0eef8;--t:#1a0a2e;--t2:rgba(26,10,46,.65);--t3:rgba(26,10,46,.42);--t4:rgba(26,10,46,.18);--border:rgba(0,0,0,.08)}
 </style>
   <link rel="stylesheet" href="/assets/visual-system.css">
 
@@ -339,27 +339,12 @@ function showToast(msg){
   setTimeout(()=>t.classList.remove('show'),3000);
 }
 
-function toggleDark(){
-  var tog=document.getElementById('darkTog');
-  var isLight=document.documentElement.classList.contains('light');
-  if(isLight){document.documentElement.classList.remove('light');tog&&tog.classList.add('on');localStorage.setItem('af-theme','dark');}
-  else{document.documentElement.classList.add('light');tog&&tog.classList.remove('on');localStorage.setItem('af-theme','light');}
-}
+function toggleDark(){var tog=document.getElementById('darkTog');var isLight=document.documentElement.classList.contains('light');if(isLight){document.documentElement.classList.remove('light');if(tog)tog.classList.add('on');localStorage.setItem('af-theme','dark');}else{document.documentElement.classList.add('light');if(tog)tog.classList.remove('on');localStorage.setItem('af-theme','light');}var sub=document.querySelector('[onclick="toggleDark()"] .mi-sub');if(sub)sub.textContent=isLight?'Tema premium dark':'Modo claro activo';}
 (function(){if(localStorage.getItem('af-theme')==='light'){document.documentElement.classList.add('light');var t=document.getElementById('darkTog');if(t)t.classList.remove('on');}})();
 
 async function handlePhotoUpload(input){
   const file=input.files?.[0];
-  if(!file)return;
-  if(!_sb||!_uid){
-    var r=new FileReader();
-    r.onload=function(e){
-      localStorage.setItem('af-avatar-local',e.target.result);
-      var av=document.getElementById('avatarEl');
-      if(av){av.style.backgroundImage='url('+e.target.result+')';av.style.backgroundSize='cover';av.style.backgroundPosition='center';}
-      var ini=document.getElementById('avatarInitial');if(ini)ini.style.display='none';
-      showToast('📸 Foto guardada');
-    };r.readAsDataURL(file);return;
-  }
+  if(!file)return;if(!_sb||!_uid){var r=new FileReader();r.onload=function(e){localStorage.setItem('af-avatar-local',e.target.result);var av=document.getElementById('avatarEl');if(av){av.style.backgroundImage='url('+e.target.result+')';av.style.backgroundSize='cover';av.style.backgroundPosition='center';}var ini=document.getElementById('avatarInitial');if(ini)ini.style.display='none';showToast('📸 Foto guardada');};r.readAsDataURL(file);return;}
   if(file.size>5*1024*1024){alert('La foto debe ser menor a 5MB');return;}
 
   showToast('📸 Subiendo foto...');
@@ -431,168 +416,6 @@ init();
 </script>
 <script src="/js/core/transitions.js"></script>
 
-
-      <!-- Mensajes de Arju — notification center -->
-      <div style="margin-bottom:20px">
-        <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px">Mensajes de Arju</div>
-        <div id="notifCenter" style="display:flex;flex-direction:column;gap:8px">
-          <div style="font-size:12px;color:rgba(255,255,255,.25);text-align:center;padding:12px">Cargando mensajes...</div>
-        </div>
-      </div>
-
-      <!-- Membresía comunidad gratuita -->
-      <div id="communityCard" style="display:none;margin-bottom:16px;background:rgba(52,211,153,.06);border:1px solid rgba(52,211,153,.15);border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px">
-        <div style="font-size:20px">🤝</div>
-        <div>
-          <div style="font-size:13px;font-weight:700;color:rgba(52,211,153,.8)">Comunidad gratuita ArjunaFit</div>
-          <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:2px">Miembro activo</div>
-        </div>
-        <div style="margin-left:auto;font-size:10px;font-weight:700;padding:3px 9px;background:rgba(52,211,153,.12);border-radius:8px;color:rgba(52,211,153,.7)">✓ ACTIVO</div>
-      </div>
-      <!-- Beta feedback widget -->
-      <div style="margin-top:20px;padding:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:16px">
-        <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px">¿Algo no funcionó?</div>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px" id="feedbackChips">
-          <button class="fb-chip" data-cat="no_entendi">No entendí qué hacer</button>
-          <button class="fb-chip" data-cat="comida_fallo">No pude registrar comida</button>
-          <button class="fb-chip" data-cat="entreno_fallo">No pude entrenar</button>
-          <button class="fb-chip" data-cat="algo_roto">Algo se veía roto</button>
-          <button class="fb-chip" data-cat="coach_raro">Coach respondió raro</button>
-          <button class="fb-chip" data-cat="otro">Otro</button>
-        </div>
-        <textarea id="feedbackMsg" placeholder="Cuéntanos qué pasó (opcional)" style="width:100%;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#f1f0f4;font-family:Outfit,sans-serif;font-size:13px;resize:vertical;min-height:70px;box-sizing:border-box;outline:none"></textarea>
-        <button id="fbSend" onclick="sendFeedback()" style="margin-top:10px;width:100%;padding:11px;border-radius:12px;border:none;cursor:pointer;background:rgba(124,58,237,.2);color:#c4b5fd;font-family:Outfit,sans-serif;font-size:13px;font-weight:700">Enviar feedback</button>
-        <div id="fbConfirm" style="display:none;font-size:12px;color:rgba(52,211,153,.7);text-align:center;margin-top:8px">✅ Gracias. Arju lo tiene en cuenta.</div>
-        <div style="margin-top:10px;text-align:center"><a href="/pages/beta-survey.html" style="font-size:12px;color:rgba(196,181,253,.5);text-decoration:none">→ Responder encuesta beta completa</a></div>
-      </div>
-
-      <!-- App version -->
-      <div id="betaUserBadge" style="display:none;justify-content:center;margin-top:12px"><span style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;background:rgba(124,58,237,.12);color:rgba(196,181,253,.6);border:1px solid rgba(196,181,253,.15)">Beta Tester</span></div>
-      <div style="text-align:center;margin-top:8px;font-size:11px;color:rgba(255,255,255,.15)" id="appVersionDisplay">v closed-beta-v1</div>
-
-      <style>
-        .fb-chip{padding:7px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:rgba(240,238,248,.5);font-family:Outfit,sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s}
-        .fb-chip.on{background:rgba(124,58,237,.2);border-color:rgba(196,181,253,.3);color:#c4b5fd}
-      </style>
-      <script>
-        var _fbCat = '';
-        document.querySelectorAll('.fb-chip').forEach(function(btn) {
-          btn.addEventListener('click', function() {
-            document.querySelectorAll('.fb-chip').forEach(function(b) { b.classList.remove('on'); });
-            btn.classList.add('on');
-            _fbCat = btn.dataset.cat;
-          });
-        });
-
-        // Beta flag
-  (function() {
-    var isBeta = localStorage.getItem('af-beta-user') === '1';
-    var betaEl = document.getElementById('betaUserBadge');
-    if (isBeta && betaEl) betaEl.style.display = 'inline-flex';
-  })();
-
-  async function sendFeedback() {
-          var msg = document.getElementById('feedbackMsg')?.value || '';
-          if (!_fbCat && !msg) { alert('Elige una categoría o escribe algo.'); return; }
-          var btn = document.getElementById('fbSend');
-          btn.disabled = true; btn.textContent = 'Enviando...';
-          try {
-            var uid = null;
-            try { var raw = localStorage.getItem('sb-egswsqymkxmbtcpnozcq-auth-token'); uid = raw ? JSON.parse(raw)?.user?.id : null; } catch(e) {}
-            await fetch('https://egswsqymkxmbtcpnozcq.supabase.co/rest/v1/beta_feedback', {
-              method: 'POST',
-              headers: {'Content-Type':'application/json','apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM','Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM','Prefer':'return=minimal'},
-              body: JSON.stringify({
-              user_id: uid || null,
-              category: _fbCat || 'general',
-              message: msg || null,
-              route: window.location.pathname,
-              device: /Mobile|Android|iPhone/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
-              browser: navigator.userAgent.slice(0,100),
-              product_type: localStorage.getItem('af-product-type') || null,
-              app_version: window.AF_VERSION || null,
-              status: 'new',
-            })
-            });
-          } catch(e) {}
-          document.getElementById('fbConfirm').style.display = 'block';
-          btn.style.display = 'none';
-          if(window.AF) AF.track('feedback_sent', {cat: _fbCat});
-        }
-
-        // Notification center
-(function() {
-  var center = document.getElementById('notifCenter');
-  if (!center) return;
-  var NUDGE_TYPES = ['log_meal','start_workout','close_day','return_after_absence','suggest_recipe','trial_low_activity','onboarding_resume'];
-  var NUDGE_LABELS = {
-    log_meal: '🥗 Registro de comida',
-    start_workout: '💪 Entrenamiento',
-    close_day: '🌙 Cierre del día',
-    return_after_absence: '👋 Regreso',
-    suggest_recipe: '🍳 Receta sugerida',
-    trial_low_activity: '🌱 Tu prueba',
-    onboarding_resume: '🧠 Preparar tu día',
-  };
-  var shown = [];
-  NUDGE_TYPES.forEach(function(type) {
-    var ts = parseInt(localStorage.getItem('af-nudge-' + type) || '0');
-    if (ts > 0) shown.push({ type, ts });
-  });
-  shown.sort(function(a,b){return b.ts-a.ts;});
-  var last5 = shown.slice(0,5);
-  if (!last5.length) {
-    center.innerHTML = '<div style="font-size:12px;color:rgba(255,255,255,.25);text-align:center;padding:12px">Sin mensajes recientes.</div>';
-  } else {
-    center.innerHTML = last5.map(function(n) {
-      var ago = Math.floor((Date.now()-n.ts)/(1000*60));
-      var agoStr = ago < 60 ? ago + ' min' : Math.floor(ago/60) + 'h';
-      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(255,255,255,.03);border-radius:10px;font-size:12px">' +
-        '<span style="color:rgba(240,238,248,.65)">' + (NUDGE_LABELS[n.type]||n.type) + '</span>' +
-        '<span style="color:rgba(255,255,255,.25)">' + agoStr + '</span>' +
-      '</div>';
-    }).join('');
-  }
-})();
-
-
-  // Load community membership
-  (async function() {
-    try {
-      var sess = await _sb.auth.getSession();
-      var uid = sess?.data?.session?.user?.id;
-      if (!uid) return;
-      var { data } = await _sb
-        .from('community_memberships')
-        .select('status')
-        .eq('user_id', uid)
-        .eq('community_id', 'free_arjunafit_community')
-        .eq('status', 'active')
-        .maybeSingle();
-      if (data) {
-        var card = document.getElementById('communityCard');
-        if (card) card.style.display = 'flex';
-      }
-    } catch(e) {}
-  })();
-
-  
-  // Payment status display
-  (function() {
-    var paymentStatus = localStorage.getItem('af-payment-status');
-    if (paymentStatus === 'pending') {
-      var notice = document.createElement('div');
-      notice.style.cssText = 'margin-bottom:14px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);border-radius:14px;padding:12px 16px;font-size:12px;color:rgba(253,186,116,.8);line-height:1.6';
-      notice.innerHTML = '⏳ <strong>Estamos validando tu pago.</strong> Esto puede tardar unos minutos.';
-      var planCard = document.getElementById('planStatusCard');
-      if (planCard && planCard.parentNode) planCard.parentNode.insertBefore(notice, planCard);
-    }
-  })();
-
-  // Update version display
-        if(window.AF) document.getElementById('appVersionDisplay').textContent = 'v ' + (AF.version || 'beta-qa-events-v1');
-      </script>
-<script src="/js/core/pwa-install.js"></script>
 
 <style>
 @keyframes nav-ripple {
@@ -827,12 +650,6 @@ document.addEventListener('DOMContentLoaded', function(){
   if (notifTog && localStorage.getItem('af-notifications') === '1') notifTog.classList.add('on');
 });
 
-// Restore avatar from localStorage
-document.addEventListener('DOMContentLoaded',function(){
-  var av=localStorage.getItem('af-avatar-local');
-  if(av){var el=document.getElementById('avatarEl');if(el){el.style.backgroundImage='url('+av+')';el.style.backgroundSize='cover';el.style.backgroundPosition='center';var ini=document.getElementById('avatarInitial');if(ini)ini.style.display='none';}}
-  var n=localStorage.getItem('af-user-name')||localStorage.getItem('af-name');
-  var ns=document.getElementById('currentNameSub');if(ns&&n)ns.textContent=n;
-});</script>
+document.addEventListener('DOMContentLoaded',function(){var av=localStorage.getItem('af-avatar-local');if(av){var el=document.getElementById('avatarEl');if(el){el.style.backgroundImage='url('+av+')';el.style.backgroundSize='cover';el.style.backgroundPosition='center';var ini=document.getElementById('avatarInitial');if(ini)ini.style.display='none';}}var n=localStorage.getItem('af-user-name')||localStorage.getItem('af-name');var ns=document.getElementById('currentNameSub');if(ns&&n)ns.textContent=n;});</script>
 </body>
 </html>
