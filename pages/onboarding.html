@@ -237,6 +237,91 @@ body{
   transition:opacity 0.35s,visibility 0.35s;
 }
 .ldr.off{opacity:0;visibility:hidden;pointer-events:none}
+
+/* ── Nav bar (bottom buttons) ──────────────────── */
+.nav-bar{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:var(--max);
+  padding:12px 24px calc(16px + env(safe-area-inset-bottom));
+  background:linear-gradient(to top,var(--bg) 70%,transparent);
+  display:flex;gap:10px;z-index:10;
+}
+.btn-pri{
+  flex:1;padding:16px;border-radius:18px;border:none;
+  background:linear-gradient(135deg,#7c3aed,#a855f7);
+  color:#fff;font-family:'Outfit',sans-serif;
+  font-size:15px;font-weight:800;cursor:pointer;
+  box-shadow:0 4px 20px rgba(124,58,237,.4);
+  transition:transform .15s,box-shadow .15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.btn-pri:active{transform:scale(.97);box-shadow:0 2px 10px rgba(124,58,237,.3)}
+.btn-pri:disabled{opacity:.45;cursor:default;box-shadow:none}
+.btn-sec{
+  padding:16px 20px;border-radius:18px;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.05);
+  color:rgba(255,255,255,.6);font-family:'Outfit',sans-serif;
+  font-size:15px;font-weight:700;cursor:pointer;
+  transition:transform .15s;
+  -webkit-tap-highlight-color:transparent;
+  white-space:nowrap;
+}
+.btn-sec:active{transform:scale(.97)}
+.btn-sec:disabled{opacity:.3;cursor:default}
+
+/* ── Option cards ───────────────────────────────── */
+.opt{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:16px;border-radius:18px;
+  border:1.5px solid rgba(255,255,255,.07);
+  background:rgba(255,255,255,.03);
+  cursor:pointer;margin-bottom:10px;
+  transition:border-color .2s,background .2s;
+  -webkit-tap-highlight-color:transparent;
+}
+.opt.selected{
+  border-color:rgba(124,58,237,.6);
+  background:rgba(124,58,237,.12);
+}
+.opt-emoji{font-size:28px;flex-shrink:0;margin-top:2px}
+.opt-title{font-size:15px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:3px}
+.opt-sub{font-size:12px;color:rgba(255,255,255,.45);line-height:1.5}
+
+/* ── Chip buttons (dias, nivel) ─────────────────── */
+.chip{
+  padding:10px 16px;border-radius:12px;
+  border:1.5px solid rgba(255,255,255,.08);
+  background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.6);font-family:'Outfit',sans-serif;
+  font-size:13px;font-weight:700;cursor:pointer;
+  transition:all .2s;-webkit-tap-highlight-color:transparent;
+  white-space:nowrap;
+}
+.chip.selected{
+  background:rgba(124,58,237,.2);
+  border-color:rgba(124,58,237,.6);color:#c4b5fd;
+}
+
+/* ── Progress bar ───────────────────────────────── */
+.prog-bar{
+  height:3px;background:rgba(255,255,255,.08);
+  position:fixed;top:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:var(--max);z-index:20;
+}
+.prog-fill{
+  height:100%;
+  background:linear-gradient(90deg,#7c3aed,#ec4899);
+  border-radius:0 2px 2px 0;transition:width .4s ease;
+}
+
+/* ── Step title ─────────────────────────────────── */
+.step-title{
+  font-size:28px;font-weight:900;letter-spacing:-.04em;
+  line-height:1.15;margin-bottom:8px;margin-top:8px;color:#fff;
+}
+.step-title span{color:#a855f7}
+.step-sub{font-size:14px;color:rgba(255,255,255,.5);margin-bottom:20px;line-height:1.5}
 </style>
   <link rel="stylesheet" href="/assets/visual-system.css">
 </head>
