@@ -28,7 +28,7 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--t);font-family:var(--font);-webkit-font-smoothing:antialiased;min-height:100dvh}
-.page{max-width:var(--max);margin:0 auto;min-height:100dvh;padding-bottom:calc(90px + env(safe-area-inset-bottom));background:var(--bg);overflow-x:hidden}
+.page{max-width:var(--max);margin:0 auto;min-height:100dvh;padding-bottom:calc(90px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10;background:linear-gradient(to bottom,var(--bg) 60%,transparent)}
 .back{width:38px;height:38px;border-radius:12px;background:var(--el);border:1px solid var(--su);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;text-decoration:none;transition:transform .15s}
 .back:active{transform:scale(.9)}
 .hdr-title{font-size:17px;font-weight:700}
@@ -93,19 +93,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--font);-webkit-font-sm
 .ldr.off{opacity:0;visibility:hidden;pointer-events:none}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-:root {
-  --bg:#0c0714;--card:#130d22;--t1:#f1f0f4;--t2:rgba(240,238,248,.7);
-  --t3:rgba(240,238,248,.45);--t4:rgba(240,238,248,.2);
-  --border:rgba(255,255,255,.08);--max:430px;--f:'Outfit',sans-serif;
-}
-:root.light {
-  --bg:#f8f7fc;--card:#ffffff;--el:#f0eef8;
-  --t:#1a0a2e;--t1:#1a0a2e;--t2:rgba(26,10,46,.65);--t3:rgba(26,10,46,.42);--t4:rgba(26,10,46,.18);
-  --border:rgba(0,0,0,.08);--pri:#7c3aed;--pl:#5b21b6;--acc:#db2777;
-}
-
-.fb-chip{padding:7px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:rgba(240,238,248,.5);font-family:Outfit,sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s}
-.fb-chip.on{background:rgba(124,58,237,.2);border-color:rgba(196,181,253,.3);color:#c4b5fd}
+:root.light{--bg:#f8f7fc;--card:#ffffff;--el:#f0eef8;--t:#1a0a2e;--t2:rgba(26,10,46,.65);--t3:rgba(26,10,46,.42);--t4:rgba(26,10,46,.18);--border:rgba(0,0,0,.08);--pri:#7c3aed;--pl:#5b21b6;--acc:#db2777}
 </style>
   <link rel="stylesheet" href="/assets/visual-system.css">
 
@@ -113,17 +101,6 @@ body{background:var(--bg);color:var(--t);font-family:var(--font);-webkit-font-sm
   .nav-ambient{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100vw,430px);height:140px;background:radial-gradient(ellipse at 50% 100%,rgba(124,58,237,.18) 0%,rgba(168,85,247,.1) 30%,transparent 70%);filter:blur(20px);z-index:99;pointer-events:none}
   nav[style*="position:fixed"]{background:rgba(12,7,22,.88)!important;backdrop-filter:blur(40px) saturate(1.8)!important;-webkit-backdrop-filter:blur(40px) saturate(1.8)!important;border-radius:26px!important;border-color:rgba(196,181,253,.08)!important;box-shadow:0 -1px 0 rgba(255,255,255,.04) inset,0 12px 40px rgba(0,0,0,.55),0 0 60px rgba(124,58,237,.06)!important}
   </style>
-<script>
-// Safety: si el loader sigue visible después de 6s → mostrar página
-setTimeout(function() {
-  var ldr = document.getElementById('ldr');
-  if (ldr && ldr.style.display !== 'none' && !ldr.classList.contains('off')) {
-    ldr.style.display = 'none';
-    ldr.classList.add('off');
-    console.warn('[AF] Safety timeout triggered on', window.location.pathname);
-  }
-}, 6000);
-</script>
 </head>
 <body style="overflow-x:hidden">
 
@@ -146,7 +123,7 @@ setTimeout(function() {
     <!-- Avatar hero -->
     <div class="avatar-hero">
       <div class="avatar-wrap" onclick="document.getElementById('photoInput').click()">
-        <div class="avatar" id="avatarEl" style="background-size:cover;background-position:center;background-repeat:no-repeat"><span id="avatarInitial">🏋️</span></div>
+        <div class="avatar" id="avatarEl"><span id="avatarInitial">🏋️</span></div>
         <div class="avatar-edit-badge">✏️</div>
       </div>
       <div class="avatar-upload-hint">Toca para cambiar foto</div>
@@ -362,49 +339,26 @@ function showToast(msg){
   setTimeout(()=>t.classList.remove('show'),3000);
 }
 
-function toggleDark() {
-  var sub = document.querySelector('#darkTog').closest('.mi').querySelector('.mi-sub');
-  var tog = document.getElementById('darkTog');
-  if (!tog) return;
-  var isDark = !document.documentElement.classList.contains('light');
-  if (isDark) {
-    document.documentElement.classList.add('light');
-    tog.classList.remove('on');
-    localStorage.setItem('af-theme', 'light');
-    if(sub) sub.textContent = 'Modo claro activo';
-  } else {
-    document.documentElement.classList.remove('light');
-    tog.classList.add('on');
-    localStorage.setItem('af-theme', 'dark');
-    if(sub) sub.textContent = 'Tema premium dark';
-  }
+function toggleDark(){
+  var tog=document.getElementById('darkTog');
+  var isLight=document.documentElement.classList.contains('light');
+  if(isLight){document.documentElement.classList.remove('light');tog&&tog.classList.add('on');localStorage.setItem('af-theme','dark');}
+  else{document.documentElement.classList.add('light');tog&&tog.classList.remove('on');localStorage.setItem('af-theme','light');}
 }
-// Apply saved theme on load
-(function() {
-  var t = localStorage.getItem('af-theme');
-  if (t === 'light') {
-    document.documentElement.classList.add('light');
-    var tog = document.getElementById('darkTog');
-    if (tog) tog.classList.remove('on');
-  }
-})();
+(function(){if(localStorage.getItem('af-theme')==='light'){document.documentElement.classList.add('light');var t=document.getElementById('darkTog');if(t)t.classList.remove('on');}})();
 
 async function handlePhotoUpload(input){
   const file=input.files?.[0];
-  if(!file) return;
-  // If no session, save as data URL in localStorage
-  if(!_sb || !_uid) {
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      localStorage.setItem('af-avatar-local', e.target.result);
-      var avatarEl = document.getElementById('avatarEl');
-      if (avatarEl) avatarEl.style.backgroundImage = 'url('+e.target.result+')';
-      var initial = document.getElementById('avatarInitial');
-      if (initial) initial.style.display = 'none';
-      showToast('📸 Foto guardada localmente');
-    };
-    reader.readAsDataURL(file);
-    return;
+  if(!file)return;
+  if(!_sb||!_uid){
+    var r=new FileReader();
+    r.onload=function(e){
+      localStorage.setItem('af-avatar-local',e.target.result);
+      var av=document.getElementById('avatarEl');
+      if(av){av.style.backgroundImage='url('+e.target.result+')';av.style.backgroundSize='cover';av.style.backgroundPosition='center';}
+      var ini=document.getElementById('avatarInitial');if(ini)ini.style.display='none';
+      showToast('📸 Foto guardada');
+    };r.readAsDataURL(file);return;
   }
   if(file.size>5*1024*1024){alert('La foto debe ser menor a 5MB');return;}
 
@@ -516,7 +470,10 @@ init();
       <div id="betaUserBadge" style="display:none;justify-content:center;margin-top:12px"><span style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:10px;background:rgba(124,58,237,.12);color:rgba(196,181,253,.6);border:1px solid rgba(196,181,253,.15)">Beta Tester</span></div>
       <div style="text-align:center;margin-top:8px;font-size:11px;color:rgba(255,255,255,.15)" id="appVersionDisplay">v closed-beta-v1</div>
 
-      
+      <style>
+        .fb-chip{padding:7px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:rgba(240,238,248,.5);font-family:Outfit,sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s}
+        .fb-chip.on{background:rgba(124,58,237,.2);border-color:rgba(196,181,253,.3);color:#c4b5fd}
+      </style>
       <script>
         var _fbCat = '';
         document.querySelectorAll('.fb-chip').forEach(function(btn) {
@@ -636,7 +593,6 @@ init();
         if(window.AF) document.getElementById('appVersionDisplay').textContent = 'v ' + (AF.version || 'beta-qa-events-v1');
       </script>
 <script src="/js/core/pwa-install.js"></script>
-
 
 <style>
 @keyframes nav-ripple {
@@ -809,7 +765,7 @@ function editPersonalData() {
     '<div style="margin-bottom:20px"><label style="font-size:12px;font-weight:700;color:rgba(255,255,255,.5);display:block;margin-bottom:6px;letter-spacing:.06em;text-transform:uppercase">OBJETIVO CALÓRICO (kcal)</label>' +
     '<input id="pf-goal" type="number" value="'+goal+'" placeholder="Ej: 2000" style="width:100%;padding:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:#fff;font-family:Outfit,sans-serif;font-size:14px;outline:none;box-sizing:border-box"></div>' +
     '<button onclick="saveBodyData()" style="width:100%;padding:14px;border-radius:14px;border:none;cursor:pointer;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-family:Outfit,sans-serif;font-size:14px;font-weight:800;margin-bottom:10px">Guardar datos</button>' +
-    '<button onclick="this.closest("[style*=fixed]").remove()" style="width:100%;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.5);font-family:Outfit,sans-serif;font-size:13px;cursor:pointer">Cancelar</button>' +
+    '<button onclick="this.closest('[style*=fixed]').remove()" style="width:100%;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.5);font-family:Outfit,sans-serif;font-size:13px;cursor:pointer">Cancelar</button>' +
     '</div>';
   document.body.appendChild(modal);
   modal.addEventListener('click', function(e){ if(e.target===modal) modal.remove(); });
@@ -871,23 +827,12 @@ document.addEventListener('DOMContentLoaded', function(){
   if (notifTog && localStorage.getItem('af-notifications') === '1') notifTog.classList.add('on');
 });
 
-// Load avatar from localStorage on init
-document.addEventListener('DOMContentLoaded', function() {
-  var localAvatar = localStorage.getItem('af-avatar-local');
-  if (localAvatar) {
-    var avatarEl = document.getElementById('avatarEl');
-    if (avatarEl) {
-      avatarEl.style.backgroundImage = 'url(' + localAvatar + ')';
-      avatarEl.style.backgroundSize = 'cover';
-      avatarEl.style.backgroundPosition = 'center';
-    }
-    var initial = document.getElementById('avatarInitial');
-    if (initial) initial.style.display = 'none';
-  }
-  // Update name sub
-  var name = localStorage.getItem('af-user-name') || localStorage.getItem('af-name');
-  var nameSub = document.getElementById('currentNameSub');
-  if (nameSub && name) nameSub.textContent = name;
+// Restore avatar from localStorage
+document.addEventListener('DOMContentLoaded',function(){
+  var av=localStorage.getItem('af-avatar-local');
+  if(av){var el=document.getElementById('avatarEl');if(el){el.style.backgroundImage='url('+av+')';el.style.backgroundSize='cover';el.style.backgroundPosition='center';var ini=document.getElementById('avatarInitial');if(ini)ini.style.display='none';}}
+  var n=localStorage.getItem('af-user-name')||localStorage.getItem('af-name');
+  var ns=document.getElementById('currentNameSub');if(ns&&n)ns.textContent=n;
 });</script>
 </body>
 </html>
