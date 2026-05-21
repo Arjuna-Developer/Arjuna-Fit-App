@@ -1138,11 +1138,20 @@ html, body {
             letter-spacing:-.01em;margin-bottom:4px">Registrar comida</div>
           <div id="cameraHeroSub" style="font-size:13px;color:rgba(196,181,253,.6);line-height:1.4">
             Foto IA · Recetas · Manual</div>
-          <div id="cameraHeroDone" style="display:none;font-size:11px;font-weight:700;
-            color:#6ee7b7;margin-top:5px">✓ Ya registraste esta comida</div>
+          <div id="cameraHeroDone" style="display:none">
+            <div style="font-size:11px;font-weight:700;color:#6ee7b7;margin-top:4px;margin-bottom:6px">✓ Ya registraste esta comida</div>
+            <div onclick="openManualLog && openManualLog(window._currentMeal||'almuerzo');event.stopPropagation()"
+              style="font-size:11px;color:rgba(196,181,253,.55);font-weight:600;cursor:pointer;
+              display:inline-flex;align-items:center;gap:4px">
+              ✏️ Ingresa tu alimento manual
+            </div>
+          </div>
         </div>
         <div style="font-size:22px;color:rgba(196,181,253,.4);position:relative;z-index:1">›</div>
       </div>
+
+      <!-- ── Smart meal registration strip ── -->
+      <div id="mealRegStrip"></div>
 
       <!-- ══ TU DÍA DE HOY — Flujo diario integrado ══ -->
 
@@ -1171,9 +1180,6 @@ html, body {
           <div style="font-size:10px;font-weight:700;letter-spacing:.1em;
             text-transform:uppercase;color:rgba(199,210,254,.55);margin-bottom:10px">
             Idea para hoy ✨</div>
-
-<!-- ── Registro inteligente de comidas ─── -->
-  <div id="mealRegStrip" style="padding:0;margin-top:0"></div>
 
           <!-- Recipe content -->
           <div style="display:flex;align-items:flex-start;gap:14px;position:relative;z-index:1">
@@ -3620,7 +3626,7 @@ window.addEventListener('load', showVoiceActivationBanner);
 <script src="/js/core/microvictorias.js"></script>
 <script src="/js/core/coach-context.js"></script>
 <script src="/js/core/arju-prompts.js"></script>
-<script src="/js/core/arju-assistant.js"></script>
+<!-- arju-assistant disabled: floating btn handled by coach strip -->
 <script src="/js/core/transitions.js">
   // Week summary widget
   (function(){
@@ -3831,7 +3837,7 @@ var _arjuCitySync = setInterval(function(){
   letter-spacing:.06em;
   user-select:none;
 ">
-  ArjunaFit v2.5.2105 · 21/05/2026 09:41
+  ArjunaFit v2.5.2105 · 21/05/2026 10:02
 </div>
 
 <script>
