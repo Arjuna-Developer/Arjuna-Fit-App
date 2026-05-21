@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArjunaFit — Sin conexión</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#090611; color:#f1f0f4; font-family:'Outfit',sans-serif; height:100vh;
+           display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; text-align:center; }
+    .icon { font-size:64px; margin-bottom:20px; }
+    h1 { font-size:24px; font-weight:900; letter-spacing:-.03em; margin-bottom:8px; }
+    p { font-size:14px; color:rgba(255,255,255,.5); line-height:1.6; max-width:280px; }
+    button { margin-top:24px; padding:14px 28px; border-radius:14px; border:none; cursor:pointer;
+             background:linear-gradient(135deg,#7c3aed,#ec4899); color:#fff; font-size:14px;
+             font-weight:800; font-family:'Outfit',sans-serif; }
+  </style>
+</head>
+<body>
+  <div class="icon">📡</div>
+  <h1>Sin conexión</h1>
+  <p>Revisa tu conexión a internet para continuar con ArjunaFit.</p>
+  <button onclick="window.location.reload()">Intentar de nuevo</button>
+</body>
+</html>
