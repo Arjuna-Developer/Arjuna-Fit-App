@@ -4312,19 +4312,10 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 // Also call directly in case DOMContentLoaded already fired
-setTimeout(function() {
-  renderTodayFoods();
-  // Also refresh macros on load
-  var dateKey = new Date().toISOString().split('T')[0];
-  var foods = [];
-  try { foods = JSON.parse(localStorage.getItem('af-food-' + dateKey) || '[]'); } catch(e){}
-  if (typeof updateMacroUI === 'function') updateMacroUI(foods);
-}, 500);
-
-// ══════════════════════════════════════════════
+setTimeout// ══════════════════════════════════════════════
 // MERCADO — Lista de compras
 // ══════════════════════════════════════════════
-var MARKET_DATA = {
+var MARKET_DATA = window.MARKET_DATA = {
   proteinas: {
     label: 'PROTEÍNAS', icon: '🥩', color: '#f87171',
     items: [
@@ -4379,6 +4370,17 @@ var MARKET_DATA = {
     ]
   }
 };
+
+(function() {
+  renderTodayFoods();
+  // Also refresh macros on load
+  var dateKey = new Date().toISOString().split('T')[0];
+  var foods = [];
+  try { foods = JSON.parse(localStorage.getItem('af-food-' + dateKey) || '[]'); } catch(e){}
+  if (typeof updateMacroUI === 'function') updateMacroUI(foods);
+}, 500);
+
+
 
 function getMarketChecked() {
   try { return JSON.parse(localStorage.getItem('af-market-checked') || '{}'); } catch(e) { return {}; }
