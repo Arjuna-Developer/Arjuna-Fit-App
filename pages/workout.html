@@ -2181,7 +2181,8 @@ async function loadRealData() {
 <script src="/js/core/exercise-library.js"></script>
   <script src="/js/core/microvictorias.js"></script>
 <!-- arju-assistant disabled in workout -->
-<script src="/js/core/transitions.js">
+<script src="/js/core/transitions.js"></script>
+<script>
 // ── buildPhaseBody: content for each accordion phase ─────────────────────
 function buildPhaseBody(phaseIndex, sess) {
   var idx = phaseIndex;
@@ -2218,8 +2219,20 @@ function buildPhaseBody(phaseIndex, sess) {
   }
   return rows.length ? '<div class="pbe-list">'+rows.join('')+'</div>' : '<div class="pbe-empty">Ver ejercicios al empezar la sesión.</div>';
 }
-
 </script>
 
+
+<script>
+// Safety: never leave page hidden more than 5s
+setTimeout(function() {
+  var p = document.getElementById('page');
+  var l = document.getElementById('ldr');
+  if (p && p.style.display === 'none') {
+    p.style.display = '';
+    if (l) l.style.display = 'none';
+    console.warn('[AF] Emergency page show triggered');
+  }
+}, 5000);
+</script>
 </body>
 </html>
