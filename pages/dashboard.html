@@ -1172,25 +1172,8 @@ html, body {
             text-transform:uppercase;color:rgba(199,210,254,.55);margin-bottom:10px">
             Idea para hoy ✨</div>
 
-<!-- ── Quick actions strip ─────────────────────────────────────── -->
-<div class="quick-actions-strip" id="quickActionsStrip"
-  style="display:flex;gap:10px;padding:0 18px;margin-top:12px;margin-bottom:4px">
-  <a href="/pages/nutrition.html"
-    style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
-           padding:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
-           border-radius:14px;color:rgba(255,255,255,.7);font-size:12px;font-weight:600;
-           text-decoration:none;font-family:var(--font)">
-    🥗 Registrar comida
-  </a>
-  <a href="/pages/nutrition.html#recetas"
-    style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
-           padding:11px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
-           border-radius:14px;color:rgba(255,255,255,.7);font-size:12px;font-weight:600;
-           text-decoration:none;font-family:var(--font)">
-    🍽️ Ver recetas
-  </a>
-</div>
-
+<!-- ── Registro inteligente de comidas ─── -->
+  <div id="mealRegStrip" style="padding:0;margin-top:0"></div>
 
           <!-- Recipe content -->
           <div style="display:flex;align-items:flex-start;gap:14px;position:relative;z-index:1">
@@ -3850,5 +3833,144 @@ var _arjuCitySync = setInterval(function(){
 ">
   ArjunaFit v2.5.2105 · 21/05/2026 09:41
 </div>
+
+<script>
+// ══════════════════════════════════════════════════════
+// SMART MEAL REGISTRATION STRIP
+// Muestra la siguiente comida a registrar
+// Se actualiza automáticamente al registrar una comida
+// ══════════════════════════════════════════════════════
+(function() {
+  var MEALS = [
+    { key:'desayuno', label:'Desayuno',  icon:'🌅', from:5,  to:11 },
+    { key:'almuerzo', label:'Almuerzo',  icon:'🌞', from:11, to:15 },
+    { key:'cena',     label:'Cena',      icon:'🌙', from:15, to:22 },
+    { key:'snack',    label:'Snack',     icon:'🍎', from:0,  to:24 },
+  ];
+
+  function getLogged() {
+    var dateKey = (function(){
+      var d=new Date();
+      return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    })();
+    try { return JSON.parse(localStorage.getItem('af-food-'+dateKey)||'[]'); } catch(e){ return []; }
+  }
+
+  function renderStrip() {
+    var strip = document.getElementById('mealRegStrip');
+    if (!strip) return;
+
+    var logged  = getLogged();
+    var loggedKeys = new Set(logged.map(function(f){ return f.meal; }));
+    var h = new Date().getHours();
+
+    // Find next meal to register
+    var next = MEALS.find(function(m){ return !loggedKeys.has(m.key) && h >= m.from && h < m.to; })
+            || MEALS.find(function(m){ return !loggedKeys.has(m.key); });
+
+    // Build progress dots
+    var dots = MEALS.slice(0,3).map(function(m){
+      var done = loggedKeys.has(m.key);
+      return '<div style="display:flex;align-items:center;gap:5px">'
+        + '<div style="width:7px;height:7px;border-radius:50%;background:'
+        + (done ? '#4ade80' : 'rgba(255,255,255,.15)')
+        + ';'+(done?'box-shadow:0 0 6px rgba(74,222,128,.5)':'')+'"></div>'
+        + '<span style="font-size:11px;font-weight:600;color:'
+        + (done ? 'rgba(74,222,128,.8)' : 'rgba(255,255,255,.3)')
+        + '">' + m.label + '</span></div>';
+    }).join('');
+
+    var allDone = MEALS.slice(0,3).every(function(m){ return loggedKeys.has(m.key); });
+
+    if (allDone) {
+      strip.innerHTML = '<div style="margin:0 0 4px;padding:13px 16px;'
+        + 'background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.2);'
+        + 'border-radius:18px;display:flex;align-items:center;gap:12px">'
+        + '<div style="font-size:22px">✅</div>'
+        + '<div><div style="font-size:13px;font-weight:700;color:#4ade80">¡Todas las comidas registradas!</div>'
+        + '<div style="font-size:11px;color:rgba(74,222,128,.6);margin-top:2px">Nutrición del día completa</div></div>'
+        + '</div>';
+      return;
+    }
+
+    if (!next) return;
+
+    strip.innerHTML =
+      // Header: progreso
+      '<div style="display:flex;align-items:center;justify-content:space-between;'
+      + 'margin:0 0 8px;padding:0 2px">'
+      + '<div style="display:flex;gap:12px">' + dots + '</div>'
+      + '<span style="font-size:11px;color:rgba(255,255,255,.25)">'
+      + logged.length + ' registrada' + (logged.length!==1?'s':'') + ' hoy</span>'
+      + '</div>'
+
+      // Main CTA: foto
+      + '<button onclick="openCamera()" style="'
+      + 'width:100%;padding:14px 16px;border-radius:16px;border:none;cursor:pointer;'
+      + 'background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;'
+      + 'font-family:Outfit,sans-serif;font-size:14px;font-weight:800;'
+      + 'display:flex;align-items:center;justify-content:center;gap:10px;'
+      + 'box-shadow:0 4px 20px rgba(124,58,237,.4),inset 0 1px 0 rgba(255,255,255,.15);'
+      + 'letter-spacing:-.01em;margin-bottom:8px;'
+      + 'text-shadow:0 1px 3px rgba(0,0,0,.3)">'
+      + '<span style="font-size:20px">📷</span>'
+      + '<span>' + next.icon + ' Registrar ' + next.label.toLowerCase() + ' con foto</span>'
+      + '</button>'
+
+      // Secondary actions
+      + '<div style="display:flex;gap:8px">'
+
+      + '<button onclick="openMealSheet('' + next.key + '')" style="'
+      + 'flex:1;padding:11px;border-radius:14px;border:1px solid rgba(255,255,255,.09);'
+      + 'background:rgba(255,255,255,.05);color:rgba(255,255,255,.7);'
+      + 'font-family:Outfit,sans-serif;font-size:12px;font-weight:700;cursor:pointer;'
+      + 'display:flex;align-items:center;justify-content:center;gap:6px">'
+      + '🍽️ Recetas'
+      + '</button>'
+
+      + '<button onclick="openManualLog('' + next.key + '')" style="'
+      + 'flex:1;padding:11px;border-radius:14px;border:1px solid rgba(255,255,255,.09);'
+      + 'background:rgba(255,255,255,.05);color:rgba(255,255,255,.7);'
+      + 'font-family:Outfit,sans-serif;font-size:12px;font-weight:700;cursor:pointer;'
+      + 'display:flex;align-items:center;justify-content:center;gap:6px">'
+      + '✏️ Manual'
+      + '</button>'
+
+      + '<button onclick="window.location.href='/pages/nutrition.html?tab=hoy'" style="'
+      + 'flex:1;padding:11px;border-radius:14px;border:1px solid rgba(255,255,255,.09);'
+      + 'background:rgba(255,255,255,.05);color:rgba(255,255,255,.7);'
+      + 'font-family:Outfit,sans-serif;font-size:12px;font-weight:700;cursor:pointer;'
+      + 'display:flex;align-items:center;justify-content:center;gap:6px">'
+      + '📊 Ver plan'
+      + '</button>'
+
+      + '</div>';
+  }
+
+  // Función manual log (inline)
+  window.openManualLog = function(meal) {
+    if (typeof openMealSheet === 'function') openMealSheet(meal);
+    else window.location.href = '/pages/nutrition.html?tab=hoy';
+  };
+
+  // Render inicial y actualización tras registrar
+  document.addEventListener('DOMContentLoaded', function() {
+    renderStrip();
+    // Re-render cuando vuelve de otra página
+    window.addEventListener('focus', renderStrip);
+    // Hook en homeGuardarFood si existe
+    var origSave = window.homeGuardarFood;
+    if (typeof origSave === 'function') {
+      window.homeGuardarFood = function() {
+        origSave.apply(this, arguments);
+        setTimeout(renderStrip, 300);
+      };
+    }
+  });
+
+  // Expose para llamar externamente
+  window.refreshMealStrip = renderStrip;
+})();
+</script>
 </body>
 </html>
