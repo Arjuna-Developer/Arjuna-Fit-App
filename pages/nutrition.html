@@ -2639,7 +2639,7 @@ function openRecipeDetail(id) {
   var ov = document.createElement('div');
   ov.id = 'recipe-detail-ov';
   ov.style.cssText = `
-    position:fixed;inset:0;z-index:300;
+    position:fixed;inset:0;z-index:999;
     background:var(--bg);overflow-y:auto;overflow-x:hidden;
     -webkit-overflow-scrolling:touch;
     padding:0;font-family:var(--font);
@@ -2700,7 +2700,7 @@ function openRecipeDetail(id) {
         color:rgba(240,238,248,.35);margin-bottom:10px">Ingredientes</div>
       <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
         border-radius:14px;padding:14px;margin-bottom:20px">
-        ${r.ingredients.map(i=>`
+        ${(r.ing||[]).map(i=>`
           <div style="display:flex;align-items:center;gap:10px;padding:5px 0;
             font-size:13px;color:rgba(240,238,248,.8)">
             <div style="width:6px;height:6px;border-radius:50%;
@@ -2711,7 +2711,7 @@ function openRecipeDetail(id) {
       <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
         color:rgba(240,238,248,.35);margin-bottom:10px">Preparación</div>
       <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
-        ${r.steps.map((s,i)=>`
+        ${(r.steps||[]).map((s,i)=>`
           <div style="display:flex;gap:12px;background:rgba(255,255,255,.03);
             border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:12px">
             <div style="width:24px;height:24px;border-radius:8px;flex-shrink:0;
@@ -2815,7 +2815,7 @@ function openQuickLog(meal) {
   var options = QUICK_FOODS[meal] || [];
 
   var ov = document.createElement('div');
-  ov.style.cssText = `position:fixed;inset:0;z-index:300;
+  ov.style.cssText = `position:fixed;inset:0;z-index:999;
     background:rgba(8,5,17,.88);backdrop-filter:blur(16px);
     display:flex;align-items:flex-end;font-family:var(--font);`;
   ov.innerHTML = `
@@ -3844,7 +3844,7 @@ function mkOverlay(id) {
   document.getElementById(id)?.remove();
   var ov = document.createElement('div');
   ov.id = id;
-  ov.style.cssText = `position:fixed;inset:0;z-index:300;background:var(--bg);
+  ov.style.cssText = `position:fixed;inset:0;z-index:999;background:var(--bg);
     overflow-y:auto;-webkit-overflow-scrolling:touch;font-family:var(--font);`;
   document.body.style.overflow = 'hidden';
   ov.addEventListener('click', e => { if (e.target===ov) { ov.remove(); document.body.style.overflow=''; } });
