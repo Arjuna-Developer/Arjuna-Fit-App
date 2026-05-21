@@ -2431,6 +2431,7 @@ function handleDashPhoto(input) {
 
     } catch(err) {
       clearInterval(msgTimer); clearTimeout(slowTimer);
+      console.error('[foto-ia] Error:', err.message);
       const msgEl2 = document.getElementById('dp-msg');
       if (msgEl2) msgEl2.textContent = 'No pude analizar bien. ¿Lo registramos manual?';
       setTimeout(() => {
@@ -2443,6 +2444,11 @@ function handleDashPhoto(input) {
 }
 
 function showDashPhotoResult(data, imgSrc) {
+  // Handle error/fallback responses
+  if (data.fallback || data.error) {
+    handlePhotoFallback(data.error, data.code);
+    return;
+  }
   const ov = document.getElementById('dash-photo-ov');
   if (!ov) return;
   const foods = data.foods || [];
@@ -3799,7 +3805,7 @@ var _arjuCitySync = setInterval(function(){
   letter-spacing:.06em;
   user-select:none;
 ">
-  ArjunaFit v2.7.2105 · 21/05/2026 17:40
+  ArjunaFit v2.7.2105 · 21/05/2026 17:45
 </div>
 
 <script>
@@ -4150,6 +4156,34 @@ function saveDashPhotoFood(name, cal, prot, fat, carb, meal) {
   t.textContent = '✅ ' + name + ' registrado';
   document.body.appendChild(t);
   setTimeout(function(){ t.remove(); }, 2500);
+}
+
+// Handle photo IA fallback gracefully
+function handlePhotoFallback(error, code) {
+  // Close photo overlay
+  document.getElementById('dash-photo-ov')?.remove();
+  
+  // Show friendly error with manual option
+  var t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:calc(80px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:600;background:rgba(14,8,28,.95);border:1px solid rgba(245,158,11,.3);border-radius:16px;padding:14px 18px;font-family:Outfit,sans-serif;max-width:320px;width:calc(100vw - 48px);box-shadow:0 8px 32px rgba(0,0,0,.4)';
+  
+  var msgs = {
+    'RATE_LIMIT':    '📸 Límite diario alcanzado. Registra manualmente.',
+    'IMAGE_TOO_LARGE': '📸 Foto muy grande. Toma una con menos zoom.',
+    'PARSE_FAILED':  '🤖 Arju no pudo identificar la comida. Prueba con mejor luz.',
+    'OPENAI_BUSY':   '⏱ Servicio ocupado. Intenta en 30 segundos.',
+  };
+  
+  var msg = msgs[code] || (error || 'Error al analizar la foto');
+  
+  t.innerHTML = '<div style="font-size:13px;color:rgba(255,255,255,.8);margin-bottom:10px">' + msg + '</div>' +
+    '<div style="display:flex;gap:8px">' +
+    '<button onclick="if(typeof openQuickLog==='function')openQuickLog();this.closest('[style*=fixed]').remove()" style="flex:1;padding:9px;border-radius:10px;border:none;background:rgba(124,58,237,.2);color:#c4b5fd;font-family:Outfit,sans-serif;font-size:12px;font-weight:700;cursor:pointer">✏️ Manual</button>' +
+    '<button onclick="this.closest('[style*=fixed]').remove()" style="padding:9px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.4);font-family:Outfit,sans-serif;font-size:12px;cursor:pointer">Cerrar</button>' +
+    '</div>';
+  
+  document.body.appendChild(t);
+  setTimeout(function(){ t?.remove(); }, 6000);
 }
 </script>
 </body>
