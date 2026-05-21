@@ -1908,8 +1908,10 @@ setTimeout(function() {
       </div>
 
       <!-- Market list -->
-      <div id="marketList" style="display:flex;flex-direction:column;gap:16px">
-        <!-- Rendered by renderMarket() -->
+      
+      <div id="marketList" style="display:flex;flex-direction:column;gap:10px">
+        <!-- Static fallback - renderMarket() will replace this -->
+        <div id="mkt-loading" style="text-align:center;padding:20px;font-size:13px;color:rgba(255,255,255,.25)">Cargando lista...</div>
       </div>
 
       <!-- Add item button -->
@@ -2316,7 +2318,12 @@ function sw(id) {
   var tc = document.getElementById(`tc-${id}`);
   if (tc) tc.scrollTop = 0;
   // Render dynamic tabs
-  if (id === 'mercado') setTimeout(renderMarket, 60);
+  if (id === 'mercado') {
+    if (typeof renderMarket === 'function') {
+      renderMarket();
+      setTimeout(renderMarket, 150); // double-fire for safety
+    }
+  }
   if (id === 'fuera')   setTimeout(function(){ if(typeof renderRestaurants==='function') renderRestaurants(); }, 60);
   if (id === 'recetas') setTimeout(function(){ filterByMeal(window._activeRecipeFilter||'todo'); }, 60);
 }
@@ -4291,6 +4298,7 @@ function deleteFoodEntry(idx) {
 // Run on load and after any save
 document.addEventListener('DOMContentLoaded', function() {
   renderTodayFoods();
+  setTimeout(renderMarket, 400);
   // Hook into saveFood to refresh list
   var origSave = window.saveFood;
   if (typeof origSave === 'function') {
@@ -4472,7 +4480,7 @@ var MARKET_DATA = {
     items: [{id:'e1',name:'Proteína en polvo',qty:'1 kg',emoji:'💪'},{id:'e2',name:'Limones',qty:'6 uds',emoji:'🍋'},{id:'e3',name:'Sal rosa',qty:'250g',emoji:'🧂'}]}
 };
 
-function renderMarket() {
+window.renderMarket = function renderMarket() {
   var list = document.getElementById('marketList');
   if (!list) return;
   var checked = getMarketChecked();
