@@ -636,854 +636,189 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
 
   </div>
 
-  <div class="tc" id="tc-recetas">
+    <div class="tc" id="tc-recetas">
 
-    <!-- Dynamic "¿Qué como ahora?" recommendation -->
-    <div id="recipeRec" style="
-      background:linear-gradient(145deg,rgba(249,115,22,.14),rgba(245,158,11,.07));
-      border:1.5px solid rgba(249,115,22,.3);border-radius:22px;
-      padding:16px 18px;cursor:pointer;
-      box-shadow:0 0 24px rgba(249,115,22,.08)"
-      onclick="openRecipeFromRec()">
-      <div style="font-size:10px;font-weight:700;letter-spacing:.1em;
-        text-transform:uppercase;color:rgba(253,186,116,.6);margin-bottom:10px"
-        id="recTimeLabel">Arju recomienda</div>
-      <div style="display:flex;align-items:center;gap:14px">
-        <div id="recEmoji" style="font-size:42px;line-height:1;
-          filter:drop-shadow(0 4px 10px rgba(249,115,22,.3))">🍳</div>
-        <div style="flex:1;min-width:0">
-          <div id="recName" style="font-size:17px;font-weight:800;
-            color:#f1f0f4;letter-spacing:-.02em;margin-bottom:4px;line-height:1.2">—</div>
-          <div id="recDesc" style="font-size:12px;color:rgba(253,186,116,.65);
-            line-height:1.5">—</div>
-          <div style="display:flex;gap:7px;margin-top:8px" id="recPills"></div>
+      <!-- ── Featured recipe card ── -->
+      <div id="featuredRecipe" style="
+        background:linear-gradient(145deg,rgba(30,10,8,.97),rgba(20,8,5,.98));
+        border:1.5px solid rgba(249,115,22,.4);border-radius:22px;
+        padding:16px;overflow:hidden;position:relative;
+        box-shadow:0 0 32px rgba(249,115,22,.12),inset 0 1px 0 rgba(255,200,100,.08);
+        margin-bottom:16px">
+        <!-- Glow blob -->
+        <div style="position:absolute;top:-30px;right:-20px;width:120px;height:120px;
+          border-radius:50%;background:rgba(249,115,22,.15);filter:blur(40px);pointer-events:none"></div>
+        <!-- Header -->
+        <div style="display:flex;align-items:center;gap:7px;margin-bottom:14px">
+          <span style="font-size:16px">✦</span>
+          <span id="featuredMealQ" style="font-size:11px;font-weight:800;letter-spacing:.1em;
+            text-transform:uppercase;color:rgba(251,191,36,.85)">¿QUÉ DESAYUNAR HOY?</span>
+        </div>
+        <!-- Content row -->
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+          <div id="featuredEmoji" style="font-size:58px;line-height:1;flex-shrink:0;
+            filter:drop-shadow(0 6px 12px rgba(0,0,0,.5))">🥣</div>
+          <div style="flex:1;min-width:0">
+            <div id="featuredName" style="font-size:22px;font-weight:900;color:#fff;
+              letter-spacing:-.03em;line-height:1.15;margin-bottom:5px">Avena que sostiene</div>
+            <div id="featuredDesc" style="font-size:13px;color:rgba(255,255,255,.5);
+              line-height:1.4;margin-bottom:10px">La energía que necesitas para empezar.</div>
+            <!-- Badges -->
+            <div style="display:flex;flex-wrap:wrap;gap:6px">
+              <span id="featuredProt" style="padding:5px 11px;border-radius:20px;font-size:11px;
+                font-weight:700;background:rgba(124,58,237,.25);color:rgba(196,181,253,.9)">💪 12g prot</span>
+              <span id="featuredTime" style="padding:5px 11px;border-radius:20px;font-size:11px;
+                font-weight:700;background:rgba(245,158,11,.18);color:rgba(253,211,77,.9)">⏱ 8 min</span>
+              <span id="featuredDiff" style="padding:5px 11px;border-radius:20px;font-size:11px;
+                font-weight:700;background:rgba(255,255,255,.08);color:rgba(255,255,255,.55)">✦ Fácil</span>
+            </div>
+          </div>
+        </div>
+        <!-- Action buttons -->
+        <div style="display:flex;gap:10px">
+          <button id="featuredVerBtn" onclick="goToRecipe()" style="
+            flex:1;padding:13px;border-radius:14px;border:none;cursor:pointer;
+            background:linear-gradient(135deg,#f97316,#fb923c);
+            color:#fff;font-family:'Outfit',sans-serif;font-size:14px;font-weight:800;
+            box-shadow:0 4px 16px rgba(249,115,22,.4);
+            text-shadow:0 1px 2px rgba(0,0,0,.3)">
+            Ver receta →
+          </button>
+          <button id="featuredAddBtn" onclick="addFeaturedToLog()" style="
+            padding:13px 20px;border-radius:14px;cursor:pointer;
+            border:1.5px solid rgba(249,115,22,.5);background:rgba(249,115,22,.1);
+            color:rgba(251,191,36,.9);font-family:'Outfit',sans-serif;
+            font-size:14px;font-weight:800;white-space:nowrap">
+            + Agregar
+          </button>
         </div>
       </div>
-      <div style="margin-top:12px;display:flex;gap:8px">
-        <button onclick="event.stopPropagation();openRecipeFromRec()" style="
-          flex:1;padding:10px;border-radius:12px;border:none;cursor:pointer;
-          background:linear-gradient(135deg,#f97316,#f59e0b);
-          color:#fff;font-family:var(--font);font-size:13px;font-weight:700">
-          Ver receta →
+
+      <!-- ── Search bar ── -->
+      <div style="position:relative;margin-bottom:14px">
+        <svg style="position:absolute;left:14px;top:50%;transform:translateY(-50%);opacity:.4"
+          width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input id="recipeSearch" type="text" placeholder="Busca: huevo, pollo, arepa, avena..."
+          oninput="filterRecipes(this.value)"
+          style="width:100%;padding:12px 14px 12px 40px;
+            background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);
+            border-radius:16px;color:#fff;font-family:'Outfit',sans-serif;font-size:13px;
+            outline:none;box-sizing:border-box;
+            -webkit-appearance:none">
+      </div>
+
+      <!-- ── Filter tabs ── -->
+      <div style="display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;
+        padding-bottom:4px;margin-bottom:16px;-webkit-overflow-scrolling:touch">
+        <button onclick="filterByMeal('todo')" id="rf-todo" style="
+          display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:20px;
+          border:none;cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;
+          background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;flex-shrink:0;
+          box-shadow:0 3px 10px rgba(124,58,237,.35)">
+          <span style="font-size:14px">⊞</span> Todo
         </button>
-        <button onclick="event.stopPropagation();saveRecipeAsMeal()" style="
-          padding:10px 14px;border-radius:12px;
-          border:1px solid rgba(249,115,22,.3);
-          background:rgba(249,115,22,.1);
-          color:rgba(253,186,116,.8);font-family:var(--font);
-          font-size:12px;font-weight:600;cursor:pointer">
-          + Agregar
+        <button onclick="filterByMeal('desayuno')" id="rf-desayuno" style="
+          display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:20px;
+          border:1px solid rgba(255,255,255,.1);cursor:pointer;font-family:'Outfit',sans-serif;
+          font-size:12px;font-weight:600;background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);flex-shrink:0">
+          🌅 Desayuno
+        </button>
+        <button onclick="filterByMeal('almuerzo')" id="rf-almuerzo" style="
+          display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:20px;
+          border:1px solid rgba(255,255,255,.1);cursor:pointer;font-family:'Outfit',sans-serif;
+          font-size:12px;font-weight:600;background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);flex-shrink:0">
+          ☀️ Almuerzo
+        </button>
+        <button onclick="filterByMeal('cena')" id="rf-cena" style="
+          display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:20px;
+          border:1px solid rgba(255,255,255,.1);cursor:pointer;font-family:'Outfit',sans-serif;
+          font-size:12px;font-weight:600;background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);flex-shrink:0">
+          🌙 Cena
+        </button>
+        <button onclick="filterByMeal('snack')" id="rf-snack" style="
+          display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:20px;
+          border:1px solid rgba(255,255,255,.1);cursor:pointer;font-family:'Outfit',sans-serif;
+          font-size:12px;font-weight:600;background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);flex-shrink:0">
+          🍓 Snack
         </button>
       </div>
-    </div>
 
-    <!-- Search -->
-    <div style="position:relative;margin-bottom:4px">
-      <input id="recipeSearch" type="search" placeholder="Busca: huevo, pollo, arepa, avena…"
-        oninput="searchRecipes(this.value)"
-        style="width:100%;padding:11px 16px 11px 38px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#f1f0f4;font-family:var(--font);font-size:13px;box-sizing:border-box;-webkit-appearance:none;outline:none">
-      <div style="position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:15px;pointer-events:none;opacity:.4">🔍</div>
-    </div>
+      <!-- ── Recipe list ── -->
+      <div id="recipeListNew" style="display:flex;flex-direction:column;gap:10px"></div>
 
-    <!-- Filters -->
-    <div class="recipe-filters" id="recipeFilters">
-      <button class="rf on" data-cat="all" onclick="filterRecipes('all',this)">Todo</button>
-      <button class="rf" data-cat="desayuno" onclick="filterRecipes('desayuno',this)">🌅 Desayuno</button>
-      <button class="rf" data-cat="almuerzo" onclick="filterRecipes('almuerzo',this)">🌞 Almuerzo</button>
-      <button class="rf" data-cat="cena" onclick="filterRecipes('cena',this)">🌙 Cena</button>
-      <button class="rf" data-cat="snack" onclick="filterRecipes('snack',this)">🍎 Snack</button>
-      <button class="rf" data-cat="rapido" onclick="filterRecipes('rapido',this)">⚡ Rápido</button>
-      <button class="rf" data-cat="alto-prot" onclick="filterRecipes('alto-prot',this)">💪 Alta proteína</button>
-      <button class="rf" data-cat="economico" onclick="filterRecipes('economico',this)">💰 Económico</button>
-      <button class="rf" data-cat="colombiano" onclick="filterRecipes('colombiano',this)">🇨🇴 Colombiano</button>
-      <button class="rf" data-cat="mamas" onclick="filterRecipes('mamas',this)">👩‍👧 Mamás</button>
-    </div>
-
-    <!-- Recipe cards — static HTML, all visible by default -->
-    <div class="recipe-grid">
-      <!-- data-tags used by JS filter -->
-      <div class="rc" data-tags="desayuno rapido" onclick="openRecipeDetail('huevos-aguacate')">
-        <span class="rc-emoji">🍳</span>
-        <div class="rc-body">
-          <div class="rc-name">Bowl de huevos y aguacate</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">28g prot.</span>
-            <span class="pill pill-c">380 cal</span>
-            <span class="pill pill-t">10 min</span>
-            <span class="pill pill-tag">desayuno</span>
+      <!-- Fallback static list (hidden once JS loads) -->
+      <div id="recipeListFallback" style="display:flex;flex-direction:column;gap:10px">
+        <!-- Recipe card template -->
+        <div onclick="" style="display:flex;align-items:center;gap:14px;padding:14px 16px;
+          background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+          border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent">
+          <div style="width:64px;height:64px;border-radius:18px;background:rgba(255,255,255,.06);
+            display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0">🥗</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:15px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:8px">
+              Bowl de huevos y aguacate</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;
+                background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">28g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;
+                background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">380 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;
+                background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">10 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;
+                background:rgba(255,255,255,.07);color:rgba(255,255,255,.4)">desayuno</span>
+            </div>
           </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
-      </div>
-
-      <div class="rc" data-tags="almuerzo completo alto-prot" onclick="openRecipeDetail('pechuga-arroz')">
-        <span class="rc-emoji">🍗</span>
-        <div class="rc-body">
-          <div class="rc-name">Pechuga con arroz y brócoli</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">45g prot.</span>
-            <span class="pill pill-c">420 cal</span>
-            <span class="pill pill-t">20 min</span>
-            <span class="pill pill-tag">almuerzo</span>
+        <div onclick="" style="display:flex;align-items:center;gap:14px;padding:14px 16px;
+          background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+          border-radius:20px;cursor:pointer">
+          <div style="width:64px;height:64px;border-radius:18px;background:rgba(255,255,255,.06);
+            display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0">🍗</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:15px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:8px">
+              Pechuga con arroz y brócoli</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;
+                background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">45g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;
+                background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">420 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;
+                background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">20 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;
+                background:rgba(255,255,255,.07);color:rgba(255,255,255,.4)">almuerzo</span>
+            </div>
           </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
-      </div>
-
-      <div class="rc" data-tags="almuerzo rapido economico" onclick="openRecipeDetail('atun-frijoles')">
-        <span class="rc-emoji">🥗</span>
-        <div class="rc-body">
-          <div class="rc-name">Atún con fríjoles negros</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">35g prot.</span>
-            <span class="pill pill-c">310 cal</span>
-            <span class="pill pill-t">5 min</span>
-            <span class="pill pill-tag">sin cocción</span>
+        <div onclick="" style="display:flex;align-items:center;gap:14px;padding:14px 16px;
+          background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+          border-radius:20px;cursor:pointer">
+          <div style="width:64px;height:64px;border-radius:18px;background:rgba(255,255,255,.06);
+            display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0">🐟</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:15px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:8px">
+              Atún con frijoles negros</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;
+                background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">35g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;
+                background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">310 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;
+                background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">5 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;
+                background:rgba(255,255,255,.07);color:rgba(255,255,255,.4)">sin cocción</span>
+            </div>
           </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
-      </div>
-
-      <div class="rc" data-tags="desayuno snack post-entreno rapido" onclick="openRecipeDetail('batido-banano')">
-        <span class="rc-emoji">🥤</span>
-        <div class="rc-body">
-          <div class="rc-name">Batido de banano y avena</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">30g prot.</span>
-            <span class="pill pill-c">350 cal</span>
-            <span class="pill pill-t">3 min</span>
-            <span class="pill pill-tag">pre-entreno</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="rc" data-tags="almuerzo cena economico" onclick="openRecipeDetail('carne-papa')">
-        <span class="rc-emoji">🥩</span>
-        <div class="rc-body">
-          <div class="rc-name">Carne molida con papa</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">32g prot.</span>
-            <span class="pill pill-c">480 cal</span>
-            <span class="pill pill-t">20 min</span>
-            <span class="pill pill-tag">familiar</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="rc" data-tags="desayuno rapido" onclick="openRecipeDetail('omelette')">
-        <span class="rc-emoji">🥚</span>
-        <div class="rc-body">
-          <div class="rc-name">Omelette de proteína</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">25g prot.</span>
-            <span class="pill pill-c">280 cal</span>
-            <span class="pill pill-t">8 min</span>
-            <span class="pill pill-tag">ligero</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="rc" data-tags="cena economico" onclick="openRecipeDetail('lentejas')">
-        <span class="rc-emoji">🍲</span>
-        <div class="rc-body">
-          <div class="rc-name">Sopa de lentejas</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">22g prot.</span>
-            <span class="pill pill-c">290 cal</span>
-            <span class="pill pill-t">30 min</span>
-            <span class="pill pill-tag">económico</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="rc" data-tags="almuerzo" onclick="openRecipeDetail('arroz-pollo')">
-        <span class="rc-emoji">🍲</span>
-        <div class="rc-body">
-          <div class="rc-name">Arroz con pollo</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">38g prot.</span>
-            <span class="pill pill-c">450 cal</span>
-            <span class="pill pill-t">35 min</span>
-            <span class="pill pill-tag">familiar</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="rc" data-tags="desayuno snack" onclick="openRecipeDetail('yogur-fruta')">
-        <span class="rc-emoji">🫙</span>
-        <div class="rc-body">
-          <div class="rc-name">Yogur griego con frutas</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">15g prot.</span>
-            <span class="pill pill-c">180 cal</span>
-            <span class="pill pill-t">2 min</span>
-            <span class="pill pill-tag">snack</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="rc" data-tags="cena rapido alto-prot colombiano" onclick="openRecipeDetail('tortilla-vegetal')">
-        <span class="rc-emoji">🥚</span>
-        <div class="rc-body">
-          <div class="rc-name">Tortilla de huevo con vegetales</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">22g prot.</span>
-            <span class="pill pill-c">250 cal</span>
-            <span class="pill pill-t">10 min</span>
-            <span class="pill pill-tag">cena ligera</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="rc" data-tags="desayuno rapido colombiano mamas" onclick="openRecipeDetail('arepa-queso-huevo')">
-        <span class="rc-emoji">🫓</span>
-        <div class="rc-body">
-          <div class="rc-name">Arepa con queso y huevos</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">24g prot.</span>
-            <span class="pill pill-c">340 cal</span>
-            <span class="pill pill-t">8 min</span>
-            <span class="pill pill-tag">colombiana</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="rc" data-tags="snack rapido alto-prot economico" onclick="openRecipeDetail('huevos-cocidos')">
-        <span class="rc-emoji">🥚</span>
-        <div class="rc-body">
-          <div class="rc-name">Huevos cocidos con sal y limón</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">18g prot.</span>
-            <span class="pill pill-c">150 cal</span>
-            <span class="pill pill-t">12 min</span>
-            <span class="pill pill-tag">snack</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="rc" data-tags="almuerzo cena economico" onclick="openRecipeDetail('frijoles-arroz')">
-        <span class="rc-emoji">🫘</span>
-        <div class="rc-body">
-          <div class="rc-name">Fríjoles con arroz y plátano</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">18g prot.</span>
-            <span class="pill pill-c">430 cal</span>
-            <span class="pill pill-t">10 min</span>
-            <span class="pill pill-tag">colombiano</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="rc" data-tags="snack rapido economico" onclick="openRecipeDetail('huevos-cocidos')">
-        <span class="rc-emoji">🥚</span>
-        <div class="rc-body">
-          <div class="rc-name">Huevos cocidos</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">12g prot.</span>
-            <span class="pill pill-c">140 cal</span>
-            <span class="pill pill-t">10 min</span>
-            <span class="pill pill-tag">snack</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="rc" data-tags="post-entreno almuerzo" onclick="openRecipeDetail('arroz-huevos')">
-        <span class="rc-emoji">🍚</span>
-        <div class="rc-body">
-          <div class="rc-name">Arroz con huevos revueltos</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">22g prot.</span>
-            <span class="pill pill-c">370 cal</span>
-            <span class="pill pill-t">12 min</span>
-            <span class="pill pill-tag">post-entreno</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="rc" data-tags="cena economico" onclick="openRecipeDetail('caldo-papa')">
-        <span class="rc-emoji">🍵</span>
-        <div class="rc-body">
-          <div class="rc-name">Caldo de papa con pollo</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">25g prot.</span>
-            <span class="pill pill-c">280 cal</span>
-            <span class="pill pill-t">30 min</span>
-            <span class="pill pill-tag">reconfortante</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="rc" data-tags="desayuno post-entreno rapido" onclick="openRecipeDetail('tostadas-aguacate')">
-        <span class="rc-emoji">🥑</span>
-        <div class="rc-body">
-          <div class="rc-name">Tostadas de aguacate con huevo</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">18g prot.</span>
-            <span class="pill pill-c">310 cal</span>
-            <span class="pill pill-t">8 min</span>
-            <span class="pill pill-tag">post-entreno</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="rc" data-tags="snack rapido" onclick="openRecipeDetail('banano-mani')">
-        <span class="rc-emoji">🍌</span>
-        <div class="rc-body">
-          <div class="rc-name">Banano con mantequilla de maní</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">8g prot.</span>
-            <span class="pill pill-c">220 cal</span>
-            <span class="pill pill-t">2 min</span>
-            <span class="pill pill-tag">pre-entreno</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="rc" data-tags="almuerzo alto-prot" onclick="openRecipeDetail('tortilla-atun')">
-        <span class="rc-emoji">🌮</span>
-        <div class="rc-body">
-          <div class="rc-name">Tortilla de atún</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">30g prot.</span>
-            <span class="pill pill-c">350 cal</span>
-            <span class="pill pill-t">12 min</span>
-            <span class="pill pill-tag">almuerzo</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="rc" data-tags="desayuno avena economico" onclick="openRecipeDetail('avena-banano')">
-        <span class="rc-emoji">🥣</span>
-        <div class="rc-body">
-          <div class="rc-name">Avena con banano y canela</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">12g prot.</span>
-            <span class="pill pill-c">310 cal</span>
-            <span class="pill pill-t">8 min</span>
-            <span class="pill pill-tag">económico</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="rc" data-tags="alto-prot desayuno rapido" onclick="openRecipeFromJSON('arepa-huevo-aguacate')">
-        <span class="rc-emoji">🌅</span>
-        <div class="rc-body">
-          <div class="rc-name">Arepa con huevo y aguacate</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">24g prot.</span>
-            <span class="pill pill-c">460 cal</span>
-            <span class="pill pill-t">10 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot desayuno rapido" onclick="openRecipeFromJSON('huevos-pericos-arepa')">
-        <span class="rc-emoji">🌅</span>
-        <div class="rc-body">
-          <div class="rc-name">Huevos pericos con arepa</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">26g prot.</span>
-            <span class="pill pill-c">420 cal</span>
-            <span class="pill pill-t">10 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot desayuno rapido" onclick="openRecipeFromJSON('yogur-banano-avena')">
-        <span class="rc-emoji">🌅</span>
-        <div class="rc-body">
-          <div class="rc-name">Yogur griego con banano y avena</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">20g prot.</span>
-            <span class="pill pill-c">380 cal</span>
-            <span class="pill pill-t">5 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot desayuno rapido" onclick="openRecipeFromJSON('omelette-espinaca')">
-        <span class="rc-emoji">🌅</span>
-        <div class="rc-body">
-          <div class="rc-name">Omelette de espinaca y queso</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">28g prot.</span>
-            <span class="pill pill-c">340 cal</span>
-            <span class="pill pill-t">10 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot desayuno rapido" onclick="openRecipeFromJSON('avena-proteina-fresas')">
-        <span class="rc-emoji">🌅</span>
-        <div class="rc-body">
-          <div class="rc-name">Avena con proteína y fresas</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">30g prot.</span>
-            <span class="pill pill-c">420 cal</span>
-            <span class="pill pill-t">10 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot desayuno rapido" onclick="openRecipeFromJSON('tostadas-huevo')">
-        <span class="rc-emoji">🌅</span>
-        <div class="rc-body">
-          <div class="rc-name">Tostadas integrales con huevo</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">20g prot.</span>
-            <span class="pill pill-c">360 cal</span>
-            <span class="pill pill-t">8 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('bowl-pollo-aguacate')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Bowl de arroz con pollo y aguacate</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">42g prot.</span>
-            <span class="pill pill-c">580 cal</span>
-            <span class="pill pill-t">20 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('pollo-desmechado-papa')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Pollo desmechado con papa criolla</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">44g prot.</span>
-            <span class="pill pill-c">490 cal</span>
-            <span class="pill pill-t">25 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('lentejas-arroz-huevo')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Lentejas con arroz y huevo</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">34g prot.</span>
-            <span class="pill pill-c">560 cal</span>
-            <span class="pill pill-t">30 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('frijoles-arroz-carne')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Frijoles con arroz y carne magra</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">45g prot.</span>
-            <span class="pill pill-c">610 cal</span>
-            <span class="pill pill-t">35 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('carne-molida-papa')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Carne molida magra con papa</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">42g prot.</span>
-            <span class="pill pill-c">520 cal</span>
-            <span class="pill pill-t">20 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('pescado-yuca-ensalada')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Pescado con yuca y ensalada</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">40g prot.</span>
-            <span class="pill pill-c">470 cal</span>
-            <span class="pill pill-t">25 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo rapido" onclick="openRecipeFromJSON('atun-arepa-tomate')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Atún con arepa y tomate</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">36g prot.</span>
-            <span class="pill pill-c">400 cal</span>
-            <span class="pill pill-t">8 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo rapido" onclick="openRecipeFromJSON('ensalada-pollo-aguacate')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Ensalada de pollo con aguacate</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">34g prot.</span>
-            <span class="pill pill-c">380 cal</span>
-            <span class="pill pill-t">15 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo rapido" onclick="openRecipeFromJSON('wrap-pollo')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Wrap integral de pollo</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">36g prot.</span>
-            <span class="pill pill-c">440 cal</span>
-            <span class="pill pill-t">12 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('sopa-pollo-verduras')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Sopa de pollo con papa y verduras</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">36g prot.</span>
-            <span class="pill pill-c">420 cal</span>
-            <span class="pill pill-t">35 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot cena" onclick="openRecipeFromJSON('pechuga-pure-papa')">
-        <span class="rc-emoji">🌙</span>
-        <div class="rc-body">
-          <div class="rc-name">Pechuga con puré de papa y ensalada</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">44g prot.</span>
-            <span class="pill pill-c">520 cal</span>
-            <span class="pill pill-t">25 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot cena" onclick="openRecipeFromJSON('salmon-arroz-vegetales')">
-        <span class="rc-emoji">🌙</span>
-        <div class="rc-body">
-          <div class="rc-name">Salmón con arroz y vegetales</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">46g prot.</span>
-            <span class="pill pill-c">560 cal</span>
-            <span class="pill pill-t">20 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot cena" onclick="openRecipeFromJSON('tilapia-patacon')">
-        <span class="rc-emoji">🌙</span>
-        <div class="rc-body">
-          <div class="rc-name">Tilapia al horno con patacón</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">40g prot.</span>
-            <span class="pill pill-c">480 cal</span>
-            <span class="pill pill-t">25 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot cena rapido" onclick="openRecipeFromJSON('cena-huevos-vegetales')">
-        <span class="rc-emoji">🌙</span>
-        <div class="rc-body">
-          <div class="rc-name">Cena ligera de huevos con vegetales</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">26g prot.</span>
-            <span class="pill pill-c">320 cal</span>
-            <span class="pill pill-t">12 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot cena" onclick="openRecipeFromJSON('pollo-al-curry')">
-        <span class="rc-emoji">🌙</span>
-        <div class="rc-body">
-          <div class="rc-name">Pollo al curry ligero</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">42g prot.</span>
-            <span class="pill pill-c">520 cal</span>
-            <span class="pill pill-t">20 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('bowl-platano-pollo')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Bowl de plátano maduro con pollo</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">38g prot.</span>
-            <span class="pill pill-c">490 cal</span>
-            <span class="pill pill-t">20 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot cena" onclick="openRecipeFromJSON('crema-ahuyama')">
-        <span class="rc-emoji">🌙</span>
-        <div class="rc-body">
-          <div class="rc-name">Crema de ahuyama con pollo</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">34g prot.</span>
-            <span class="pill pill-c">380 cal</span>
-            <span class="pill pill-t">30 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot cena rapido" onclick="openRecipeFromJSON('tortilla-vegetales')">
-        <span class="rc-emoji">🌙</span>
-        <div class="rc-body">
-          <div class="rc-name">Tortilla española de vegetales</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">28g prot.</span>
-            <span class="pill pill-c">380 cal</span>
-            <span class="pill pill-t">15 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo rapido" onclick="openRecipeFromJSON('ensalada-atun-garbanzos')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Ensalada de atún con garbanzos</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">36g prot.</span>
-            <span class="pill pill-c">400 cal</span>
-            <span class="pill pill-t">8 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('garbanzos-salteados-pollo')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Garbanzos salteados con pollo</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">42g prot.</span>
-            <span class="pill pill-c">480 cal</span>
-            <span class="pill pill-t">18 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('bowl-quinoa-pollo')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Bowl de quinoa con pollo</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">40g prot.</span>
-            <span class="pill pill-c">510 cal</span>
-            <span class="pill pill-t">20 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('pasta-integral-pollo')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Pasta integral con pollo</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">40g prot.</span>
-            <span class="pill pill-c">520 cal</span>
-            <span class="pill pill-t">20 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo rapido" onclick="openRecipeFromJSON('pasta-atun-tomate')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Pasta con atún y tomate</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">36g prot.</span>
-            <span class="pill pill-c">460 cal</span>
-            <span class="pill pill-t">15 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot rapido snack" onclick="openRecipeFromJSON('batido-proteina-banano')">
-        <span class="rc-emoji">🍎</span>
-        <div class="rc-body">
-          <div class="rc-name">Batido de proteína con banano</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">35g prot.</span>
-            <span class="pill pill-c">380 cal</span>
-            <span class="pill pill-t">3 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="rapido snack" onclick="openRecipeFromJSON('smoothie-frutos-rojos')">
-        <span class="rc-emoji">🍎</span>
-        <div class="rc-body">
-          <div class="rc-name">Smoothie de frutos rojos y yogur</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">18g prot.</span>
-            <span class="pill pill-c">280 cal</span>
-            <span class="pill pill-t">5 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot desayuno rapido" onclick="openRecipeFromJSON('panquecas-avena')">
-        <span class="rc-emoji">🌅</span>
-        <div class="rc-body">
-          <div class="rc-name">Panquecas de avena y banano</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">22g prot.</span>
-            <span class="pill pill-c">420 cal</span>
-            <span class="pill pill-t">15 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo rapido" onclick="openRecipeFromJSON('arepa-rellena-pollo')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Arepa rellena de pollo</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">38g prot.</span>
-            <span class="pill pill-c">480 cal</span>
-            <span class="pill pill-t">15 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot cena" onclick="openRecipeFromJSON('hamburguesa-casera-fit')">
-        <span class="rc-emoji">🌙</span>
-        <div class="rc-body">
-          <div class="rc-name">Hamburguesa casera fit</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">42g prot.</span>
-            <span class="pill pill-c">560 cal</span>
-            <span class="pill pill-t">20 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('burrito-bowl')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Burrito bowl saludable</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">42g prot.</span>
-            <span class="pill pill-c">580 cal</span>
-            <span class="pill pill-t">20 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('arroz-paisa')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Arroz paisa saludable</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">45g prot.</span>
-            <span class="pill pill-c">650 cal</span>
-            <span class="pill pill-t">30 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot cena" onclick="openRecipeFromJSON('picada-fit')">
-        <span class="rc-emoji">🌙</span>
-        <div class="rc-body">
-          <div class="rc-name">Picada saludable alta en proteína</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">44g prot.</span>
-            <span class="pill pill-c">580 cal</span>
-            <span class="pill pill-t">25 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot desayuno rapido" onclick="openRecipeFromJSON('tostada-aguacate-huevo')">
-        <span class="rc-emoji">🌅</span>
-        <div class="rc-body">
-          <div class="rc-name">Tostada de aguacate con huevo</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">22g prot.</span>
-            <span class="pill pill-c">420 cal</span>
-            <span class="pill pill-t">8 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot cena" onclick="openRecipeFromJSON('albondigas-arroz')">
-        <span class="rc-emoji">🌙</span>
-        <div class="rc-body">
-          <div class="rc-name">Albóndigas magras con arroz</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">42g prot.</span>
-            <span class="pill pill-c">520 cal</span>
-            <span class="pill pill-t">25 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot cena" onclick="openRecipeFromJSON('pechuga-tomate-natural')">
-        <span class="rc-emoji">🌙</span>
-        <div class="rc-body">
-          <div class="rc-name">Pechuga en salsa de tomate natural</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">44g prot.</span>
-            <span class="pill pill-c">380 cal</span>
-            <span class="pill pill-t">20 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('ensalada-quinoa-atun')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Ensalada de quinoa y atún</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">36g prot.</span>
-            <span class="pill pill-c">440 cal</span>
-            <span class="pill pill-t">20 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot cena rapido" onclick="openRecipeFromJSON('caldo-huevo-arepa')">
-        <span class="rc-emoji">🌙</span>
-        <div class="rc-body">
-          <div class="rc-name">Caldo de huevo con arepa</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">22g prot.</span>
-            <span class="pill pill-c">300 cal</span>
-            <span class="pill pill-t">12 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('bowl-post-entreno')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Bowl post-entreno de arroz, pollo y aguacate</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">44g prot.</span>
-            <span class="pill pill-c">600 cal</span>
-            <span class="pill pill-t">20 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot almuerzo" onclick="openRecipeFromJSON('papa-rellena-saludable')">
-        <span class="rc-emoji">🌞</span>
-        <div class="rc-body">
-          <div class="rc-name">Papa rellena saludable</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">38g prot.</span>
-            <span class="pill pill-c">520 cal</span>
-            <span class="pill pill-t">30 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot cena rapido" onclick="openRecipeFromJSON('quesadilla-pollo')">
-        <span class="rc-emoji">🌙</span>
-        <div class="rc-body">
-          <div class="rc-name">Quesadilla saludable de pollo</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">38g prot.</span>
-            <span class="pill pill-c">460 cal</span>
-            <span class="pill pill-t">12 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot cena rapido" onclick="openRecipeFromJSON('tacos-pollo-saludables')">
-        <span class="rc-emoji">🌙</span>
-        <div class="rc-body">
-          <div class="rc-name">Tacos saludables de pollo</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">36g prot.</span>
-            <span class="pill pill-c">480 cal</span>
-            <span class="pill pill-t">15 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
-      </div>
-      <div class="rc" data-tags="alto-prot cena" onclick="openRecipeFromJSON('cazuela-pollo-verduras')">
-        <span class="rc-emoji">🌙</span>
-        <div class="rc-body">
-          <div class="rc-name">Cazuela ligera de pollo y verduras</div>
-          <div class="rc-pills">
-            <span class="pill pill-p">38g prot.</span>
-            <span class="pill pill-c">420 cal</span>
-            <span class="pill pill-t">30 min</span>
-          </div>
-        </div><span class="rc-arr">›</span>
       </div>
 
     </div>
-  </div>
 
-  <!-- ══════════════ TAB: MERCADO ══════════════ -->
+
   <div class="tc" id="tc-mercado">
     <div>
       <div style="font-size:16px;font-weight:800;letter-spacing:-.02em;margin-bottom:3px">
