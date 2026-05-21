@@ -191,11 +191,11 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="mi-text"><div class="mi-title">Modo oscuro</div><div class="mi-sub">Tema premium dark</div></div>
         <button class="tog on" id="darkTog"></button>
       </div>
-      <a href="/pages/onboarding.html" class="mi" onclick="window.location.href='/pages/onboarding.html';return false;">
+      <div class="mi" onclick="editarMiPlan()" style="cursor:pointer">
         <div class="mi-icon" style="background:rgba(16,185,129,.1)">⚙️</div>
         <div class="mi-text"><div class="mi-title">Editar mi plan</div><div class="mi-sub">Objetivo, peso, nivel</div></div>
         <span class="mi-arrow">›</span>
-      </a>
+      </div>
     </div>
 
     <!-- Soporte -->
@@ -664,6 +664,14 @@ document.addEventListener('DOMContentLoaded', function(){
   if (notifTog && localStorage.getItem('af-notifications') === '1') notifTog.classList.add('on');
 });
 
-document.addEventListener('DOMContentLoaded',function(){var av=localStorage.getItem('af-avatar-local');if(av){var el=document.getElementById('avatarEl');if(el){el.style.backgroundImage='url('+av+')';el.style.backgroundSize='cover';el.style.backgroundPosition='center';var ini=document.getElementById('avatarInitial');if(ini)ini.style.display='none';}}var n=localStorage.getItem('af-user-name')||localStorage.getItem('af-name');var ns=document.getElementById('currentNameSub');if(ns&&n)ns.textContent=n;});</script>
+document.addEventListener('DOMContentLoaded',function(){var av=localStorage.getItem('af-avatar-local');if(av){var el=document.getElementById('avatarEl');if(el){el.style.backgroundImage='url('+av+')';el.style.backgroundSize='cover';el.style.backgroundPosition='center';var ini=document.getElementById('avatarInitial');if(ini)ini.style.display='none';}}var n=localStorage.getItem('af-user-name')||localStorage.getItem('af-name');var ns=document.getElementById('currentNameSub');if(ns&&n)ns.textContent=n;});
+function editarMiPlan() {
+  // Clear onboarding_completed so onboarding shows instead of bouncing to dashboard
+  localStorage.removeItem('af-onboarding-completed');
+  localStorage.removeItem('af-onboarding-step');
+  // Navigate to onboarding
+  window.location.href = '/pages/onboarding.html';
+}
+</script>
 </body>
 </html>
