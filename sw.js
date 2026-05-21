@@ -43,6 +43,9 @@ self.addEventListener('activate', e => {
   );
 });
 
+// Offline fallback page
+const OFFLINE_URL = '/offline.html';
+
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
 
