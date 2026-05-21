@@ -674,6 +674,19 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
         </div>
       </div>
 
+
+        <!-- Crear receta pequeño -->
+        <div onclick="openCreateRecipe()" style="display:flex;align-items:center;gap:12px;padding:12px 14px;
+          background:rgba(124,58,237,.08);border:1px dashed rgba(124,58,237,.35);
+          border-radius:16px;cursor:pointer;-webkit-tap-highlight-color:transparent;margin-top:2px">
+          <span style="font-size:20px">✨</span>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:700;color:#c4b5fd">Crear receta con mis ingredientes</div>
+            <div style="font-size:11px;color:rgba(167,139,250,.45);margin-top:1px">Arju genera algo con lo que tienes</div>
+          </div>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(167,139,250,.4)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+
       <!-- ── Search bar ── -->
       <div style="position:relative;margin-bottom:14px">
         <svg style="position:absolute;left:14px;top:50%;transform:translateY(-50%);opacity:.4"
@@ -729,22 +742,1053 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
       <div id="recipeListNew" style="display:flex;flex-direction:column;gap:10px"></div>
 
       <!-- Fallback static list (hidden once JS loads) -->
-            <div id="recipeListFallback" style="display:flex;flex-direction:column;gap:10px">
-        <div data-meal="desayuno" onclick="openRecipeDetail('bowl-huevos')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;
-          background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
-          border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;
-          transition:background .15s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
-          <div style="width:64px;height:64px;border-radius:18px;background:rgba(255,255,255,.06);
-            display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0">🥗</div>
+                        <div id="recipeListFallback" style="display:flex;flex-direction:column;gap:10px">
+        <div data-meal="desayuno" onclick="openRecipeDetail('bowl-huevos')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥗</div>
           <div style="flex:1;min-width:0">
-            <div style="font-size:15px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:8px">Bowl de huevos y aguacate</div>
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Bowl de huevos y aguacate</div>
             <div style="display:flex;flex-wrap:wrap;gap:5px">
               <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">28g prot.</span>
               <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">380 cal</span>
               <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">10 min</span>
-              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.4)">desayuno</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
             </div>
           </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('huevos-espinaca')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥚</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Huevos revueltos con espinaca</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">22g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">280 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">7 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('avena-proteina')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥣</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Avena con proteína y banana</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">30g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">350 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">8 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('tostadas-salmon')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍞</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Tostadas de salmón y aguacate</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">25g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">320 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">5 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('pancakes-prot')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥞</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Pancakes de avena y proteína</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">35g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">420 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">15 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('yogur-frutas')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🫙</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Yogur griego con frutas y miel</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">20g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">260 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">3 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('arepa-huevo')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🫓</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Arepa con huevo y aguacate</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">18g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">340 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">12 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('smoothie-prot')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥤</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Smoothie verde proteico</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">28g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">290 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">4 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('tortilla-vegetal')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍳</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Tortilla de vegetales</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">24g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">310 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">10 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('bowl-frutas')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍓</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Bowl de frutas con granola fit</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">12g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">290 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">5 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('wrap-pechuga')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🌯</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Wrap de pechuga y vegetales</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">32g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">370 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">8 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('cottage-frutas')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🧀</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Cottage con frutas y almendras</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">22g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">250 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">3 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('tostadas-atun')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🐟</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Tostadas integrales con atún</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">26g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">300 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">5 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('chia-mango')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥭</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Pudín de chía con mango</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">14g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">240 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">5 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('burrito-huevo')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🌮</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Burrito de huevo y frijoles</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">29g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">410 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">12 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('pechuga-arroz')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍗</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Pechuga con arroz y brócoli</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">45g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">420 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">20 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('arroz-pollo')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍲</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Arroz con pollo colombiano</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">38g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">450 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">30 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('lentejas')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🫘</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Lentejas con vegetales</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">18g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">320 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">25 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('atun-frijoles')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🐟</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Atún con frijoles negros</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">35g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">310 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">5 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('salmon-espinaca')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🐟</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Salmón con espinaca salteada</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">42g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">390 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">15 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('quinoa-pollo')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍚</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Quinoa con pollo y vegetales</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">40g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">430 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">20 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('sancocho-light')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍵</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Sancocho de pollo light</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">36g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">370 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">35 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('wrap-turkey')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🌯</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Wrap de pavo y mostaza dijon</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">32g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">340 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">8 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('bowl-buda')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥙</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Buddha bowl fitness</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">28g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">380 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">15 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('pasta-integral')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍝</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Pasta integral con pollo</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">35g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">440 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">20 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('sopa-proteina')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍜</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Sopa de proteína y vegetales</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">30g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">290 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">20 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('bistec-yuca')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥩</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Bistec con yuca y ensalada</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">45g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">480 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">25 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('ensalada-pollo')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥗</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Ensalada de pollo mediterránea</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">38g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">350 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">10 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('tacos-pollo')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🌮</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Tacos de pollo con maíz</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">33g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">400 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">15 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('cazuela-res')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🫕</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Cazuela de res con papa</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">40g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">460 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">40 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="cena" onclick="openRecipeDetail('sopa-lentejas')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍵</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Sopa de lentejas</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">18g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">280 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">20 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">cena</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="cena" onclick="openRecipeDetail('pechuga-grillada')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍗</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Pechuga grillada y vegetales</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">42g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">340 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">15 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">cena</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="cena" onclick="openRecipeDetail('huevos-noche')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍳</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Revuelto nocturno de claras</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">30g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">200 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">8 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">cena</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="cena" onclick="openRecipeDetail('ensalada-atun')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥗</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Ensalada de atún y aguacate</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">32g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">290 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">5 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">cena</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="cena" onclick="openRecipeDetail('brocoli-pollo')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥦</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Brócoli con pollo al vapor</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">38g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">310 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">15 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">cena</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="cena" onclick="openRecipeDetail('tortilla-claras')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍳</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Tortilla de claras con espinaca</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">26g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">220 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">8 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">cena</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="snack" onclick="openRecipeDetail('batido')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍌</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Batido de proteína y banana</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">30g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">290 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">3 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">snack</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="snack" onclick="openRecipeDetail('manzana-mantequilla')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍎</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Manzana con mantequilla de maní</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">8g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">200 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">2 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">snack</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="snack" onclick="openRecipeDetail('huevo-cocido')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥚</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Huevos cocidos con sal rosa</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">12g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">140 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">10 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">snack</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="snack" onclick="openRecipeDetail('nueces-frutas')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥜</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Mix de nueces y fruta seca</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">6g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">180 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">1 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">snack</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+
+      </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('huevos-espinaca')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥚</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Huevos revueltos con espinaca</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">22g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">280 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">7 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('avena-proteina')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥣</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Avena con proteína y banana</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">30g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">350 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">8 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('tostadas-salmon')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍞</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Tostadas de salmón y aguacate</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">25g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">320 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">5 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('pancakes-prot')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥞</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Pancakes de avena y proteína</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">35g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">420 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">15 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('yogur-frutas')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🫙</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Yogur griego con frutas y miel</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">20g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">260 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">3 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('arepa-huevo')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🫓</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Arepa con huevo y aguacate</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">18g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">340 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">12 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('smoothie-prot')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥤</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Smoothie verde proteico</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">28g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">290 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">4 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('tortilla-vegetal')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍳</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Tortilla de vegetales</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">24g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">310 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">10 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('bowl-frutas')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍓</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Bowl de frutas con granola fit</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">12g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">290 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">5 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('wrap-pechuga')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🌯</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Wrap de pechuga y vegetales</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">32g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">370 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">8 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('cottage-frutas')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🧀</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Cottage con frutas y almendras</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">22g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">250 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">3 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('tostadas-atun')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🐟</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Tostadas integrales con atún</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">26g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">300 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">5 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('chia-mango')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥭</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Pudín de chía con mango</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">14g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">240 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">5 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="desayuno" onclick="openRecipeDetail('burrito-huevo')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🌮</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Burrito de huevo y frijoles</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">29g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">410 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">12 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">desayuno</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('pechuga-arroz')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍗</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Pechuga con arroz y brócoli</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">45g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">420 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">20 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('arroz-pollo')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍲</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Arroz con pollo colombiano</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">38g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">450 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">30 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('lentejas')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🫘</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Lentejas con vegetales</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">18g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">320 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">25 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('atun-frijoles')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🐟</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Atún con frijoles negros</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">35g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">310 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">5 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('salmon-espinaca')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🐟</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Salmón con espinaca salteada</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">42g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">390 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">15 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('quinoa-pollo')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍚</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Quinoa con pollo y vegetales</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">40g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">430 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">20 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('sancocho-light')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍵</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Sancocho de pollo light</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">36g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">370 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">35 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('wrap-turkey')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🌯</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Wrap de pavo y mostaza dijon</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">32g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">340 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">8 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('bowl-buda')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥙</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Buddha bowl fitness</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">28g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">380 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">15 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('pasta-integral')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍝</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Pasta integral con pollo</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">35g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">440 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">20 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('sopa-proteina')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍜</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Sopa de proteína y vegetales</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">30g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">290 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">20 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('bistec-yuca')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥩</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Bistec con yuca y ensalada</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">45g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">480 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">25 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('ensalada-pollo')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥗</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Ensalada de pollo mediterránea</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">38g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">350 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">10 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('tacos-pollo')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🌮</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Tacos de pollo con maíz</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">33g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">400 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">15 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="almuerzo" onclick="openRecipeDetail('cazuela-res')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🫕</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Cazuela de res con papa</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">40g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">460 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">40 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">almuerzo</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="cena" onclick="openRecipeDetail('sopa-lentejas')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍵</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Sopa de lentejas</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">18g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">280 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">20 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">cena</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="cena" onclick="openRecipeDetail('pechuga-grillada')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍗</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Pechuga grillada y vegetales</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">42g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">340 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">15 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">cena</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="cena" onclick="openRecipeDetail('huevos-noche')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍳</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Revuelto nocturno de claras</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">30g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">200 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">8 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">cena</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="cena" onclick="openRecipeDetail('ensalada-atun')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥗</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Ensalada de atún y aguacate</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">32g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">290 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">5 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">cena</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="cena" onclick="openRecipeDetail('brocoli-pollo')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥦</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Brócoli con pollo al vapor</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">38g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">310 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">15 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">cena</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="cena" onclick="openRecipeDetail('tortilla-claras')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍳</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Tortilla de claras con espinaca</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">26g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">220 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">8 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">cena</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="snack" onclick="openRecipeDetail('batido')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍌</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Batido de proteína y banana</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">30g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">290 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">3 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">snack</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="snack" onclick="openRecipeDetail('manzana-mantequilla')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🍎</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Manzana con mantequilla de maní</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">8g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">200 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">2 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">snack</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="snack" onclick="openRecipeDetail('huevo-cocido')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥚</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Huevos cocidos con sal rosa</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">12g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">140 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">10 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">snack</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+        <div data-meal="snack" onclick="openRecipeDetail('nueces-frutas')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
+          <div style="width:60px;height:60px;border-radius:16px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0">🥜</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;margin-bottom:7px">Mix de nueces y fruta seca</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px">
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(124,58,237,.2);color:rgba(196,181,253,.9)">6g prot.</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(245,158,11,.15);color:rgba(253,211,77,.9)">180 cal</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(16,185,129,.15);color:rgba(110,231,183,.9)">1 min</span>
+              <span style="padding:3px 9px;border-radius:20px;font-size:10px;font-weight:600;background:rgba(255,255,255,.07);color:rgba(255,255,255,.38)">snack</span>
+            </div>
+          </div>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+
+        <!-- Crear receta pequeño -->
+        <div onclick="openCreateRecipe()" style="display:flex;align-items:center;gap:12px;padding:12px 14px;
+          background:rgba(124,58,237,.08);border:1px dashed rgba(124,58,237,.35);
+          border-radius:16px;cursor:pointer;-webkit-tap-highlight-color:transparent;margin-top:2px">
+          <span style="font-size:20px">✨</span>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:700;color:#c4b5fd">Crear receta con mis ingredientes</div>
+            <div style="font-size:11px;color:rgba(167,139,250,.45);margin-top:1px">Arju genera algo con lo que tienes</div>
+          </div>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(167,139,250,.4)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
         <div data-meal="almuerzo" onclick="openRecipeDetail('pechuga-arroz')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;
@@ -832,25 +1876,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
           </div>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
-
-        <!-- Crear receta -->
-        <div onclick="openCreateRecipe()" style="display:flex;align-items:center;gap:14px;padding:16px;
-          background:linear-gradient(135deg,rgba(124,58,237,.12),rgba(236,72,153,.06));
-          border:1.5px dashed rgba(124,58,237,.4);border-radius:20px;cursor:pointer;
-          -webkit-tap-highlight-color:transparent">
-          <div style="width:52px;height:52px;border-radius:16px;
-            background:linear-gradient(135deg,rgba(124,58,237,.2),rgba(236,72,153,.15));
-            display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;
-            border:1px solid rgba(124,58,237,.3)">✨</div>
-          <div style="flex:1">
-            <div style="font-size:14px;font-weight:800;color:#c4b5fd;margin-bottom:3px">Crear receta con mis ingredientes</div>
-            <div style="font-size:12px;color:rgba(167,139,250,.5)">Arju genera una receta personalizada</div>
-          </div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(167,139,250,.5)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-        </div>
       </div>
 
-    </div>
 
 
   <div class="tc" id="tc-mercado">
