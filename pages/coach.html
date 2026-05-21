@@ -448,6 +448,17 @@ html, body {
   nav[style*="position:fixed"]{background:rgba(12,7,22,.88)!important;backdrop-filter:blur(40px) saturate(1.8)!important;-webkit-backdrop-filter:blur(40px) saturate(1.8)!important;border-radius:26px!important;border-color:rgba(196,181,253,.08)!important;box-shadow:0 -1px 0 rgba(255,255,255,.04) inset,0 12px 40px rgba(0,0,0,.55),0 0 60px rgba(124,58,237,.06)!important}
   </style>
   <link rel="stylesheet" href="/assets/visual-polish.css">
+<script>
+// Safety: si el loader sigue visible después de 6s → mostrar página
+setTimeout(function() {
+  var ldr = document.getElementById('ldr');
+  if (ldr && ldr.style.display !== 'none' && !ldr.classList.contains('off')) {
+    ldr.style.display = 'none';
+    ldr.classList.add('off');
+    console.warn('[AF] Safety timeout triggered on', window.location.pathname);
+  }
+}, 6000);
+</script>
 </head>
 <body>
 <div id="ldr" style="position:fixed;inset:0;background:#090611;z-index:999;display:flex;align-items:center;justify-content:center;transition:opacity .3s"><div style="width:36px;height:36px;border-radius:50%;border:3px solid rgba(124,58,237,.2);border-top-color:#7c3aed;animation:spin .7s linear infinite"></div></div>
