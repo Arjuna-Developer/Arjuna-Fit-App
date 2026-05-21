@@ -1687,25 +1687,26 @@ function prevPhase(){
 function nextPhase(){
   // Check completion for simple phases (0,1,2,4)
   if (S.phase < 3 || S.phase === 4) {
-    var doneBtns   = document.querySelectorAll('.se-done.done');
-    var totalBtns  = document.querySelectorAll('.se-done');
+    // Uses S.simpleChecks[key] — buttons with class 'on' = done
+    var doneBtns  = document.querySelectorAll('.se-done.on');
+    var totalBtns = document.querySelectorAll('.se-done');
     if (totalBtns.length > 0 && doneBtns.length < totalBtns.length) {
-      // Shake the next button as feedback
+      // Shake next button
       var nb = document.getElementById('nextBtn');
       if (nb) { nb.style.transform='scale(.93)'; setTimeout(function(){ nb.style.transform=''; },200); }
-      // Flash incomplete items
-      document.querySelectorAll('.se-done:not(.done)').forEach(function(btn){
+      // Highlight incomplete items
+      document.querySelectorAll('.se-done:not(.on)').forEach(function(btn){
         var row = btn.closest('.simple-ex');
         if (row) {
-          row.style.background='rgba(245,158,11,.12)';
-          row.style.border='1px solid rgba(245,158,11,.3)';
-          setTimeout(function(){ row.style.background=''; row.style.border=''; }, 1200);
+          row.style.background='rgba(245,158,11,.1)';
+          row.style.borderLeft='2px solid rgba(245,158,11,.5)';
+          setTimeout(function(){ row.style.background=''; row.style.borderLeft=''; }, 1200);
         }
       });
       // Toast
       var t=document.createElement('div');
       t.style.cssText='position:fixed;bottom:calc(80px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:400;background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.35);border-radius:13px;padding:10px 20px;font-family:Outfit,sans-serif;font-size:13px;font-weight:700;color:#fcd34d;white-space:nowrap;';
-      t.textContent='✓ Completa todos los ejercicios primero';
+      t.textContent='Completa todos los ejercicios primero ✓';
       document.body.appendChild(t);
       setTimeout(function(){ t.remove(); }, 2000);
       return;
