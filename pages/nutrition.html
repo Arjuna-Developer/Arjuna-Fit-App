@@ -298,7 +298,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         Hoy
       </button>
-      <button onclick="sw('recetas')" id="t-recetas" style="
+      <button onclick="sw('recetas');document.getElementById('tc-recetas')?.scrollIntoView({behavior:'smooth'})" id="t-recetas" style="
         display:flex;align-items:center;gap:6px;padding:8px 16px;
         border-radius:12px;border:1px solid rgba(255,255,255,.08);cursor:pointer;
         font-family:'Outfit',sans-serif;background:rgba(255,255,255,.05);
@@ -575,7 +575,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
           Recetas
         </button>
-        <button onclick="openFoodSearch && openFoodSearch()" style="
+        <button onclick="if(typeof openFoodSearch==='function'){openFoodSearch();}else{openQuickLog();}" style="
           flex:1;padding:12px 8px;border-radius:14px;border:1px solid rgba(255,255,255,.08);
           background:rgba(255,255,255,.05);color:rgba(255,255,255,.65);cursor:pointer;
           font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;
@@ -583,7 +583,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           Buscar
         </button>
-        <button onclick="openManualEntry && openManualEntry()" style="
+        <button onclick="if(typeof openManualEntry==='function'){openManualEntry();}else{openQuickLog();}" style="
           flex:1;padding:12px 8px;border-radius:14px;border:1px solid rgba(255,255,255,.08);
           background:rgba(255,255,255,.05);color:rgba(255,255,255,.65);cursor:pointer;
           font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;
@@ -593,28 +593,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
         </button>
       </div>
 
-      <!-- Registrado hoy -->
+      <!-- Registrado hoy (dinámico) -->
       <div>
         <div style="font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
           color:rgba(255,255,255,.3);margin-bottom:12px">REGISTRADO HOY</div>
         <div id="todayFoodList" style="display:flex;flex-direction:column;gap:8px">
-          <!-- Rendered by JS — static fallback -->
-          <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;
-            background:rgba(255,255,255,.03);
-            border:1px solid rgba(255,255,255,.06);
-            border-left:3px solid #4ade80;
-            border-radius:0 18px 18px 0">
-            <div style="width:44px;height:44px;border-radius:14px;background:rgba(74,222,128,.08);
-              display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">🌅</div>
-            <div style="flex:1;min-width:0">
-              <div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em">Bowl de huevos y aguacate</div>
-              <div style="font-size:11px;color:rgba(74,222,128,.7);margin-top:3px;font-weight:600">
-                28g prot · 380 cal · Desayuno · 04:50</div>
-            </div>
-            <button style="width:30px;height:30px;border-radius:9px;border:1px solid rgba(255,255,255,.1);
-              background:rgba(255,255,255,.05);color:rgba(255,255,255,.4);cursor:pointer;
-              display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">×</button>
-          </div>
+          <!-- renderTodayFoods() fills this -->
         </div>
       </div>
     </div>
@@ -3358,6 +3342,79 @@ function afNavRegister() {
   if (lbl) { lbl.style.color=cfg.color; lbl.style.fontWeight='800'; }
   if (dot.length) { var d=dot[dot.length-1]; d.style.background=cfg.glow; d.style.boxShadow='0 0 6px '+cfg.glow; }
 })();
+
+// ── Render "Registrado Hoy" list ──────────────────
+function renderTodayFoods() {
+  var list = document.getElementById('todayFoodList');
+  if (!list) return;
+
+  var dateKey = new Date().toISOString().split('T')[0];
+  var foods = [];
+  try { foods = JSON.parse(localStorage.getItem('af-food-' + dateKey) || '[]'); } catch(e){}
+
+  var MEAL_ICONS = { desayuno:'🌅', almuerzo:'🌞', cena:'🌙', snack:'🍓' };
+  var MEAL_COLORS = { desayuno:'rgba(74,222,128,.7)', almuerzo:'rgba(251,191,36,.7)', cena:'rgba(167,139,250,.7)', snack:'rgba(249,115,22,.7)' };
+  var MEAL_BORDERS = { desayuno:'#4ade80', almuerzo:'#fbbf24', cena:'#a78bfa', snack:'#fb923c' };
+
+  if (!foods.length) {
+    list.innerHTML = '<div style="text-align:center;padding:20px 0;font-size:13px;color:rgba(255,255,255,.25)">Aún no has registrado comidas hoy</div>';
+    return;
+  }
+
+  list.innerHTML = foods.map(function(f, i) {
+    var meal = (f.meal || 'desayuno').toLowerCase();
+    var icon = MEAL_ICONS[meal] || '🍽️';
+    var col  = MEAL_COLORS[meal] || 'rgba(196,181,253,.7)';
+    var bord = MEAL_BORDERS[meal] || '#a78bfa';
+    var time = f.time ? f.time.slice(0,5) : '';
+    var meta = [f.protein?f.protein+'g prot':'', f.kcal?f.kcal+' cal':'', f.meal||'', time].filter(Boolean).join(' · ');
+    return '<div style="display:flex;align-items:center;gap:12px;padding:14px 16px;' +
+      'background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);' +
+      'border-left:3px solid '+bord+';border-radius:0 18px 18px 0">' +
+      '<div style="width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.05);' +
+        'display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">'+icon+'</div>' +
+      '<div style="flex:1;min-width:0">' +
+        '<div style="font-size:14px;font-weight:800;color:#fff;letter-spacing:-.01em;' +
+          'white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+f.name+'</div>' +
+        '<div style="font-size:11px;color:'+col+';margin-top:3px;font-weight:600">'+meta+'</div>' +
+      '</div>' +
+      '<button onclick="deleteFoodEntry('+i+')" style="width:30px;height:30px;border-radius:9px;' +
+        'border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);' +
+        'color:rgba(255,255,255,.4);cursor:pointer;display:flex;align-items:center;' +
+        'justify-content:center;font-size:14px;flex-shrink:0">×</button>' +
+      '</div>';
+  }).join('');
+}
+
+function deleteFoodEntry(idx) {
+  var dateKey = new Date().toISOString().split('T')[0];
+  var foods = [];
+  try { foods = JSON.parse(localStorage.getItem('af-food-' + dateKey) || '[]'); } catch(e){}
+  foods.splice(idx, 1);
+  localStorage.setItem('af-food-' + dateKey, JSON.stringify(foods));
+  renderTodayFoods();
+  if (typeof updateMacroDisplay === 'function') updateMacroDisplay();
+}
+
+// Run on load and after any save
+document.addEventListener('DOMContentLoaded', function() {
+  renderTodayFoods();
+  // Hook into saveFood to refresh list
+  var origSave = window.saveFood;
+  if (typeof origSave === 'function') {
+    window.saveFood = function() {
+      var result = origSave.apply(this, arguments);
+      setTimeout(renderTodayFoods, 300);
+      return result;
+    };
+  }
+  // Also refresh when tab becomes visible
+  document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) renderTodayFoods();
+  });
+});
+// Also call directly in case DOMContentLoaded already fired
+setTimeout(renderTodayFoods, 500);
 </script>
 
 
