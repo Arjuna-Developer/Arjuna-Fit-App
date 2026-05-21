@@ -945,7 +945,7 @@ html, body {
 /* ═══════════════════════════════════════════
    ARJU — NEON STARS & GLASS CARD
 ═══════════════════════════════════════════ */
-@keyframes twinkle-star { 0%,100%{opacity:.1;transform:scale(1)} 50%{opacity:var(--sop,.8);transform:scale(1.6)} }
+ 50%{opacity:var(--sop,.8);transform:scale(1.6)} }
 @keyframes blob-float   { 0%,100%{transform:translate(0,0) scale(1)} 40%{transform:translate(10px,-8px) scale(1.04)} 70%{transform:translate(-7px,9px) scale(.97)} }
 
 /* Neon ambient blobs */
@@ -954,7 +954,7 @@ html, body {
 
 /* Stars layer */
 .arju-stars { position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:22px; }
-.arju-star  { position:absolute;border-radius:50%;animation:twinkle-star var(--sdur,3s) ease-in-out infinite;animation-delay:var(--sdel,0s); }
+
 
 /* Eyebrow */
 .arju-eyebrow { display:flex;align-items:center;justify-content:space-between;padding:4px 2px;margin-top:8px; }
@@ -1236,95 +1236,6 @@ html, body {
         </div>
       </div>
 
-      <!-- ARJU PREPARÓ TU DÍA — simple y claro -->
-      <div id="dailyPlanCard" style="border-radius:22px;overflow:hidden;position:relative;
-        transition:background .5s ease,border-color .5s ease,box-shadow .5s ease;">
-
-        <div style="position:absolute;top:-30px;right:-20px;width:120px;height:120px;
-          border-radius:50%;background:rgba(124,58,237,.1);filter:blur(40px);pointer-events:none"></div>
-
-        <!-- Header — sin eyebrow duplicado -->
-        <div style="padding:12px 18px 10px;position:relative;z-index:1;
-          display:flex;align-items:center;justify-content:space-between">
-          <div id="planDayLabel" style="font-size:15px;font-weight:800;
-            letter-spacing:-.02em;color:#f1f0f4">—</div>
-          <div id="planDayBadge"></div>
-        </div>
-
-        <!-- Thin progress bar -->
-        <div style="height:2px;background:rgba(255,255,255,.04);margin:0 18px 12px;border-radius:2px;overflow:hidden">
-          <div id="dayProgressFill" style="height:100%;border-radius:2px;width:0%;
-            background:linear-gradient(90deg,#7c3aed,#ec4899);
-            transition:width .7s cubic-bezier(.34,1.1,.64,1);opacity:0.9"></div>
-        </div>
-
-        <!-- 1. ENTRENO -->
-        <div id="planWorkoutRow" onclick="location.href='/pages/workout.html'"
-          style="padding:12px 18px;display:flex;align-items:center;gap:12px;
-            border-top:1px solid rgba(255,255,255,.05);cursor:pointer;position:relative;z-index:1">
-          <div style="font-size:22px">💪</div>
-          <div style="flex:1;min-width:0">
-            <div id="planWorkoutName" style="font-size:14px;font-weight:700;color:#f1f0f4;
-              white-space:nowrap;overflow:hidden;text-overflow:ellipsis">—</div>
-            <div id="planWorkoutSub" style="font-size:11px;color:rgba(196,181,253,.4);margin-top:1px">—</div>
-          </div>
-          <div style="font-size:12px;color:rgba(196,181,253,.45);font-weight:600;
-            flex-shrink:0;white-space:nowrap">Empezar →</div>
-        </div>
-
-        <!-- 2. PRÓXIMA COMIDA -->
-        <div style="padding:14px 18px;border-top:1px solid rgba(255,255,255,.05);
-          position:relative;z-index:1">
-          <div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-            color:rgba(255,255,255,.18);margin-bottom:10px">Arju recomienda</div>
-
-          <!-- Next meal highlight -->
-          <div id="planNextMeal" style="display:flex;align-items:center;gap:12px;
-            margin-bottom:12px">
-            <div id="planNextMealEmoji" style="font-size:28px;line-height:1;flex-shrink:0">—</div>
-            <div style="flex:1;min-width:0">
-              <div id="planNextMealName" style="font-size:15px;font-weight:700;
-                color:#f1f0f4;margin-bottom:3px">—</div>
-              <div id="planNextMealSub" style="font-size:12px;color:rgba(240,238,248,.4);
-                line-height:1.4">—</div>
-            </div>
-          </div>
-
-          <!-- CTAs -->
-          <div style="display:flex;gap:8px">
-            <button onclick="openCamera()" style="
-              flex:1;padding:12px 14px;border-radius:14px;border:none;cursor:pointer;
-              background:linear-gradient(135deg,#8b5cf6,#ec4899);
-              color:#fff;font-family:var(--f);font-size:14px;font-weight:800;
-              display:flex;align-items:center;justify-content:center;gap:8px;
-              box-shadow:0 4px 24px rgba(236,72,153,.4),0 0 0 1px rgba(255,255,255,.1) inset;
-              letter-spacing:-.01em">
-              📷 Registrar con foto
-            </button>
-            <button onclick="window.location.href='/pages/workout.html'" style="
-              padding:11px 13px;border-radius:13px;
-              border:1px solid rgba(255,255,255,.1);
-              background:rgba(255,255,255,.04);cursor:pointer;
-              color:rgba(240,238,248,.55);font-family:var(--f);font-size:12px;
-              font-weight:600;white-space:nowrap">
-              Ver entrenamiento completo
-            </button>
-          </div>
-        </div>
-
-        <!-- Full plan (hidden by default) -->
-        <div id="planFull" style="display:none;padding:0 18px 14px;
-          position:relative;z-index:1;flex-direction:column;gap:6px">
-          <div id="planMeals"></div>
-        </div>
-
-        <!-- 3. ENFOQUE -->
-        <div style="padding:11px 18px;background:rgba(124,58,237,.04);
-          border-top:1px solid rgba(255,255,255,.04);position:relative;z-index:1">
-          <div id="planFocus" style="font-size:12px;color:rgba(240,238,248,.5);
-            line-height:1.6;font-style:italic;text-align:center">—</div>
-        </div>
-      </div>
 
       <!-- Retention nudge card (fills dynamically) -->
       <div id="retention-slot"></div>
@@ -1379,8 +1290,8 @@ html, body {
       ════════════════════════════════════════ -->
       <div class="arju-section" style="position:relative">
         <!-- Neon blobs de fondo -->
-        <div class="arju-blob" style="width:260px;height:260px;background:radial-gradient(circle,rgba(109,40,217,.18) 0%,transparent 70%);top:-80px;left:-50px;animation-delay:0s"></div>
-        <div class="arju-blob" style="width:200px;height:200px;background:radial-gradient(circle,rgba(190,24,93,.13) 0%,transparent 70%);top:-50px;right:-30px;animation-delay:-6s"></div>
+        <div class="arju-blob" style="width:260px;height:260px;background:radial-gradient(circle,rgba(109,40,217,.08) 0%,transparent 70%);top:-80px;left:-50px;animation-delay:0s"></div>
+        <div class="arju-blob" style="width:200px;height:200px;background:radial-gradient(circle,rgba(190,24,93,.06) 0%,transparent 70%);top:-50px;right:-30px;animation-delay:-6s"></div>
 
         <!-- Eyebrow -->
         <div class="arju-eyebrow">
@@ -1396,9 +1307,6 @@ html, body {
 
         <!-- Glass card -->
         <div class="arju-glass-card">
-          <!-- Estrellas -->
-          <div class="arju-stars" id="arjuStars"></div>
-
           <!-- Header -->
           <div class="agc-header">
             <div>
@@ -3821,28 +3729,7 @@ window.addEventListener('load', showVoiceActivationBanner);
     }, 2000);
   }
 
-  // Generate stars
-  var layer = document.getElementById('arjuStars');
-  if(layer){
-    var starCfg = [
-      [8,12,.85,'3s',.1],[20,6,.7,'2.8s',.4],[33,18,.9,'2.2s',.7],
-      [46,8,.6,'4s',1.1],[58,14,1,'2s',0],[70,5,.75,'3.8s',.3],
-      [82,16,.8,'2.6s',.6],[92,9,.7,'3.2s',.9],[96,22,.85,'1.8s',.2],
-      [4,30,.55,'4.2s',.8],[16,38,.8,'2.4s',.5],[30,28,.7,'3.6s',1.4],
-      [50,35,.6,'2.9s',.7],[65,25,.82,'2.1s',.2],[77,32,.9,'3.4s',.6],
-      [88,28,.65,'2.7s',1.0],[94,44,.8,'3.9s',.3],[12,55,.7,'2.3s',.9],
-      [40,50,.85,'3.1s',.4],[62,58,.6,'2.5s',.7],[78,48,.9,'3.7s',.1],
-    ];
-    var cols = ['rgba(255,255,255','rgba(196,181,253','rgba(249,168,212','rgba(167,139,250'];
-    starCfg.forEach(function(c,i){
-      var el = document.createElement('div');
-      el.className = 'arju-star';
-      var sz = .8 + Math.random()*1.6;
-      var col = cols[i%cols.length];
-      el.style.cssText = 'width:'+sz+'px;height:'+sz+'px;left:'+c[0]+'%;top:'+c[1]+'%;background:'+col+',.88);--sop:'+c[2]+';--sdur:'+c[3]+';--sdel:'+c[4]+'s;box-shadow:0 0 '+Math.round(sz*2.5)+'px '+col+',.5)';
-      layer.appendChild(el);
-    });
-  }
+  
 
   // Market meta from localStorage
   var mk = document.getElementById('arjuMarketMeta');
