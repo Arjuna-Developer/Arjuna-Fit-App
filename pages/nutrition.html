@@ -60,7 +60,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
 
 /* ── Tab content ── */
 .tc{display:none}
-.tc.on{display:block;position:fixed;inset:0;z-index:5;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:calc(var(--hdr-h,108px)) 16px calc(90px + env(safe-area-inset-bottom));background:var(--bg);animation:fi .2s ease both}
+.tc.on{display:block;position:fixed;top:var(--hdr-h,108px);left:0;right:0;bottom:0;z-index:4;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;scrollbar-width:none;padding:16px 16px calc(90px + env(safe-area-inset-bottom));background:var(--bg);animation:fi .2s ease both}
 @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
 /* ── Nutrición del día ── */
@@ -266,6 +266,10 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
   background:rgba(124,58,237,.1);color:rgba(196,181,253,.5)}
 
 :root{--hdr-h:108px}
+
+.hdr{position:fixed;top:0;left:0;right:0;max-width:430px;margin:0 auto;z-index:10;background:var(--bg)}
+
+.tc.on::-webkit-scrollbar{display:none}
 </style>
   <link rel="stylesheet" href="/assets/visual-system.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
