@@ -1045,12 +1045,24 @@ html, body {
 
 </style>
   <link rel="stylesheet" href="/assets/visual-system.css">
-  <script src="/js/core/auth-bootstrap.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/js/core/auth-bootstrap.js"></script>
 <script src="/js/core/auth-guard.js"></script>
 <script src="/js/core/ops-config.js"></script>
 <script src="/js/core/analytics.js"></script>
 <script src="/js/core/experiment-config.js"></script>
   <link rel="stylesheet" href="/assets/visual-polish.css">
+<script>
+// Safety: si el loader sigue visible después de 6s → mostrar página
+setTimeout(function() {
+  var ldr = document.getElementById('ldr');
+  if (ldr && ldr.style.display !== 'none' && !ldr.classList.contains('off')) {
+    ldr.style.display = 'none';
+    ldr.classList.add('off');
+    console.warn('[AF] Safety timeout triggered on', window.location.pathname);
+  }
+}, 6000);
+</script>
 </head>
 <body>
 
@@ -1511,7 +1523,6 @@ html, body {
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 // ── Admin mode indicator ──────────────────────────────────────
   (function() {
