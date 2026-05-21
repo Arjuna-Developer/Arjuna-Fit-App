@@ -137,6 +137,36 @@ body{background:var(--bg);color:var(--t);font-family:var(--font);-webkit-font-sm
       <div class="stat"><div class="stat-v" id="sWeek">1</div><div class="stat-l">📅 Semana</div></div>
     </div>
 
+
+    <!-- Datos personales -->
+    <div class="sec-lbl">Mis datos</div>
+    <div class="menu">
+      <div class="mi" onclick="editPersonalData()">
+        <div class="mi-icon" style="background:rgba(124,58,237,.1)">📊</div>
+        <div class="mi-text">
+          <div class="mi-title">Datos corporales</div>
+          <div class="mi-sub" id="bodyDataSub">Peso, talla, objetivo</div>
+        </div>
+        <span class="mi-arrow">›</span>
+      </div>
+      <div class="mi" onclick="editName()">
+        <div class="mi-icon" style="background:rgba(59,130,246,.1)">✏️</div>
+        <div class="mi-text">
+          <div class="mi-title">Editar nombre</div>
+          <div class="mi-sub" id="currentNameSub">Cargando...</div>
+        </div>
+        <span class="mi-arrow">›</span>
+      </div>
+      <div class="mi" onclick="showNotifications()">
+        <div class="mi-icon" style="background:rgba(245,158,11,.1)">🔔</div>
+        <div class="mi-text">
+          <div class="mi-title">Notificaciones</div>
+          <div class="mi-sub">Recordatorios y alertas</div>
+        </div>
+        <button class="tog" id="notifTog" onclick="event.stopPropagation();toggleNotifications()"></button>
+      </div>
+    </div>
+
     <!-- Preferencias -->
     <div class="sec-lbl">Preferencias</div>
     <div class="menu">
@@ -185,7 +215,7 @@ body{background:var(--bg);color:var(--t);font-family:var(--font);-webkit-font-sm
       </div>
     </div>
 
-    <div style="text-align:center;font-size:11px;color:var(--t4);padding:8px 0">ArjunaFit · v2.0</div>
+    <div style="text-align:center;font-size:11px;color:var(--t4);padding:8px 0">ArjunaFit · v2.6.2105</div>
 
   </div>
 
@@ -225,8 +255,9 @@ body{background:var(--bg);color:var(--t);font-family:var(--font);-webkit-font-sm
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js">
-  // ── Show plan/trial status ────────────────────────
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+// ── Show plan/trial status ────────────────────────
   (function() {
     const card = document.getElementById('planStatusCard');
     const txt  = document.getElementById('planStatusText');
@@ -290,7 +321,6 @@ body{background:var(--bg);color:var(--t);font-family:var(--font);-webkit-font-sm
       if (sub) sub.textContent = '7 días gratis disponibles · Sin tarjeta de crédito';
     }
   })();
-
 </script>
 <script src="/js/core/ops-config.js"></script>
 <script src="/js/core/analytics.js"></script>
@@ -698,6 +728,86 @@ function afNavRegister() {
   if (lbl) { lbl.style.color=cfg.color; lbl.style.fontWeight='800'; }
   if (dot.length) { var d=dot[dot.length-1]; d.style.background=cfg.glow; d.style.boxShadow='0 0 6px '+cfg.glow; }
 })();
+
+function editPersonalData() {
+  var weight = localStorage.getItem('af-weight') || '';
+  var height = localStorage.getItem('af-height') || '';
+  var goal   = localStorage.getItem('af-goal') || '';
+  
+  var modal = document.createElement('div');
+  modal.style.cssText = 'position:fixed;inset:0;z-index:500;background:rgba(8,4,18,.95);display:flex;align-items:flex-end;justify-content:center;backdrop-filter:blur(10px)';
+  modal.innerHTML =
+    '<div style="width:100%;max-width:430px;background:#130d22;border:1px solid rgba(124,58,237,.2);border-radius:24px 24px 0 0;padding:24px 20px calc(24px + env(safe-area-inset-bottom));font-family:Outfit,sans-serif">' +
+    '<div style="width:36px;height:4px;border-radius:2px;background:rgba(255,255,255,.15);margin:0 auto 20px"></div>' +
+    '<div style="font-size:18px;font-weight:800;color:#fff;margin-bottom:20px">📊 Mis datos corporales</div>' +
+    '<div style="margin-bottom:14px"><label style="font-size:12px;font-weight:700;color:rgba(255,255,255,.5);display:block;margin-bottom:6px;letter-spacing:.06em;text-transform:uppercase">PESO ACTUAL (kg)</label>' +
+    '<input id="pf-weight" type="number" value="'+weight+'" placeholder="Ej: 68" style="width:100%;padding:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:#fff;font-family:Outfit,sans-serif;font-size:14px;outline:none;box-sizing:border-box"></div>' +
+    '<div style="margin-bottom:14px"><label style="font-size:12px;font-weight:700;color:rgba(255,255,255,.5);display:block;margin-bottom:6px;letter-spacing:.06em;text-transform:uppercase">ESTATURA (cm)</label>' +
+    '<input id="pf-height" type="number" value="'+height+'" placeholder="Ej: 165" style="width:100%;padding:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:#fff;font-family:Outfit,sans-serif;font-size:14px;outline:none;box-sizing:border-box"></div>' +
+    '<div style="margin-bottom:20px"><label style="font-size:12px;font-weight:700;color:rgba(255,255,255,.5);display:block;margin-bottom:6px;letter-spacing:.06em;text-transform:uppercase">OBJETIVO CALÓRICO (kcal)</label>' +
+    '<input id="pf-goal" type="number" value="'+goal+'" placeholder="Ej: 2000" style="width:100%;padding:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:#fff;font-family:Outfit,sans-serif;font-size:14px;outline:none;box-sizing:border-box"></div>' +
+    '<button onclick="saveBodyData()" style="width:100%;padding:14px;border-radius:14px;border:none;cursor:pointer;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-family:Outfit,sans-serif;font-size:14px;font-weight:800;margin-bottom:10px">Guardar datos</button>' +
+    '<button onclick="this.closest('[style*=fixed]').remove()" style="width:100%;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.5);font-family:Outfit,sans-serif;font-size:13px;cursor:pointer">Cancelar</button>' +
+    '</div>';
+  document.body.appendChild(modal);
+  modal.addEventListener('click', function(e){ if(e.target===modal) modal.remove(); });
+}
+
+function saveBodyData() {
+  var w = document.getElementById('pf-weight')?.value;
+  var h = document.getElementById('pf-height')?.value;
+  var g = document.getElementById('pf-goal')?.value;
+  if (w) localStorage.setItem('af-weight', w);
+  if (h) localStorage.setItem('af-height', h);
+  if (g) { localStorage.setItem('af-goal', g); localStorage.setItem('af-kcal-goal', g); }
+  
+  // Update sub text
+  var sub = document.getElementById('bodyDataSub');
+  if (sub && w && h) sub.textContent = w+'kg · '+h+'cm' + (g ? ' · '+g+' kcal meta' : '');
+  
+  // Close modal
+  document.querySelector('[style*="inset:0"]')?.remove();
+  showToast('✅ Datos guardados');
+}
+
+function editName() {
+  var current = localStorage.getItem('af-user-name') || '';
+  var newName = prompt('Tu nombre:', current);
+  if (newName && newName.trim()) {
+    localStorage.setItem('af-user-name', newName.trim());
+    var avatarName = document.getElementById('avatarName');
+    if (avatarName) avatarName.textContent = newName.trim();
+    var sub = document.getElementById('currentNameSub');
+    if (sub) sub.textContent = newName.trim();
+    showToast('✅ Nombre actualizado');
+  }
+}
+
+function toggleNotifications() {
+  var tog = document.getElementById('notifTog');
+  var isOn = tog && tog.classList.contains('on');
+  if (tog) tog.classList.toggle('on', !isOn);
+  localStorage.setItem('af-notifications', isOn ? '0' : '1');
+}
+
+function showNotifications() {}
+
+// Init body data sub
+document.addEventListener('DOMContentLoaded', function(){
+  var w = localStorage.getItem('af-weight');
+  var h = localStorage.getItem('af-height');
+  var g = localStorage.getItem('af-goal') || localStorage.getItem('af-kcal-goal');
+  var sub = document.getElementById('bodyDataSub');
+  if (sub && (w || h)) sub.textContent = (w?w+'kg':'') + (w&&h?' · ':'') + (h?h+'cm':'') + (g?' · '+g+' kcal meta':'');
+  
+  var nameSub = document.getElementById('currentNameSub');
+  var name = localStorage.getItem('af-user-name') || localStorage.getItem('af-name');
+  if (nameSub && name) nameSub.textContent = name;
+  
+  // Notif toggle state
+  var notifTog = document.getElementById('notifTog');
+  if (notifTog && localStorage.getItem('af-notifications') === '1') notifTog.classList.add('on');
+});
 </script>
 </body>
 </html>
