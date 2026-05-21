@@ -30,8 +30,7 @@
 body{background:var(--bg);color:var(--t);font-family:var(--f);
   -webkit-font-smoothing:antialiased;min-height:100dvh}
 .page{max-width:var(--mx);margin:0 auto;min-height:100dvh;
-  padding-bottom:calc(var(--nav)+env(safe-area-inset-bottom))}
-.hdr{padding:calc(env(safe-area-inset-top)+16px) 20px 0;
+  padding-bottom:calc(90px + env(safe-area-inset-bottom));
   position:sticky;top:0;z-index:10;
   background:linear-gradient(to bottom,var(--bg) 60%,transparent);
   padding-bottom:12px}
@@ -921,6 +920,7 @@ window.openDailyClosure = openDailyClosure;
 
 <!-- Beta feedback button -->
   <div style="margin:8px 16px"><a href="/pages/beta-survey.html" style="display:flex;align-items:center;gap:8px;padding:11px 16px;background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.15);border-radius:13px;text-decoration:none;color:rgba(196,181,253,.7);font-family:Outfit,sans-serif;font-size:12px;font-weight:700">✦ Enviar feedback beta →</a></div>
+
 
 <style>
 @keyframes nav-ripple {
