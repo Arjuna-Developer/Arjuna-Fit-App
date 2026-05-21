@@ -1085,6 +1085,19 @@ function afNavRegister() {
   if (lbl) { lbl.style.color=cfg.color; lbl.style.fontWeight='800'; }
   if (dot.length) { var d=dot[dot.length-1]; d.style.background=cfg.glow; d.style.boxShadow='0 0 6px '+cfg.glow; }
 })();
+
+function renderDayState() {
+  // Refresh progress page with latest data
+  var container = document.getElementById('main') || document.getElementById('progress-content');
+  if (!container) return;
+  if (typeof emptyHTML === 'function') {
+    container.innerHTML = emptyHTML();
+  }
+}
+// Auto-refresh on visibility change
+document.addEventListener('visibilitychange', function() {
+  if (!document.hidden && typeof renderDayState === 'function') renderDayState();
+});
 </script>
 </body>
 </html>
