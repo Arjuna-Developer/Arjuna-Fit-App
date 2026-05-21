@@ -105,10 +105,10 @@ function mapHotmartStatus(event) {
 }
 
 function guessProductFromAmount(amount) {
-  // ⚠️ UNSAFE fallback — never guess product, always use needs_review
-  // This prevents wrong product assignment (glutes vs belly, masa vs definicion)
-  console.warn('[Webhook] guessProductFromAmount called — product IDs not configured!', { amount });
-  return null; // Always returns null — will trigger needs_review
+  // DESHABILITADO: nunca adivinar producto por monto
+  // Siempre usar HOTMART_PRODUCT_MAP con IDs reales
+  console.warn('[Webhook] No product ID found — sending to needs_review. Amount:', amount);
+  return null;
 }
 
 // ── Validate payment against catalog ────────────────────────────
