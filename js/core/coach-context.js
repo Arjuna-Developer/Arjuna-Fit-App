@@ -327,3 +327,58 @@ window.CoachCtx = {
   getArjuSystemPrompt, getMessage, show, autoGreet, afterFoodLogged, afterWorkout, checkStreak, buildCtx };
   console.log('[CoachCtx] Ready');
 })();
+
+
+// ── Rich user context from localStorage ─────────────────────────
+function getArjuRichContext() {
+  var today = new Date().toISOString().split('T')[0];
+  var foods = [];
+  try { foods = JSON.parse(localStorage.getItem('af-food-'+today) || '[]'); } catch(e) {}
+  
+  var totCal  = foods.reduce(function(s,f){ return s + (f.cal||0); }, 0);
+  var totProt = foods.reduce(function(s,f){ return s + (f.prot||0); }, 0);
+  var totCarb = foods.reduce(function(s,f){ return s + (f.carb||0); }, 0);
+  var totFat  = foods.reduce(function(s,f){ return s + (f.fat||0); }, 0);
+  
+  var name    = localStorage.getItem('af-user-name') || localStorage.getItem('af-name') || 'el usuario';
+  var product = localStorage.getItem('af-product-tipo') || 'reto';
+  var reto    = localStorage.getItem('af-selected-reto') || 'gluteos';
+  var week    = localStorage.getItem('af-week') || '1';
+  var weight  = localStorage.getItem('af-weight') || '';
+  var height  = localStorage.getItem('af-height') || '';
+  var goalCal = parseInt(localStorage.getItem('af-kcal-goal') || localStorage.getItem('af-goal') || '2000');
+  var streak  = localStorage.getItem('af-streak') || '0';
+  
+  var retoNames = {
+    gluteos: 'Reto de glúteos',
+    pancita: 'Reto para bajar la pancita',
+    masa: 'Plan de masa muscular',
+    definicion: 'Plan de reducción de grasa'
+  };
+  
+  var mealsList = foods.length > 0
+    ? foods.map(function(f){ return f.name + ' (' + (f.cal||0) + ' kcal, ' + (f.prot||0) + 'g prot)'; }).join(', ')
+    : 'Sin comidas registradas hoy';
+  
+  var pctCal = goalCal > 0 ? Math.round((totCal/goalCal)*100) : 0;
+  
+  return [
+    '=== CONTEXTO DEL USUARIO ===',
+    'Nombre: ' + name,
+    'Programa: ' + (retoNames[reto] || reto) + ' (Semana ' + week + ')',
+    'Tipo de plan: ' + (product === 'reto' ? 'Reto (trial/pago)' : 'Plan personalizado'),
+    weight ? 'Peso: ' + weight + 'kg' : '',
+    height ? 'Estatura: ' + height + 'cm' : '',
+    'Racha actual: ' + streak + ' días',
+    '',
+    '=== HOY ===',
+    'Calorías: ' + totCal + ' / ' + goalCal + ' kcal (' + pctCal + '% de meta)',
+    'Proteína: ' + totProt + 'g',
+    'Carbohidratos: ' + totCarb + 'g',
+    'Grasas: ' + totFat + 'g',
+    'Comidas: ' + mealsList,
+  ].filter(Boolean).join('\n');
+}
+
+// Expose globally
+window.getArjuRichContext = getArjuRichContext;
