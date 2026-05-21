@@ -783,12 +783,14 @@ async function saveAndGo() {
   localStorage.removeItem('af-onboarding-partial');
   localStorage.removeItem('af-onboarding-step');
 
-  // Init trial for retos
-  if (window.AF_Trial && answers.tipo === 'reto') {
+  // Init trial for retos — only if NOT editing existing plan
+  var isEditingPlan = localStorage.getItem('af-editing-plan') === '1';
+  if (!isEditingPlan && window.AF_Trial && answers.tipo === 'reto') {
     window.AF_Trial.initTrial();
     localStorage.setItem('af-trial-start', Date.now().toString());
     localStorage.setItem('af-trial-ends', String(Date.now() + 7*24*60*60*1000));
   }
+  localStorage.removeItem('af-editing-plan'); // Clear flag after use
 
   // Save to Supabase
   try {
