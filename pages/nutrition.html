@@ -59,8 +59,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
   border-color:transparent;box-shadow:0 2px 12px rgba(124,58,237,.3)}
 
 /* ── Tab content ── */
-.tc{display:none;padding:12px 16px calc(90px + env(safe-area-inset-bottom));flex-direction:column;gap:12px}
-.tc.on{display:flex;animation:fi .2s ease both}
+.tc{display:none}
+.tc.on{display:block;position:fixed;inset:0;z-index:5;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:calc(var(--hdr-h,108px)) 16px calc(90px + env(safe-area-inset-bottom));background:var(--bg);animation:fi .2s ease both}
 @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
 /* ── Nutrición del día ── */
@@ -264,6 +264,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
   color:#6ee7b7;animation:meal-check .3s cubic-bezier(.34,1.2,.64,1)}
 .meal-slot.current .meal-slot-check{border:1.5px solid rgba(124,58,237,.4);
   background:rgba(124,58,237,.1);color:rgba(196,181,253,.5)}
+
+:root{--hdr-h:108px}
 </style>
   <link rel="stylesheet" href="/assets/visual-system.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -4779,6 +4781,17 @@ function showSaveToast(name) {
     }
   }, 300);
 }
+
+// Set header height for tab positioning
+(function(){
+  function setHdrH(){
+    var hdr = document.querySelector('.hdr');
+    if(hdr) document.documentElement.style.setProperty('--hdr-h', hdr.offsetHeight+'px');
+  }
+  setHdrH();
+  window.addEventListener('resize', setHdrH);
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(setHdrH, 50); });
+})();
 </script>
 </body>
 </html>
