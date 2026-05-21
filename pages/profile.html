@@ -101,6 +101,10 @@ body{background:var(--bg);color:var(--t);font-family:var(--font);-webkit-font-sm
   .nav-ambient{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100vw,430px);height:140px;background:radial-gradient(ellipse at 50% 100%,rgba(124,58,237,.18) 0%,rgba(168,85,247,.1) 30%,transparent 70%);filter:blur(20px);z-index:99;pointer-events:none}
   nav[style*="position:fixed"]{background:rgba(12,7,22,.88)!important;backdrop-filter:blur(40px) saturate(1.8)!important;-webkit-backdrop-filter:blur(40px) saturate(1.8)!important;border-radius:26px!important;border-color:rgba(196,181,253,.08)!important;box-shadow:0 -1px 0 rgba(255,255,255,.04) inset,0 12px 40px rgba(0,0,0,.55),0 0 60px rgba(124,58,237,.06)!important}
   </style>
+<script>
+// Safety timeout
+setTimeout(function(){var l=document.getElementById("ldr");if(l&&l.style.display!=="none"&&!l.classList.contains("off")){l.style.display="none";}},6000);
+</script>
 </head>
 <body style="overflow-x:hidden">
 
@@ -588,7 +592,7 @@ function editPersonalData() {
     '<div style="margin-bottom:20px"><label style="font-size:12px;font-weight:700;color:rgba(255,255,255,.5);display:block;margin-bottom:6px;letter-spacing:.06em;text-transform:uppercase">OBJETIVO CALÓRICO (kcal)</label>' +
     '<input id="pf-goal" type="number" value="'+goal+'" placeholder="Ej: 2000" style="width:100%;padding:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:#fff;font-family:Outfit,sans-serif;font-size:14px;outline:none;box-sizing:border-box"></div>' +
     '<button onclick="saveBodyData()" style="width:100%;padding:14px;border-radius:14px;border:none;cursor:pointer;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-family:Outfit,sans-serif;font-size:14px;font-weight:800;margin-bottom:10px">Guardar datos</button>' +
-    '<button onclick="this.closest('[style*=fixed]').remove()" style="width:100%;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.5);font-family:Outfit,sans-serif;font-size:13px;cursor:pointer">Cancelar</button>' +
+    '<button onclick="this.closest("[style*=fixed]").remove()" style="width:100%;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.5);font-family:Outfit,sans-serif;font-size:13px;cursor:pointer">Cancelar</button>' +
     '</div>';
   document.body.appendChild(modal);
   modal.addEventListener('click', function(e){ if(e.target===modal) modal.remove(); });
