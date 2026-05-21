@@ -382,3 +382,90 @@ function getArjuRichContext() {
 
 // Expose globally
 window.getArjuRichContext = getArjuRichContext;
+
+
+// ══ Supabase-first context loader ═════════════════════════════════
+window._loadSupabaseContext = async function() {
+  var sb  = window.sb;
+  var ctx = {};
+  if (!sb) return ctx;
+  try {
+    var sess = await Promise.race([
+      sb.auth.getSession(),
+      new Promise(function(_, r) { setTimeout(function() { r(new Error('timeout')); }, 3000); })
+    ]);
+    var uid = sess?.data?.session?.user?.id;
+    if (!uid) return ctx;
+
+    // 1. Profile data
+    var { data: profile } = await sb.from('profiles')
+      .select('full_name,weight_kg,height_cm,calorie_goal,product_type,subscription_status,access_level,streak_current,workout_day_num,onboarding_completed')
+      .eq('id', uid).single().catch(function() { return { data: null }; });
+
+    if (profile) {
+      ctx.name            = profile.full_name;
+      ctx.weight          = profile.weight_kg;
+      ctx.height          = profile.height_cm;
+      ctx.calorieGoal     = profile.calorie_goal;
+      ctx.product         = profile.product_type;
+      ctx.subscriptionStatus = profile.subscription_status;
+      ctx.accessLevel     = profile.access_level;
+      ctx.streak          = profile.streak_current || 0;
+      ctx.workoutDay      = profile.workout_day_num || 0;
+      // Sync to localStorage
+      if (ctx.name)   localStorage.setItem('af-user-name', ctx.name);
+      if (ctx.product) localStorage.setItem('af-product-type', ctx.product);
+    }
+
+    // 2. Today's nutrition logs
+    var today = new Date().toISOString().split('T')[0];
+    var { data: logs } = await sb.from('nutrition_logs')
+      .select('name,calories,protein,carbs,fat,meal')
+      .eq('user_id', uid).eq('date', today)
+      .catch(function() { return { data: [] }; });
+
+    if (logs && logs.length > 0) {
+      ctx.todayFoods = logs;
+      ctx.totalCal   = logs.reduce(function(s, l) { return s + (l.calories || 0); }, 0);
+      ctx.totalProt  = logs.reduce(function(s, l) { return s + (l.protein  || 0); }, 0);
+      ctx.totalCarb  = logs.reduce(function(s, l) { return s + (l.carbs    || 0); }, 0);
+      ctx.totalFat   = logs.reduce(function(s, l) { return s + (l.fat      || 0); }, 0);
+    }
+
+    // 3. Latest workout
+    var { data: wLogs } = await sb.from('workout_sessions')
+      .select('completed_at,session_type,duration_min')
+      .eq('user_id', uid)
+      .order('completed_at', { ascending: false }).limit(1)
+      .catch(function() { return { data: [] }; });
+
+    if (wLogs && wLogs.length > 0) {
+      ctx.lastWorkout = wLogs[0].completed_at;
+      ctx.lastWorkoutType = wLogs[0].session_type;
+    }
+
+  } catch(e) {
+    console.warn('[CoachContext] Supabase load error:', e.message);
+  }
+  return ctx;
+};
+
+// Patch getArjuContext to merge Supabase data
+var _origGetArjuContext = window.getArjuContext;
+window.getArjuContext = async function() {
+  var localCtx = _origGetArjuContext ? _origGetArjuContext() : {};
+  var sbCtx = {};
+  try { sbCtx = await window._loadSupabaseContext(); } catch(e) {}
+  // Supabase wins for real data, localStorage is fallback
+  return Object.assign({}, localCtx, sbCtx,
+    // Keep local data if Supabase didn't return it
+    {
+      name:        sbCtx.name        || localCtx.name,
+      product:     sbCtx.product     || localCtx.product,
+      streak:      sbCtx.streak      !== undefined ? sbCtx.streak : localCtx.streak,
+      workoutDay:  sbCtx.workoutDay  !== undefined ? sbCtx.workoutDay : localCtx.workoutDay,
+      totalCal:    sbCtx.totalCal    !== undefined ? sbCtx.totalCal : localCtx.totalCal,
+      totalProt:   sbCtx.totalProt   !== undefined ? sbCtx.totalProt : localCtx.totalProt,
+    }
+  );
+};
