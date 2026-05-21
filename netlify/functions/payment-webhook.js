@@ -19,28 +19,14 @@ const PRODUCT_CATALOG = {
 // ── Map Hotmart product IDs to our product types ────────────────
 // UPDATE THESE with real Hotmart product IDs when available
 const HOTMART_PRODUCT_MAP = {
-  // ════════════════════════════════════════════════════════════
-  // ⚠️ ACCIÓN REQUERIDA — Completar con IDs reales de Hotmart
-  // ════════════════════════════════════════════════════════════
-  // Cómo obtener los IDs:
-  //   1. Ir a Hotmart → Products → tu producto
-  //   2. Copiar el ID del producto (aparece en la URL: /products/XXXXXX)
-  //   3. Reemplazar las XXXXX abajo por ese ID
-  // ════════════════════════════════════════════════════════════
-
-  // Reto de glúteos — $32 USD
-  // 'HOTMART_ID_GLUTEOS': 'challenge_glutes',
-
-  // Reto para bajar la pancita — $32 USD
-  // 'HOTMART_ID_PANCITA': 'challenge_belly',
-
-  // Aumento de masa muscular — $72 USD/mes
-  // URL conocida: pay.hotmart.com/M105694336W?bid=1777962608286
-  // 'M105694336W': 'custom_muscle_gain',
-
-  // Reducción de porcentaje graso — $72 USD/mes
-  // URL conocida: pay.hotmart.com/M105694336W
-  // 'M105694336W_fat': 'custom_fat_loss',
+  // ══════════════════════════════════════════════════════
+  // INSTRUCCIÓN: Reemplazar con IDs reales de Hotmart
+  // Hotmart → Productos → tu producto → Código del producto
+  // ══════════════════════════════════════════════════════
+  // 'HOTMART_PRODUCT_ID_GLUTEOS':   { product: 'challenge_glutes',    name: 'Reto Glúteos' },
+  // 'HOTMART_PRODUCT_ID_PANCITA':   { product: 'challenge_belly',     name: 'Reto Pancita' },
+  // 'HOTMART_PRODUCT_ID_MASA':      { product: 'custom_muscle_gain',  name: 'Plan Masa' },
+  // 'HOTMART_PRODUCT_ID_DEFINICION':{ product: 'custom_fat_loss',     name: 'Plan Definición' },
 };
 
 // Expected amounts by product (for validation)
@@ -119,9 +105,10 @@ function mapHotmartStatus(event) {
 }
 
 function guessProductFromAmount(amount) {
-  if (amount === 32) return 'challenge_glutes'; // best guess — can't distinguish retos by amount alone
-  if (amount === 72) return 'custom_muscle_gain'; // best guess
-  return null;
+  // ⚠️ UNSAFE fallback — never guess product, always use needs_review
+  // This prevents wrong product assignment (glutes vs belly, masa vs definicion)
+  console.warn('[Webhook] guessProductFromAmount called — product IDs not configured!', { amount });
+  return null; // Always returns null — will trigger needs_review
 }
 
 // ── Validate payment against catalog ────────────────────────────
