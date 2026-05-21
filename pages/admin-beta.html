@@ -1139,6 +1139,61 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(loadDashboardMetrics, 1000);
   }
 });
+
+async function uploadKnowledge() {
+  var title   = document.getElementById('kn-title')?.value?.trim();
+  var content = document.getElementById('kn-content')?.value?.trim();
+  var type    = document.getElementById('kn-type')?.value || 'general';
+  
+  if (!title || !content) { alert('Completa título y contenido'); return; }
+  
+  try {
+    var client = window.sb || window.supabase;
+    if (!client) throw new Error('No supabase client');
+    
+    var { error } = await client.from('arju_knowledge').insert({
+      title: title, content: content, doc_type: type,
+      created_at: new Date().toISOString(), active: true
+    });
+    
+    if (error) throw error;
+    
+    document.getElementById('kn-title').value = '';
+    document.getElementById('kn-content').value = '';
+    alert('✅ Documento agregado al conocimiento de Arju');
+  } catch(e) {
+    alert('Error: ' + e.message);
+  }
+}
+
+async function testKnowledge() {
+  var query = document.getElementById('kn-query')?.value?.trim();
+  var result = document.getElementById('kn-result');
+  if (!query || !result) return;
+  
+  result.textContent = 'Buscando...';
+  
+  try {
+    var res = await fetch('/.netlify/functions/search-arju-knowledge', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: query, limit: 3 })
+    });
+    var data = await res.json();
+    
+    if (data.chunks && data.chunks.length > 0) {
+      result.innerHTML = data.chunks.map(function(c) {
+        return '<div style="padding:8px;background:rgba(124,58,237,.08);border-radius:8px;margin-bottom:6px">' +
+          '<div style="font-weight:700;color:#c4b5fd;margin-bottom:4px">' + (c.title||'—') + '</div>' +
+          '<div>' + (c.content||'').slice(0,200) + '...</div></div>';
+      }).join('');
+    } else {
+      result.textContent = 'Sin resultados para: ' + query;
+    }
+  } catch(e) {
+    result.textContent = 'Error: ' + e.message;
+  }
+}
 </script>
 </body>
 </html>
