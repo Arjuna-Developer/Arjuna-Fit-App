@@ -940,7 +940,110 @@ html, body {
     }
     .nav-icon-wrap:active { transform: scale(0.88) !important; }
 
-  </style>
+  
+
+/* ═══════════════════════════════════════════
+   ARJU — NEON STARS & GLASS CARD
+═══════════════════════════════════════════ */
+@keyframes twinkle-star { 0%,100%{opacity:.1;transform:scale(1)} 50%{opacity:var(--sop,.8);transform:scale(1.6)} }
+@keyframes blob-float   { 0%,100%{transform:translate(0,0) scale(1)} 40%{transform:translate(10px,-8px) scale(1.04)} 70%{transform:translate(-7px,9px) scale(.97)} }
+
+/* Neon ambient blobs */
+.arju-blob { position:absolute;border-radius:50%;pointer-events:none;animation:blob-float 16s ease-in-out infinite; }
+.arju-section { position:relative;overflow:visible; }
+
+/* Stars layer */
+.arju-stars { position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:22px; }
+.arju-star  { position:absolute;border-radius:50%;animation:twinkle-star var(--sdur,3s) ease-in-out infinite;animation-delay:var(--sdel,0s); }
+
+/* Eyebrow */
+.arju-eyebrow { display:flex;align-items:center;justify-content:space-between;padding:4px 2px;margin-top:8px; }
+.arju-ey-l    { display:flex;align-items:center;gap:7px; }
+.arju-ey-dot  { width:6px;height:6px;border-radius:50%;background:#7c3aed;box-shadow:0 0 6px #7c3aed; }
+.arju-ey-txt  { font-size:10px;font-weight:700;color:rgba(167,139,250,.5);letter-spacing:.12em;text-transform:uppercase; }
+.arju-ey-day  { display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:rgba(167,139,250,.65);letter-spacing:.03em; }
+
+/* Glass card base */
+.arju-glass-card {
+  position:relative;overflow:hidden;
+  background:rgba(28,12,58,.52);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:22px;
+  box-shadow:0 0 0 1px rgba(255,255,255,.03),0 20px 50px rgba(50,10,140,.18),
+             0 4px 20px rgba(0,0,0,.4),
+             inset 0 1.5px 0 rgba(255,255,255,.1),inset 0 -1px 0 rgba(0,0,0,.2);
+}
+.arju-glass-card::before {
+  content:'';position:absolute;inset:0;border-radius:22px;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 110% 55% at 50% 0%,rgba(167,139,250,.09),transparent 62%);
+}
+.arju-glass-card::after {
+  content:'';position:absolute;top:0;left:20%;right:20%;height:1px;z-index:0;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(167,139,250,.3),rgba(236,72,153,.18),transparent);
+}
+
+/* Card header */
+.agc-header { padding:16px 18px 13px;display:flex;align-items:flex-start;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.055);position:relative;z-index:1; }
+.agc-title  { font-size:20px;font-weight:800;color:rgba(255,255,255,.95);letter-spacing:-.025em;line-height:1.15;margin-bottom:3px; }
+.agc-sub    { font-size:12px;color:rgba(255,255,255,.3);font-weight:500; }
+.agc-pill   { padding:8px 14px;border:1px solid rgba(167,139,250,.28);border-radius:999px;font-size:11px;font-weight:700;color:rgba(196,181,253,.75);cursor:pointer;white-space:nowrap;flex-shrink:0;margin-top:3px;background:rgba(124,58,237,.07);transition:all .2s; }
+.agc-pill:active { background:rgba(124,58,237,.18); }
+
+/* Rows */
+.agc-row { display:flex;align-items:center;gap:13px;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .18s;position:relative;z-index:1; }
+.agc-row:active { background:rgba(255,255,255,.025); }
+.agc-row-last { border-bottom:none; }
+.agc-ico      { width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+.agc-ico svg  { width:21px;height:21px; }
+.agc-ico-pink   { background:rgba(190,24,93,.12);border:1px solid rgba(236,72,153,.2);box-shadow:0 0 12px rgba(236,72,153,.1),inset 0 1px 0 rgba(255,255,255,.05); }
+.agc-ico-purple { background:rgba(109,40,217,.12);border:1px solid rgba(124,58,237,.2);box-shadow:0 0 12px rgba(124,58,237,.1),inset 0 1px 0 rgba(255,255,255,.05); }
+.agc-body  { flex:1;min-width:0; }
+.agc-rtitle{ font-size:13px;font-weight:700;color:rgba(255,255,255,.88);letter-spacing:-.01em;margin-bottom:3px; }
+.agc-rmeta { font-size:11px;color:rgba(255,255,255,.3);font-weight:500; }
+.agc-pill-pink  { padding:7px 13px;background:rgba(190,24,93,.78);border:1px solid rgba(236,72,153,.22);border-radius:999px;font-size:11px;font-weight:800;color:rgba(255,255,255,.95);display:flex;align-items:center;gap:4px;cursor:pointer;flex-shrink:0;box-shadow:0 3px 14px rgba(190,24,93,.28),inset 0 1px 0 rgba(255,255,255,.1);transition:all .18s; }
+.agc-pill-pink:active { transform:scale(.96); }
+.agc-pill-amber { padding:7px 13px;background:rgba(146,64,14,.72);border:1px solid rgba(245,158,11,.2);border-radius:999px;font-size:11px;font-weight:800;color:rgba(253,230,138,.9);display:flex;align-items:center;gap:4px;cursor:pointer;flex-shrink:0;box-shadow:0 3px 14px rgba(180,83,9,.22),inset 0 1px 0 rgba(255,255,255,.07);transition:all .18s; }
+.agc-pill-amber:active { transform:scale(.96); }
+.agc-chev { font-size:12px;opacity:.7; }
+
+/* Submenu */
+.agc-submenu { max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1),opacity .3s;opacity:0;border-bottom:1px solid rgba(255,255,255,.04);background:rgba(5,2,14,.45);position:relative;z-index:1; }
+.agc-submenu.open { max-height:700px;opacity:1; }
+.asm-inner  { padding:13px 18px 15px; }
+.asm-lbl    { font-size:10px;font-weight:700;color:rgba(255,255,255,.22);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px; }
+.asm-city   { display:flex;align-items:center;gap:8px;margin-bottom:12px; }
+.asm-select { flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:11px;padding:9px 12px;color:rgba(255,255,255,.82);font-size:13px;font-weight:600;font-family:'Outfit',sans-serif;outline:none;cursor:pointer;appearance:none;-webkit-appearance:none; }
+.asm-select option { background:#110824;color:#fff; }
+.asm-types  { display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:13px; }
+.asm-type   { display:flex;align-items:center;gap:7px;padding:9px 11px;border-radius:12px;border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.025);cursor:pointer;transition:all .18s;-webkit-tap-highlight-color:transparent; }
+.asm-type:active { transform:scale(.97); }
+.asm-type.sel { border-color:rgba(236,72,153,.32);background:rgba(190,24,93,.1); }
+.asm-type-emo { font-size:16px;flex-shrink:0; }
+.asm-type-txt { font-size:12px;font-weight:600;color:rgba(255,255,255,.4); }
+.asm-type.sel .asm-type-txt { color:rgba(253,164,175,.88); }
+.asm-rlbl   { font-size:10px;font-weight:700;color:rgba(255,255,255,.22);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px; }
+.asm-rlist  { display:flex;flex-direction:column;gap:7px; }
+.asm-rcard  { background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.055);border-radius:13px;padding:10px 12px;display:flex;align-items:center;gap:11px;cursor:pointer;transition:all .18s; }
+.asm-rcard:active { background:rgba(124,58,237,.08);border-color:rgba(124,58,237,.18); }
+.asm-remo   { font-size:19px;flex-shrink:0; }
+.asm-rinfo  { flex:1;min-width:0; }
+.asm-rname  { font-size:12px;font-weight:700;color:rgba(255,255,255,.82); }
+.asm-rdetail{ font-size:11px;color:rgba(255,255,255,.3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.asm-rright { text-align:right;flex-shrink:0; }
+.asm-rstars { font-size:11px;color:#fbbf24;font-weight:700; }
+.asm-rdist  { font-size:10px;color:rgba(255,255,255,.25);margin-top:2px; }
+.asm-rtag   { font-size:10px;font-weight:700;padding:2px 7px;border-radius:999px;background:rgba(74,222,128,.08);color:rgba(74,222,128,.78);margin-top:3px;display:inline-block; }
+.asm-cta    { width:100%;margin-top:10px;padding:11px;border-radius:13px;background:rgba(109,40,217,.55);border:1px solid rgba(167,139,250,.2);font-size:12px;font-weight:700;color:rgba(255,255,255,.88);cursor:pointer;font-family:'Outfit',sans-serif;transition:all .18s;box-shadow:0 4px 16px rgba(109,40,217,.2); }
+.asm-cta:active { opacity:.8; }
+
+/* Tip section */
+.agc-tip { background:rgba(8,4,20,.35);padding:13px 18px;display:flex;align-items:flex-start;gap:12px;border-top:1px solid rgba(255,255,255,.04);position:relative;z-index:1; }
+.agc-tip-ico { width:42px;height:42px;border-radius:50%;background:rgba(180,115,10,.1);border:1px solid rgba(245,158,11,.18);box-shadow:0 0 12px rgba(245,158,11,.1),inset 0 1px 0 rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px; }
+.agc-tip-lbl { font-size:10px;font-weight:700;color:rgba(245,158,11,.58);letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px; }
+.agc-tip-txt { font-size:12px;font-weight:500;color:rgba(255,255,255,.5);line-height:1.6; }
+
+</style>
   <link rel="stylesheet" href="/assets/visual-system.css">
   <script src="/js/core/auth-bootstrap.js"></script>
 <script src="/js/core/auth-guard.js"></script>
@@ -1273,6 +1376,114 @@ html, body {
           </div></div>
         </div>
       </div>
+
+      
+      <!-- ════════════════════════════════════════
+           ARJU PREPARÓ TU DÍA — Neon Glass Card
+           Agregado sobre el coach strip
+      ════════════════════════════════════════ -->
+      <div class="arju-section" style="position:relative">
+        <!-- Neon blobs de fondo -->
+        <div class="arju-blob" style="width:260px;height:260px;background:radial-gradient(circle,rgba(109,40,217,.18) 0%,transparent 70%);top:-80px;left:-50px;animation-delay:0s"></div>
+        <div class="arju-blob" style="width:200px;height:200px;background:radial-gradient(circle,rgba(190,24,93,.13) 0%,transparent 70%);top:-50px;right:-30px;animation-delay:-6s"></div>
+
+        <!-- Eyebrow -->
+        <div class="arju-eyebrow">
+          <div class="arju-ey-l">
+            <div class="arju-ey-dot"></div>
+            <span class="arju-ey-txt">Arju preparó tu día</span>
+          </div>
+          <div class="arju-ey-day" id="arjuEyDay">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span id="arjuDayName">—</span>
+          </div>
+        </div>
+
+        <!-- Glass card -->
+        <div class="arju-glass-card">
+          <!-- Estrellas -->
+          <div class="arju-stars" id="arjuStars"></div>
+
+          <!-- Header -->
+          <div class="agc-header">
+            <div>
+              <div class="agc-title">Todo listo para hoy</div>
+              <div class="agc-sub" id="arjuCardSub">Plan personalizado</div>
+            </div>
+            <div class="agc-pill" onclick="location.href='/pages/nutrition.html'">Ver todo ›</div>
+          </div>
+
+          <!-- Row 1: Comer fuera -->
+          <div class="agc-row" onclick="toggleArjuSub()">
+            <div class="agc-ico agc-ico-pink">
+              <svg viewBox="0 0 24 24" fill="none" stroke="rgba(244,114,182,.72)" stroke-width="1.7" stroke-linecap="round">
+                <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2"/><path d="M7 2v20"/>
+                <path d="M21 15V2a5 5 0 00-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/>
+              </svg>
+            </div>
+            <div class="agc-body">
+              <div class="agc-rtitle">¿Vas a comer fuera?</div>
+              <div class="agc-rmeta">Arju te dice exactamente qué pedir</div>
+            </div>
+            <div class="agc-pill-pink">
+              <span>Recomendación</span><span class="agc-chev" id="arjuChev">›</span>
+            </div>
+          </div>
+
+          <!-- Submenu comer fuera -->
+          <div class="agc-submenu" id="arjuSubMenu">
+            <div class="asm-inner">
+              <div class="asm-lbl">Tu ciudad</div>
+              <div class="asm-city">
+                <span style="font-size:14px">📍</span>
+                <select class="asm-select" id="arjuCitySelect" onchange="renderArjuRests()">
+                  <option value="cali">Cali</option>
+                  <option value="bogota">Bogotá</option>
+                  <option value="medellin">Medellín</option>
+                  <option value="barranquilla">Barranquilla</option>
+                  <option value="cartagena">Cartagena</option>
+                </select>
+              </div>
+              <div class="asm-lbl">¿Dónde vas?</div>
+              <div class="asm-types">
+                <div class="asm-type sel" data-t="saludable" onclick="selArjuType(this)"><span class="asm-type-emo">🥗</span><span class="asm-type-txt">Saludable</span></div>
+                <div class="asm-type" data-t="rapida" onclick="selArjuType(this)"><span class="asm-type-emo">🍔</span><span class="asm-type-txt">Rápida</span></div>
+                <div class="asm-type" data-t="domicilio" onclick="selArjuType(this)"><span class="asm-type-emo">📦</span><span class="asm-type-txt">Domicilio</span></div>
+                <div class="asm-type" data-t="cafeteria" onclick="selArjuType(this)"><span class="asm-type-emo">☕</span><span class="asm-type-txt">Cafetería</span></div>
+              </div>
+              <div class="asm-rlbl" id="arjuRestsLbl">Cerca a ti en Cali</div>
+              <div class="asm-rlist" id="arjuRestList"></div>
+              <button class="asm-cta" onclick="openArjuMaps()">Ver en mapa · Google Maps →</button>
+            </div>
+          </div>
+
+          <!-- Row 2: Lista de mercado -->
+          <div class="agc-row agc-row-last" onclick="location.href='/pages/market.html'">
+            <div class="agc-ico agc-ico-purple">
+              <svg viewBox="0 0 24 24" fill="none" stroke="rgba(167,139,250,.72)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.95-1.57l1.65-7.43H6"/>
+              </svg>
+            </div>
+            <div class="agc-body">
+              <div class="agc-rtitle">Lista de mercado</div>
+              <div class="agc-rmeta" id="arjuMarketMeta">Compras de la semana</div>
+            </div>
+            <div class="agc-pill-amber"><span>Ver lista</span><span class="agc-chev">›</span></div>
+          </div>
+
+          <!-- Tip del día -->
+          <div class="agc-tip">
+            <div class="agc-tip-ico">💡</div>
+            <div>
+              <div class="agc-tip-lbl">Tip del día</div>
+              <div class="agc-tip-txt" id="arjuTipTxt">Toma agua antes de cada comida. Reduce el hambre y mejora la digestión sin esfuerzo.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /ARJU CARD -->
+
 
       <!-- Coach — compact strip (al final) -->
       <div id="coachStrip" style="
@@ -3591,5 +3802,180 @@ window.addEventListener('load', showVoiceActivationBanner);
       color:rgba(255,255,255,.3);font-family:Outfit,sans-serif;font-size:11px;cursor:pointer">Después</button>
   </div>
 </div>
+
+<script>
+/* ═══════════════════════════════════════════
+   ARJU CARD — Stars, Submenu, Maps
+═══════════════════════════════════════════ */
+(function initArjuCard(){
+  // Day name
+  var days = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  var dn = document.getElementById('arjuDayName');
+  if(dn) dn.textContent = days[new Date().getDay()];
+
+  // Card subtitle with week/day from existing data
+  var sub = document.getElementById('arjuCardSub');
+  if(sub){
+    var wkEl = document.getElementById('tagWeek');
+    if(wkEl && wkEl.textContent && wkEl.textContent !== 'Semana 1'){
+      sub.textContent = 'Plan personalizado · ' + wkEl.textContent;
+    } else { sub.textContent = 'Plan personalizado'; }
+    setTimeout(function(){
+      var wk2 = document.getElementById('tagWeek');
+      if(wk2 && sub) sub.textContent = 'Plan personalizado · ' + wk2.textContent;
+    }, 2000);
+  }
+
+  // Generate stars
+  var layer = document.getElementById('arjuStars');
+  if(layer){
+    var starCfg = [
+      [8,12,.85,'3s',.1],[20,6,.7,'2.8s',.4],[33,18,.9,'2.2s',.7],
+      [46,8,.6,'4s',1.1],[58,14,1,'2s',0],[70,5,.75,'3.8s',.3],
+      [82,16,.8,'2.6s',.6],[92,9,.7,'3.2s',.9],[96,22,.85,'1.8s',.2],
+      [4,30,.55,'4.2s',.8],[16,38,.8,'2.4s',.5],[30,28,.7,'3.6s',1.4],
+      [50,35,.6,'2.9s',.7],[65,25,.82,'2.1s',.2],[77,32,.9,'3.4s',.6],
+      [88,28,.65,'2.7s',1.0],[94,44,.8,'3.9s',.3],[12,55,.7,'2.3s',.9],
+      [40,50,.85,'3.1s',.4],[62,58,.6,'2.5s',.7],[78,48,.9,'3.7s',.1],
+    ];
+    var cols = ['rgba(255,255,255','rgba(196,181,253','rgba(249,168,212','rgba(167,139,250'];
+    starCfg.forEach(function(c,i){
+      var el = document.createElement('div');
+      el.className = 'arju-star';
+      var sz = .8 + Math.random()*1.6;
+      var col = cols[i%cols.length];
+      el.style.cssText = 'width:'+sz+'px;height:'+sz+'px;left:'+c[0]+'%;top:'+c[1]+'%;background:'+col+',.88);--sop:'+c[2]+';--sdur:'+c[3]+';--sdel:'+c[4]+'s;box-shadow:0 0 '+Math.round(sz*2.5)+'px '+col+',.5)';
+      layer.appendChild(el);
+    });
+  }
+
+  // Market meta from localStorage
+  var mk = document.getElementById('arjuMarketMeta');
+  if(mk){
+    try {
+      var foods = JSON.parse(localStorage.getItem('af-market-list')||'[]');
+      if(foods.length){
+        var pending = foods.filter(function(f){ return !f.checked; }).length;
+        mk.textContent = pending + ' pendientes · ' + (foods.length-pending) + ' comprados';
+      }
+    } catch(e){}
+  }
+
+  // Tip rotativo por día
+  var TIPS = [
+    'Toma agua antes de cada comida. Reduce el hambre y mejora la digestión sin esfuerzo.',
+    'Duerme 7-8 horas. El músculo crece mientras descansas, no mientras entrenas.',
+    'Prioriza proteína en el desayuno. Reduce el antojo de dulce durante el día.',
+    'Camina 10 minutos después de comer. Mejora la digestión y quema calorías extra.',
+    'Prepara tus comidas el domingo. La consistencia supera a la perfección.',
+    'El estrés eleva el cortisol y dificulta perder grasa. Una pausa de 5 min ayuda.',
+    'Mastica despacio. Tu cerebro tarda 20 min en recibir la señal de saciedad.',
+  ];
+  var tipEl = document.getElementById('arjuTipTxt');
+  if(tipEl) tipEl.textContent = TIPS[new Date().getDay() % TIPS.length];
+})();
+
+/* ─ Submenu toggle ─ */
+function toggleArjuSub(){
+  var sm = document.getElementById('arjuSubMenu');
+  var ch = document.getElementById('arjuChev');
+  if(!sm) return;
+  var open = sm.classList.toggle('open');
+  if(ch) ch.textContent = open ? '∨' : '›';
+  if(open) renderArjuRests();
+}
+
+/* ─ Type selector ─ */
+var _arjuType = 'saludable';
+function selArjuType(el){
+  document.querySelectorAll('.asm-type').forEach(function(b){ b.classList.remove('sel'); });
+  el.classList.add('sel');
+  _arjuType = el.dataset.t;
+  renderArjuRests();
+}
+
+/* ─ Restaurants data ─ */
+var ARJURESTS = {
+  cali:{
+    saludable:[{e:'🥗',n:'Natuchef',d:'Bowl proteico · Chipichape',s:'4.8',dist:'0.4 km'},{e:'🌿',n:'Green Bowl',d:'Ensaladas · Av. Roosevelt',s:'4.6',dist:'0.9 km'},{e:'🍱',n:'Saludable & Co',d:'Menú macro · El Peñón',s:'4.7',dist:'1.2 km'}],
+    rapida:[{e:'🍗',n:'Kokoriko',d:'Pollo asado · sin freír · Multiplaza',s:'4.3',dist:'0.6 km'},{e:'🥙',n:'Subway',d:'Pechuga sin mayo · CC Jardín Plaza',s:'4.2',dist:'0.8 km'}],
+    domicilio:[{e:'📲',n:'Rappi Saludable',d:'Filtro fit · entrega ~25 min',s:'4.5',dist:'App'},{e:'🛵',n:'iFood Fit',d:'Opciones bajas en calorías',s:'4.4',dist:'App'}],
+    cafeteria:[{e:'☕',n:'Juan Valdez',d:'Sánduche integral · tinto sin azúcar',s:'4.4',dist:'0.3 km'},{e:'🥐',n:'OMA Café',d:'Ensalada + bebida sin azúcar',s:'4.3',dist:'0.5 km'}],
+  },
+  bogota:{
+    saludable:[{e:'🥗',n:'Masa',d:'Bowl vegetal + proteína · Usaquén',s:'4.9',dist:'0.5 km'},{e:'🌿',n:'Quinoa',d:'Menú fit · Chapinero',s:'4.7',dist:'0.7 km'},{e:'🍱',n:'Wok',d:'Proteína ligera · Zona Rosa',s:'4.8',dist:'1.0 km'}],
+    rapida:[{e:'🥙',n:'Subway',d:'Pechuga sin mayo · Andino',s:'4.2',dist:'0.4 km'},{e:'🍗',n:'El Corral Lite',d:'Burger pollo sin queso extra',s:'4.1',dist:'0.6 km'}],
+    domicilio:[{e:'📲',n:'Rappi Saludable',d:'Filtro fit · entrega ~30 min',s:'4.6',dist:'App'},{e:'🛵',n:'Fresco Market',d:'Mercado fit a domicilio',s:'4.7',dist:'App'}],
+    cafeteria:[{e:'☕',n:'Juan Valdez',d:'Sánduche integral · tinto',s:'4.5',dist:'0.2 km'},{e:'🥐',n:'Amor Perfecto',d:'Snack saludable · café filtrado',s:'4.8',dist:'0.4 km'}],
+  },
+  medellin:{
+    saludable:[{e:'🥗',n:'La Provincia',d:'Bowl proteína · El Poblado',s:'4.8',dist:'0.6 km'},{e:'🌿',n:'Hygge',d:'Estilo fit · Laureles',s:'4.7',dist:'0.9 km'}],
+    rapida:[{e:'🍗',n:'Kokoriko',d:'Pollo asado · El Tesoro',s:'4.3',dist:'0.5 km'},{e:'🥙',n:'Subway',d:'Pechuga integral · Poblado',s:'4.2',dist:'0.7 km'}],
+    domicilio:[{e:'📲',n:'Rappi Fit',d:'Opciones saludables · ~25 min',s:'4.5',dist:'App'},{e:'🛵',n:'Domicilios.com',d:'Filtro saludable disponible',s:'4.3',dist:'App'}],
+    cafeteria:[{e:'☕',n:'Pergamino',d:'Café de origen · snack fit',s:'4.9',dist:'0.3 km'},{e:'🥐',n:'OMA',d:'Sánduche · tinto sin azúcar',s:'4.4',dist:'0.5 km'}],
+  },
+  barranquilla:{
+    saludable:[{e:'🥗',n:'Fit Bowl BQ',d:'Bowl proteico · Buenavista',s:'4.6',dist:'0.7 km'},{e:'🌿',n:'Green & Fit',d:'Ensaladas · Zona Norte',s:'4.5',dist:'1.0 km'}],
+    rapida:[{e:'🍗',n:'Kokoriko BQ',d:'Pollo asado · sin freír',s:'4.2',dist:'0.5 km'}],
+    domicilio:[{e:'📲',n:'Rappi Saludable',d:'Entrega ~30 min · fit',s:'4.4',dist:'App'}],
+    cafeteria:[{e:'☕',n:'Juan Valdez',d:'Sánduche integral · tinto',s:'4.4',dist:'0.4 km'}],
+  },
+  cartagena:{
+    saludable:[{e:'🥗',n:'La Boquilla Fit',d:'Proteína de mar · Bocagrande',s:'4.7',dist:'0.8 km'},{e:'🌿',n:'Eat Well CTG',d:'Bowl saludable · Getsemaní',s:'4.6',dist:'1.1 km'}],
+    rapida:[{e:'🥙',n:'Subway',d:'Pechuga integral · sin salsas',s:'4.2',dist:'0.6 km'}],
+    domicilio:[{e:'📲',n:'Rappi Fit',d:'Opciones fit · entrega ~35 min',s:'4.4',dist:'App'}],
+    cafeteria:[{e:'☕',n:'Juan Valdez',d:'Café + sánduche saludable',s:'4.3',dist:'0.5 km'}],
+  },
+};
+
+function renderArjuRests(){
+  var sel = document.getElementById('arjuCitySelect');
+  if(!sel) return;
+  var city = sel.value;
+  var cityName = sel.options[sel.selectedIndex].text;
+  var lbl = document.getElementById('arjuRestsLbl');
+  if(lbl) lbl.textContent = 'Cerca a ti en ' + cityName;
+  var data = (ARJURESTS[city]||{})[_arjuType] || [];
+  var list = document.getElementById('arjuRestList');
+  if(!list) return;
+  list.innerHTML = data.map(function(r){
+    return '<div class="asm-rcard">'+
+      '<span class="asm-remo">'+r.e+'</span>'+
+      '<div class="asm-rinfo"><div class="asm-rname">'+r.n+'</div><div class="asm-rdetail">'+r.d+'</div></div>'+
+      '<div class="asm-rright"><div class="asm-rstars">★ '+r.s+'</div><div class="asm-rdist">'+r.dist+'</div><span class="asm-rtag">Fit</span></div>'+
+    '</div>';
+  }).join('');
+  // Auto-detect city from profile if available
+  var savedCity = localStorage.getItem('af-user-city');
+  if(savedCity && ARJURESTS[savedCity] && sel.value !== savedCity){
+    sel.value = savedCity; renderArjuRests();
+  }
+}
+
+function openArjuMaps(){
+  var sel = document.getElementById('arjuCitySelect');
+  var city = sel ? sel.options[sel.selectedIndex].text : 'Colombia';
+  var q = encodeURIComponent('restaurantes saludables ' + city + ' colombia');
+  window.open('https://www.google.com/maps/search/' + q, '_blank');
+}
+
+// Initial render
+renderArjuRests();
+
+// Sync city from profile after data loads (hook into existing init)
+var _arjuCitySync = setInterval(function(){
+  var p = window._userProfile;
+  if(!p) return;
+  clearInterval(_arjuCitySync);
+  var cityMap = {cali:'cali',bogota:'bogota','bogotá':'bogota','medellín':'medellin',medellin:'medellin',barranquilla:'barranquilla',cartagena:'cartagena'};
+  var key = cityMap[(p.ciudad||'').toLowerCase()];
+  if(key){
+    var sel = document.getElementById('arjuCitySelect');
+    if(sel){ sel.value = key; renderArjuRests(); }
+    localStorage.setItem('af-user-city', key);
+  }
+}, 1500);
+</script>
+
 </body>
 </html>
