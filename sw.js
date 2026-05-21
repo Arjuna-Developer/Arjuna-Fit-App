@@ -6,6 +6,7 @@ const CACHE = 'arjunafit-v3';
 
 // Solo assets que no cambian frecuentemente
 const PRECACHE = [
+  '/offline.html',
   '/styles/tokens.css',
   '/styles/reset.css',
   '/styles/components.css',
@@ -51,9 +52,22 @@ self.addEventListener('fetch', e => {
 
   const url = e.request.url;
 
+  // ── Navegación offline: fallback antes del NO_CACHE check ──
+  if (e.request.mode === 'navigate') {
+    e.respondWith(
+      fetch(e.request).catch(() =>
+        caches.match(OFFLINE_URL).then(r => r || new Response(
+          '<html><body style="font-family:sans-serif;text-align:center;padding:40px;background:#090611;color:#fff"><h1>Sin conexion</h1><p>Revisa tu internet.</p></body></html>',
+          { headers: { 'Content-Type': 'text/html' } }
+        ))
+      )
+    );
+    return;
+  }
+
   // Nunca interceptar si coincide con NO_CACHE
   const skip = NO_CACHE.some(pattern => url.includes(pattern));
-  if (skip) return; // deja que el browser lo maneje directamente
+  if (skip) return;
 
   // Cache-first para assets estáticos (CSS, JS, imágenes, fuentes CDN)
   e.respondWith(
