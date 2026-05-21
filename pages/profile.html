@@ -374,23 +374,44 @@ function afNavRegister() {
   }, 150);
 }
 
-// ── Active page highlight ──────────────────────
+// ── Active page highlight — por href ──────────
 (function(){
   var path = window.location.pathname;
-  var items = {
-    dashboard: 0, workout: 1, coach: 3, nutrition: 4
+  var PAGE_MAP = {
+    'dashboard': { color:'#a78bfa', glow:'#a78bfa' },
+    'workout':   { color:'#c4b5fd', glow:'#8b5cf6' },
+    'coach':     { color:'#93c5fd', glow:'#3b82f6' },
+    'nutrition': { color:'#6ee7b7', glow:'#10b981' },
   };
-  var links = document.querySelectorAll('#af-nav .af-nav-item');
-  Object.keys(items).forEach(function(key){
-    if (path.includes(key)) {
-      var el = links[items[key]];
-      if (!el) return;
-      var svg = el.querySelector('svg');
-      var lbl = el.querySelector('span');
-      var dot = el.querySelector('div');
-      if (svg) svg.setAttribute('stroke','rgba(196,181,253,.95)');
-      if (lbl) { lbl.style.color='rgba(196,181,253,.95)'; lbl.style.fontWeight='700'; }
-      if (dot) { dot.style.background='#a78bfa'; dot.style.boxShadow='0 0 5px #a78bfa'; }
+  
+  var activeKey = Object.keys(PAGE_MAP).find(function(k){ return path.includes(k); });
+  if (!activeKey) return;
+  
+  var col = PAGE_MAP[activeKey].color;
+  var glow = PAGE_MAP[activeKey].glow;
+  
+  // Find the matching nav link by href
+  document.querySelectorAll('#af-nav .af-nav-item').forEach(function(el) {
+    var href = el.getAttribute('href') || '';
+    var isActive = href.includes(activeKey);
+    
+    // Skip Arju button when on coach page (it's a duplicate)
+    if (activeKey === 'coach' && href.includes('from=nav')) return;
+    
+    if (isActive) {
+      var svg  = el.querySelector('svg');
+      var lbl  = el.querySelector('span');
+      var dot  = el.querySelectorAll('div');
+      var icon = el.querySelector('div[style*="36px"]') || el.querySelector('div[style*="border-radius:12px"]');
+      
+      if (svg) svg.setAttribute('stroke', col);
+      if (lbl) { lbl.style.color=col; lbl.style.fontWeight='800'; }
+      // Last div = dot indicator
+      var allDivs = el.querySelectorAll('div');
+      var lastDiv = allDivs[allDivs.length-1];
+      if (lastDiv) { lastDiv.style.background=glow; lastDiv.style.boxShadow='0 0 6px '+glow; }
+      // Icon container — add subtle glow
+      if (icon) { icon.style.borderColor='rgba(167,139,250,.4)'; icon.style.background='rgba(124,58,237,.2)'; }
     }
   });
 })();
