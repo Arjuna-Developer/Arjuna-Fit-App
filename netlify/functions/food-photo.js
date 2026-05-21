@@ -77,7 +77,7 @@ exports.handler = async (event) => {
       }
     } catch(authErr) {
       console.warn('[food-photo] Auth check failed (non-blocking):', authErr.message);
-      // Non-blocking — beta can proceed without auth
+      return { statusCode: 401, headers, body: JSON.stringify({ error: 'Authentication required', code: 'AUTH_REQUIRED' }) };
     }
   }
 
