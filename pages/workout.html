@@ -251,14 +251,15 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .se-name{font-size:14px;font-weight:700;letter-spacing:-.01em}
 .se-spec{font-size:12px;color:var(--t3);margin-top:2px}
 .se-done{
-  width:34px;height:34px;border-radius:10px;flex-shrink:0;
-  border:1.5px solid rgba(255,255,255,.1);
-  background:rgba(255,255,255,.04);
+  width:30px;height:30px;border-radius:50%;flex-shrink:0;
+  border:1.5px solid rgba(255,255,255,.15);
+  background:transparent;
   display:flex;align-items:center;justify-content:center;
-  font-size:16px;cursor:pointer;
-  transition:all .15s;-webkit-tap-highlight-color:transparent}
+  font-size:13px;font-weight:800;color:transparent;
+  cursor:pointer;
+  transition:all .18s;-webkit-tap-highlight-color:transparent}
 .se-done:active{transform:scale(.9)}
-.se-done.on{background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.4);color:var(--ok)}
+.se-done.on{background:rgba(16,185,129,.2);border-color:rgba(16,185,129,.6);color:#4ade80;font-size:14px;box-shadow:0 0 10px rgba(16,185,129,.25)}
 
 /* ── Main exercise cards ── */
 .ex-list{display:flex;flex-direction:column;gap:6px}
@@ -336,7 +337,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   font-size:16px;cursor:pointer;transition:all .18s;
   -webkit-tap-highlight-color:transparent}
 .set-done:active{transform:scale(.88)}
-.set-done.on{background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.4);color:var(--ok)}
+.set-done.on{background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.4);color:#4ade80}
 /* Completed row dim */
 .set-row:has(.set-done.on) .set-inp{opacity:.45}
 .set-row:has(.set-done.on) .set-n{opacity:.45}
@@ -1254,7 +1255,7 @@ function renderSimplePhase(key,items,title,nextLabel,subEl,subText){
               <div class="se-spec">${ex.spec}</div>
             </div>
             <div class="se-done ${checks[i]?'on':''}" id="${key}c${i}"
-                 onclick="toggleSimple('${key}',${i})">${checks[i]?'✓':'○'}</div>
+                 onclick="toggleSimple('${key}',${i})">${checks[i]?'✓':''}</div>
           </div>`
       ).join('')}
     </div>
