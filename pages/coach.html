@@ -469,7 +469,7 @@ html, body {
         <span id="statusLabel">Listo para ayudarte</span>
       </div>
     </div>
-    <div class="coach-avatar-sm"><span style="display:inline-flex;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#7c3aed,#ec4899);vertical-align:middle;margin-right:5px"></span></div>
+    <div class="coach-avatar-sm"><span style="display:inline-flex;width:20px;height:20px;font-size:14px;align-items:center;justify-content:center">🤖</span><span style="display:none;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#7c3aed,#ec4899);vertical-align:middle;margin-right:5px"></span></div>
   </div>
 
   <!-- MESSAGES -->
@@ -1360,6 +1360,28 @@ function afNavRegister() {
   if (svg) svg.setAttribute('stroke', cfg.color);
   if (lbl) { lbl.style.color=cfg.color; lbl.style.fontWeight='800'; }
   if (dot.length) { var d=dot[dot.length-1]; d.style.background=cfg.glow; d.style.boxShadow='0 0 6px '+cfg.glow; }
+})();
+
+// Handle ?msg= URL param (from workout, nutrition, etc.)
+(function(){
+  var msg = new URLSearchParams(window.location.search).get('msg');
+  if (msg) {
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        var input = document.getElementById('textInput');
+        if (input) {
+          input.value = decodeURIComponent(msg);
+          input.style.height = 'auto';
+          input.style.height = input.scrollHeight + 'px';
+          // Auto-send after brief delay
+          setTimeout(function() {
+            var sendBtn = document.getElementById('sendBtn') || document.querySelector('[onclick*="send"]');
+            if (sendBtn) sendBtn.click();
+          }, 500);
+        }
+      }, 800);
+    });
+  }
 })();
 </script>
 </body>
