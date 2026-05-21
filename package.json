@@ -1,13 +1,17 @@
 {
   "name": "arjunafit-app",
-  "version": "1.0.0",
-  "description": "ArjunaFit \u2014 Companion Wellness App",
+  "version": "2.8.2105",
+  "description": "ArjunaFit — Fitness & Nutrition App",
   "private": true,
+  "scripts": {
+    "lint":     "echo 'No lint configured yet'",
+    "validate": "node scripts/validate-html.js",
+    "deploy":   "netlify deploy --prod",
+    "check":    "node --check pages/*.html || true"
+  },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.0"
   },
   "devDependencies": {},
-  "engines": {
-    "node": ">=18.0.0"
-  }
+  "engines": { "node": ">=18" }
 }
