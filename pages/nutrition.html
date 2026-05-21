@@ -60,7 +60,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
 
 /* ── Tab content ── */
 .tc{display:none}
-.tc.on{display:block;position:fixed;left:0;right:0;bottom:0;z-index:4;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;scrollbar-width:none;padding:16px 16px calc(90px + env(safe-area-inset-bottom));background:var(--bg);animation:fi .2s ease both}
+.tc.on{display:flex;flex-direction:column;animation:fi .2s ease both;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;scrollbar-width:none}
 @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
 /* ── Nutrición del día ── */
@@ -267,7 +267,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
 
 :root{--hdr-h:108px}
 
-.hdr{position:fixed;top:0;left:0;right:0;max-width:430px;margin:0 auto;z-index:10;background:var(--bg)}
+
 
 .tc.on::-webkit-scrollbar{display:none}
 </style>
@@ -1286,7 +1286,6 @@ setTimeout(function() {
         </div>
       </div>
 
-      </div>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
         <div data-meal="desayuno" onclick="openRecipeDetail('huevos-espinaca')" style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .12s" onmousedown="this.style.background='rgba(124,58,237,.08)'" onmouseup="this.style.background='rgba(255,255,255,.04)'">
