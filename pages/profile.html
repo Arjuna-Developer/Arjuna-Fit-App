@@ -92,6 +92,17 @@ body{background:var(--bg);color:var(--t);font-family:var(--font);-webkit-font-sm
 .ldr{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;align-items:center;justify-content:center;transition:opacity .3s,visibility .3s}
 .ldr.off{opacity:0;visibility:hidden;pointer-events:none}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+:root {
+  --bg:#0c0714;--card:#130d22;--t1:#f1f0f4;--t2:rgba(240,238,248,.7);
+  --t3:rgba(240,238,248,.45);--t4:rgba(240,238,248,.2);
+  --border:rgba(255,255,255,.08);--max:430px;--f:'Outfit',sans-serif;
+}
+:root.light {
+  --bg:#f5f4f8;--card:#ffffff;--t1:#1a0a2e;--t2:rgba(26,10,46,.7);
+  --t3:rgba(26,10,46,.45);--t4:rgba(26,10,46,.2);
+  --border:rgba(0,0,0,.08);
+}
 </style>
   <link rel="stylesheet" href="/assets/visual-system.css">
 
@@ -186,7 +197,7 @@ setTimeout(function() {
         <div class="mi-text"><div class="mi-title">Modo oscuro</div><div class="mi-sub">Tema premium dark</div></div>
         <button class="tog on" id="darkTog"></button>
       </div>
-      <a href="/pages/onboarding.html" class="mi">
+      <a href="/pages/onboarding.html" class="mi" onclick="window.location.href='/pages/onboarding.html';return false;">
         <div class="mi-icon" style="background:rgba(16,185,129,.1)">⚙️</div>
         <div class="mi-text"><div class="mi-title">Editar mi plan</div><div class="mi-sub">Objetivo, peso, nivel</div></div>
         <span class="mi-arrow">›</span>
@@ -348,11 +359,47 @@ function showToast(msg){
   setTimeout(()=>t.classList.remove('show'),3000);
 }
 
-function toggleDark(){document.getElementById('darkTog').classList.toggle('on')}
+function toggleDark() {
+  var tog = document.getElementById('darkTog');
+  if (!tog) return;
+  var isDark = !document.documentElement.classList.contains('light');
+  if (isDark) {
+    document.documentElement.classList.add('light');
+    tog.classList.remove('on');
+    localStorage.setItem('af-theme', 'light');
+  } else {
+    document.documentElement.classList.remove('light');
+    tog.classList.add('on');
+    localStorage.setItem('af-theme', 'dark');
+  }
+}
+// Apply saved theme on load
+(function() {
+  var t = localStorage.getItem('af-theme');
+  if (t === 'light') {
+    document.documentElement.classList.add('light');
+    var tog = document.getElementById('darkTog');
+    if (tog) tog.classList.remove('on');
+  }
+})();
 
 async function handlePhotoUpload(input){
   const file=input.files?.[0];
-  if(!file||!_sb||!_uid)return;
+  if(!file) return;
+  // If no session, save as data URL in localStorage
+  if(!_sb || !_uid) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      localStorage.setItem('af-avatar-local', e.target.result);
+      var avatarEl = document.getElementById('avatarEl');
+      if (avatarEl) avatarEl.style.backgroundImage = 'url('+e.target.result+')';
+      var initial = document.getElementById('avatarInitial');
+      if (initial) initial.style.display = 'none';
+      showToast('📸 Foto guardada localmente');
+    };
+    reader.readAsDataURL(file);
+    return;
+  }
   if(file.size>5*1024*1024){alert('La foto debe ser menor a 5MB');return;}
 
   showToast('📸 Subiendo foto...');
@@ -819,6 +866,24 @@ document.addEventListener('DOMContentLoaded', function(){
   var notifTog = document.getElementById('notifTog');
   if (notifTog && localStorage.getItem('af-notifications') === '1') notifTog.classList.add('on');
 });
-</script>
+
+// Load avatar from localStorage on init
+document.addEventListener('DOMContentLoaded', function() {
+  var localAvatar = localStorage.getItem('af-avatar-local');
+  if (localAvatar) {
+    var avatarEl = document.getElementById('avatarEl');
+    if (avatarEl) {
+      avatarEl.style.backgroundImage = 'url(' + localAvatar + ')';
+      avatarEl.style.backgroundSize = 'cover';
+      avatarEl.style.backgroundPosition = 'center';
+    }
+    var initial = document.getElementById('avatarInitial');
+    if (initial) initial.style.display = 'none';
+  }
+  // Update name sub
+  var name = localStorage.getItem('af-user-name') || localStorage.getItem('af-name');
+  var nameSub = document.getElementById('currentNameSub');
+  if (nameSub && name) nameSub.textContent = name;
+});</script>
 </body>
 </html>
