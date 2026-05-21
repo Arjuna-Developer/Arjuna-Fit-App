@@ -32,14 +32,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
   font-family:var(--font);-webkit-font-smoothing:antialiased}
-.page{max-width:var(--max);margin:0 auto;
-  height:100dvh;overflow-y:auto;overflow-x:hidden;
-  -webkit-overflow-scrolling:touch;
-  overscroll-behavior-y:contain;
-  scrollbar-width:none;
-  padding-bottom:calc(90px + env(safe-area-inset-bottom));
-  background:linear-gradient(to bottom,var(--bg) 70%,transparent);
-  position:sticky;top:0;z-index:20}
+.page{max-width:var(--max);margin:0 auto;height:100dvh;display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
 .hdr-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .hdr-title{font-size:22px;font-weight:800;letter-spacing:-.03em}
 .hdr-sub{font-size:12px;color:var(--t3);margin-top:1px}
@@ -60,7 +53,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
 
 /* ── Tab content ── */
 .tc{display:none}
-.tc.on{display:flex;flex-direction:column;animation:fi .2s ease both;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;scrollbar-width:none}
+.tc.on{display:flex;flex-direction:column;flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;scrollbar-width:none;padding:16px 16px calc(90px + env(safe-area-inset-bottom));gap:12px;animation:fi .2s ease both}
 @keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
 /* ── Nutrición del día ── */
@@ -269,7 +262,11 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
 
 
 
+
+
 .tc.on::-webkit-scrollbar{display:none}
+
+.hdr{flex-shrink:0;background:var(--bg);padding:12px 16px 0;z-index:10}
 </style>
   <link rel="stylesheet" href="/assets/visual-system.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -636,6 +633,131 @@ setTimeout(function() {
     </div>
 
   </div>
+
+
+      <!-- Guia Nutricional — moved from tab to bottom of Hoy -->
+      <div style="background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:20px;overflow:hidden;margin-top:4px">
+        <div style="padding:16px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:10px">
+          <span style="font-size:20px">📖</span>
+          <div><div style="font-size:15px;font-weight:800;color:#fff">Guía Nutricional</div>
+          <div style="font-size:12px;color:var(--t3)">Toca para expandir. Principios que funcionan.</div></div>
+        </div>
+    <div>
+      <div style="font-size:16px;font-weight:800;letter-spacing:-.02em;margin-bottom:3px">
+        Guía Nutricional 📖</div>
+      <div style="font-size:13px;color:var(--t3)">Toca para expandir. Principios que funcionan.</div>
+    </div>
+
+    <!-- Quick stats row -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+      <div style="background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.2);
+        border-radius:14px;padding:12px 8px;text-align:center">
+        <div style="font-size:20px;font-weight:800;color:var(--pl)">1.6g</div>
+        <div style="font-size:10px;color:rgba(196,181,253,.5);font-weight:600;
+          margin-top:2px;line-height:1.3">prot/kg<br>de peso</div>
+      </div>
+      <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);
+        border-radius:14px;padding:12px 8px;text-align:center">
+        <div style="font-size:20px;font-weight:800;color:#fcd34d">2L</div>
+        <div style="font-size:10px;color:rgba(252,211,77,.5);font-weight:600;
+          margin-top:2px;line-height:1.3">agua<br>mínimo</div>
+      </div>
+      <div style="background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.15);
+        border-radius:14px;padding:12px 8px;text-align:center">
+        <div style="font-size:20px;font-weight:800;color:#6ee7b7">3+1</div>
+        <div style="font-size:10px;color:rgba(110,231,183,.5);font-weight:600;
+          margin-top:2px;line-height:1.3">comidas<br>al día</div>
+      </div>
+    </div>
+
+    <div class="guide-card" onclick="toggleGuide(this)">
+      <div class="gc-title">🥩 Proteína — tu prioridad #1 <span>›</span></div>
+      <div class="gc-body">
+        Come proteína en <b>cada comida</b>. Es lo más importante del reto.
+        <br><br>
+        <b>Fuentes LATAM:</b> pollo, huevos, atún, fríjoles, lentejas, yogur griego, carne.
+        <br><br>
+        Meta: <b>1.6–2g por kg de peso</b> al día. Sin obsesionarte con el número exacto.
+        <div class="guide-tip">
+          <span style="font-size:16px">💡</span>
+          <span style="font-size:12px;color:var(--t2)">Si no llegas al número no hay drama. Solo intenta agregar proteína en cada plato.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="guide-card" onclick="toggleGuide(this)">
+      <div class="gc-title">⚡ Qué comer post-entreno <span>›</span></div>
+      <div class="gc-body">
+        En los <b>45 minutos</b> después del entreno consume:
+        <br><br>
+        <b>Proteína + carbohidratos</b> = recuperación óptima.
+        <br><br>
+        <ul>
+          <li>Arroz con huevos revueltos</li>
+          <li>Batido banano + avena</li>
+          <li>Pechuga con arroz</li>
+          <li>Yogur griego + fruta</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="guide-card" onclick="toggleGuide(this)">
+      <div class="gc-title">🍌 Snacks inteligentes <span>›</span></div>
+      <div class="gc-body">
+        Los mejores snacks son simples y fáciles de preparar:
+        <ul>
+          <li>Yogur griego + fruta</li>
+          <li>2 huevos cocidos</li>
+          <li>Banano + mantequilla de maní</li>
+          <li>Puñado de nueces</li>
+          <li>Avena con leche</li>
+        </ul>
+        <br>
+        <b>Tip:</b> prepáralos el domingo para tenerlos listos toda la semana.
+      </div>
+    </div>
+
+    <div class="guide-card" onclick="toggleGuide(this)">
+      <div class="gc-title">🍽️ Comer sin obsesión <span>›</span></div>
+      <div class="gc-body">
+        <b>No hay alimentos prohibidos.</b> Hay porciones más inteligentes.
+        <br><br>
+        Come despacio. Para al 80% de saciedad. Come sin pantallas.
+        <br><br>
+        Una comida "mala" no rompe el progreso. <b>La consistencia gana.</b>
+        <div class="guide-tip">
+          <span style="font-size:16px"><span style="display:inline-flex;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#7c3aed,#ec4899);vertical-align:middle;margin-right:5px"></span>
+          <span style="font-size:12px;color:var(--t2)">"El plato perfecto no existe. El plato consistente sí." — Arju</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="guide-card" onclick="toggleGuide(this)">
+      <div class="gc-title">💧 Hidratación <span>›</span></div>
+      <div class="gc-body">
+        Toma <b>al menos 2L de agua</b> al día. Más si entrenas fuerte.
+        <br><br>
+        El hambre entre comidas <b>a veces es sed</b>. Antes de comer, toma agua primero.
+        <br><br>
+        Si entrenas: +500ml por cada hora de ejercicio.
+      </div>
+    </div>
+
+    <div class="guide-card" onclick="toggleGuide(this)">
+      <div class="gc-title">🛒 Ideas de desayuno rápido <span>›</span></div>
+      <div class="gc-body">
+        <ul>
+          <li>Avena + banano + canela (8 min)</li>
+          <li>3 huevos + aguacate (10 min)</li>
+          <li>Yogur griego + granola + fresas (2 min)</li>
+          <li>Batido avena + banano + leche (3 min)</li>
+          <li>Tostadas integrales + aguacate + huevo (8 min)</li>
+        </ul>
+        <br>
+        <b>Truco:</b> Prepara la avena la noche anterior. En la mañana solo calienta.
+      </div>
+    </div>
+      </div>
 
     <div class="tc" id="tc-recetas">
     <div style="display:none;position:absolute">
@@ -2135,123 +2257,6 @@ setTimeout(function() {
       </div>
     </div>
 
-id="tc-guia">
-    <div>
-      <div style="font-size:16px;font-weight:800;letter-spacing:-.02em;margin-bottom:3px">
-        Guía Nutricional 📖</div>
-      <div style="font-size:13px;color:var(--t3)">Toca para expandir. Principios que funcionan.</div>
-    </div>
-
-    <!-- Quick stats row -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
-      <div style="background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.2);
-        border-radius:14px;padding:12px 8px;text-align:center">
-        <div style="font-size:20px;font-weight:800;color:var(--pl)">1.6g</div>
-        <div style="font-size:10px;color:rgba(196,181,253,.5);font-weight:600;
-          margin-top:2px;line-height:1.3">prot/kg<br>de peso</div>
-      </div>
-      <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);
-        border-radius:14px;padding:12px 8px;text-align:center">
-        <div style="font-size:20px;font-weight:800;color:#fcd34d">2L</div>
-        <div style="font-size:10px;color:rgba(252,211,77,.5);font-weight:600;
-          margin-top:2px;line-height:1.3">agua<br>mínimo</div>
-      </div>
-      <div style="background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.15);
-        border-radius:14px;padding:12px 8px;text-align:center">
-        <div style="font-size:20px;font-weight:800;color:#6ee7b7">3+1</div>
-        <div style="font-size:10px;color:rgba(110,231,183,.5);font-weight:600;
-          margin-top:2px;line-height:1.3">comidas<br>al día</div>
-      </div>
-    </div>
-
-    <div class="guide-card" onclick="toggleGuide(this)">
-      <div class="gc-title">🥩 Proteína — tu prioridad #1 <span>›</span></div>
-      <div class="gc-body">
-        Come proteína en <b>cada comida</b>. Es lo más importante del reto.
-        <br><br>
-        <b>Fuentes LATAM:</b> pollo, huevos, atún, fríjoles, lentejas, yogur griego, carne.
-        <br><br>
-        Meta: <b>1.6–2g por kg de peso</b> al día. Sin obsesionarte con el número exacto.
-        <div class="guide-tip">
-          <span style="font-size:16px">💡</span>
-          <span style="font-size:12px;color:var(--t2)">Si no llegas al número no hay drama. Solo intenta agregar proteína en cada plato.</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="guide-card" onclick="toggleGuide(this)">
-      <div class="gc-title">⚡ Qué comer post-entreno <span>›</span></div>
-      <div class="gc-body">
-        En los <b>45 minutos</b> después del entreno consume:
-        <br><br>
-        <b>Proteína + carbohidratos</b> = recuperación óptima.
-        <br><br>
-        <ul>
-          <li>Arroz con huevos revueltos</li>
-          <li>Batido banano + avena</li>
-          <li>Pechuga con arroz</li>
-          <li>Yogur griego + fruta</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="guide-card" onclick="toggleGuide(this)">
-      <div class="gc-title">🍌 Snacks inteligentes <span>›</span></div>
-      <div class="gc-body">
-        Los mejores snacks son simples y fáciles de preparar:
-        <ul>
-          <li>Yogur griego + fruta</li>
-          <li>2 huevos cocidos</li>
-          <li>Banano + mantequilla de maní</li>
-          <li>Puñado de nueces</li>
-          <li>Avena con leche</li>
-        </ul>
-        <br>
-        <b>Tip:</b> prepáralos el domingo para tenerlos listos toda la semana.
-      </div>
-    </div>
-
-    <div class="guide-card" onclick="toggleGuide(this)">
-      <div class="gc-title">🍽️ Comer sin obsesión <span>›</span></div>
-      <div class="gc-body">
-        <b>No hay alimentos prohibidos.</b> Hay porciones más inteligentes.
-        <br><br>
-        Come despacio. Para al 80% de saciedad. Come sin pantallas.
-        <br><br>
-        Una comida "mala" no rompe el progreso. <b>La consistencia gana.</b>
-        <div class="guide-tip">
-          <span style="font-size:16px"><span style="display:inline-flex;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#7c3aed,#ec4899);vertical-align:middle;margin-right:5px"></span>
-          <span style="font-size:12px;color:var(--t2)">"El plato perfecto no existe. El plato consistente sí." — Arju</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="guide-card" onclick="toggleGuide(this)">
-      <div class="gc-title">💧 Hidratación <span>›</span></div>
-      <div class="gc-body">
-        Toma <b>al menos 2L de agua</b> al día. Más si entrenas fuerte.
-        <br><br>
-        El hambre entre comidas <b>a veces es sed</b>. Antes de comer, toma agua primero.
-        <br><br>
-        Si entrenas: +500ml por cada hora de ejercicio.
-      </div>
-    </div>
-
-    <div class="guide-card" onclick="toggleGuide(this)">
-      <div class="gc-title">🛒 Ideas de desayuno rápido <span>›</span></div>
-      <div class="gc-body">
-        <ul>
-          <li>Avena + banano + canela (8 min)</li>
-          <li>3 huevos + aguacate (10 min)</li>
-          <li>Yogur griego + granola + fresas (2 min)</li>
-          <li>Batido avena + banano + leche (3 min)</li>
-          <li>Tostadas integrales + aguacate + huevo (8 min)</li>
-        </ul>
-        <br>
-        <b>Truco:</b> Prepara la avena la noche anterior. En la mañana solo calienta.
-      </div>
-    </div>
-  </div>
 
     </div>
   </div>
@@ -2267,7 +2272,7 @@ id="tc-guia">
 <script>
 // ── Ensure sw() is always available even if script errors ──
 window.sw = window.sw || function(id) {
-  ['hoy','recetas','mercado','fuera','guia'].forEach(function(k) {
+  ['hoy','recetas','mercado','fuera'].forEach(function(k) {
     var tc  = document.getElementById('tc-'+k);
     var btn = document.getElementById('t-'+k);
     if (tc) tc.style.display = (k===id) ? 'flex' : 'none';
