@@ -728,8 +728,8 @@ function showProgressionPrompt(exerciseName, lastWeight) {
     <div id="bspn" style="display:none;width:14px;height:14px;border-radius:50%;
       border:2px solid rgba(255,255,255,.3);border-top-color:#fff;
       animation:spin .6s linear infinite;position:absolute"></div>
-    <span id="nextLbl" style="font-size:14px;font-weight:800;letter-spacing:-.02em;position:relative;z-index:1">Continuar ✓</span>
-    <span id="nextSub" style="font-size:10px;font-weight:500;opacity:.75;position:relative;z-index:1;margin-top:1px"></span>
+    <span id="nextLbl" style="font-size:14px;font-weight:800;letter-spacing:-.02em;position:relative;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,.5)">Continuar ✓</span>
+    <span id="nextSub" style="font-size:10px;font-weight:500;opacity:.85;position:relative;z-index:1;margin-top:1px;text-shadow:0 1px 3px rgba(0,0,0,.4)"></span>
   </button>
 
   <!-- Arju -->
@@ -1099,31 +1099,31 @@ function renderCurrentPhase(){
     { // 0 Calentamiento
       bg:'linear-gradient(135deg,#f59e0b,#ef4444)',
       shadow:'0 6px 22px rgba(245,158,11,.5),inset 0 1px 0 rgba(255,255,255,.15)',
-      label:'🔥 Iniciar calentamiento',
+      label:'Iniciar calentamiento',
       sub:'Despierta el cuerpo — 5 minutos'
     },
     { // 1 Movilidad
       bg:'linear-gradient(135deg,#3b82f6,#6366f1)',
       shadow:'0 6px 22px rgba(59,130,246,.5),inset 0 1px 0 rgba(255,255,255,.15)',
-      label:'🦵 Movilidad completa ✓',
+      label:'Movilidad completa ✓',
       sub:'Libera cadera y columna'
     },
     { // 2 Activación
       bg:'linear-gradient(135deg,#10b981,#059669)',
       shadow:'0 6px 22px rgba(16,185,129,.5),inset 0 1px 0 rgba(255,255,255,.15)',
-      label:'⚡ Activación completa ✓',
+      label:'Activación completa ✓',
       sub:'Glúteos despiertos — a por ello'
     },
     { // 3 Ejercicios
       bg:'linear-gradient(135deg,#7c3aed,#a855f7,#ec4899)',
       shadow:'0 6px 22px rgba(124,58,237,.55),inset 0 1px 0 rgba(255,255,255,.15)',
-      label:'💪 Completar entrenamiento ✓',
+      label:'Completar entrenamiento ✓',
       sub:'Aquí es donde crece el músculo'
     },
     { // 4 Enfriamiento
       bg:'linear-gradient(135deg,#6366f1,#8b5cf6)',
       shadow:'0 6px 22px rgba(99,102,241,.5),inset 0 1px 0 rgba(255,255,255,.15)',
-      label:'🏆 Terminar y guardar',
+      label:'Terminar y guardar',
       sub:'Lo lograste. Recupera bien.'
     },
   ];
