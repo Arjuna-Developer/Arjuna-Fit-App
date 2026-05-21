@@ -3527,6 +3527,17 @@ async function addRestMeal(restaurantIdx, optIdx) {
   }
 })();
 
+
+// Deep link: nutrition.html#mercado → abre tab mercado
+(function() {
+  var hash = window.location.hash.replace('#','') || 
+             new URLSearchParams(window.location.search).get('tab');
+  if (hash && ['hoy','recetas','mercado','fuera','guia'].includes(hash)) {
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() { if(typeof sw === 'function') sw(hash); }, 300);
+    });
+  }
+})();
 </script>
 
 <div class="nav-ambient" aria-hidden="true"></div>
