@@ -4538,17 +4538,9 @@ function addMarketItem() {
 
 // Init market when tab opens
 document.addEventListener('DOMContentLoaded', function() {
-  var origSw = window.sw;
-  if (typeof origSw === 'function') {
-    window.sw = function(id) {
-      origSw(id);
-      if (id === 'mercado') setTimeout(renderMarket, 50);
-    };
-  }
-  // Also render if already on mercado
-  if (window.location.hash === '#mercado' || new URLSearchParams(window.location.search).get('tab') === 'mercado') {
-    setTimeout(renderMarket, 300);
-  }
+  // Render market if deep linking to it
+  var _initTab = (window.location.hash||'').replace('#','') || new URLSearchParams(window.location.search).get('tab');
+  if (_initTab === 'mercado') setTimeout(renderMarket, 400);
 });
 </script>
 
