@@ -2317,6 +2317,7 @@ function sw(id) {
   if (tc) tc.scrollTop = 0;
   // Render dynamic tabs
   if (id === 'mercado') setTimeout(renderMarket, 60);
+  if (id === 'fuera')   setTimeout(function(){ if(typeof renderRestaurants==='function') renderRestaurants(); }, 60);
   if (id === 'recetas') setTimeout(function(){ filterByMeal(window._activeRecipeFilter||'todo'); }, 60);
 }
 
