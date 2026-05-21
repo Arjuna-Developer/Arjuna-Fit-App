@@ -345,6 +345,20 @@ exports.handler = async (event, context) => {
       return { statusCode: 200, headers, body: JSON.stringify({ status: 'needs_review', reason: validation.reason }) };
     }
 
+    // ── Guard: null productType → needs_review ──────
+    if (!normalized.productType) {
+      console.warn('[Webhook] productType is null — HOTMART_PRODUCT_MAP not configured. Marking needs_review.');
+      await logReconciliation(sb, paymentId, 'unknown_product',
+        'Payment from ' + normalized.email + ' — product ID not in HOTMART_PRODUCT_MAP. Manual review required.',
+        null);
+      return { statusCode: 200, headers, body: JSON.stringify({
+        status: 'needs_review',
+        reason: 'product_id_not_configured',
+        email: normalized.email,
+        hotmart_product_id: normalized.productId
+      })};
+    }
+
     // ── Find or create user ───────────────────────
     const { userId, isNew } = await findOrCreateUser(sb, normalized.email, normalized.name, normalized.productType);
 
