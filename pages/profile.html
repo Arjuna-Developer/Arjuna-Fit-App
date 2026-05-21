@@ -143,7 +143,7 @@ setTimeout(function() {
     <!-- Avatar hero -->
     <div class="avatar-hero">
       <div class="avatar-wrap" onclick="document.getElementById('photoInput').click()">
-        <div class="avatar" id="avatarEl"><span id="avatarInitial">🏋️</span></div>
+        <div class="avatar" id="avatarEl" style="background-size:cover;background-position:center;background-repeat:no-repeat"><span id="avatarInitial">🏋️</span></div>
         <div class="avatar-edit-badge">✏️</div>
       </div>
       <div class="avatar-upload-hint">Toca para cambiar foto</div>
@@ -360,6 +360,7 @@ function showToast(msg){
 }
 
 function toggleDark() {
+  var sub = document.querySelector('#darkTog').closest('.mi').querySelector('.mi-sub');
   var tog = document.getElementById('darkTog');
   if (!tog) return;
   var isDark = !document.documentElement.classList.contains('light');
@@ -367,10 +368,12 @@ function toggleDark() {
     document.documentElement.classList.add('light');
     tog.classList.remove('on');
     localStorage.setItem('af-theme', 'light');
+    if(sub) sub.textContent = 'Modo claro activo';
   } else {
     document.documentElement.classList.remove('light');
     tog.classList.add('on');
     localStorage.setItem('af-theme', 'dark');
+    if(sub) sub.textContent = 'Tema premium dark';
   }
 }
 // Apply saved theme on load
@@ -805,7 +808,7 @@ function editPersonalData() {
     '<div style="margin-bottom:20px"><label style="font-size:12px;font-weight:700;color:rgba(255,255,255,.5);display:block;margin-bottom:6px;letter-spacing:.06em;text-transform:uppercase">OBJETIVO CALÓRICO (kcal)</label>' +
     '<input id="pf-goal" type="number" value="'+goal+'" placeholder="Ej: 2000" style="width:100%;padding:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:#fff;font-family:Outfit,sans-serif;font-size:14px;outline:none;box-sizing:border-box"></div>' +
     '<button onclick="saveBodyData()" style="width:100%;padding:14px;border-radius:14px;border:none;cursor:pointer;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-family:Outfit,sans-serif;font-size:14px;font-weight:800;margin-bottom:10px">Guardar datos</button>' +
-    '<button onclick="this.closest('[style*=fixed]').remove()" style="width:100%;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.5);font-family:Outfit,sans-serif;font-size:13px;cursor:pointer">Cancelar</button>' +
+    '<button onclick="this.closest("[style*=fixed]").remove()" style="width:100%;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.5);font-family:Outfit,sans-serif;font-size:13px;cursor:pointer">Cancelar</button>' +
     '</div>';
   document.body.appendChild(modal);
   modal.addEventListener('click', function(e){ if(e.target===modal) modal.remove(); });
