@@ -666,9 +666,12 @@ document.addEventListener('DOMContentLoaded', function(){
 
 document.addEventListener('DOMContentLoaded',function(){var av=localStorage.getItem('af-avatar-local');if(av){var el=document.getElementById('avatarEl');if(el){el.style.backgroundImage='url('+av+')';el.style.backgroundSize='cover';el.style.backgroundPosition='center';var ini=document.getElementById('avatarInitial');if(ini)ini.style.display='none';}}var n=localStorage.getItem('af-user-name')||localStorage.getItem('af-name');var ns=document.getElementById('currentNameSub');if(ns&&n)ns.textContent=n;});
 function editarMiPlan() {
-  // Clear onboarding_completed so onboarding shows instead of bouncing to dashboard
+  // Mark as editing (not first signup) — preserves trial dates and workout progress
+  localStorage.setItem('af-editing-plan', '1');
+  // Clear only onboarding gate — keep workout_day_num, streak, trial dates
   localStorage.removeItem('af-onboarding-completed');
   localStorage.removeItem('af-onboarding-step');
+  localStorage.removeItem('af-onboarding-partial');
   // Navigate to onboarding
   window.location.href = '/pages/onboarding.html';
 }
