@@ -1060,6 +1060,85 @@ showTab = function(id) {
 </div>
 
 <script src="/js/admin-knowledge.js"></script>
-<script src="/js/core/arju-knowledge.js"></script>
+<script src="/js/core/arju-knowledge.js">
+// ── Enhanced metrics loading ─────────────────────────────────
+async function loadDashboardMetrics() {
+  try {
+    var client = window.supabase || (window.AF && window.AF.supabase);
+    if (!client) { console.warn('No supabase client'); return; }
+    
+    // Load all users
+    var { data: users, error } = await client
+      .from('profiles')
+      .select('id, email, full_name, product_type, subscription_status, access_level, trial_ends_at, created_at')
+      .order('created_at', { ascending: false });
+    
+    if (error) throw error;
+    
+    var now = new Date();
+    var stats = {
+      total: users.length,
+      trials: users.filter(function(u){ return u.subscription_status === 'trialing'; }).length,
+      active: users.filter(function(u){ return u.subscription_status === 'active'; }).length,
+      expired: users.filter(function(u){ return u.subscription_status === 'trial_expired'; }).length,
+      pending: users.filter(function(u){ return u.subscription_status === 'payment_required'; }).length,
+      last7days: users.filter(function(u){ return new Date(u.created_at) > new Date(now - 7*24*3600*1000); }).length,
+    };
+    
+    // Update stat cards
+    updateStat('stat-total',   stats.total);
+    updateStat('stat-trials',  stats.trials);
+    updateStat('stat-active',  stats.active);
+    updateStat('stat-expired', stats.expired);
+    updateStat('stat-pending', stats.pending);
+    updateStat('stat-new7',    stats.last7days);
+    
+    // Conversion rate
+    var conv = stats.total > 0 ? Math.round((stats.active/stats.total)*100) : 0;
+    updateStat('stat-conv', conv+'%');
+    
+    // Render user list
+    renderUserList(users.slice(0, 50));
+    
+  } catch(e) {
+    console.error('Metrics error:', e);
+  }
+}
+
+function updateStat(id, val) {
+  var el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+
+function renderUserList(users) {
+  var list = document.getElementById('userList') || document.getElementById('users-table');
+  if (!list) return;
+  
+  list.innerHTML = users.map(function(u) {
+    var statusColor = {
+      trialing: '#34d399', active: '#a78bfa',
+      trial_expired: '#f87171', payment_required: '#fbbf24',
+      inactive: '#6b7280'
+    }[u.subscription_status] || '#6b7280';
+    
+    var daysAgo = Math.floor((new Date() - new Date(u.created_at)) / (1000*3600*24));
+    
+    return '<tr style="border-bottom:1px solid rgba(255,255,255,.05)">' +
+      '<td style="padding:10px 12px;font-size:13px;color:#fff;font-weight:600">' + (u.full_name || u.email?.split('@')[0] || '—') + '</td>' +
+      '<td style="padding:10px 12px;font-size:12px;color:rgba(255,255,255,.5)">' + (u.email || '—') + '</td>' +
+      '<td style="padding:10px 12px"><span style="padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700;color:'+statusColor+';background:'+statusColor+'22">' + (u.subscription_status || '—') + '</span></td>' +
+      '<td style="padding:10px 12px;font-size:12px;color:rgba(255,255,255,.5)">' + (u.product_type || '—') + '</td>' +
+      '<td style="padding:10px 12px;font-size:12px;color:rgba(255,255,255,.4)">' + (daysAgo === 0 ? 'Hoy' : daysAgo+'d') + '</td>' +
+      '</tr>';
+  }).join('');
+}
+
+// Auto-load on admin init
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof loadDashboardMetrics === 'function') {
+    setTimeout(loadDashboardMetrics, 1000);
+  }
+});
+</script>
 </body>
 </html>
