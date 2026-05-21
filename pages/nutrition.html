@@ -3528,13 +3528,26 @@ async function addRestMeal(restaurantIdx, optIdx) {
 })();
 
 
-// Deep link: nutrition.html#mercado → abre tab mercado
+// Deep link: nutrition.html#mercado o ?tab=mercado
 (function() {
-  var hash = window.location.hash.replace('#','') || 
-             new URLSearchParams(window.location.search).get('tab');
-  if (hash && ['hoy','recetas','mercado','fuera','guia'].includes(hash)) {
+  function tryDeepLink() {
+    var hash = (window.location.hash||'').replace('#','').toLowerCase();
+    var param = new URLSearchParams(window.location.search).get('tab')||'';
+    var target = hash || param;
+    var valid = ['hoy','recetas','mercado','fuera','guia'];
+    if (target && valid.includes(target) && typeof sw === 'function') {
+      sw(target);
+      // Scroll to top of content
+      var sc = document.getElementById('scroll') || document.querySelector('.scroll');
+      if (sc) sc.scrollTop = 0;
+      return true;
+    }
+    return false;
+  }
+  // Try immediately, then on load, then after init
+  if (!tryDeepLink()) {
     document.addEventListener('DOMContentLoaded', function() {
-      setTimeout(function() { if(typeof sw === 'function') sw(hash); }, 300);
+      if (!tryDeepLink()) setTimeout(tryDeepLink, 600);
     });
   }
 })();
