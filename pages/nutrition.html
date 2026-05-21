@@ -4715,6 +4715,63 @@ document.addEventListener('DOMContentLoaded', function() {
   try { c = JSON.parse(localStorage.getItem('af-market-checked') || '{}'); } catch(e){}
   Object.keys(c).forEach(function(id) { if (c[id]) toggleMarketItem(id); });
 });
+
+// ── Agregar sugerencia al log ───────────────────────
+var SUGGESTION_DATA = {
+  'pechuga-arroz':  {name:'Pechuga con arroz y brócoli', cal:420, prot:45, fat:8,  carb:40},
+  'arroz-pollo':    {name:'Arroz con pollo',              cal:450, prot:38, fat:10, carb:52},
+  'lentejas':       {name:'Lentejas con vegetales',       cal:320, prot:18, fat:3,  carb:52},
+  'atun-frijoles':  {name:'Atún con frijoles negros',     cal:310, prot:35, fat:4,  carb:28},
+  'batido-banano':  {name:'Batido de banano y proteína',  cal:290, prot:30, fat:4,  carb:38},
+  'avena-banano':   {name:'Avena con banano y canela',    cal:310, prot:12, fat:6,  carb:52},
+  'huevos-aguacate':{name:'Bowl de huevos y aguacate',    cal:380, prot:28, fat:18, carb:22},
+  'omelette':       {name:'Omelette de vegetales',        cal:280, prot:22, fat:16, carb:8},
+  'caldo-papa':     {name:'Caldo de papa y pollo',        cal:240, prot:20, fat:4,  carb:32},
+};
+
+function addSuggestion(id) {
+  var d = SUGGESTION_DATA[id] || {name: id, cal:300, prot:25, fat:8, carb:30};
+  var h = new Date().getHours();
+  var meal = h < 11 ? 'desayuno' : h < 15 ? 'almuerzo' : h < 20 ? 'cena' : 'snack';
+  if (typeof saveFood === 'function') {
+    saveFood(d.name, d.cal, d.prot, d.fat || 0, meal, d.carb || 0);
+    // Visual feedback
+    showSaveToast(d.name);
+  }
+}
+
+function addFeaturedToLog() {
+  // Add whatever is in the featured card
+  var featuredName = document.querySelector('#featuredRecipe .recipe-name, #featuredRecipe [style*="font-weight:800"]');
+  var name = featuredName ? featuredName.textContent.trim() : 'Receta destacada';
+  var h = new Date().getHours();
+  var meal = h < 11 ? 'desayuno' : h < 15 ? 'almuerzo' : h < 20 ? 'cena' : 'snack';
+  if (typeof saveFood === 'function') {
+    saveFood(name, 380, 32, 10, meal, 35);
+    showSaveToast(name);
+  }
+}
+
+function showSaveToast(name) {
+  var existing = document.getElementById('save-toast');
+  if (existing) existing.remove();
+  var t = document.createElement('div');
+  t.id = 'save-toast';
+  t.style.cssText = 'position:fixed;top:calc(20px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:600;background:rgba(52,211,153,.15);border:1px solid rgba(52,211,153,.3);border-radius:14px;padding:10px 20px;font-family:Outfit,sans-serif;font-size:13px;font-weight:700;color:#34d399;white-space:nowrap;backdrop-filter:blur(10px)';
+  t.textContent = '✅ ' + name.slice(0,30) + ' registrado';
+  document.body.appendChild(t);
+  setTimeout(function(){ t.remove(); }, 2500);
+  // Refresh today list
+  setTimeout(function(){
+    if (typeof renderTodayFoods === 'function') renderTodayFoods();
+    if (typeof updateMacroUI === 'function') {
+      var dk = new Date().toISOString().split('T')[0];
+      var fs = [];
+      try { fs = JSON.parse(localStorage.getItem('af-food-'+dk)||'[]'); } catch(e){}
+      updateMacroUI(fs);
+    }
+  }, 300);
+}
 </script>
 </body>
 </html>
