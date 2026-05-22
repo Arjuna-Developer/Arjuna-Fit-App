@@ -44,8 +44,12 @@ exports.handler = async (event) => {
     };
   }
 
-  // ── Validar sesión Supabase (opcional para beta, log) ──
-  if (authToken && process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+  // ── Validar sesión Supabase — OBLIGATORIO ──────────────
+  if (!authToken) {
+    return { statusCode: 401, headers: corsHeaders(),
+      body: JSON.stringify({ error: 'Token requerido para analizar fotos.' }) };
+  }
+  if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
     try {
       const sb = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
       const { data: { user }, error } = await sb.auth.getUser(authToken);
@@ -76,10 +80,10 @@ exports.handler = async (event) => {
         }).catch(err => console.warn('[food-photo] Log insert failed:', err.message));
       }
     } catch(authErr) {
-      // Non-blocking: log and continue unless it's clearly an auth rejection
-      console.warn('[food-photo] Auth check warning:', authErr.message);
-      // Do not block — continue to OpenAI
-      // 401 disabled for beta — auth errors are non-fatal
+      // Auth error — bloquear acceso
+      console.warn('[food-photo] Auth error:', authErr.message);
+      return { statusCode: 401, headers: corsHeaders(),
+        body: JSON.stringify({ error: 'Sesión inválida. Vuelve a iniciar sesión.' }) };
     }
   }
 
