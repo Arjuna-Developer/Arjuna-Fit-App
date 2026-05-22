@@ -1802,7 +1802,7 @@ async function loadCoach(uid, name, todayDone, streak, sessType, weekNum) {
     const ctx = todayDone
       ? `${name} completó su sesión hoy. Racha ${streak} días. Cierre cálido máximo 2 oraciones. Tono "Buenas buenas".`
       : `${name}, ${h<12?'mañana':h<18?'tarde':'noche'}, semana ${weekNum}, racha ${streak} días. Saludo breve tono "Buenas buenas". Máximo 2 oraciones.`;
-    const res = await fetch('/.netlify/functions/chat', {
+    const res = await fetch('/api/chat', {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
         system: 'Eres Arjuna, coach de ArjunaFit. Tono: "Buenas buenas". Calmado, humano. Sin motivación tóxica. Español LATAM.',
@@ -2442,7 +2442,7 @@ function handleDashPhoto(input) {
       let _s = null;
       try { _s = window.sb ? (await window.sb.auth.getSession())?.data?.session : null; } catch(e) {}
       const _t = _s?.access_token || '';
-      const res = await fetch('/.netlify/functions/food-photo', {
+      const res = await fetch('/api/food-photo', {
         method:'POST',
         headers:{'Content-Type':'application/json', ..._t ? {'Authorization':'Bearer '+_t} : {}},
         body: JSON.stringify({ image: base64, mimeType: mime, authToken: _t }),
