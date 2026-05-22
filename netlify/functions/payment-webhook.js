@@ -24,7 +24,7 @@ const HOTMART_PRODUCT_MAP = {
   // Hotmart → Productos → tu producto → Código del producto
   // ══════════════════════════════════════════════════════
   // 'HOTMART_PRODUCT_ID_GLUTEOS':   { product: 'challenge_glutes',    name: 'Reto Glúteos' },
-  // 'HOTMART_PRODUCT_ID_PANCITA':   { product: 'challenge_belly',     name: 'Reto Pancita' },
+    '7678934': { product: 'challenge_belly', name: 'Reto Pancita' },
   // 'HOTMART_PRODUCT_ID_MASA':      { product: 'custom_muscle_gain',  name: 'Plan Masa' },
   // 'HOTMART_PRODUCT_ID_DEFINICION':{ product: 'custom_fat_loss',     name: 'Plan Definición' },
 };
