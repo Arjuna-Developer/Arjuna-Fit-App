@@ -8,8 +8,15 @@ window.FoodLog = (function() {
   const TABLE = 'nutrition_logs';
 
   function getSB() { return window.sb || null; }
-  function getUID() {
+  async function getUID() {
     try {
+      // Usar getSession() como fuente autoritativa (no localStorage)
+      if (window.sb && window.sb.auth) {
+        var sess = await window.sb.auth.getSession();
+        var uid = sess?.data?.session?.user?.id;
+        if (uid) return uid;
+      }
+      // Fallback legacy localStorage
       var raw = localStorage.getItem('sb-egswsqymkxmbtcpnozcq-auth-token')
             || localStorage.getItem('arjunafit-auth');
       return raw ? JSON.parse(raw)?.user?.id : null;
@@ -20,7 +27,7 @@ window.FoodLog = (function() {
 
   // ── saveFoodLog ──────────────────────────────────────────────────
   async function saveFoodLog(food) {
-    var uid  = getUID();
+    var uid  = await getUID();
     var entry = {
       user_id:   uid || 'local',
       date:      food.date || todayKey(),
@@ -54,7 +61,7 @@ window.FoodLog = (function() {
 
   // ── loadTodayFoodLogs ────────────────────────────────────────────
   async function loadTodayFoodLogs() {
-    var uid = getUID();
+    var uid = await getUID();
     var today = todayKey();
 
     if (getSB() && uid) {
@@ -105,7 +112,7 @@ window.FoodLog = (function() {
 
   // ── syncLocalFallback ────────────────────────────────────────────
   async function syncLocalFallback() {
-    var uid = getUID();
+    var uid = await getUID();
     if (!getSB() || !uid) return { synced: 0 };
     var synced = 0;
     // Find all af-food-* keys with pending_sync entries
