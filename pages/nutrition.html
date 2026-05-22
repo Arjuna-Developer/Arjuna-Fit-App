@@ -3197,7 +3197,7 @@ function renderLogList(entries) {
 async function saveFood(name, cal, prot, fat = 0, meal, carb = 0) {
   // Track first meal and meal confirmed
   try {
-    var _fk = 'af-food-' + localDateKey();
+    var _fk = 'af-food-' + new Date().toISOString().split('T')[0];
     var _fe = JSON.parse(localStorage.getItem(_fk) || '[]');
     if (_fe.length === 0) {
       if (window.AF) AF.track('first_meal_logged', { source: meal || 'entry', name: name });
@@ -3231,7 +3231,7 @@ async function saveFood(name, cal, prot, fat = 0, meal, carb = 0) {
       if (!session?.user?.id) return;
       await _sb2.from('nutrition_logs').insert({
         user_id:        session.user.id,
-        date:           localDateKey(),
+        date:           new Date().toISOString().split('T')[0],
         meal_type:      meal || 'otro',
         source_type:    'manual',
         food_items_json: JSON.stringify([{ name, cal:safeCal, prot:safeProt, carb, fat:safeFat }]),
@@ -3593,78 +3593,79 @@ function renderPhotoResult(data) {
   var h = new Date().getHours();
   var defaultMeal = h<11?'desayuno':h<15?'almuerzo':h<19?'cena':'snack';
 
-  // Human feedback first
-  var humanMsg = (total.prot||0) >= 25
+  // Totales calculados
+  var totCal  = Math.round(total.cal  || foods.reduce((s,f)=>s+(f.cal||0),0));
+  var totProt = Math.round(total.prot || foods.reduce((s,f)=>s+(f.prot||0),0));
+
+  var humanMsg = totProt >= 25
     ? 'Buen aporte de proteína. Esta comida sostiene tu energía.'
-    : (total.prot||0) >= 12
+    : totProt >= 12
     ? 'En la próxima agrega un poco más de proteína si puedes.'
-    : 'Registrado. Intenta agregar algo de proteína en la próxima comida.';
+    : 'Registrado. Intenta agregar proteína en la próxima comida.';
 
   el.innerHTML = `
-    <!-- Human feedback -->
-    <div style="background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.15);
-      border-radius:14px;padding:12px 14px;display:flex;align-items:flex-start;gap:10px">
-      <span style="font-size:18px;flex-shrink:0">✨</span>
-      <div style="font-size:13px;color:rgba(219,234,254,.8);line-height:1.5">${humanMsg}</div>
+    <!-- Mensaje Arju -->
+    <div style="background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.2);
+      border-radius:14px;padding:10px 14px;font-size:13px;color:rgba(196,181,253,.9);line-height:1.5">
+      💜 ${humanMsg}
     </div>
 
-    <!-- Detected foods - EDITABLE -->
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;
-      letter-spacing:.06em;color:rgba(255,255,255,.25);margin-bottom:2px">Detectado</div>
-    ${foods.map((f,i) => `
-      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
-        border-radius:14px;padding:11px 14px">
-        <div style="font-size:13px;font-weight:600;color:#f1f0f4;margin-bottom:6px">${f.name}</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-          <div>
-            <div style="font-size:10px;color:rgba(255,255,255,.3);margin-bottom:3px">Proteína (g)</div>
-            <input type="number" id="fp-prot-${i}" value="${f.prot||0}" min="0"
-              style="width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-              border-radius:9px;padding:7px 10px;color:#f1f0f4;font-family:var(--font);
-              font-size:13px;outline:none;text-align:center">
-          </div>
-          <div>
-            <div style="font-size:10px;color:rgba(255,255,255,.3);margin-bottom:3px">Calorías</div>
-            <input type="number" id="fp-cal-${i}" value="${f.cal||0}" min="0"
-              style="width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-              border-radius:9px;padding:7px 10px;color:#f1f0f4;font-family:var(--font);
-              font-size:13px;outline:none;text-align:center">
-          </div>
-        </div>
-      </div>`).join('')}
-
-    <!-- Warning -->
-    <div style="font-size:11px;color:rgba(255,255,255,.2);text-align:center">
-      ⚠️ Estimación aproximada — puedes ajustar antes de guardar</div>
-
-    <!-- Meal selection + confirm -->
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;
-      letter-spacing:.06em;color:rgba(255,255,255,.25)">Asignar a</div>
+    <!-- Totales prominentes -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+        border-radius:14px;padding:14px;text-align:center">
+        <div style="font-size:26px;font-weight:800;color:#f1f0f4">${totCal}</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:2px">kcal totales</div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+        border-radius:14px;padding:14px;text-align:center">
+        <div style="font-size:26px;font-weight:800;color:#4ade80">${totProt}g</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:2px">proteína</div>
+      </div>
+    </div>
+
+    <!-- Lista compacta de alimentos -->
+    <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+      border-radius:14px;overflow:hidden">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+        color:rgba(255,255,255,.25);padding:10px 14px 6px">Detectado</div>
+      ${foods.map((f,i)=>`
+        <div style="display:flex;justify-content:space-between;align-items:center;
+          padding:8px 14px;border-top:1px solid rgba(255,255,255,.04)">
+          <span style="font-size:13px;color:rgba(255,255,255,.75)">${f.name}</span>
+          <span style="font-size:12px;color:rgba(255,255,255,.35);white-space:nowrap;margin-left:8px">
+            ${Math.round(f.cal||0)} cal · ${Math.round(f.prot||0)}g prot</span>
+        </div>`).join('')}
+    </div>
+
+    <!-- Asignar a comida -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
       ${['desayuno','almuerzo','cena','snack'].map(m=>`
         <button id="pfm-${m}" onclick="selectPhotoMeal('${m}')" style="
-          padding:9px;border-radius:12px;cursor:pointer;font-family:var(--font);
-          font-size:12px;font-weight:600;
-          border:1px solid ${m===defaultMeal?'rgba(139,92,246,.5)':'rgba(255,255,255,.1)'};
-          background:${m===defaultMeal?'rgba(139,92,246,.2)':'rgba(255,255,255,.04)'};
-          color:${m===defaultMeal?'#c4b5fd':'rgba(240,238,248,.5)'};
-          -webkit-tap-highlight-color:transparent">
-          ${m==='desayuno'?'🌅':m==='almuerzo'?'🌞':m==='cena'?'🌙':'🍎'}
-          ${m.charAt(0).toUpperCase()+m.slice(1)}
+          padding:8px 4px;border-radius:10px;cursor:pointer;font-family:var(--font);
+          font-size:11px;font-weight:600;text-align:center;
+          border:1px solid ${m===defaultMeal?'rgba(139,92,246,.5)':'rgba(255,255,255,.08)'};
+          background:${m===defaultMeal?'rgba(139,92,246,.2)':'transparent'};
+          color:${m===defaultMeal?'#c4b5fd':'rgba(240,238,248,.4)'};
+          -webkit-tap-highlight-color:transparent;display:flex;flex-direction:column;
+          align-items:center;gap:2px">
+          <span>${m==='desayuno'?'🌅':m==='almuerzo'?'🌞':m==='cena'?'🌙':'🍎'}</span>
+          <span>${m==='desayuno'?'Desay.':m==='almuerzo'?'Almuerzo':m==='cena'?'Cena':'Snack'}</span>
         </button>`).join('')}
     </div>
 
-    <button onclick="confirmPhotoGuardar(${foods.length})" style="
-      width:100%;padding:13px;border-radius:14px;border:none;cursor:pointer;
+    <button onclick="confirmPhotoGuardar(${foods.length},${totCal},${totProt})" style="
+      width:100%;padding:14px;border-radius:14px;border:none;cursor:pointer;
       background:linear-gradient(135deg,#8b5cf6,#ec4899);
-      color:#fff;font-family:var(--font);font-size:14px;font-weight:800;
-      box-shadow:0 4px 20px rgba(139,92,246,.4)">
+      color:#fff;font-family:var(--font);font-size:15px;font-weight:800;
+      -webkit-tap-highlight-color:transparent">
       ✓ Guardar comida
     </button>
   `;
 
   window._photoMeal = defaultMeal;
   window._photoFoodsCount = foods.length;
+  window._photoTotals = { cal: totCal, prot: totProt };
 }
 
 function selectPhotoMeal(meal) {
@@ -3679,20 +3680,15 @@ function selectPhotoMeal(meal) {
   });
 }
 
-function confirmPhotoGuardar(foodCount) {
+function confirmPhotoGuardar(foodCount, totCal, totProt) {
   var meal = window._photoMeal || 'almuerzo';
-  let totCal = 0, totProt = 0;
-  var names = [];
-  for (let i = 0; i < foodCount; i++) {
-    totCal  += parseFloat(document.getElementById(`fp-cal-${i}`)?.value  || 0);
-    totProt += parseFloat(document.getElementById(`fp-prot-${i}`)?.value || 0);
-    var item = document.querySelectorAll('[id^="fp-cal-"]')[i];
-    if (item) names.push(item.closest('div')?.querySelector('.food-name')?.textContent || '');
-  }
-  var name = `Foto IA · ${meal}`;
+  // Usar totales pre-calculados o leerlos del estado guardado
+  var cal  = totCal  || window._photoTotals?.cal  || 0;
+  var prot = totProt || window._photoTotals?.prot || 0;
+  var name = 'Foto IA · ' + meal.charAt(0).toUpperCase() + meal.slice(1);
   document.getElementById('photo-ov')?.remove();
   document.body.style.overflow = '';
-  saveFood(name, totCal, totProt, 0, meal);
+  saveFood(name, cal, prot, 0, meal);
 }
 
 function showManualAfterPhotoFail() {
@@ -3896,7 +3892,7 @@ function mkOverlay(id) {
   document.getElementById(id)?.remove();
   var ov = document.createElement('div');
   ov.id = id;
-  ov.style.cssText = `position:fixed;inset:0;z-index:999;background:var(--bg);
+  ov.style.cssText = `position:fixed;inset:0;z-index:9999;background:var(--bg);
     overflow-y:auto;-webkit-overflow-scrolling:touch;font-family:var(--font);`;
   document.body.style.overflow = 'hidden';
   ov.addEventListener('click', e => { if (e.target===ov) { ov.remove(); document.body.style.overflow=''; } });
@@ -3922,7 +3918,7 @@ function stickyBack(ovId, title) {
 // ── Load today's data ────────────────────────────
 function loadToday() {
   var localKey = `af-food-${localDateKey()}`;
-  var utcKey   = `af-food-${localDateKey()}`;
+  var utcKey   = `af-food-${new Date().toISOString().split('T')[0]}`;
   // Try local date first, fall back to UTC key (handles old saved data)
   let local = JSON.parse(localStorage.getItem(localKey) || '[]');
   if (!local.length && localKey !== utcKey) {
@@ -4189,7 +4185,7 @@ async function addRestMeal(restaurantIdx, optIdx) {
     carbs_g:   opt.carbs_g   || 0,
     fat_g:     opt.fat_g     || 0,
     source:    'restaurant',
-    log_date:  localDateKey(),
+    log_date:  new Date().toISOString().split('T')[0],
   };
 
   // Try save via Supabase
@@ -4442,7 +4438,7 @@ function renderTodayFoods() {
   var list = document.getElementById('todayFoodList');
   if (!list) return;
 
-  var dateKey = localDateKey();
+  var dateKey = new Date().toISOString().split('T')[0];
   var foods = [];
   try { foods = JSON.parse(localStorage.getItem('af-food-' + dateKey) || '[]'); } catch(e){}
 
@@ -4481,7 +4477,7 @@ function renderTodayFoods() {
 }
 
 function deleteFoodEntry(idx) {
-  var dateKey = localDateKey();
+  var dateKey = new Date().toISOString().split('T')[0];
   var foods = [];
   try { foods = JSON.parse(localStorage.getItem('af-food-' + dateKey) || '[]'); } catch(e){}
   foods.splice(idx, 1);
@@ -4509,7 +4505,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var result = origSave.apply(this, arguments);
       setTimeout(function() {
         renderTodayFoods();
-        var dk = localDateKey();
+        var dk = new Date().toISOString().split('T')[0];
         var fs = [];
         try { fs = JSON.parse(localStorage.getItem('af-food-' + dk) || '[]'); } catch(e){}
         if (typeof updateMacroUI === 'function') updateMacroUI(fs);
@@ -4526,7 +4522,7 @@ document.addEventListener('DOMContentLoaded', function() {
 setTimeout(function() {
   renderTodayFoods();
   // Also refresh macros on load
-  var dateKey = localDateKey();
+  var dateKey = new Date().toISOString().split('T')[0];
   var foods = [];
   try { foods = JSON.parse(localStorage.getItem('af-food-' + dateKey) || '[]'); } catch(e){}
   if (typeof updateMacroUI === 'function') updateMacroUI(foods);
@@ -4816,7 +4812,7 @@ function showSaveToast(name) {
   setTimeout(function(){
     if (typeof renderTodayFoods === 'function') renderTodayFoods();
     if (typeof updateMacroUI === 'function') {
-      var dk = localDateKey();
+      var dk = new Date().toISOString().split('T')[0];
       var fs = [];
       try { fs = JSON.parse(localStorage.getItem('af-food-'+dk)||'[]'); } catch(e){}
       updateMacroUI(fs);
