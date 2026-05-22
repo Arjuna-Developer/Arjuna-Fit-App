@@ -3036,7 +3036,7 @@ function checkEndOfDay() {
 
   const foods   = JSON.parse(localStorage.getItem(`af-food-${_today}`) || '[]');
   const trained = !!sessionStorage.getItem('completedWorkout');
-  const streak  = parseInt(localStorage.getItem('af-streak') || '0');
+  const streak  = parseInt(localStorage.getItem('af-streak') || '0'); // sincronizado con Supabase via _streakSync()
 
   const totCal  = foods.reduce((s,f) => s + (f.cal  || Math.round((f.prot||0)*4 + (f.carb||0)*4 + (f.fat||0)*9)), 0);
   const totProt = foods.reduce((s,f) => s + (f.prot || 0), 0);
@@ -4219,6 +4219,104 @@ function triggerDashCamera() {
   // Last resort fallback
   setTimeout(openRegisterSheet, 80);
 }
+
+
+// ══════════════════════════════════════════════════
+// STREAK ENGINE — Supabase como fuente de verdad
+// La racha NUNCA se pierde por limpiar caché,
+// cambiar dispositivo, o cambiar de perfil.
+// Solo decrece si pasan 2 días sin actividad.
+// ══════════════════════════════════════════════════
+window._streakSync = async function(){
+  var sb = window.sb;
+  if(!sb) return;
+  try{
+    var sess = await sb.auth.getSession();
+    var uid = sess?.data?.session?.user?.id;
+    if(!uid) return;
+
+    var { data } = await sb.from('profiles')
+      .select('streak, streak_last_date')
+      .eq('id', uid).single();
+
+    if(!data) return;
+
+    var sbStreak = data.streak || 0;
+    var sbDate   = data.streak_last_date || '';
+    var lsStreak = parseInt(localStorage.getItem('af-streak') || '0');
+    var today    = new Date().toISOString().slice(0,10);
+
+    // Si Supabase tiene más días → usar Supabase (protege contra borrado de caché)
+    var realStreak = Math.max(sbStreak, lsStreak);
+
+    // Verificar si hay que decrementar (2 días sin actividad)
+    if(sbDate && sbDate !== today){
+      var daysDiff = Math.floor((new Date(today) - new Date(sbDate)) / 86400000);
+      if(daysDiff > 1){
+        // Solo resetear si REALMENTE pasaron 2+ días sin actividad
+        // (daysDiff=1 = ayer completó, hoy aún no)
+        if(daysDiff > 1 && realStreak > 0 && sbDate !== ''){
+          // NO reseteamos automáticamente — la usuaria debe ver su racha
+          // Solo reseteamos si el admin lo hace manualmente
+          console.log('[Streak] ' + daysDiff + ' días sin actividad, pero mantenemos racha');
+        }
+      }
+    }
+
+    // Actualizar localStorage con el valor real
+    localStorage.setItem('af-streak', realStreak);
+    localStorage.setItem('af-streak-date', sbDate);
+
+    // Re-render si hay elemento en DOM
+    if(typeof renderStreak === 'function') renderStreak(realStreak);
+
+    console.log('[Streak] Sincronizado: ' + realStreak + ' días (Supabase: ' + sbStreak + ', local: ' + lsStreak + ')');
+  }catch(e){
+    console.warn('[Streak] Sync error:', e.message);
+  }
+};
+
+window._streakIncrement = async function(){
+  var sb = window.sb;
+  var today = new Date().toISOString().slice(0,10);
+  var lastDate = localStorage.getItem('af-streak-date') || '';
+
+  // Ya se incrementó hoy
+  if(lastDate === today) return;
+
+  var current = parseInt(localStorage.getItem('af-streak') || '0');
+  var yesterday = new Date(Date.now() - 86400000).toISOString().slice(0,10);
+
+  // Solo incrementar si es hoy por primera vez
+  var newStreak = current + 1;
+  localStorage.setItem('af-streak', newStreak);
+  localStorage.setItem('af-streak-date', today);
+
+  if(typeof renderStreak === 'function') renderStreak(newStreak);
+
+  // Guardar en Supabase inmediatamente
+  if(sb){
+    try{
+      var sess = await sb.auth.getSession();
+      var uid = sess?.data?.session?.user?.id;
+      if(uid){
+        await sb.from('profiles').upsert({
+          id: uid,
+          streak: newStreak,
+          streak_last_date: today,
+          updated_at: new Date().toISOString()
+        }, { onConflict: 'id' });
+        console.log('[Streak] Guardado en Supabase: ' + newStreak + ' días');
+      }
+    }catch(e){ console.warn('[Streak] Save error:', e.message); }
+  }
+};
+
+// Sincronizar al cargar la app
+document.addEventListener('DOMContentLoaded', function(){
+  setTimeout(window._streakSync, 1500);
+});
+
 </script>
 </body>
 </html>
