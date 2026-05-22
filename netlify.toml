@@ -6,8 +6,8 @@
 
 [[redirects]]
   from  = "/signup"
-  to    = "/pages/onboarding.html"
-  status = 301
+  to    = "/signup.html"
+  status = 200
 
 [[redirects]]
   from  = "/complete-account"
