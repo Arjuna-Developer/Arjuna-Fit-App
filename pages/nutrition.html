@@ -301,6 +301,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
 </style>
   <link rel="stylesheet" href="/assets/visual-system.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/js/nutrition/food-log.js"></script>
 <script src="/js/core/auth-bootstrap.js"></script>
 <script src="/js/core/auth-guard.js"></script>
 <script src="/js/core/ops-config.js"></script>
@@ -3197,7 +3198,7 @@ function renderLogList(entries) {
 async function saveFood(name, cal, prot, fat = 0, meal, carb = 0) {
   // Track first meal and meal confirmed
   try {
-    var _fk = 'af-food-' + new Date().toISOString().split('T')[0];
+    var _fk = 'af-food-' + localDateKey();
     var _fe = JSON.parse(localStorage.getItem(_fk) || '[]');
     if (_fe.length === 0) {
       if (window.AF) AF.track('first_meal_logged', { source: meal || 'entry', name: name });
@@ -3231,7 +3232,7 @@ async function saveFood(name, cal, prot, fat = 0, meal, carb = 0) {
       if (!session?.user?.id) return;
       await _sb2.from('nutrition_logs').insert({
         user_id:        session.user.id,
-        date:           new Date().toISOString().split('T')[0],
+        date:           localDateKey(),
         meal_type:      meal || 'otro',
         source_type:    'manual',
         food_items_json: JSON.stringify([{ name, cal:safeCal, prot:safeProt, carb, fat:safeFat }]),
@@ -3918,7 +3919,7 @@ function stickyBack(ovId, title) {
 // ── Load today's data ────────────────────────────
 function loadToday() {
   var localKey = `af-food-${localDateKey()}`;
-  var utcKey   = `af-food-${new Date().toISOString().split('T')[0]}`;
+  var utcKey   = `af-food-${localDateKey()}`;
   // Try local date first, fall back to UTC key (handles old saved data)
   let local = JSON.parse(localStorage.getItem(localKey) || '[]');
   if (!local.length && localKey !== utcKey) {
@@ -4185,7 +4186,7 @@ async function addRestMeal(restaurantIdx, optIdx) {
     carbs_g:   opt.carbs_g   || 0,
     fat_g:     opt.fat_g     || 0,
     source:    'restaurant',
-    log_date:  new Date().toISOString().split('T')[0],
+    log_date:  localDateKey(),
   };
 
   // Try save via Supabase
@@ -4438,7 +4439,7 @@ function renderTodayFoods() {
   var list = document.getElementById('todayFoodList');
   if (!list) return;
 
-  var dateKey = new Date().toISOString().split('T')[0];
+  var dateKey = localDateKey();
   var foods = [];
   try { foods = JSON.parse(localStorage.getItem('af-food-' + dateKey) || '[]'); } catch(e){}
 
@@ -4477,7 +4478,7 @@ function renderTodayFoods() {
 }
 
 function deleteFoodEntry(idx) {
-  var dateKey = new Date().toISOString().split('T')[0];
+  var dateKey = localDateKey();
   var foods = [];
   try { foods = JSON.parse(localStorage.getItem('af-food-' + dateKey) || '[]'); } catch(e){}
   foods.splice(idx, 1);
@@ -4505,7 +4506,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var result = origSave.apply(this, arguments);
       setTimeout(function() {
         renderTodayFoods();
-        var dk = new Date().toISOString().split('T')[0];
+        var dk = localDateKey();
         var fs = [];
         try { fs = JSON.parse(localStorage.getItem('af-food-' + dk) || '[]'); } catch(e){}
         if (typeof updateMacroUI === 'function') updateMacroUI(fs);
@@ -4522,7 +4523,7 @@ document.addEventListener('DOMContentLoaded', function() {
 setTimeout(function() {
   renderTodayFoods();
   // Also refresh macros on load
-  var dateKey = new Date().toISOString().split('T')[0];
+  var dateKey = localDateKey();
   var foods = [];
   try { foods = JSON.parse(localStorage.getItem('af-food-' + dateKey) || '[]'); } catch(e){}
   if (typeof updateMacroUI === 'function') updateMacroUI(foods);
@@ -4812,7 +4813,7 @@ function showSaveToast(name) {
   setTimeout(function(){
     if (typeof renderTodayFoods === 'function') renderTodayFoods();
     if (typeof updateMacroUI === 'function') {
-      var dk = new Date().toISOString().split('T')[0];
+      var dk = localDateKey();
       var fs = [];
       try { fs = JSON.parse(localStorage.getItem('af-food-'+dk)||'[]'); } catch(e){}
       updateMacroUI(fs);
