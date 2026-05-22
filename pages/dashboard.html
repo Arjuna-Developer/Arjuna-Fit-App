@@ -2262,7 +2262,7 @@ function openMealSheet(meal) {
       </div>
 
       <!-- 📷 Foto IA — primera opción destacada -->
-      <button onclick="document.getElementById('home-log-ov').remove();location.href='/pages/nutrition.html?camera=1'" style="
+      <button onclick="document.getElementById('home-log-ov').remove();triggerDashCamera()" style="
         width:100%;display:flex;align-items:center;gap:12px;padding:13px 15px;
         border-radius:14px;margin-bottom:10px;cursor:pointer;text-align:left;
         border:1.5px solid rgba(124,58,237,.35);
@@ -4097,7 +4097,7 @@ function afNavRegister() {
   }
   setTimeout(function(){
     if(typeof openCamera==='function') openCamera();
-    else window.location.href='/pages/nutrition.html?camera=1';
+    else window.triggerDashCamera();
   },150);
 }
 
