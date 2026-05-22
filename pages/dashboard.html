@@ -2436,10 +2436,15 @@ function handleDashPhoto(input) {
     try {
       const base64 = e.target.result.split(',')[1];
       const mime   = file.type || 'image/jpeg';
+      // Auth token for food-photo
+      let _s = null;
+      try { _s = window.sb ? (await window.sb.auth.getSession())?.data?.session : null; } catch(e) {}
+      const _t = _s?.access_token || '';
       const res = await fetch('/.netlify/functions/food-photo', {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ image: base64, mimeType: mime }),
-        signal: AbortSignal.timeout(20000),
+        method:'POST',
+        headers:{'Content-Type':'application/json', ..._t ? {'Authorization':'Bearer '+_t} : {}},
+        body: JSON.stringify({ image: base64, mimeType: mime, authToken: _t }),
+        signal: AbortSignal.timeout(25000),
       });
       clearInterval(msgTimer); clearTimeout(slowTimer);
 
