@@ -2146,7 +2146,7 @@ function openRegisterSheet() {
           <label for="dash-cam-input" style="
             display:flex;align-items:center;gap:14px;padding:15px 18px;
             cursor:pointer;-webkit-tap-highlight-color:transparent"
-            onclick="document.getElementById('reg-sheet').remove();setTimeout(function(){var i=document.getElementById('dash-cam-input');if(i)i.click();},50)">
+            onclick="document.getElementById('reg-sheet').remove();setTimeout(function(){var i=document.getElementById('dash-cam-input-global');if(i){i.value='';i.click();}},50)">
             <div style="width:44px;height:44px;border-radius:14px;flex-shrink:0;
               background:linear-gradient(135deg,#7c3aed,#ec4899);
               display:flex;align-items:center;justify-content:center;font-size:22px">📷</div>
