@@ -29,6 +29,8 @@ exports.handler = async (event) => {
     const body   = JSON.parse(event.body || '{}');
     imageBase64  = body.image;
     mimeType     = body.mimeType || 'image/jpeg';
+    const VALID_MIME = ['image/jpeg','image/png','image/webp','image/gif'];
+    if (!VALID_MIME.includes(mimeType)) mimeType = 'image/jpeg';
     authToken    = body.authToken || event.headers['authorization']?.replace('Bearer ', '');
     if (!imageBase64) throw new Error('No image provided');
   } catch(e) {
