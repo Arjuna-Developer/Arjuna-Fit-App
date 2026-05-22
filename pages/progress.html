@@ -610,9 +610,23 @@ async function init(){
         <div class="pr-list">${prs.length?prs.map(pr=>`<div class="pr-item"><div class="pr-icon">⭐</div><div style="flex:1"><div class="pr-name">${pr.exercise_name}</div><div class="pr-date">${new Date(pr.achieved_at).toLocaleDateString('es',{day:'numeric',month:'short'})}</div></div><div><div class="pr-val">${pr.value}</div><div class="pr-unit">kg</div></div></div>`).join(''):`<div class="empty" style="padding:20px"><div class="empty-icon">🏆</div><div class="empty-sub" style="margin-bottom:10px">Aún no tienes récords. ¡Cada entreno cuenta!</div><a href="/pages/workout.html" class="empty-cta">Ir a entrenar →</a></div>`}</div>
       </div>
       <div>
-        <div class="sec-title">Fotos de progreso 📸</div>
-        <div class="sec-sub">Antes / Después · Documenta tu transformación</div>
+        <div class="sec-title" style="display:flex;justify-content:space-between;align-items:center">
+          <span>Fotos de progreso 📸</span>
+          <button onclick="addPhoto()" style="font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;border:1px solid rgba(124,58,237,.35);background:rgba(124,58,237,.1);color:#c4b5fd;cursor:pointer;font-family:var(--f)">+ Agregar</button>
+        </div>
+        <div class="sec-sub" style="margin-bottom:12px">Antes / Después · Documenta tu transformación</div>
         <div class="ph-grid" id="ph-grid"></div>
+      </div>
+      <div>
+        <div class="sec-title" style="display:flex;justify-content:space-between;align-items:center">
+          <span>Mis medidas 📏</span>
+          <button onclick="openMedidasSheet()" style="font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;border:1px solid rgba(16,185,129,.35);background:rgba(16,185,129,.1);color:#6ee7b7;cursor:pointer;font-family:var(--f)">Actualizar</button>
+        </div>
+        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:16px;margin-top:8px" id="medidas-card-vals">
+          <div style="text-align:center;color:rgba(255,255,255,.25);font-size:13px;padding:8px">
+            Toca "Actualizar" para registrar tu peso y medidas
+          </div>
+        </div>
       </div>
     `;
     setTimeout(()=>{
