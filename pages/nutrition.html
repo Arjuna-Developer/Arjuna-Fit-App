@@ -302,6 +302,19 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
   <link rel="stylesheet" href="/assets/visual-system.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="/js/nutrition/food-log.js"></script>
+<script>
+(async function(){
+  try{
+    var _g=window.sb||window.supabase?.createClient(
+      'https://egswsqymkxmbtcpnozcq.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM',
+      {auth:{persistSession:true,storageKey:'arjunafit-auth'}}
+    );
+    var r=await Promise.race([_g.auth.getSession(),new Promise(function(_,rej){setTimeout(function(){rej(new Error('t'));},3000)})]);
+    if(!r?.data?.session?.user)window.location.replace('/');
+  }catch(e){window.location.replace('/');}
+})();
+</script>
 <script src="/js/core/auth-bootstrap.js"></script>
 <script src="/js/core/auth-guard.js"></script>
 <script src="/js/core/ops-config.js"></script>
@@ -3985,7 +3998,7 @@ loadToday();
       new Promise(r => setTimeout(() => r({ data:{ session:null } }), 3000))
     ]) || { data:{ session:null } };
     var session = authRes?.data?.session;
-    if (!session?.user) { window.location.replace('/'); return; }
+    if (!session?.user) return;
     _uid = session.user.id;
 
     var profileRes = await Promise.race([
