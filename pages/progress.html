@@ -195,6 +195,8 @@ setTimeout(function() {
 </script>
 </head>
 <body style="overflow-x:hidden">
+<input type="file" id="prog-cam-input" accept="image/*" capture="environment"
+  style="display:none;position:fixed;top:-9999px" onchange="handleProgressPhoto(this)">
 <div class="ldr" id="ldr">
   <div style="font-size:36px;animation:pulse 1.5s ease-in-out infinite">📈</div>
 </div>
@@ -610,10 +612,7 @@ async function init(){
       <div>
         <div class="sec-title">Fotos de progreso 📸</div>
         <div class="sec-sub">Antes / Después · Documenta tu transformación</div>
-        <div class="ph-grid">
-          <div class="ph-slot" onclick="addPhoto()"><div class="ph-icon">📷</div><div class="ph-lbl">Foto Antes<br><span style="font-size:10px;opacity:.6">Toca para agregar</span></div></div>
-          <div class="ph-slot" onclick="addPhoto()"><div class="ph-icon">📷</div><div class="ph-lbl">Foto Después<br><span style="font-size:10px;opacity:.6">Toca para agregar</span></div></div>
-        </div>
+        <div class="ph-grid" id="ph-grid"></div>
       </div>
     `;
     setTimeout(()=>{
@@ -623,6 +622,11 @@ async function init(){
     },300);
   }catch(e){clearTimeout(to);console.error(e);document.getElementById('main').innerHTML=emptyHTML();}
   document.getElementById('ldr').classList.add('off');
+  // Inicializar fotos y medidas guardadas
+  setTimeout(function() {
+    renderPhotoSlots();
+    renderMedidasCard();
+  }, 100);
 
   // Dynamic fields: meals count, workouts this month, reto name, Arju msg
   requestAnimationFrame(function() {
@@ -660,7 +664,205 @@ async function init(){
     }
   });
 }
-function addPhoto(){alert('📷 Subida de fotos próximamente.');}
+function addPhoto(type) {
+  // type: 'antes' | 'despues' | null (pregunta)
+  if (!type) {
+    // Mostrar sheet de selección
+    openPhotoTypeSheet();
+    return;
+  }
+  window._photoType = type;
+  var inp = document.getElementById('prog-cam-input');
+  if (inp) { inp.value = ''; inp.click(); }
+}
+
+function openPhotoTypeSheet() {
+  var ex = document.getElementById('photo-type-sheet');
+  if (ex) ex.remove();
+  var sheet = document.createElement('div');
+  sheet.id = 'photo-type-sheet';
+  sheet.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(8,5,17,.88);display:flex;align-items:flex-end;font-family:var(--f)';
+  sheet.innerHTML = `
+    <div style="width:100%;max-width:430px;margin:0 auto;padding:20px 16px calc(24px + env(safe-area-inset-bottom));
+      background:rgba(12,6,24,.99);border-radius:28px 28px 0 0;border-top:1px solid rgba(255,255,255,.08)">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+        color:rgba(196,181,253,.4);text-align:center;margin-bottom:16px">¿Qué foto es?</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <button onclick="document.getElementById('photo-type-sheet').remove();addPhoto('antes')"
+          style="display:flex;align-items:center;gap:14px;padding:16px;border-radius:16px;
+          border:1.5px solid rgba(124,58,237,.3);background:rgba(124,58,237,.08);
+          cursor:pointer;text-align:left;-webkit-tap-highlight-color:transparent">
+          <span style="font-size:28px">📸</span>
+          <div><div style="font-size:15px;font-weight:700;color:#f1f0f4">Foto de inicio</div>
+          <div style="font-size:12px;color:rgba(196,181,253,.5);margin-top:2px">Así empecé el reto</div></div>
+        </button>
+        <button onclick="document.getElementById('photo-type-sheet').remove();addPhoto('despues')"
+          style="display:flex;align-items:center;gap:14px;padding:16px;border-radius:16px;
+          border:1.5px solid rgba(16,185,129,.3);background:rgba(16,185,129,.08);
+          cursor:pointer;text-align:left;-webkit-tap-highlight-color:transparent">
+          <span style="font-size:28px">✨</span>
+          <div><div style="font-size:15px;font-weight:700;color:#f1f0f4">Foto de progreso</div>
+          <div style="font-size:12px;color:rgba(110,231,183,.5);margin-top:2px">Cómo estoy ahora</div></div>
+        </button>
+        <button onclick="document.getElementById('photo-type-sheet').remove()"
+          style="padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.07);
+          background:transparent;color:rgba(255,255,255,.3);cursor:pointer;font-family:var(--f);font-size:13px">
+          Cancelar</button>
+      </div>
+    </div>`;
+  sheet.addEventListener('click', e => { if(e.target===sheet) sheet.remove(); });
+  document.body.appendChild(sheet);
+}
+
+function handleProgressPhoto(input) {
+  var file = input.files && input.files[0];
+  if (!file) return;
+  var type = window._photoType || 'antes';
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var b64 = e.target.result;
+    // Guardar en localStorage
+    localStorage.setItem('af-progress-photo-' + type, b64);
+    localStorage.setItem('af-progress-photo-' + type + '-date',
+      new Date().toLocaleDateString('es-CO', {day:'numeric',month:'short',year:'numeric'}));
+    // Actualizar UI
+    renderPhotoSlots();
+    showProgressToast('📸 Foto guardada correctamente');
+  };
+  reader.readAsDataURL(file);
+}
+
+function renderPhotoSlots() {
+  var slots = ['antes','despues'];
+  var labels = { antes:'Foto inicio', despues:'Foto progreso' };
+  var grid = document.getElementById('ph-grid');
+  if (!grid) return;
+  grid.innerHTML = slots.map(function(t) {
+    var saved = localStorage.getItem('af-progress-photo-' + t);
+    var date  = localStorage.getItem('af-progress-photo-' + t + '-date') || '';
+    if (saved) {
+      return '<div class="ph-slot" onclick="addPhoto('' + t + '')" style="position:relative;overflow:hidden">' +
+        '<img src="' + saved + '" style="width:100%;height:100%;object-fit:cover;border-radius:16px">' +
+        '<div style="position:absolute;bottom:0;left:0;right:0;padding:8px;background:linear-gradient(transparent,rgba(0,0,0,.7));text-align:center">' +
+        '<div style="font-size:10px;color:rgba(255,255,255,.7);font-weight:600">' + labels[t] + '</div>' +
+        (date ? '<div style="font-size:9px;color:rgba(255,255,255,.4)">' + date + '</div>' : '') +
+        '</div></div>';
+    } else {
+      return '<div class="ph-slot" onclick="addPhoto('' + t + '')">' +
+        '<div class="ph-icon">📷</div>' +
+        '<div class="ph-lbl">' + labels[t] + '<br><span style="font-size:10px;opacity:.6">Toca para agregar</span></div>' +
+        '</div>';
+    }
+  }).join('');
+}
+
+function showProgressToast(msg) {
+  var t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:calc(90px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:500;background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);border-radius:14px;padding:10px 18px;font-family:var(--f);font-size:13px;font-weight:600;color:#34d399;white-space:nowrap';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(function() { t.remove(); }, 2500);
+}
+
+function openMedidasSheet() {
+  var ex = document.getElementById('medidas-sheet');
+  if (ex) ex.remove();
+
+  var peso    = localStorage.getItem('af-medida-peso')    || '';
+  var cintura = localStorage.getItem('af-medida-cintura') || '';
+  var cadera  = localStorage.getItem('af-medida-cadera')  || '';
+
+  var sheet = document.createElement('div');
+  sheet.id = 'medidas-sheet';
+  sheet.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(8,5,17,.92);display:flex;align-items:flex-end;font-family:var(--f)';
+  sheet.innerHTML = `
+    <div style="width:100%;max-width:430px;margin:0 auto;padding:20px 16px calc(28px + env(safe-area-inset-bottom));
+      background:rgba(12,6,24,.99);border-radius:28px 28px 0 0;border-top:1px solid rgba(255,255,255,.08)">
+      <div style="font-size:16px;font-weight:800;color:#f1f0f4;margin-bottom:4px">Mis medidas</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.3);margin-bottom:18px">Actualiza cada semana para ver tu progreso</div>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:18px">
+        ${[
+          ['af-medida-peso','Peso','kg','⚖️', peso],
+          ['af-medida-cintura','Cintura','cm','📏', cintura],
+          ['af-medida-cadera','Cadera','cm','📐', cadera],
+        ].map(([id,label,unit,ico,val]) => `
+          <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px 16px">
+            <div style="font-size:11px;color:rgba(255,255,255,.35);font-weight:600;margin-bottom:8px">${ico} ${label}</div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <input id="m_${id}" type="number" inputmode="decimal" value="${val}"
+                placeholder="0" min="0" max="999" step="0.1"
+                style="flex:1;background:transparent;border:none;outline:none;
+                font-size:26px;font-weight:800;color:#f1f0f4;font-family:var(--f)">
+              <span style="font-size:14px;color:rgba(255,255,255,.3);font-weight:600">${unit}</span>
+            </div>
+          </div>`).join('')}
+      </div>
+      <div style="display:flex;gap:8px">
+        <button onclick="document.getElementById('medidas-sheet').remove()"
+          style="flex:1;padding:13px;border-radius:14px;border:1px solid rgba(255,255,255,.08);
+          background:transparent;color:rgba(255,255,255,.4);cursor:pointer;font-family:var(--f);font-size:13px">
+          Cancelar</button>
+        <button onclick="saveMedidas()"
+          style="flex:2;padding:13px;border-radius:14px;border:none;cursor:pointer;
+          background:linear-gradient(135deg,#7c3aed,#ec4899);
+          color:#fff;font-family:var(--f);font-size:14px;font-weight:800">
+          Guardar medidas</button>
+      </div>
+    </div>`;
+  sheet.addEventListener('click', e => { if(e.target===sheet) sheet.remove(); });
+  document.body.appendChild(sheet);
+}
+
+async function saveMedidas() {
+  var fields = [
+    ['af-medida-peso','weight_kg'],
+    ['af-medida-cintura','waist_cm'],
+    ['af-medida-cadera','hip_cm'],
+  ];
+  var changed = false;
+  var payload = { updated_at: new Date().toISOString() };
+  fields.forEach(function([id, col]) {
+    var el = document.getElementById('m_' + id);
+    if (!el) return;
+    var val = parseFloat(el.value);
+    if (!isNaN(val) && val > 0) {
+      localStorage.setItem(id, val);
+      payload[col] = val;
+      changed = true;
+    }
+  });
+
+  if (!changed) { document.getElementById('medidas-sheet')?.remove(); return; }
+
+  // Guardar en Supabase
+  try {
+    var sess = await _sb.auth.getSession();
+    var uid = sess?.data?.session?.user?.id;
+    if (uid) {
+      payload.id = uid;
+      await _sb.from('profiles').upsert(payload, { onConflict: 'id' });
+    }
+  } catch(e) { /* offline fallback ok */ }
+
+  document.getElementById('medidas-sheet')?.remove();
+  renderMedidasCard();
+  showProgressToast('✅ Medidas guardadas');
+}
+
+function renderMedidasCard() {
+  var el = document.getElementById('medidas-card-vals');
+  if (!el) return;
+  var peso    = localStorage.getItem('af-medida-peso')    || '—';
+  var cintura = localStorage.getItem('af-medida-cintura') || '—';
+  var cadera  = localStorage.getItem('af-medida-cadera')  || '—';
+  el.innerHTML =
+    '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">' +
+    [['⚖️','Peso',peso,'kg'],['📏','Cintura',cintura,'cm'],['📐','Cadera',cadera,'cm']].map(function(x){
+      return '<div style="text-align:center"><div style="font-size:11px;color:rgba(255,255,255,.3);margin-bottom:4px">'+x[0]+' '+x[1]+'</div>' +
+        '<div style="font-size:22px;font-weight:800;color:#f1f0f4">' + x[2] + '</div>' +
+        (x[2]!=='—'?'<div style="font-size:10px;color:rgba(255,255,255,.3)">'+x[3]+'</div>':'') + '</div>';
+    }).join('') + '</div>';
+}
 init();
 
 // ════════════════════════════════════════════════════════════
