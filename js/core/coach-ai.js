@@ -5,7 +5,7 @@
 
 const AF_Coach = {
 
-  ENDPOINT: '/.netlify/functions/chat',
+  ENDPOINT: '/api/chat',
 
   // Prompt base del coach
   BASE_SYSTEM: `Eres Arjuna, coach personal de fitness y nutrición de ArjunaFit.
@@ -233,7 +233,7 @@ window.arjuSend = async function(userMessage, mode, ctx) {
     : "Eres Arju, coach de ArjunaFit. Responde breve y útil.";
 
   try {
-    var response = await fetch('/.netlify/functions/chat', {
+    var response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
