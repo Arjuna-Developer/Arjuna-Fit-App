@@ -3229,7 +3229,7 @@ async function saveFood(name, cal, prot, fat = 0, meal, carb = 0) {
       ) : null;
       if (!_sb2) return;
       var { data:{ session } } = await _sb2.auth.getSession();
-      if (!session?.user?.id) { window.location.replace('/'); return; }
+      if (!session?.user?.id) return;
       await _sb2.from('nutrition_logs').insert({
         user_id:        session.user.id,
         date:           localDateKey(),
