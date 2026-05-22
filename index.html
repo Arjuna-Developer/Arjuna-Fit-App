@@ -1036,12 +1036,12 @@ document.getElementById('forgotForm').addEventListener('submit', async function 
 
     // Map legacy reto param to product type
     if (!product && reto) {
-      var retoMap = { gluteos:'challenge_glutes', pancita:'challenge_belly', masa:'custom_muscle_gain', definicion:'custom_fat_loss' };
+      var retoMap = { gluteos:'challenge_glutes', pancita:'challenge_belly', masa:'custom_muscle_gain', definicion:'custom_fat_loss', personalizado:'custom_plan' };
       product = retoMap[reto] || '';
     }
 
     // Save product selection (survives page reload during auth)
-    if (product && ['challenge_glutes','challenge_belly','custom_muscle_gain','custom_fat_loss'].includes(product)) {
+    if (product && ['challenge_glutes','challenge_belly','custom_muscle_gain','custom_fat_loss','custom_plan'].includes(product)) {
       localStorage.setItem('af-pending-product', product);
       // Redirect to signup page if coming with product context
       if (!window.location.pathname.includes('signup')) { window.location.href = '/signup?product=' + product; return; }
