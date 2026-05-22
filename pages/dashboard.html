@@ -1133,7 +1133,7 @@ setTimeout(function() {
 
 
       <!-- 📷 CAMERA HERO — acción principal (primero) -->
-      <div id="cameraHero" onclick="openCamera()" style="
+      <div id="cameraHero" onclick="triggerDashCamera()" style="
         background:linear-gradient(145deg,rgba(36,12,56,.97),rgba(14,6,28,.98));
         border:1.5px solid rgba(124,58,237,.4);border-radius:22px;
         padding:16px 18px;cursor:pointer;
@@ -2144,7 +2144,7 @@ function openRegisterSheet() {
           <label for="dash-cam-input" style="
             display:flex;align-items:center;gap:14px;padding:15px 18px;
             cursor:pointer;-webkit-tap-highlight-color:transparent"
-            onclick="document.getElementById('reg-sheet').remove()">
+            onclick="document.getElementById('reg-sheet').remove();setTimeout(function(){var i=document.getElementById('dash-cam-input');if(i)i.click();},50)">
             <div style="width:44px;height:44px;border-radius:14px;flex-shrink:0;
               background:linear-gradient(135deg,#7c3aed,#ec4899);
               display:flex;align-items:center;justify-content:center;font-size:22px">📷</div>
@@ -4207,6 +4207,16 @@ function handlePhotoFallback(error, code) {
   
   document.body.appendChild(t);
   setTimeout(function(){ t?.remove(); }, 6000);
+}
+
+function triggerDashCamera() {
+  // Haptic feedback
+  if (navigator.vibrate) navigator.vibrate(12);
+  // Trigger file input directly — opens camera on mobile
+  var inp = document.getElementById('dash-cam-input');
+  if (inp) { inp.click(); return; }
+  // Fallback: open register sheet
+  setTimeout(openRegisterSheet, 80);
 }
 </script>
 </body>
