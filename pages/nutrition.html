@@ -336,6 +336,68 @@ setTimeout(function() {
   }
 }, 6000);
 </script>
+
+<style>
+/* ── Comer fuera ── */
+.fuera-city,.fuera-cat{
+  padding:7px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.1);
+  cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;
+  background:rgba(255,255,255,.05);color:rgba(255,255,255,.55);
+  flex-shrink:0;white-space:nowrap;-webkit-tap-highlight-color:transparent;
+  transition:all .2s;
+}
+.active-fuera-city,.active-fuera-cat{
+  background:linear-gradient(135deg,#7c3aed,#a855f7)!important;
+  color:#fff!important;border-color:transparent!important;
+  box-shadow:0 3px 12px rgba(124,58,237,.4);
+}
+.fuera-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;overflow:hidden;
+  -webkit-tap-highlight-color:transparent;
+}
+.fuera-card-top{
+  display:flex;align-items:center;gap:12px;padding:16px;cursor:pointer;
+}
+.fuera-icon{
+  width:52px;height:52px;border-radius:16px;
+  background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.2);
+  display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;
+}
+.fuera-name{font-size:15px;font-weight:800;color:#f1f0f4;letter-spacing:-.02em}
+.fuera-cat-badge{
+  font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;
+  background:rgba(124,58,237,.15);color:#a78bfa;margin-top:3px;display:inline-block;
+}
+.fuera-best{padding:0 16px 14px}
+.fuera-best-label{
+  font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  color:#a78bfa;margin-bottom:6px;
+}
+.fuera-option{
+  background:rgba(124,58,237,.06);border:1px solid rgba(124,58,237,.15);
+  border-radius:14px;padding:12px 14px;margin-bottom:8px;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.fuera-option-name{font-size:13px;font-weight:700;color:#f1f0f4;margin-bottom:6px}
+.fuera-macros{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.fuera-macro{
+  font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;
+}
+.fm-cal{background:rgba(245,158,11,.12);color:#fcd34d}
+.fm-prot{background:rgba(74,222,128,.1);color:#4ade80}
+.fuera-tip{
+  font-size:12px;color:rgba(167,139,250,.7);line-height:1.5;
+  border-top:1px solid rgba(124,58,237,.15);padding-top:8px;margin-top:4px;
+}
+.fuera-reg-btn{
+  width:100%;padding:10px;border-radius:10px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,rgba(124,58,237,.25),rgba(168,85,247,.2));
+  border:1px solid rgba(124,58,237,.3);
+  color:#c4b5fd;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;
+  margin-top:6px;-webkit-tap-highlight-color:transparent;
+}
+</style>
 </head>
 <body>
 <div class="ldr" id="ldr"><div style="width:36px;height:36px;border-radius:50%;border:3px solid rgba(124,58,237,.2);border-top-color:#7c3aed;animation:spin .7s linear infinite"></div></div>
@@ -2264,38 +2326,33 @@ setTimeout(function() {
     </div>
 
 
-    <div class="tc" id="tc-fuera">
-      <div style="margin-bottom:20px">
-        <div style="font-size:20px;font-weight:900;color:#fff;letter-spacing:-.03em;margin-bottom:4px">Comer fuera 🍽️</div>
-        <div style="font-size:13px;color:rgba(255,255,255,.4)">Arju te dice exactamente qué pedir según tu objetivo</div>
+    <div class="tc" id="tc-fuera" style="flex-direction:column;gap:0;padding:0">
+      <div style="padding:20px 16px 0">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+          <div style="font-size:22px;font-weight:900;color:#fff;letter-spacing:-.03em">Comer fuera</div>
+          <span style="font-size:18px">🍽️</span>
+        </div>
+        <div id="fuera-arju-tip" style="font-size:13px;color:rgba(196,181,253,.7);line-height:1.5;margin-bottom:16px">Cargando recomendación...</div>
+        <div style="display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;margin-bottom:12px;-webkit-overflow-scrolling:touch">
+          <button onclick="fueraSelectCity('cali')" id="fc-cali" class="fuera-city active-fuera-city">📍 Cali</button>
+          <button onclick="fueraSelectCity('bogota')" id="fc-bogota" class="fuera-city">Bogotá</button>
+          <button onclick="fueraSelectCity('medellin')" id="fc-medellin" class="fuera-city">Medellín</button>
+          <button onclick="fueraSelectCity('barranquilla')" id="fc-barranquilla" class="fuera-city">Barranquilla</button>
+        </div>
+        <div style="display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;margin-bottom:16px;-webkit-overflow-scrolling:touch">
+          <button onclick="fueraSelectCat('all')" id="fcat-all" class="fuera-cat active-fuera-cat">✨ Todo</button>
+          <button onclick="fueraSelectCat('comida_colombiana')" id="fcat-comida_colombiana" class="fuera-cat">🇨🇴 Colombiano</button>
+          <button onclick="fueraSelectCat('saludable')" id="fcat-saludable" class="fuera-cat">🥗 Saludable</button>
+          <button onclick="fueraSelectCat('comida_rapida')" id="fcat-comida_rapida" class="fuera-cat">⚡ Rápido</button>
+          <button onclick="fueraSelectCat('desayuno')" id="fcat-desayuno" class="fuera-cat">☀️ Desayuno</button>
+          <button onclick="fueraSelectCat('comida_japonesa')" id="fcat-comida_japonesa" class="fuera-cat">🍱 Japonés</button>
+          <button onclick="fueraSelectCat('comida_internacional')" id="fcat-comida_internacional" class="fuera-cat">🌍 Internacional</button>
+        </div>
       </div>
-      <div style="display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-bottom:16px;padding-bottom:2px">
-        <button onclick="selectCity('cali')" id="city-cali" style="padding:8px 16px;border-radius:20px;border:none;cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;flex-shrink:0;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;box-shadow:0 3px 10px rgba(124,58,237,.35)">📍 Cali</button>
-        <button onclick="selectCity('bogota')" id="city-bogota" style="padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.1);cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);flex-shrink:0">Bogotá</button>
-        <button onclick="selectCity('medellin')" id="city-medellin" style="padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.1);cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);flex-shrink:0">Medellín</button>
-        <button onclick="selectCity('barranquilla')" id="city-barranquilla" style="padding:8px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.1);cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);flex-shrink:0">Barranquilla</button>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px">
-        <button onclick="selectMealType('saludable')" id="mt-saludable" style="padding:14px;border-radius:16px;border:1.5px solid rgba(16,185,129,.4);background:rgba(16,185,129,.08);cursor:pointer;font-family:'Outfit',sans-serif;text-align:left">
-          <div style="font-size:20px;margin-bottom:6px">🥗</div><div style="font-size:13px;font-weight:700;color:#34d399">Saludable</div><div style="font-size:11px;color:rgba(52,211,153,.6);margin-top:2px">Bajo en calorías</div>
-        </button>
-        <button onclick="selectMealType('rapida')" id="mt-rapida" style="padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);cursor:pointer;font-family:'Outfit',sans-serif;text-align:left">
-          <div style="font-size:20px;margin-bottom:6px">⚡</div><div style="font-size:13px;font-weight:700;color:rgba(255,255,255,.8)">Rápida</div><div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:2px">Lista en minutos</div>
-        </button>
-        <button onclick="selectMealType('domicilio')" id="mt-domicilio" style="padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);cursor:pointer;font-family:'Outfit',sans-serif;text-align:left">
-          <div style="font-size:20px;margin-bottom:6px">🛵</div><div style="font-size:13px;font-weight:700;color:rgba(255,255,255,.8)">Domicilio</div><div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:2px">A tu puerta</div>
-        </button>
-        <button onclick="selectMealType('cafeteria')" id="mt-cafeteria" style="padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);cursor:pointer;font-family:'Outfit',sans-serif;text-align:left">
-          <div style="font-size:20px;margin-bottom:6px">☕</div><div style="font-size:13px;font-weight:700;color:rgba(255,255,255,.8)">Cafetería</div><div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:2px">Opciones de oficina</div>
-        </button>
-      </div>
-      <div id="restaurantList" style="display:flex;flex-direction:column;gap:10px"></div>
-      <div style="display:flex;align-items:flex-start;gap:12px;padding:14px 16px;margin-top:8px;background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.2);border-radius:18px">
-        <span style="font-size:20px;flex-shrink:0">🤖</span>
-        <div><div style="font-size:11px;font-weight:800;color:#a78bfa;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px">CONSEJO ARJU</div>
-        <div id="arjuFueraTip" style="font-size:13px;color:rgba(255,255,255,.65);line-height:1.6">Cuando comas fuera, prioriza proteína primero. Pide la proteína antes de ver las opciones de carbohidratos.</div></div>
-      </div>
+      <div id="fuera-list" style="display:flex;flex-direction:column;gap:10px;padding:0 16px 100px"></div>
     </div>
+
+
 
 
     </div>
@@ -5055,6 +5112,178 @@ if (!document.getElementById('spinStyle')) {
 }
 
 function closePhotoOverlay(){var ov=document.getElementById('photo-ov');if(ov)ov.remove();document.body.style.overflow='';}
+</script>
+
+<script>
+// ════════════════════════════════════════════
+// COMER FUERA — módulo completo
+// ════════════════════════════════════════════
+(function(){
+
+var _fCity = 'cali';
+var _fCat  = 'all';
+var _fData = null;
+var _userGoal = localStorage.getItem('af-selected-reto') || 'glutes';
+
+// Mapeo reto → goal_fit key
+var GOAL_MAP = {
+  gluteos:'glutes', pancita:'belly', masa:'muscle_gain', definicion:'fat_loss',
+  glutes:'glutes', belly:'belly', muscle_gain:'muscle_gain', fat_loss:'fat_loss'
+};
+var goal = GOAL_MAP[_userGoal] || 'glutes';
+
+// Tips por objetivo
+var TIPS = {
+  glutes:       'Tu objetivo es glúteos: prioriza proteína (pollo, carne, huevo) y carbos de calidad.',
+  belly:        'Para bajar pancita: elige proteína magra, evita fritos y salsas. Pide ensalada de acompañante.',
+  muscle_gain:  'En fase de masa: no te preocupes por el carbohidrato. Asegura mínimo 35g de proteína.',
+  fat_loss:     'En definición: proteína primero, carbos moderados, cero fritos. Agua en vez de jugo.',
+};
+
+// Cargar datos
+function loadData(cb) {
+  if (_fData) { cb(_fData); return; }
+  fetch('/data/nutrition/restaurant-options.json', { cache:'no-store' })
+    .then(function(r){ return r.json(); })
+    .then(function(d){ _fData = d; cb(d); })
+    .catch(function(){ _fData = []; cb([]); });
+}
+
+// Filtrar
+function filterData(data) {
+  return data.filter(function(r) {
+    var catOk = _fCat === 'all' || r.category === _fCat;
+    return catOk;
+  });
+}
+
+// Renderizar
+function renderFuera() {
+  var tip = document.getElementById('fuera-arju-tip');
+  if (tip) tip.textContent = TIPS[goal] || 'Prioriza proteína en cada opción.';
+
+  loadData(function(data) {
+    var filtered = filterData(data);
+    var list = document.getElementById('fuera-list');
+    if (!list) return;
+
+    if (!filtered.length) {
+      list.innerHTML = '<div style="text-align:center;padding:32px 16px;color:rgba(255,255,255,.25);font-size:13px">No hay opciones en esta categoría aún 🌱</div>';
+      return;
+    }
+
+    list.innerHTML = filtered.map(function(r, idx) {
+      // Mejor opción para el objetivo del usuario
+      var best = r.common_options.filter(function(o) {
+        return !r.goal_fit || r.goal_fit.includes(goal);
+      });
+      if (!best.length) best = r.common_options;
+
+      var optionsHTML = best.map(function(opt, oi) {
+        return '<div class="fuera-option" onclick="fueraRegistrar('' + 
+          r.id + '-' + oi + '','' + 
+          (opt.name||'').replace(/'/g,"\'") + '',' + 
+          (opt.calories||0) + ',' + (opt.protein_g||0) + ')">' +
+          '<div class="fuera-option-name">' + (opt.name||'') + '</div>' +
+          '<div class="fuera-macros">' +
+          '<span class="fuera-macro fm-cal">🔥 ' + (opt.calories||0) + ' kcal</span>' +
+          '<span class="fuera-macro fm-prot">💪 ' + (opt.protein_g||0) + 'g prot</span>' +
+          '</div>' +
+          (opt.arju_tip ? '<div class="fuera-tip">💜 ' + opt.arju_tip + '</div>' : '') +
+          '<button class="fuera-reg-btn">+ Registrar esta comida</button>' +
+          '</div>';
+      }).join('');
+
+      var catLabel = {
+        comida_colombiana:'🇨🇴 Colombiano',
+        saludable:'🥗 Saludable',
+        comida_rapida:'⚡ Rápido',
+        desayuno:'☀️ Desayuno',
+        comida_japonesa:'🍱 Japonés',
+        comida_internacional:'🌍 Internacional',
+      }[r.category] || r.category;
+
+      var isForGoal = r.goal_fit && r.goal_fit.includes(goal);
+      var borderStyle = isForGoal 
+        ? 'border:1.5px solid rgba(124,58,237,.35)'
+        : 'border:1px solid rgba(255,255,255,.07)';
+
+      return '<div class="fuera-card" style="' + borderStyle + '" id="fcard-' + idx + '">' +
+        '<div class="fuera-card-top" onclick="fuera toggleCard(' + idx + ')">' +
+          '<div class="fuera-icon">' + (r.emoji||'🍽️') + '</div>' +
+          '<div style="flex:1;min-width:0">' +
+            '<div class="fuera-name">' + r.name + '</div>' +
+            '<div class="fuera-cat-badge">' + catLabel + '</div>' +
+            (isForGoal ? '<div style="font-size:10px;color:#4ade80;margin-top:2px;font-weight:700">✓ Para tu objetivo</div>' : '') +
+          '</div>' +
+          '<div style="font-size:16px;color:rgba(255,255,255,.2)" id="fchev-' + idx + '">›</div>' +
+        '</div>' +
+        '<div class="fuera-best" id="fbody-' + idx + '" style="display:block">' +
+          '<div class="fuera-best-label">💜 Arju recomienda pedir:</div>' +
+          optionsHTML +
+        '</div>' +
+      '</div>';
+    }).join('');
+  });
+}
+
+window.fuera_toggleCard = function(idx) {
+  var body = document.getElementById('fbody-' + idx);
+  var chev = document.getElementById('fchev-' + idx);
+  if (!body) return;
+  var open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : 'block';
+  if (chev) chev.textContent = open ? '›' : '⌄';
+};
+
+window.fueraSelectCity = function(city) {
+  _fCity = city;
+  document.querySelectorAll('[id^="fc-"]').forEach(function(b) {
+    b.classList.remove('active-fuera-city');
+  });
+  var btn = document.getElementById('fc-' + city);
+  if (btn) btn.classList.add('active-fuera-city');
+  renderFuera();
+};
+
+window.fueraSelectCat = function(cat) {
+  _fCat = cat;
+  document.querySelectorAll('[id^="fcat-"]').forEach(function(b) {
+    b.classList.remove('active-fuera-cat');
+  });
+  var btn = document.getElementById('fcat-' + cat);
+  if (btn) btn.classList.add('active-fuera-cat');
+  renderFuera();
+};
+
+window.fueraRegistrar = function(id, name, cal, prot) {
+  var h = new Date().getHours();
+  var meal = h < 11 ? 'desayuno' : h < 15 ? 'almuerzo' : h < 20 ? 'cena' : 'snack';
+  if (typeof saveFood === 'function') {
+    saveFood(name, cal, prot, 0, meal);
+    // Feedback visual
+    var t = document.createElement('div');
+    t.style.cssText = 'position:fixed;bottom:calc(90px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:500;background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);border-radius:14px;padding:10px 18px;font-family:Outfit,sans-serif;font-size:13px;font-weight:600;color:#34d399;white-space:nowrap';
+    t.textContent = '✅ ' + name.slice(0,30) + ' registrado';
+    document.body.appendChild(t);
+    setTimeout(function(){ t.remove(); }, 2500);
+  }
+};
+
+// Iniciar cuando el tab se abra
+var _origSw = window.sw;
+window.sw = function(id) {
+  if (_origSw) _origSw(id);
+  if (id === 'fuera') setTimeout(renderFuera, 60);
+};
+
+// Si ya está activo al cargar
+setTimeout(function(){
+  var tc = document.getElementById('tc-fuera');
+  if (tc && tc.style.display !== 'none' && tc.classList.contains('on')) renderFuera();
+}, 400);
+
+})();
 </script>
 </body>
 </html>
