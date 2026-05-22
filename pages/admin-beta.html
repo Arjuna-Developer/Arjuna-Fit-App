@@ -1174,7 +1174,7 @@ async function testKnowledge() {
   result.textContent = 'Buscando...';
   
   try {
-    var res = await fetch('/.netlify/functions/search-arju-knowledge', {
+    var res = await fetch('/api/search-arju-knowledge', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query: query, limit: 3 })
