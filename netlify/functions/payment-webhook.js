@@ -22,11 +22,7 @@ const HOTMART_PRODUCT_MAP = {
   // ── Productos ACTIVOS ─────────────────────────────────────
   '7678934': { product: 'challenge_belly',    name: 'Reto Pancita' },
   '6998679': { product: 'challenge_glutes',   name: 'Reto Glúteos' },
-  '7678979': { product: 'custom_plan',        name: 'Plan Personalizado Virtual' },
-
-  // ── Agregar si hay versiones separadas ───────────────────
-  // 'ID_MASA':       { product: 'custom_muscle_gain', name: 'Plan Masa' },
-  // 'ID_DEFINICION': { product: 'custom_fat_loss',    name: 'Plan Definición' },
+  '7678979': { product: 'custom_plan',        name: 'Plan Personalizado Virtual' }, // cubre masa + definición
 };
 
 // Expected amounts by product (for validation)
