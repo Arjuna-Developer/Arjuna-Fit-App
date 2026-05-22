@@ -7,6 +7,12 @@
   if(localStorage.getItem('af-theme')==='light')
     document.documentElement.classList.add('light');
 })();
+
+// localDateKey — fecha local Colombia (no UTC)
+function localDateKey() {
+  var d = new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
 </script>
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32-v2.png">
@@ -1891,7 +1897,7 @@ async function finishWorkout(){
   try{
     const newDay=(S.profile?.workout_day_num||0)+1;
     await Promise.all([
-      _sb.from('profiles').update({workout_day_num:newDay,last_workout_date:new Date().toISOString().split('T')[0]}).eq('id',S.uid),
+      _sb.from('profiles').update({workout_day_num:newDay,last_workout_date:localDateKey()}).eq('id',S.uid),
       _sb.from('progress').insert({user_id:S.uid,day_num:newDay,created_at:new Date().toISOString()})
     ]);
     let vol=0,totalSets=0;
@@ -2239,7 +2245,7 @@ async function loadRealData() {
     }
 
     // Check if already trained today
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = localDateKey();
     let alreadyTrained = false;
     try {
       const { data: tp } = await Promise.race([
@@ -2363,7 +2369,7 @@ setTimeout(function() {
 
 function completeWorkout() {
   // Save to localStorage
-  var today = new Date().toISOString().split('T')[0];
+  var today = localDateKey();
   var workouts = [];
   try { workouts = JSON.parse(localStorage.getItem('af-workouts') || '[]'); } catch(e){}
   workouts.push({ date: today, completed: true, timestamp: Date.now() });
