@@ -5043,6 +5043,8 @@ if (!document.getElementById('spinStyle')) {
   s.textContent = '@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}';
   document.head.appendChild(s);
 }
+
+function closePhotoOverlay(){var ov=document.getElementById('photo-ov');if(ov)ov.remove();document.body.style.overflow='';}
 </script>
 </body>
 </html>
