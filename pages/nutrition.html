@@ -598,7 +598,7 @@ setTimeout(function() {
       </div>
 
       <!-- CTA registrar con foto -->
-      <button id="btnRegFoto" onclick="if(typeof openCamera==='function')openCamera();else window.location.href='/pages/dashboard.html?camera=1'" style="
+      <button id="btnRegFoto" onclick="openCamera()" style="
         width:100%;padding:16px;border-radius:18px;border:none;cursor:pointer;
         background:linear-gradient(135deg,#7c3aed 0%,#a855f7 40%,#ec4899 100%);
         color:#fff;font-family:'Outfit',sans-serif;font-size:16px;font-weight:800;
@@ -4411,7 +4411,7 @@ function afNavRegister() {
     }
   }
   setTimeout(function(){
-    if(typeof openCamera==='function') openCamera();
+    openCamera();
     else window.location.href='/pages/nutrition.html?camera=1';
   },150);
 }
@@ -4870,6 +4870,199 @@ window.renderTodayFoods = function(foods) {
     empty.style.display = hasFoods ? 'none' : 'block';
   }
 };
+
+// ════════════════════════════════════════════════════════
+// openCamera — foto IA in-page (no navegar a otro lugar)
+// ════════════════════════════════════════════════════════
+function openCamera(meal) {
+  // Create overlay
+  var ov = document.createElement('div');
+  ov.id  = 'photoOverlay';
+  ov.style.cssText = 'position:fixed;inset:0;z-index:1200;background:rgba(5,3,14,.95);display:flex;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch';
+
+  ov.innerHTML = `
+    <div style="display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.07)">
+      <button onclick="document.getElementById('photoOverlay').remove()" style="width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,.08);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff">←</button>
+      <div>
+        <div style="font-size:16px;font-weight:800;color:#fff">Registrar con foto</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.4)">IA analiza tu plato y estima macros</div>
+      </div>
+    </div>
+
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:24px 20px;gap:16px">
+
+      <!-- Camera trigger -->
+      <label for="photoInput" style="width:100%;cursor:pointer">
+        <div id="photoPreview" style="width:100%;aspect-ratio:4/3;border-radius:20px;background:rgba(255,255,255,.05);border:2px dashed rgba(255,255,255,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;overflow:hidden">
+          <span style="font-size:48px">📷</span>
+          <span style="font-size:14px;font-weight:700;color:rgba(255,255,255,.5)">Toca para tomar foto</span>
+          <span style="font-size:12px;color:rgba(255,255,255,.3)">o seleccionar de galería</span>
+        </div>
+      </label>
+      <input type="file" id="photoInput" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoSelected(this, '${meal||''}')">
+
+      <!-- Results area -->
+      <div id="photoResults" style="width:100%;display:none"></div>
+
+      <!-- Loading -->
+      <div id="photoLoading" style="display:none;text-align:center;padding:32px">
+        <div style="font-size:32px;margin-bottom:12px;animation:spin 1s linear infinite">🔄</div>
+        <div style="font-size:14px;color:rgba(255,255,255,.6);font-weight:600">Analizando tu comida...</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.35);margin-top:6px">La IA detecta los alimentos y calcula los macros</div>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(ov);
+}
+
+async function handlePhotoSelected(input, meal) {
+  var file = input.files[0];
+  if (!file) return;
+
+  // Show preview
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var preview = document.getElementById('photoPreview');
+    if (preview) {
+      preview.innerHTML = '<img src="' + e.target.result + '" style="width:100%;height:100%;object-fit:cover;border-radius:18px">';
+    }
+  };
+  reader.readAsDataURL(file);
+
+  // Show loading
+  document.getElementById('photoLoading').style.display = 'block';
+  document.getElementById('photoResults').style.display = 'none';
+
+  try {
+    // Validate size (4MB max)
+    if (file.size > 4 * 1024 * 1024) {
+      throw new Error('La foto es muy grande. Máximo 4MB.');
+    }
+
+    // Convert to base64
+    var b64 = await new Promise(function(res, rej) {
+      var r = new FileReader();
+      r.onload  = function() { res(r.result.split(',')[1]); };
+      r.onerror = rej;
+      r.readAsDataURL(file);
+    });
+
+    // Get auth token
+    var authToken = '';
+    try {
+      var raw = localStorage.getItem('sb-egswsqymkxmbtcpnozcq-auth-token');
+      if (raw) authToken = JSON.parse(raw)?.access_token || '';
+    } catch(e) {}
+
+    // Send to food-photo function
+    var resp = await fetch('/.netlify/functions/food-photo', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + authToken
+      },
+      body: JSON.stringify({
+        image:     b64,
+        mediaType: file.type,
+        meal:      meal || (function() {
+          var h = new Date().getHours();
+          return h < 11 ? 'desayuno' : h < 15 ? 'almuerzo' : h < 19 ? 'cena' : 'snack';
+        })()
+      })
+    });
+
+    var data = await resp.json();
+    document.getElementById('photoLoading').style.display = 'none';
+
+    if (!resp.ok || !data.foods) {
+      throw new Error(data.error || 'Error analizando la foto');
+    }
+
+    // Show results
+    showPhotoResults(data, meal);
+
+  } catch(err) {
+    document.getElementById('photoLoading').style.display = 'none';
+    var results = document.getElementById('photoResults');
+    results.style.display = 'block';
+    results.innerHTML = '<div style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:16px;padding:16px;text-align:center;color:rgba(255,100,100,.9);font-size:13px;font-weight:600">' +
+      '⚠️ ' + (err.message || 'Error al procesar la foto') + '</div>';
+  }
+}
+
+function showPhotoResults(data, meal) {
+  var results = document.getElementById('photoResults');
+  if (!results) return;
+  results.style.display = 'block';
+
+  var foods = data.foods || [];
+  var total = { cal: data.total_calories||0, prot: data.total_protein||0, carb: data.total_carbs||0, fat: data.total_fat||0 };
+
+  var foodsHtml = foods.map(function(f) {
+    return '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06)">' +
+      '<div><div style="font-size:13px;font-weight:700;color:#fff">' + f.name + '</div>' +
+      '<div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:2px">' + (f.amount||'') + '</div></div>' +
+      '<div style="text-align:right"><div style="font-size:13px;font-weight:800;color:#a78bfa">' + Math.round(f.calories||0) + ' cal</div>' +
+      '<div style="font-size:11px;color:rgba(255,255,255,.4)">' + Math.round(f.protein||0) + 'g prot</div></div>' +
+    '</div>';
+  }).join('');
+
+  results.innerHTML =
+    '<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:16px;width:100%">' +
+      '<div style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px">🔍 Detectado por IA</div>' +
+      foodsHtml +
+      '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08)">' +
+        '<div style="text-align:center"><div style="font-size:16px;font-weight:900;color:#fff">' + Math.round(total.cal) + '</div><div style="font-size:10px;color:rgba(255,255,255,.4)">kcal</div></div>' +
+        '<div style="text-align:center"><div style="font-size:16px;font-weight:900;color:#a78bfa">' + Math.round(total.prot) + 'g</div><div style="font-size:10px;color:rgba(255,255,255,.4)">prot</div></div>' +
+        '<div style="text-align:center"><div style="font-size:16px;font-weight:900;color:#fcd34d">' + Math.round(total.carb) + 'g</div><div style="font-size:10px;color:rgba(255,255,255,.4)">carb</div></div>' +
+        '<div style="text-align:center"><div style="font-size:16px;font-weight:900;color:#6ee7b7">' + Math.round(total.fat) + 'g</div><div style="font-size:10px;color:rgba(255,255,255,.4)">grasas</div></div>' +
+      '</div>' +
+    '</div>' +
+    '<button onclick="savePhotoMeal(' + JSON.stringify(data).replace(/</g,"\u003c") + ','' + (meal||'') + '')" style="' +
+      'width:100%;padding:16px;border-radius:18px;border:none;cursor:pointer;margin-top:12px;' +
+      'background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-family:'Outfit',sans-serif;' +
+      'font-size:15px;font-weight:800;letter-spacing:-.01em;' +
+      'box-shadow:0 4px 20px rgba(124,58,237,.4)">✓ Agregar al registro</button>';
+}
+
+async function savePhotoMeal(data, meal) {
+  if (!meal) {
+    var h = new Date().getHours();
+    meal = h < 11 ? 'desayuno' : h < 15 ? 'almuerzo' : h < 19 ? 'cena' : 'snack';
+  }
+  var entry = {
+    name:     (data.foods||[]).map(function(f){return f.name;}).join(', ') || 'Comida IA',
+    cal:      Math.round(data.total_calories||0),
+    prot:     Math.round(data.total_protein||0),
+    carb:     Math.round(data.total_carbs||0),
+    fat:      Math.round(data.total_fat||0),
+    meal:     meal,
+    source:   'foto_ia'
+  };
+
+  if (window.FoodLog) {
+    await window.FoodLog.saveFoodLog(entry);
+  } else {
+    saveFood(entry);
+  }
+
+  // Close overlay
+  var ov = document.getElementById('photoOverlay');
+  if (ov) ov.remove();
+
+  // Show success and refresh UI
+  showSaveToast && showSaveToast('📷 Registrado con IA ✓');
+  renderTodayFoods && renderTodayFoods();
+}
+
+// Spin animation for loading
+if (!document.getElementById('spinStyle')) {
+  var s = document.createElement('style');
+  s.id = 'spinStyle';
+  s.textContent = '@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}';
+  document.head.appendChild(s);
+}
 </script>
 </body>
 </html>
