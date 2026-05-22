@@ -134,6 +134,27 @@ const SUPABASE_URL = 'https://egswsqymkxmbtcpnozcq.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM';
 const _sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: true, storageKey: 'arjunafit-auth' } });
 
+// ── Auth guard: si ya tienes sesión → dashboard ──────────────
+(async function() {
+  try {
+    var _sbCheck = window.supabase?.createClient(
+      'https://egswsqymkxmbtcpnozcq.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM',
+      { auth: { persistSession: true, storageKey: 'arjunafit-auth' } }
+    );
+    var { data: { session } } = await _sbCheck.auth.getSession();
+    if (session?.user) {
+      // Usuario ya autenticado → verificar si completó onboarding
+      var { data: p } = await _sbCheck.from('profiles')
+        .select('onboarding_completed').eq('id', session.user.id).maybeSingle();
+      window.location.replace(
+        p?.onboarding_completed ? '/pages/dashboard.html' : '/pages/onboarding.html'
+      );
+    }
+  } catch(e) { /* continuar mostrando signup */ }
+})();
+
+
 // ── Product meta — reads from AF_Commerce if available ────────
 // Fallback for when commerce-config loads async
 var PRODUCTS_FALLBACK = {
@@ -141,6 +162,7 @@ var PRODUCTS_FALLBACK = {
   challenge_belly:    { icon:'🔥', name:'Reto para bajar la pancita',   price:'7 días gratis · luego $32 USD',  hasTrial:true,  cta:'Crear cuenta y empezar gratis' },
   custom_muscle_gain: { icon:'💪', name:'Aumento de masa muscular',     price:'$72 USD/mes · pago inmediato',   hasTrial:false, cta:'Crear cuenta y continuar al pago' },
   custom_fat_loss:    { icon:'⚡', name:'Reducción de porcentaje graso', price:'$72 USD/mes · pago inmediato',   hasTrial:false, cta:'Crear cuenta y continuar al pago' },
+  custom_plan:        { icon:'🏋️', name:'Plan Personalizado Virtual',    price:'$72 USD/mes · pago inmediato',   hasTrial:false, cta:'Crear cuenta y continuar al pago' },
 };
 
 function getProductMeta(id) {
@@ -366,8 +388,9 @@ document.getElementById('signupForm').addEventListener('submit', async function(
     } else {
         // Personalizados: open payment then go to onboarding
         var hotmartUrls = {
-          custom_muscle_gain: 'https://pay.hotmart.com/M105694336W?bid=1777962608286',
-          custom_fat_loss:    'https://pay.hotmart.com/M105694336W'
+          custom_muscle_gain: 'https://pay.hotmart.com/U7678979S',
+          custom_fat_loss:    'https://pay.hotmart.com/U7678979S',
+          custom_plan:        'https://pay.hotmart.com/U7678979S'
         };
         var payUrl = hotmartUrls[product];
         if (payUrl) {
