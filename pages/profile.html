@@ -625,24 +625,30 @@ function saveBodyData() {
   showToast('✅ Datos guardados');
 }
 
-function editName() {
+async function editName() {
   var current = localStorage.getItem('af-user-name') || '';
   var newName = prompt('Tu nombre:', current);
   if (newName && newName.trim()) {
-    localStorage.setItem('af-user-name', newName.trim());
+    var trimmed = newName.trim();
+    localStorage.setItem('af-user-name', trimmed);
     var avatarName = document.getElementById('avatarName');
-    if (avatarName) avatarName.textContent = newName.trim();
+    if (avatarName) avatarName.textContent = trimmed;
     var sub = document.getElementById('currentNameSub');
-    if (sub) sub.textContent = newName.trim();
-    showToast('✅ Nombre actualizado');
+    if (sub) sub.textContent = trimmed;
+    // Guardar en Supabase
+    var saved = await saveProfileToSupabase({ name: trimmed });
+    showToast(saved ? '✅ Nombre guardado' : '✅ Nombre actualizado (offline)');
   }
 }
 
-function toggleNotifications() {
+async function toggleNotifications() {
   var tog = document.getElementById('notifTog');
   var isOn = tog && tog.classList.contains('on');
   if (tog) tog.classList.toggle('on', !isOn);
-  localStorage.setItem('af-notifications', isOn ? '0' : '1');
+  var newVal = !isOn;
+  localStorage.setItem('af-notifications', newVal ? '1' : '0');
+  // Guardar en Supabase
+  await saveProfileToSupabase({ notifications: newVal });
 }
 
 function showNotifications() {}
@@ -762,9 +768,7 @@ window.saveBodyData = async function() {
   if (ok) showToast && showToast('Guardado en tu cuenta ✓');
 };
 
-// Patch editName to use Supabase
-var _origEditName = window.editName;
-window.editName = _origEditName; // keep existing, but add Supabase save hook
+// editName ya guarda en Supabase directamente
 document.addEventListener('DOMContentLoaded', async function() {
   // Load Supabase profile on init
   if (typeof init === 'function') {
