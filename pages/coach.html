@@ -481,7 +481,7 @@ setTimeout(function() {
   <div class="coach-header">
     <a href="/pages/dashboard.html" class="header-back">←</a>
     <div class="coach-header-info">
-      <div class="coach-header-name">Coach Arjuna</div>
+      <div class="coach-header-name">Arju — Tu Coach</div>
       <div class="coach-header-status">
         <div class="status-dot"></div>
         <span id="statusLabel">Listo para ayudarte</span>
@@ -720,6 +720,7 @@ async function processMessage(text) {
   try {
     // V2: context-aware mode detection
     var ctx = window.getArjuContext ? getArjuContext() : {};
+    ctx.userId = COACH.user?.id || '';
     var detectedMode = window.detectArjuMode ? detectArjuMode(ctx) : 'daily_coach';
     // Check for keyword overrides
     var textL = text.toLowerCase();
@@ -1098,7 +1099,7 @@ async function initCoach() {
   // Timeout — loader nunca queda colgado
   const _ldrT = setTimeout(() => {
     document.getElementById('pageLoader').classList.add('hide');
-    addMessage('assistant', 'Hola, soy Arjuna. ¿En qué te ayudo hoy?');
+    addMessage('assistant', 'Hola, soy Arju, tu coach 💜 ¿Cómo estás hoy?');
     addQuickActions();
   }, 5000);
 
@@ -1134,11 +1135,14 @@ async function initCoach() {
       if (_notifMsg) { addMessage('arju', _notifMsg); addQuickActions(); return; }
     }
 
+    const h = new Date().getHours();
+    const saludo = h < 12 ? 'Buenos días' : h < 19 ? 'Buenas tardes' : 'Buenas noches';
     const greetings = [
-      `Hola ${nombre} 👋 Semana ${weekNum} del reto. ${streak > 0 ? `Llevas ${streak} días de racha — sigue así.` : 'Hoy es un buen día para empezar tu racha.'} ¿En qué te ayudo?`,
-      `Bienvenida ${nombre} ✨ Estás en semana ${weekNum}. ${streak > 0 ? `🔥 ${streak} días seguidos.` : 'Sin racha aún — ¿entrenamos hoy?'} ¿Qué necesitas?`,
+      `${saludo} ${nombre} 👋 Estás en semana ${weekNum} de tu reto de ${reto}. ${streak > 0 ? `Llevas ${streak} días seguidos — eso es constancia real.` : 'Hoy puede ser el día uno de tu racha.'} ¿Cómo amaneciste?`,
+      `Hola ${nombre} ✨ Semana ${weekNum} del reto. ${streak > 0 ? `🔥 ${streak} días en racha.` : 'Tu racha empieza hoy si quieres.'} ¿Cómo te sientes hoy?`,
+      `${saludo} ${nombre} 💜 ${streak > 0 ? `${streak} días seguidos — vas muy bien.` : 'Cada día que entras cuenta.'} ¿Entrenamos hoy o necesitas algo primero?`,
     ];
-    const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+    const greeting = greetings[new Date().getDay() % greetings.length];
 
     // Historial reciente
     let history = [];
@@ -1184,7 +1188,7 @@ async function initCoach() {
     clearTimeout(_ldrT);
     console.error('Coach init error:', e);
     document.getElementById('pageLoader').classList.add('hide');
-    addMessage('assistant', 'Hola, soy tu Coach Arjuna. ¿En qué te puedo ayudar hoy?');
+    addMessage('assistant', 'Hola, soy Arju, tu coach de ArjunaFit 💜 ¿Cómo estás hoy?');
     addQuickActions();
   }
 }
