@@ -1072,6 +1072,8 @@ setTimeout(function() {
 </script>
 </head>
 <body>
+<input id="dash-cam-input-global" type="file" accept="image/*" capture="environment" style="display:none;position:fixed" onchange="handleDashPhoto(this)">
+
 
 <!-- Loader -->
 <div class="ldr" id="ldr">
@@ -4210,12 +4212,11 @@ function handlePhotoFallback(error, code) {
 }
 
 function triggerDashCamera() {
-  // Haptic feedback
   if (navigator.vibrate) navigator.vibrate(12);
-  // Trigger file input directly — opens camera on mobile
-  var inp = document.getElementById('dash-cam-input');
-  if (inp) { inp.click(); return; }
-  // Fallback: open register sheet
+  // Use permanent global input (always in DOM, not inside overlay)
+  var inp = document.getElementById('dash-cam-input-global');
+  if (inp) { inp.value = ''; inp.click(); return; }
+  // Last resort fallback
   setTimeout(openRegisterSheet, 80);
 }
 </script>
