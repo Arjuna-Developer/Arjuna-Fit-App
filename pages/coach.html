@@ -1116,7 +1116,7 @@ function speakCoachReply(text) {
     if (raw) authToken = JSON.parse(raw).access_token || '';
   } catch(e) {}
 
-  fetch('/.netlify/functions/tts', {
+  fetch('/api/tts', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
     body: JSON.stringify({ text: clean })
