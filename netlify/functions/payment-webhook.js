@@ -19,14 +19,13 @@ const PRODUCT_CATALOG = {
 // ── Map Hotmart product IDs to our product types ────────────────
 // UPDATE THESE with real Hotmart product IDs when available
 const HOTMART_PRODUCT_MAP = {
-  // ══════════════════════════════════════════════════════
-  // INSTRUCCIÓN: Reemplazar con IDs reales de Hotmart
-  // Hotmart → Productos → tu producto → Código del producto
-  // ══════════════════════════════════════════════════════
-  // 'HOTMART_PRODUCT_ID_GLUTEOS':   { product: 'challenge_glutes',    name: 'Reto Glúteos' },
-    '7678934': { product: 'challenge_belly', name: 'Reto Pancita' },
-  // 'HOTMART_PRODUCT_ID_MASA':      { product: 'custom_muscle_gain',  name: 'Plan Masa' },
-  // 'HOTMART_PRODUCT_ID_DEFINICION':{ product: 'custom_fat_loss',     name: 'Plan Definición' },
+  // ── Productos ACTIVOS ─────────────────────────────────────
+  '7678934': { product: 'challenge_belly', name: 'Reto Pancita' },
+
+  // ── Agregar cuando estén disponibles ─────────────────────
+  // 'ID_GLUTEOS':    { product: 'challenge_glutes',   name: 'Reto Glúteos' },
+  // 'ID_MASA':       { product: 'custom_muscle_gain', name: 'Plan Masa' },
+  // 'ID_DEFINICION': { product: 'custom_fat_loss',    name: 'Plan Definición' },
 };
 
 // Expected amounts by product (for validation)
