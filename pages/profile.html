@@ -357,32 +357,73 @@ function toggleDark(){var tog=document.getElementById('darkTog');var isLight=doc
 (function(){if(localStorage.getItem('af-theme')==='light'){document.documentElement.classList.add('light');var t=document.getElementById('darkTog');if(t)t.classList.remove('on');}})();
 
 async function handlePhotoUpload(input){
-  const file=input.files?.[0];
-  if(!file)return;if(!_sb||!_uid){var r=new FileReader();r.onload=function(e){localStorage.setItem('af-avatar-local',e.target.result);var av=document.getElementById('avatarEl');if(av){av.style.backgroundImage='url('+e.target.result+')';av.style.backgroundSize='cover';av.style.backgroundPosition='center';}var ini=document.getElementById('avatarInitial');if(ini)ini.style.display='none';showToast('📸 Foto guardada');};r.readAsDataURL(file);return;}
-  if(file.size>5*1024*1024){alert('La foto debe ser menor a 5MB');return;}
+  var file = input.files && input.files[0];
+  if(!file) return;
 
-  showToast('📸 Subiendo foto...');
-  try{
-    const ext=file.name.split('.').pop()||'jpg';
-    const path=`avatars/${_uid}.${ext}`;
-    const{error:upErr}=await _sb.storage.from('profile-photos').upload(path,file,{upsert:true});
-    if(upErr)throw upErr;
+  if(file.size > 5*1024*1024){ showToast('⚠️ Foto menor a 5MB'); return; }
+  showToast('📸 Guardando foto...');
 
-    const{data}=_sb.storage.from('profile-photos').getPublicUrl(path);
-    const url=data.publicUrl+`?t=${Date.now()}`;
+  var reader = new FileReader();
+  reader.onload = async function(ev){
+    var b64 = ev.target.result;
 
-    await _sb.from('profiles').update({avatar_url:url}).eq('id',_uid);
-
-    // Update avatar in UI
-    const av=document.getElementById('avatarEl');
-    av.innerHTML=`<img src="${url}" alt="Avatar">`;
-    showToast('✓ Foto actualizada');
-  }catch(e){
-    console.error('Photo upload error:',e);
-    showToast('Error al subir. Intenta de nuevo.');
-  }
-  input.value='';
+    // Comprimir a 400×400 máx para no saturar Supabase
+    var img = new Image();
+    img.onload = async function(){
+      var canvas = document.createElement('canvas');
+      var MAX = 400;
+      var w = img.width, h = img.height;
+      if(w > MAX || h > MAX){
+        if(w >= h){ h = Math.round(h*MAX/w); w = MAX; }
+        else { w = Math.round(w*MAX/h); h = MAX; }
+      }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      var compressed = canvas.toDataURL('image/jpeg', 0.8);
+      await _saveAvatarUrl(compressed);
+    };
+    img.onerror = async function(){
+      await _saveAvatarUrl(b64); // sin comprimir
+    };
+    img.src = b64;
+  };
+  reader.readAsDataURL(file);
 }
+
+async function _saveAvatarUrl(url){
+  // Guardar en localStorage siempre
+  localStorage.setItem('af-avatar-local', url);
+
+  // Actualizar UI inmediatamente
+  var av = document.getElementById('avatarEl');
+  if(av){
+    av.style.backgroundImage = 'url(' + url + ')';
+    av.style.backgroundSize = 'cover';
+    av.style.backgroundPosition = 'center';
+    av.style.borderRadius = '50%';
+    var ini = document.getElementById('avatarInitial');
+    if(ini) ini.style.display = 'none';
+  }
+
+  // Guardar en Supabase profiles.avatar_url
+  try{
+    var sb = window.sb;
+    if(sb && _uid){
+      await sb.from('profiles').upsert({
+        id: _uid,
+        avatar_url: url,
+        updated_at: new Date().toISOString()
+      }, { onConflict: 'id' });
+      showToast('✓ Foto guardada');
+    } else {
+      showToast('📸 Foto guardada (local)');
+    }
+  }catch(e){
+    console.warn('[Avatar] Supabase error:', e.message);
+    showToast('📸 Foto guardada (local)');
+  }
+}
+
 
 async function doLogout(){
   if(!confirm('¿Cerrar sesión?'))return;
@@ -627,17 +668,41 @@ function saveBodyData() {
 
 async function editName() {
   var current = localStorage.getItem('af-user-name') || '';
-  var newName = prompt('Tu nombre:', current);
-  if (newName && newName.trim()) {
-    var trimmed = newName.trim();
-    localStorage.setItem('af-user-name', trimmed);
-    var avatarName = document.getElementById('avatarName');
-    if (avatarName) avatarName.textContent = trimmed;
-    var sub = document.getElementById('currentNameSub');
-    if (sub) sub.textContent = trimmed;
-    // Guardar en Supabase
-    var saved = await saveProfileToSupabase({ name: trimmed });
-    showToast(saved ? '✅ Nombre guardado' : '✅ Nombre actualizado (offline)');
+
+  // Sheet nativo en vez de prompt() — funciona en todos los móviles
+  var ex = document.getElementById('edit-name-sheet');
+  if(ex) ex.remove();
+  var sheet = document.createElement('div');
+  sheet.id = 'edit-name-sheet';
+  sheet.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(8,5,17,.92);display:flex;align-items:flex-end;font-family:Outfit,sans-serif';
+  sheet.innerHTML = '<div style="width:100%;max-width:430px;margin:0 auto;padding:24px 16px calc(32px + env(safe-area-inset-bottom));background:rgba(12,6,24,.99);border-radius:28px 28px 0 0;border-top:1px solid rgba(255,255,255,.08)">'
+    +'<div style="font-size:16px;font-weight:800;color:#f1f0f4;margin-bottom:4px">Tu nombre</div>'
+    +'<div style="font-size:13px;color:rgba(255,255,255,.4);margin-bottom:16px">Así te llama Arju</div>'
+    +'<input id="nameSheetInput" type="text" value="'+current+'" maxlength="40" autocorrect="off" autocapitalize="words" placeholder="Escribe tu nombre..." style="width:100%;background:rgba(255,255,255,.06);border:1.5px solid rgba(124,58,237,.4);border-radius:14px;padding:14px 16px;color:#f1f0f4;font-family:Outfit,sans-serif;font-size:16px;font-weight:700;outline:none;margin-bottom:12px;box-sizing:border-box">'
+    +'<div style="display:flex;gap:8px">'
+      +'<button onclick="document.getElementById('edit-name-sheet').remove()" style="flex:1;padding:13px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:transparent;color:rgba(255,255,255,.4);cursor:pointer;font-family:Outfit,sans-serif;font-size:13px">Cancelar</button>'
+      +'<button onclick="saveNameFromSheet()" style="flex:2;padding:13px;border-radius:14px;border:none;cursor:pointer;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-family:Outfit,sans-serif;font-size:14px;font-weight:800">Guardar</button>'
+    +'</div></div>';
+  sheet.addEventListener('click', function(e){ if(e.target===sheet) sheet.remove(); });
+  document.body.appendChild(sheet);
+  setTimeout(function(){ var i=document.getElementById('nameSheetInput'); if(i){i.focus();i.select();} }, 200);
+}
+
+window.saveNameFromSheet = async function(){
+  var input = document.getElementById('nameSheetInput');
+  if(!input) return;
+  var trimmed = input.value.trim();
+  if(!trimmed){ showToast('⚠️ Escribe tu nombre'); return; }
+
+  localStorage.setItem('af-user-name', trimmed);
+  var avatarName = document.getElementById('avatarName');
+  if(avatarName) avatarName.textContent = trimmed;
+  var sub = document.getElementById('currentNameSub');
+  if(sub) sub.textContent = trimmed;
+  document.getElementById('edit-name-sheet')?.remove();
+
+  var saved = await saveProfileToSupabase({ name: trimmed });
+  showToast(saved ? '✅ Nombre guardado' : '✅ Nombre actualizado (offline)');
   }
 }
 
