@@ -334,7 +334,7 @@ setTimeout(function() {
         <div class="hdr-title">Nutrición</div>
         <div class="hdr-sub" id="hdrDate"></div>
       </div>
-      <button class="log-btn" onclick="openQuickLog()">+ Registrar</button>
+      <button class="log-btn" onclick="if(typeof openPhotoLog==='function')openPhotoLog();else openQuickLog()">+ Registrar</button>
     </div>
     <!-- Premium tab bar -->
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:8px 16px 10px">
@@ -4874,45 +4874,7 @@ window.renderTodayFoods = function(foods) {
 // openCamera — foto IA in-page (no navegar a otro lugar)
 // ════════════════════════════════════════════════════════
 function openCamera(meal) {
-  // Create overlay
-  var ov = document.createElement('div');
-  ov.id  = 'photoOverlay';
-  ov.style.cssText = 'position:fixed;inset:0;z-index:1200;background:rgba(5,3,14,.95);display:flex;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch';
-
-  ov.innerHTML = `
-    <div style="display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.07)">
-      <button onclick="document.getElementById('photoOverlay').remove()" style="width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,.08);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff">←</button>
-      <div>
-        <div style="font-size:16px;font-weight:800;color:#fff">Registrar con foto</div>
-        <div style="font-size:12px;color:rgba(255,255,255,.4)">IA analiza tu plato y estima macros</div>
-      </div>
-    </div>
-
-    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:24px 20px;gap:16px">
-
-      <!-- Camera trigger -->
-      <label for="photoInput" style="width:100%;cursor:pointer">
-        <div id="photoPreview" style="width:100%;aspect-ratio:4/3;border-radius:20px;background:rgba(255,255,255,.05);border:2px dashed rgba(255,255,255,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;overflow:hidden">
-          <span style="font-size:48px">📷</span>
-          <span style="font-size:14px;font-weight:700;color:rgba(255,255,255,.5)">Toca para tomar foto</span>
-          <span style="font-size:12px;color:rgba(255,255,255,.3)">o seleccionar de galería</span>
-        </div>
-      </label>
-      <input type="file" id="photoInput" accept="image/*" capture="environment" style="display:none" onchange="handlePhotoSelected(this, '${meal||''}')">
-
-      <!-- Results area -->
-      <div id="photoResults" style="width:100%;display:none"></div>
-
-      <!-- Loading -->
-      <div id="photoLoading" style="display:none;text-align:center;padding:32px">
-        <div style="font-size:32px;margin-bottom:12px;animation:spin 1s linear infinite">🔄</div>
-        <div style="font-size:14px;color:rgba(255,255,255,.6);font-weight:600">Analizando tu comida...</div>
-        <div style="font-size:12px;color:rgba(255,255,255,.35);margin-top:6px">La IA detecta los alimentos y calcula los macros</div>
-      </div>
-    </div>
-  `;
-
-  document.body.appendChild(ov);
+  if (typeof openPhotoLog === "function") openPhotoLog(meal);
 }
 
 async function handlePhotoSelected(input, meal) {
