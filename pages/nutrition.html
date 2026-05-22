@@ -4412,7 +4412,6 @@ function afNavRegister() {
   }
   setTimeout(function(){
     openCamera();
-    else window.location.href='/pages/nutrition.html?camera=1';
   },150);
 }
 
@@ -4995,35 +4994,54 @@ function showPhotoResults(data, meal) {
   var results = document.getElementById('photoResults');
   if (!results) return;
   results.style.display = 'block';
+  window._lastPhotoData = data;
 
   var foods = data.foods || [];
-  var total = { cal: data.total_calories||0, prot: data.total_protein||0, carb: data.total_carbs||0, fat: data.total_fat||0 };
+  var total = {
+    cal:  data.total_calories || 0,
+    prot: data.total_protein  || 0,
+    carb: data.total_carbs    || 0,
+    fat:  data.total_fat      || 0
+  };
 
   var foodsHtml = foods.map(function(f) {
-    return '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06)">' +
-      '<div><div style="font-size:13px;font-weight:700;color:#fff">' + f.name + '</div>' +
-      '<div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:2px">' + (f.amount||'') + '</div></div>' +
-      '<div style="text-align:right"><div style="font-size:13px;font-weight:800;color:#a78bfa">' + Math.round(f.calories||0) + ' cal</div>' +
-      '<div style="font-size:11px;color:rgba(255,255,255,.4)">' + Math.round(f.protein||0) + 'g prot</div></div>' +
-    '</div>';
+    return [
+      '<div style="display:flex;justify-content:space-between;align-items:center;',
+      'padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06)">',
+      '<div>',
+        '<div style="font-size:13px;font-weight:700;color:#fff">' + (f.name || '') + '</div>',
+        '<div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:2px">' + (f.amount || '') + '</div>',
+      '</div>',
+      '<div style="text-align:right">',
+        '<div style="font-size:13px;font-weight:800;color:#a78bfa">' + Math.round(f.calories || 0) + ' cal</div>',
+        '<div style="font-size:11px;color:rgba(255,255,255,.4)">' + Math.round(f.protein || 0) + 'g prot</div>',
+      '</div>',
+      '</div>'
+    ].join('');
   }).join('');
 
-  results.innerHTML =
-    '<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:16px;width:100%">' +
-      '<div style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px">🔍 Detectado por IA</div>' +
-      foodsHtml +
-      '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08)">' +
-        '<div style="text-align:center"><div style="font-size:16px;font-weight:900;color:#fff">' + Math.round(total.cal) + '</div><div style="font-size:10px;color:rgba(255,255,255,.4)">kcal</div></div>' +
-        '<div style="text-align:center"><div style="font-size:16px;font-weight:900;color:#a78bfa">' + Math.round(total.prot) + 'g</div><div style="font-size:10px;color:rgba(255,255,255,.4)">prot</div></div>' +
-        '<div style="text-align:center"><div style="font-size:16px;font-weight:900;color:#fcd34d">' + Math.round(total.carb) + 'g</div><div style="font-size:10px;color:rgba(255,255,255,.4)">carb</div></div>' +
-        '<div style="text-align:center"><div style="font-size:16px;font-weight:900;color:#6ee7b7">' + Math.round(total.fat) + 'g</div><div style="font-size:10px;color:rgba(255,255,255,.4)">grasas</div></div>' +
-      '</div>' +
-    '</div>' +
-    '<button onclick="savePhotoMeal(' + JSON.stringify(data).replace(/</g,"\u003c") + ','' + (meal||'') + '')" style="' +
-      'width:100%;padding:16px;border-radius:18px;border:none;cursor:pointer;margin-top:12px;' +
-      'background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;font-family:'Outfit',sans-serif;' +
-      'font-size:15px;font-weight:800;letter-spacing:-.01em;' +
-      'box-shadow:0 4px 20px rgba(124,58,237,.4)">✓ Agregar al registro</button>';
+  var html = [
+    '<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);',
+    'border-radius:20px;padding:16px;width:100%">',
+      '<div style="font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;',
+      'color:rgba(255,255,255,.4);margin-bottom:12px">Detectado por IA</div>',
+      foodsHtml,
+      '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px;',
+      'padding-top:12px;border-top:1px solid rgba(255,255,255,.08)">',
+        '<div style="text-align:center"><div style="font-size:16px;font-weight:900;color:#fff">' + Math.round(total.cal) + '</div><div style="font-size:10px;color:rgba(255,255,255,.4)">kcal</div></div>',
+        '<div style="text-align:center"><div style="font-size:16px;font-weight:900;color:#a78bfa">' + Math.round(total.prot) + 'g</div><div style="font-size:10px;color:rgba(255,255,255,.4)">prot</div></div>',
+        '<div style="text-align:center"><div style="font-size:16px;font-weight:900;color:#fcd34d">' + Math.round(total.carb) + 'g</div><div style="font-size:10px;color:rgba(255,255,255,.4)">carb</div></div>',
+        '<div style="text-align:center"><div style="font-size:16px;font-weight:900;color:#6ee7b7">' + Math.round(total.fat) + 'g</div><div style="font-size:10px;color:rgba(255,255,255,.4)">grasas</div></div>',
+      '</div>',
+    '</div>',
+    '<button onclick="savePhotoMealFromBtn(this)" data-meal="' + (meal || '') + '"',
+    ' style="width:100%;padding:16px;border-radius:18px;border:none;cursor:pointer;margin-top:12px;',
+    'background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;',
+    'font-family:sans-serif;font-size:15px;font-weight:800;letter-spacing:-.01em;',
+    'box-shadow:0 4px 20px rgba(124,58,237,.4)">Agregar al registro</button>'
+  ].join('');
+
+  results.innerHTML = html;
 }
 
 async function savePhotoMeal(data, meal) {
