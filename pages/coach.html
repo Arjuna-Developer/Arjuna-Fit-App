@@ -555,7 +555,7 @@ let COACH = {
   micPaused: false,
   speechSupported: false,
   silenceTimer: null,
-  wakeWordActive: false,  // "Arju" wake word mode
+  wakeWordActive: true,  // sin wake word — escucha inmediata  // "Arju" wake word mode
   _wakeTimer: null,
 };
 
@@ -865,7 +865,7 @@ function initSpeechRecognition() {
   rec.maxAlternatives = 1;
 
   rec.onstart = () => {
-    try { COACH.micActive = true; updateMicUI('listening'); setStatus('Escuchando...', 'listening'); }
+    try { COACH.micActive = true; updateMicUI('listening'); setStatus('Habla ahora...', 'listening'); }
     catch(e) { console.warn('[Coach] onstart error:', e.message); }
   };
 
@@ -880,25 +880,8 @@ function initSpeechRecognition() {
     document.getElementById('interimText').textContent = interim;
 
     // ── Wake word "Arju" ─────────────────────────
-    if (!COACH.wakeWordActive) {
-      if (allText.includes('arju') || allText.includes('arjú')) {
-        COACH.wakeWordActive = true;
-        document.getElementById('interimText').textContent = '';
-        updateMicUI('wake');
-        setStatus('¿Sí? Te escucho...', 'listening');
-        // Short confirmation beep via TTS
-        const u = new SpeechSynthesisUtterance('Dime.');
-        u.lang = 'es-MX'; u.rate = 1.1; u.volume = 0.6;
-        window.speechSynthesis?.speak(u);
-        // Reset wake word after 8s of silence
-        clearTimeout(COACH._wakeTimer);
-        COACH._wakeTimer = setTimeout(() => {
-          COACH.wakeWordActive = false;
-          updateMicUI('listening');
-        }, 8000);
-      }
-      return; // ignore everything until wake word
-    }
+    // Wake word desactivado — escucha directa
+      // (usuario puede hablar sin decir "Arju" primero)
 
     // ── Normal message processing ─────────────────
     if (final.trim()) {
@@ -918,8 +901,17 @@ function initSpeechRecognition() {
   };
 
   rec.onerror = (e) => {
-    const ignore = ['no-speech', 'aborted'];
-    if (ignore.includes(e.error)) return;
+    console.log('[Mic] error:', e.error);
+    if (e.error === 'no-speech') {
+      // No hubo voz — reiniciar automáticamente
+      setTimeout(() => {
+        if (!COACH.micPaused && !COACH.isProcessing) {
+          try { COACH.recognition.start(); } catch(_){}
+        }
+      }, 300);
+      return;
+    }
+    if (e.error === 'aborted') return;
     console.warn('Speech error:', e.error);
     if (e.error === 'not-allowed') {
       showToast('Permiso de micrófono denegado. Actívalo en configuración del navegador.', 5000);
