@@ -14,6 +14,7 @@ const PRODUCT_CATALOG = {
   challenge_belly:    { name: 'Reto para bajar la pancita', expectedAmount: 32, currency: 'USD', trialDays: 7,  billing: 'one_time' },
   custom_muscle_gain: { name: 'Aumento de masa muscular',   expectedAmount: 72, currency: 'USD', trialDays: 0,  billing: 'monthly'  },
   custom_fat_loss:    { name: 'Reducción de % graso',       expectedAmount: 72, currency: 'USD', trialDays: 0,  billing: 'monthly'  },
+  custom_plan:        { name: 'Plan Personalizado Virtual', expectedAmount: 72, currency: 'USD', trialDays: 0,  billing: 'monthly'  },
 };
 
 // ── Map Hotmart product IDs to our product types ────────────────
