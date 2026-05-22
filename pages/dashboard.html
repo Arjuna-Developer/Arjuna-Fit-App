@@ -2763,7 +2763,7 @@ function logPlanMeal(mealKey, name, cal, prot) {
 
   // Log it
   logged.push({ name, cal, prot, carb:0, fat:0, meal:mealKey, ts:Date.now() });
-  localStorage.setItem(`af-food-${today}`, JSON.stringify(logged));
+  localStorage.setItem(`af-food-${_ld}`, JSON.stringify(logged));
 
   // Update this row visually with animation
   const row = document.getElementById(`plan-meal-${mealKey}`);
