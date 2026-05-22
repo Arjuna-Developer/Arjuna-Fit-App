@@ -233,14 +233,20 @@ window.arjuSend = async function(userMessage, mode, ctx) {
     : "Eres Arju, coach de ArjunaFit. Responde breve y útil.";
 
   try {
-    var response = await fetch('/api/chat', {
+    var response = await fetch('/.netlify/functions/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: userMessage, systemPrompt: systemPrompt, mode: mode })
+      body: JSON.stringify({
+        system:     systemPrompt,
+        messages:   [{ role: 'user', content: userMessage }],
+        max_tokens: 300,
+        mode:       mode,
+        user_id:    ctx?.userId || ''
+      })
     });
     if (!response.ok) throw new Error('api_error');
     var data = await response.json();
-    var message = data.message || data.reply || data.content || '';
+    var message = data.choices?.[0]?.message?.content || data.reply || data.message || '';
     if (window.AF) AF.track('arju_response_generated', { mode: mode, product: ctx?.productType || '' });
     return {
       message:             message,
