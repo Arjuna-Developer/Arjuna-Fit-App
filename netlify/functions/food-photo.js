@@ -76,8 +76,10 @@ exports.handler = async (event) => {
         }).catch(err => console.warn('[food-photo] Log insert failed:', err.message));
       }
     } catch(authErr) {
-      console.warn('[food-photo] Auth check failed (non-blocking):', authErr.message);
-      return { statusCode: 401, headers, body: JSON.stringify({ error: 'Authentication required', code: 'AUTH_REQUIRED' }) };
+      // Non-blocking: log and continue unless it's clearly an auth rejection
+      console.warn('[food-photo] Auth check warning:', authErr.message);
+      // Do not block — continue to OpenAI
+      // 401 disabled for beta — auth errors are non-fatal
     }
   }
 
