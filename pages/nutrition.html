@@ -3667,7 +3667,7 @@ async function handleFoodPhoto(input) {
         if(label) label.textContent = 'Tardando un poco más de lo normal…';
       }, 5000);
 
-      var res = await fetch('/.netlify/functions/food-photo', {
+      var res = await fetch('/api/food-photo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ image: base64, mimeType }),
@@ -5036,7 +5036,7 @@ async function handlePhotoSelected(input, meal) {
     } catch(e) {}
 
     // Send to food-photo function
-    var resp = await fetch('/.netlify/functions/food-photo', {
+    var resp = await fetch('/api/food-photo', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -5313,7 +5313,7 @@ window.menuGenerar = async function(){
       if(raw) authToken = JSON.parse(raw)?.access_token || '';
     }catch(e){}
 
-    var res = await fetch('/.netlify/functions/chat',{
+    var res = await fetch('/api/chat',{
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+authToken},
       body:JSON.stringify({
