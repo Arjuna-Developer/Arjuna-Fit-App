@@ -7,6 +7,12 @@
   if(localStorage.getItem('af-theme')==='light')
     document.documentElement.classList.add('light');
 })();
+
+// localDateKey — fecha local Colombia (no UTC)
+function localDateKey() {
+  var d = new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
 </script>
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32-v2.png">
@@ -216,7 +222,7 @@ function emptyHTML(){
   const phase = getPhase(1);
   
   // Get stats from localStorage
-  const today = new Date().toISOString().split('T')[0];
+  const today = localDateKey();
   const foods = (() => { try{ return JSON.parse(localStorage.getItem('af-food-'+today)||'[]'); }catch(e){return[];} })();
   const workouts = (() => { try{ return JSON.parse(localStorage.getItem('af-workouts')||'[]'); }catch(e){return[];} })();
   const streak = (() => { try{ return parseInt(localStorage.getItem('af-streak')||'0'); }catch(e){return 0;} })();
@@ -857,7 +863,7 @@ async function saveDailyClosure(mood, wins, tomorrow, arjuMsg) {
   try {
     await sb.from('daily_closures').upsert({
       user_id: uid,
-      date: new Date().toISOString().split('T')[0],
+      date: localDateKey(),
       mood: mood,
       selected_wins: wins,
       tomorrow_focus: tomorrow,
