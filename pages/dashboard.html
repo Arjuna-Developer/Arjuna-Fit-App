@@ -1821,7 +1821,7 @@ function toggleVoiceMute() {
   // Reset daily workout flags at new day
   (function() {
     var lastReset = localStorage.getItem('af-daily-reset-date');
-    var today2 = new Date().toISOString().split('T')[0];
+    var today2 = localDateKey();
     if (lastReset !== today2) {
       localStorage.removeItem('af-workout-started');
       localStorage.removeItem('af-workout-completed');
@@ -1986,7 +1986,7 @@ function toggleVoiceMute() {
 
   // Check if day was already closed today — show state
   (function() {
-    var today = localDateKey ? localDateKey() : new Date().toISOString().split('T')[0];
+    var today = localDateKey ? localDateKey() : localDateKey();
     var closed = localStorage.getItem('af-day-closed-' + today);
     if (closed) {
       try {
@@ -4161,7 +4161,7 @@ function saveDashPhotoFood(name, cal, prot, fat, carb, meal) {
     saveFood(name, cal, prot, fat, meal, carb);
   } else {
     // Fallback to localStorage directly
-    var today = new Date().toISOString().split('T')[0];
+    var today = localDateKey();
     var key = 'af-food-' + today;
     var foods = [];
     try { foods = JSON.parse(localStorage.getItem(key) || '[]'); } catch(e){}
