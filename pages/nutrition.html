@@ -310,9 +310,16 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM',
       {auth:{persistSession:true,storageKey:'arjunafit-auth'}}
     );
-    var r=await Promise.race([_g.auth.getSession(),new Promise(function(_,rej){setTimeout(function(){rej(new Error('t'));},3000)})]);
-    if(!r?.data?.session?.user)window.location.replace('/');
-  }catch(e){window.location.replace('/');}
+    if(!_g) return; // sin Supabase — dejar cargar la página
+    var r=await Promise.race([
+      _g.auth.getSession(),
+      new Promise(function(res){setTimeout(function(){res({data:{session:null}});},8000)})
+    ]);
+    // Solo redirigir si definitivamente no hay sesión (no por timeout)
+    if(r && r.data && r.data.session === null && r.data.session !== undefined){
+      window.location.replace('/');
+    }
+  }catch(e){ console.warn('[Auth] nutrition guard:', e.message); /* no redirigir en error */ }
 })();
 </script>
 <script src="/js/core/auth-bootstrap.js"></script>
@@ -3345,10 +3352,14 @@ async function saveFood(name, cal, prot, fat = 0, meal, carb = 0) {
   // Save to Supabase nutrition_logs (non-blocking)
   (async function() {
     try {
-      var _sb2 = window.supabase ? window.supabase.createClient(
-        'https://egswsqymkxmbtcpnozcq.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM'
-      ) : null;
+      // Usar cliente global — no crear nuevo cada vez
+      var _sb2 = window.sb || window._sbClient || null;
+      if (!_sb2 && window.supabase) {
+        _sb2 = window._sbClient = window.supabase.createClient(
+          'https://egswsqymkxmbtcpnozcq.supabase.co',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM'
+        );
+      }
       if (!_sb2) return;
       var { data:{ session } } = await _sb2.auth.getSession();
       if (!session?.user?.id) return;
@@ -4614,6 +4625,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var fs = [];
         try { fs = JSON.parse(localStorage.getItem('af-food-' + dk) || '[]'); } catch(e){}
         if (typeof updateMacroUI === 'function') updateMacroUI(fs);
+        if (typeof renderTodayFoods === 'function') renderTodayFoods();
         // Actualizar subtítulos de meal cards (Sin registrar → comida)
         ['desayuno','almuerzo','cena','snack'].forEach(function(m) {
           var sub = document.getElementById('meal-' + m + '-sub');
