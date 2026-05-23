@@ -815,7 +815,8 @@ async function processMessage(text) {
 
     var result;
     if (window.arjuSend) {
-      console.log('[Coach] llamando arjuSend, mode:', detectedMode);
+      COACH.lastMode = detectedMode;
+    console.log('[Coach] llamando arjuSend, mode:', detectedMode);
       result = await arjuSend(text, detectedMode, ctx);
     } else {
       // Fallback directo a /api/chat si arjuSend no está disponible
@@ -1582,6 +1583,50 @@ function clearChat() {
     var nombre = ctx.name ? ', ' + ctx.name : '';
     appendMessage('arju', sal + nombre + '. ¿En qué te ayudo?');
   }, 400);
+}
+
+
+// ── Feedback loop ────────────────────────────────
+async function sendFeedback(rating, msgId, btn) {
+  var row = document.getElementById('fb_' + msgId);
+  if (!row || row.dataset.voted) return;
+  row.dataset.voted = '1';
+
+  // Feedback visual
+  btn.style.background = rating === 1 ? 'rgba(74,222,128,.2)' : 'rgba(239,68,68,.2)';
+  btn.style.borderColor = rating === 1 ? '#4ade80' : '#ef4444';
+
+  // Obtener el texto del mensaje
+  var msgDiv = document.querySelector('[data-msg-id="' + msgId + '"]');
+  var arjuReply = msgDiv ? msgDiv.textContent.replace('👍👎', '').trim() : '';
+
+  // Obtener último mensaje del usuario
+  var msgs = document.querySelectorAll('.message.user');
+  var userMsg = msgs.length ? msgs[msgs.length-1].textContent.trim() : '';
+
+  // Guardar en Supabase
+  try {
+    var sb = window.sb;
+    if (sb) {
+      var sess = await sb.auth.getSession();
+      var uid = sess?.data?.session?.user?.id;
+      if (uid) {
+        await sb.from('arju_feedback').insert({
+          user_id:      uid,
+          rating:       rating,
+          mode:         COACH.lastMode || 'daily_coach',
+          user_message: userMsg.slice(0, 500),
+          arju_reply:   arjuReply.slice(0, 1000),
+          created_at:   new Date().toISOString()
+        });
+      }
+    }
+  } catch(e) { console.warn('[Feedback]', e.message); }
+
+  // Si es positivo, guardar para fine-tuning automático
+  if (rating === 1) {
+    console.log('[Feedback] 👍 guardado para fine-tuning');
+  }
 }
 
 </script>
