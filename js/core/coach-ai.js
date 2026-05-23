@@ -233,21 +233,9 @@ window.arjuSend = async function(userMessage, mode, ctx) {
     : "Eres Arju, coach de ArjunaFit. Responde breve y útil.";
 
   try {
-    // Obtener token de Supabase para el header
-    var _authTok = '';
-    try {
-      var _raw = localStorage.getItem('sb-egswsqymkxmbtcpnozcq-auth-token')
-              || localStorage.getItem('arjunafit-auth');
-      if (_raw) _authTok = JSON.parse(_raw)?.access_token || '';
-    } catch(e) {}
-
     var response = await fetch('/api/chat', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + _authTok,
-        'X-ArjunaFit': '1'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         system:     systemPrompt,
         messages:   [{ role: 'user', content: userMessage }],
@@ -271,18 +259,13 @@ window.arjuSend = async function(userMessage, mode, ctx) {
       tone:                (window.ARJU_MODES && window.ARJU_MODES[mode]) ? window.ARJU_MODES[mode].tone : 'helpful',
     };
   } catch(e) {
-    console.error('[Arju] API error:', e.message);
     if (window.AF) AF.track('arju_response_failed', { mode: mode, error: e.message });
-    // Intentar una vez más después de 2 segundos
-    if (!ctx._retry) {
-      await new Promise(r => setTimeout(r, 2000));
-      return window.arjuSend(userMessage, mode, { ...ctx, _retry: true });
-    }
+    var fallback = window.getArjuFallback ? getArjuFallback(mode) : 'Vamos paso a paso.';
     return {
-      message: 'No pude conectarme ahora. Revisa tu internet e intenta de nuevo 💜',
-      suggestedActions: [],
-      mode: mode,
-      isFallback: true,
+      message:          fallback,
+      suggestedActions: window.getArjuActions ? getArjuActions(mode) : [],
+      mode:             mode,
+      isFallback:       true,
     };
   }
 };
