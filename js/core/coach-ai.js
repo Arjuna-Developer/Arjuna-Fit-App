@@ -233,9 +233,21 @@ window.arjuSend = async function(userMessage, mode, ctx) {
     : "Eres Arju, coach de ArjunaFit. Responde breve y útil.";
 
   try {
+    // Obtener token de Supabase para el header
+    var _authTok = '';
+    try {
+      var _raw = localStorage.getItem('sb-egswsqymkxmbtcpnozcq-auth-token')
+              || localStorage.getItem('arjunafit-auth');
+      if (_raw) _authTok = JSON.parse(_raw)?.access_token || '';
+    } catch(e) {}
+
     var response = await fetch('/api/chat', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + _authTok,
+        'X-ArjunaFit': '1'
+      },
       body: JSON.stringify({
         system:     systemPrompt,
         messages:   [{ role: 'user', content: userMessage }],
