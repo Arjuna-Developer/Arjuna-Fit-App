@@ -2990,7 +2990,7 @@ function openQuickLog(meal) {
   var options = QUICK_FOODS[meal] || [];
 
   var ov = document.createElement('div');
-  ov.style.cssText = `position:fixed;inset:0;z-index:999;
+  ov.style.cssText = `position:fixed;inset:0;z-index:99999;
     background:rgba(8,5,17,.88);backdrop-filter:blur(16px);
     display:flex;align-items:flex-end;font-family:var(--font);`;
   ov.innerHTML = `
@@ -4614,6 +4614,30 @@ document.addEventListener('DOMContentLoaded', function() {
         var fs = [];
         try { fs = JSON.parse(localStorage.getItem('af-food-' + dk) || '[]'); } catch(e){}
         if (typeof updateMacroUI === 'function') updateMacroUI(fs);
+        // Actualizar subtítulos de meal cards (Sin registrar → comida)
+        ['desayuno','almuerzo','cena','snack'].forEach(function(m) {
+          var sub = document.getElementById('meal-' + m + '-sub');
+          var chk = document.getElementById('meal-' + m + '-chk');
+          var mFoods = fs.filter(function(f){ return (f.meal||'').toLowerCase() === m; });
+          if (sub) {
+            if (mFoods.length > 0) {
+              var totCal = mFoods.reduce(function(s,f){return s+(f.cal||0);},0);
+              var totProt = mFoods.reduce(function(s,f){return s+(f.prot||0);},0);
+              sub.textContent = mFoods.length + ' comida' + (mFoods.length>1?'s':'') + 
+                ' · ' + Math.round(totCal) + ' cal · ' + Math.round(totProt) + 'g prot';
+              sub.style.color = 'rgba(74,222,128,.8)';
+            } else {
+              sub.textContent = 'Sin registrar';
+              sub.style.color = 'rgba(255,255,255,.4)';
+            }
+          }
+          if (chk) {
+            chk.style.background = mFoods.length > 0 
+              ? 'linear-gradient(135deg,#4ade80,#10b981)' : 'rgba(255,255,255,.05)';
+            chk.style.borderColor = mFoods.length > 0 
+              ? 'transparent' : 'rgba(255,255,255,.12)';
+          }
+        });
       }, 400);
       return result;
     };
@@ -4733,8 +4757,10 @@ function addToLog(rid) {
 
 // ── openMealDetail ─────────────────────────────────
 function openMealDetail(meal) {
+  // Capitalizar para que coincida con QUICK_FOODS keys
+  var cap = meal ? meal.charAt(0).toUpperCase() + meal.slice(1) : null;
   window._quickLogMeal = meal;
-  if (typeof openQuickLog === 'function') openQuickLog();
+  if (typeof openQuickLog === 'function') openQuickLog(cap);
 }
 
 // ── filterByMeal ────────────────────────────────────
