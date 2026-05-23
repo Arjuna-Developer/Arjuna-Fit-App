@@ -747,7 +747,7 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;')
     .replace(/\n/g, '<br>');
 }
-async async function sendMessage() {
+async function sendMessage() {
   const input = document.getElementById('textInput');
   const text  = input.value.trim();
   if (!text || COACH.isProcessing) return;
@@ -758,7 +758,9 @@ async async function sendMessage() {
   updateSendBtn();
 
   addMessage('user', text);
-  await processMessage(text);
+  processMessage(text).catch(function(e) {
+    console.error('[sendMessage] error:', e.message);
+  });
 }
 
 function showQuickActionsV2(actions) {
