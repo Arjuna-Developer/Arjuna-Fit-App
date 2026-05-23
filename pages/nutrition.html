@@ -261,15 +261,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
 :root{--hdr-h:108px}
 
 
-
-
-
-
-
-
-
-
-
 /* === NUTRITION TAB LAYOUT === */
 :root { --nutr-hdr: 108px; }
 
@@ -300,8 +291,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
 .meal-partial { background:rgba(245,158,11,.1) !important; border-color:rgba(245,158,11,.3) !important }
 </style>
   <link rel="stylesheet" href="/assets/visual-system.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="/js/nutrition/food-log.js"></script>
+  
+
 <script>
 (async function(){
   try{
@@ -315,10 +306,10 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
   }catch(e){console.warn('[Auth]',e.message);}
 })();
 </script>
-<script src="/js/core/auth-bootstrap.js"></script>
-<script src="/js/core/auth-guard.js"></script>
-<script src="/js/core/ops-config.js"></script>
-<script src="/js/core/analytics.js"></script>
+
+
+
+
 
   <style>
   .nav-ambient{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100vw,430px);height:140px;background:radial-gradient(ellipse at 50% 100%,rgba(124,58,237,.18) 0%,rgba(168,85,247,.1) 30%,transparent 70%);filter:blur(20px);z-index:99;pointer-events:none}
@@ -2208,7 +2199,6 @@ window.openMealDetail = window.openMealDetail || function(meal) {
       </div>
 
 
-
     <div class="tc" id="tc-mercado">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px">
         <div>
@@ -2443,14 +2433,13 @@ window.openMealDetail = window.openMealDetail || function(meal) {
 </div>
 
 
-<script src="/js/core/coach-context.js"></script>
-<script src="/js/core/arju-prompts.js"></script>
-<script src="/js/core/icons.js"></script>
-<script src="/js/core/food-db.js"></script>
-<script src="/js/core/microvictorias.js"></script>
-<script src="/js/core/arju-assistant.js"></script>
+
+
+
+
+
+
 <script>
-// ── Ensure sw() is always available even if script errors ──
 window.sw = window.sw || function(id) {
   ['hoy','recetas','mercado','fuera'].forEach(function(k) {
     var tc  = document.getElementById('tc-'+k);
@@ -2458,8 +2447,6 @@ window.sw = window.sw || function(id) {
     if (tc) tc.style.display = (k===id) ? 'flex' : 'none';
   });
 };
-
-// ── Dynamic photo CTA label by hour ─────────────
 (function() {
   var h = new Date().getHours();
   var lbl = h<11?'Registrar desayuno con foto':
@@ -2469,15 +2456,11 @@ window.sw = window.sw || function(id) {
   var el = document.getElementById('photoMainLabel');
   if (el) el.textContent = lbl;
 })();
-
-// ── Date header ──────────────────────────────────
 var days  = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 var months= ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 var now   = new Date();
 var _hdrDate = document.getElementById('hdrDate');
 if (_hdrDate) _hdrDate.textContent = `${days[now.getDay()]}, ${now.getDate()} de ${months[now.getMonth()]}`;
-
-// ── Supabase ──────────────────────────────────────
 let _sb = null, _uid = null;
 try {
   _sb = window.supabase?.createClient(
@@ -2486,8 +2469,6 @@ try {
     { auth: { persistSession:true, storageKey:'arjunafit-auth' } }
   );
 } catch(e) {}
-
-// ── Rotating tips ─────────────────────────────────
 var TIPS = [
   'Prioriza proteína en cada comida. Es lo más importante para el reto.',
   'Agua primero. El hambre entre comidas a veces es sed disfrazada.',
@@ -2499,8 +2480,6 @@ var TIPS = [
 ];
 var _tip = document.getElementById('nutriTip'); if (_tip) _tip.textContent = TIPS[now.getDay() % TIPS.length];
 
-// ── Tab switching ─────────────────────────────────
-// ── Dynamic recipe recommendation by time ────────
 var REC_BY_TIME = {
   desayuno: [
     { id:'huevos-aguacate', emoji:'🍳', name:'Desayuno que sí llena', desc:'Rápido, proteína real, sin complicarse.' },
@@ -2685,9 +2664,6 @@ function sw(id) {
   if (id === 'mercado') setTimeout(renderMarket, 60);
   if (id === 'recetas') setTimeout(function(){ filterByMeal(window._activeRecipeFilter||'todo'); }, 60);
 }
-
-
-// ── Recetario render + search ─────────────────────────
 function renderRecetario() {
   // No-op if grid already in DOM (static HTML)
   // Just ensure filters reset and search is cleared
@@ -2709,8 +2685,6 @@ function searchRecipes(val) {
   var emptyEl = document.getElementById('recEmptyState');
   if (emptyEl) emptyEl.style.display = visible === 0 ? 'block' : 'none';
 }
-
-// ── Recipe filters ────────────────────────────────
 function filterRecipes(cat, btn) {
   // Update filter buttons
   document.querySelectorAll('.rf').forEach(b => b.classList.remove('on'));
@@ -2725,10 +2699,7 @@ function filterRecipes(cat, btn) {
     }
   });
 }
-
-// ── Recipe detail overlay ─────────────────────────
 var RECIPES = {
-  // ── DESAYUNOS ──────────────────────────────────────
   'bowl-huevos':     {name:'Bowl de huevos y aguacate',      cat:'desayuno', cal:380, prot:28, fat:18, carb:22, time:'10 min', emoji:'🥗',
     ing:['3 huevos','1/2 aguacate','1 tomate','Espinaca','Sal y pimienta'],
     steps:['Cocina los huevos al gusto (revueltos o pochados)','Corta el aguacate y el tomate en cubos','Arma el bowl con espinaca de base','Agrega los huevos encima con el aguacate y tomate','Sazona con sal, pimienta y limón']},
@@ -2773,7 +2744,6 @@ var RECIPES = {
     steps:['Mezcla chía con leche de coco y vainilla','Deja reposar 8h en nevera','En la mañana revuelve bien','Sirve con mango en cubos encima']},
   'burrito-huevo':   {name:'Burrito de huevo y frijoles',    cat:'desayuno', cal:410, prot:29, fat:14, carb:44, time:'12 min', emoji:'🌮',
     ing:['1 tortilla grande','2 huevos','1/4 taza frijoles','Salsa','Queso']},
-  // ── ALMUERZOS ─────────────────────────────────────
   'pechuga-arroz':   {name:'Pechuga con arroz y brócoli',    cat:'almuerzo', cal:420, prot:45, fat:8,  carb:40, time:'20 min', emoji:'🍗',
     ing:['150g pechuga','1 taza arroz cocido','1 taza brócoli','Aceite oliva','Ajo y sal'],
     steps:['Sazona la pechuga con ajo, sal y pimienta','Cocina en sartén 6 min por lado','Cocina el brócoli al vapor 5 min','Sirve con el arroz y el brócoli']},
@@ -2811,7 +2781,6 @@ var RECIPES = {
     ing:['2 tortillas maíz','120g pollo','Maíz','Pico de gallo','Cilantro']},
   'cazuela-res':     {name:'Cazuela de res con papa',        cat:'almuerzo', cal:460, prot:40, fat:16, carb:38, time:'40 min', emoji:'🫕',
     ing:['150g carne res','1 papa','Zanahoria','Cebolla','Tomate']},
-  // ── CENAS ─────────────────────────────────────────
   'sopa-lentejas':   {name:'Sopa de lentejas',               cat:'cena',     cal:280, prot:18, fat:3,  carb:44, time:'20 min', emoji:'🍵',
     ing:['1/2 taza lentejas','Zanahoria','Tomate','Cebolla','Comino']},
   'pechuga-grillada':{name:'Pechuga grillada y vegetales',   cat:'cena',     cal:340, prot:42, fat:8,  carb:18, time:'15 min', emoji:'🍗',
@@ -2824,7 +2793,6 @@ var RECIPES = {
     ing:['150g pechuga','2 tazas brócoli','Ajo','Aceite oliva','Sal']},
   'tortilla-claras': {name:'Tortilla de claras con espinaca',cat:'cena',     cal:220, prot:26, fat:6,  carb:8,  time:'8 min',  emoji:'🍳',
     ing:['5 claras','1 taza espinaca','1/4 cebolla','Aceite oliva','Sal']},
-  // ── SNACKS ────────────────────────────────────────
   'batido':          {name:'Batido de proteína y banana',    cat:'snack',    cal:290, prot:30, fat:4,  carb:38, time:'3 min',  emoji:'🍌',
     ing:['1 scoop proteína','1 banana','250ml leche','Hielo']},
   'manzana-mantequilla':{name:'Manzana con mantequilla maní',cat:'snack',   cal:200, prot:8,  fat:12, carb:22, time:'2 min',  emoji:'🍎',
@@ -2956,8 +2924,6 @@ function openRecipeDetail(id) {
   document.body.appendChild(ov);
   ov.scrollTop = 0;
 }
-
-// ── Guide accordion ───────────────────────────────
 function toggleGuide(card) {
   var body = card.querySelector('.gc-body');
   var arrow = card.querySelector('.gc-title span');
@@ -2965,8 +2931,6 @@ function toggleGuide(card) {
   body.classList.toggle('open', !isOpen);
   if (arrow) arrow.textContent = isOpen ? '›' : '‹';
 }
-
-// ── Shopping list ─────────────────────────────────
 function toggleShop(el, key) {
   el.classList.toggle('ck');
   localStorage.setItem(key, el.classList.contains('ck') ? '1' : '0');
@@ -2982,8 +2946,6 @@ document.querySelectorAll('.shop-item').forEach(el => {
   var key = el.getAttribute('onclick')?.match(/'(sh-[^']+)'/)?.[1];
   if (key && localStorage.getItem(key) === '1') el.classList.add('ck');
 });
-
-// ── Registro del díaging ──────────────────────────────────
 var QUICK_FOODS = {
   'Desayuno': [
     {name:'Bowl de huevos y aguacate',     cal:380, prot:28, id:'huevos-aguacate',   emoji:'🍳'},
@@ -3068,16 +3030,12 @@ function logThisRecipe(id) {
   saveFood(entry.name, entry.cal, entry.prot, 0, meal);
 }
 
-// ── Default macro goals (overridden by Supabase profile) ─
-// ── Local date (not UTC — fixes timezone bug) ─────
 function localDateKey() {
   var d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
 
 var GOALS = { cal: 2000, prot: 120, carbs: 200, fat: 55 };
-
-// ── Macro status messages (human, not obsessive) ──────────
 function macroMessage(protPct) {
   if (protPct >= 90) return '✓ Proteína cubierta hoy. Buen trabajo.';
   if (protPct >= 60) return 'Vas bien en proteína. Sigue así.';
@@ -3085,8 +3043,6 @@ function macroMessage(protPct) {
   return 'Te faltan opciones altas en proteína hoy.';
 }
 
-// ── Render macros from today's log ───────────────────────
-// ── Meal rhythm visualization ──────────────────────
 var MEAL_CONFIG = [
   { key:'desayuno', icon:'🌅', name:'Desayuno',  start:6,  end:11 },
   { key:'almuerzo', icon:'🌞', name:'Almuerzo',  start:11, end:15 },
@@ -3135,8 +3091,6 @@ function renderMealRhythm(entries) {
     </div>
   `;
 }
-
-// ── Update card visual state ──────────────────────
 function updateCardState(calPct, proteinPct, mealsCount) {
   var card = document.getElementById('macroCard');
   var label = document.getElementById('dayStateLabel');
@@ -3269,8 +3223,6 @@ function updateMacroUI(entries) {
   renderMealRhythm(entries);
   updateCardState(calPct, Math.min(100, Math.round((totProt/GOALS.prot)*100)), entries.length);
 }
-
-// ── Smart recipe suggestions ──────────────────────────────
 function showSmartSuggestions(remProt, remCal) {
   var el = document.getElementById('smartSuggestions');
   if (!el) return;
@@ -3312,8 +3264,6 @@ function showSmartSuggestions(remProt, remCal) {
       </div>`).join('')}
   `;
 }
-
-// ── Render today's food log ───────────────────────────────
 function renderLogList(entries) {
   var el = document.getElementById('logList');
   if (!el) return;
@@ -3346,8 +3296,6 @@ function renderLogList(entries) {
       </div>`).join('')}
   `;
 }
-
-// ── Guardar food (cal, prot, carb, fat) ──────────────────────
 async function saveFood(name, cal, prot, fat = 0, meal, carb = 0) {
   // Track first meal and meal confirmed
   try {
@@ -3398,8 +3346,6 @@ async function saveFood(name, cal, prot, fat = 0, meal, carb = 0) {
       });
     } catch(e) { console.warn('[Nutrition] Supabase log failed:', e.message); }
   })();
-
-  // ── Arju feedback ────────────────────────────────────────────────
   (function() {
     var retoCurrent = localStorage.getItem('af-selected-reto') || '';
     var productType = localStorage.getItem('af-product-type') || '';
@@ -3430,8 +3376,6 @@ async function saveFood(name, cal, prot, fat = 0, meal, carb = 0) {
     }).catch(e => console.warn('[Nutrition] Supabase:', e.message));
   }
 }
-
-// ── Delete food ───────────────────────────────────────────
 function deleteFood(idx) {
   var today = localDateKey();
   var key   = `af-food-${today}`;
@@ -3440,8 +3384,6 @@ function deleteFood(idx) {
   localStorage.setItem(key, JSON.stringify(local));
   updateMacroUI(local);
 }
-
-// ── USDA FoodData Central Search ─────────────────
 var USDA_KEY = 'DEMO_KEY'; // Replace with real key from api.nal.usda.gov
 
 function openUSDASearch() {
@@ -3619,8 +3561,6 @@ function usda_localFallback(q) {
       <div style="font-size:11px;color:var(--t3)">${r.prot}g prot · ${r.cal} cal</div>
     </div>`).join('');
 }
-
-// ── Photo food logging ────────────────────────────
 function openPhotoLog() {
   var ov = mkOverlay('photo-ov');
   ov.innerHTML = `
@@ -3862,8 +3802,6 @@ function showManualAfterPhotoFail() {
     </div>
   `;
 }
-
-// ── Manual log ────────────────────────────────────
 function openManualLog() {
   var ov = mkOverlay('manual-ov');
   var h = new Date().getHours();
@@ -4040,8 +3978,6 @@ function submitManual() {
   document.getElementById('manual-ov')?.remove();
   document.body.style.overflow = '';
 }
-
-// ── Overlay helpers ───────────────────────────────
 function mkOverlay(id) {
   document.getElementById(id)?.remove();
   var ov = document.createElement('div');
@@ -4069,7 +4005,6 @@ function stickyBack(ovId, title) {
       flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${title}</div>
   </div>`;
 }
-// ── Load today's data ────────────────────────────
 function loadToday() {
   var localKey = `af-food-${localDateKey()}`;
   var utcKey   = `af-food-${localDateKey()}`;
@@ -4094,8 +4029,6 @@ function showGuardardToast(name, meal) {
   document.body.appendChild(t);
   setTimeout(() => t.remove(), 2500);
 }
-
-// ── Init — loader hides immediately ───────────────────────
 // 1. Hide spinner RIGHT NOW, no waiting
 var _ldr = document.getElementById('ldr');
 if (_ldr) _ldr.classList.add('off');
@@ -4184,8 +4117,6 @@ loadToday();
     loadToday();
   }
 })();
-
-// ── Load recipe from /data/recipes/recipes.json by id ─────────────
 async function openRecipeFromJSON(recipeId) {
   try {
     if (!window._AF_RECIPES_CACHE) {
@@ -4220,11 +4151,6 @@ async function openRecipeFromJSON(recipeId) {
     openRecipeDetail(recipeId);
   }
 }
-
-
-
-
-// ── Comer fuera — Restaurant MVP ──────────────────────────────────────────
 var _restaurants = null;
 var _selRest = null;
 
@@ -4432,9 +4358,6 @@ async function addRestMeal(restaurantIdx, optIdx) {
 </style>
 
 
-
-
-
 <style>
 @keyframes nav-ripple {
   0%   { transform:translate(-50%,-50%) scale(0); opacity:.6; }
@@ -4564,8 +4487,6 @@ function afNavRegister() {
     openCamera();
   },150);
 }
-
-// ── Active page — por ID, limpia todo primero ──────────
 (function(){
   var path = window.location.pathname;
   var MAP = {
@@ -4586,8 +4507,6 @@ function afNavRegister() {
   if (lbl) { lbl.style.color=cfg.color; lbl.style.fontWeight='800'; }
   if (dot.length) { var d=dot[dot.length-1]; d.style.background=cfg.glow; d.style.boxShadow='0 0 6px '+cfg.glow; }
 })();
-
-// ── Render "Registrado Hoy" list ──────────────────
 function renderTodayFoods() {
   var list = document.getElementById('todayFoodList');
   if (!list) return;
@@ -4681,10 +4600,7 @@ setTimeout(function() {
   try { foods = JSON.parse(localStorage.getItem('af-food-' + dateKey) || '[]'); } catch(e){}
   if (typeof updateMacroUI === 'function') updateMacroUI(foods);
 }, 500);
-
-// ══════════════════════════════════════════════
 // MERCADO — Lista de compras
-// ══════════════════════════════════════════════
 var MARKET_DATA = {
   proteinas: {
     label: 'PROTEÍNAS', icon: '🥩', color: '#f87171',
@@ -4779,14 +4695,10 @@ function addToLog(rid) {
     if (modal) modal.remove();
   }
 }
-
-// ── openMealDetail ─────────────────────────────────
 function openMealDetail(meal) {
   window._quickLogMeal = meal;
   if (typeof openQuickLog === 'function') openQuickLog();
 }
-
-// ── filterByMeal ────────────────────────────────────
 window._activeRecipeFilter = 'todo';
 function filterByMeal(meal) {
   window._activeRecipeFilter = meal || 'todo';
@@ -4808,13 +4720,6 @@ function filterByMeal(meal) {
   });
 }
 
-// ── Market data & functions ──────────────────────────
-function getMarketChecked() {
-  try { return JSON.parse(localStorage.getItem('af-market-checked') || '{}'); } catch(e) { return {}; }
-}
-function saveMarketChecked(obj) {
-  localStorage.setItem('af-market-checked', JSON.stringify(obj));
-}
 
 var MARKET_DATA = {
   proteinas:     { label:'PROTEÍNAS',     icon:'🥩', color:'#f87171',
@@ -4870,9 +4775,6 @@ function renderMarket() {
 }
 
 
-
-
-
 function toggleMarketItem(id) {
   var c = {};
   try { c = JSON.parse(localStorage.getItem('af-market-checked') || '{}'); } catch(e){}
@@ -4916,8 +4818,6 @@ document.addEventListener('DOMContentLoaded', function() {
   try { c = JSON.parse(localStorage.getItem('af-market-checked') || '{}'); } catch(e){}
   Object.keys(c).forEach(function(id) { if (c[id]) toggleMarketItem(id); });
 });
-
-// ── Agregar sugerencia al log ───────────────────────
 var SUGGESTION_DATA = {
   'pechuga-arroz':  {name:'Pechuga con arroz y brócoli', cal:420, prot:45, fat:8,  carb:40},
   'arroz-pollo':    {name:'Arroz con pollo',              cal:450, prot:38, fat:10, carb:52},
@@ -5019,10 +4919,7 @@ window.renderTodayFoods = function(foods) {
     empty.style.display = hasFoods ? 'none' : 'block';
   }
 };
-
-// ════════════════════════════════════════════════════════
 // openCamera — foto IA in-page (no navegar a otro lugar)
-// ════════════════════════════════════════════════════════
 function openCamera(meal) {
   if (typeof openPhotoLog === "function") openPhotoLog(meal);
 }
