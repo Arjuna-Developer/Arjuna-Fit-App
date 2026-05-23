@@ -1,9 +1,8 @@
-// ═══════════════════════════════════════════════
+
 // ArjunaFit — Trial System v2
 // FUENTE DE VERDAD: Supabase profiles.trial_start
 // localStorage = cache rápido, NUNCA fuente de verdad
 // El trial NUNCA se puede resetear limpiando caché
-// ═══════════════════════════════════════════════
 (function () {
   'use strict';
 
@@ -45,8 +44,6 @@
     const g = localStorage.getItem('af-product-tipo') || 'reto';
     return trialTypes.includes(t) || g === 'reto';
   }
-
-  // ── Obtener trial_start desde Supabase ──────────────────────
   // REGLA: si Supabase tiene trial_start → siempre usar ese valor
   // Si no tiene → crear ahora y guardar en Supabase
   // NUNCA re-crear si ya existe en Supabase
@@ -68,8 +65,6 @@
         console.warn('[Trial] Supabase read error:', error.message);
         return;
       }
-
-      // ── Si ya pagó → marcar como pagado ──
       if (data && data.paid_at) {
         localStorage.setItem(KEY_PAID, '1');
         localStorage.removeItem(KEY_START);
@@ -115,8 +110,6 @@
       console.warn('[Trial] Sync error:', e.message);
     }
   }
-
-  // ── initTrial: llamado al login/inicio ──────────
   function initTrial(userId) {
     if (!isTrialEligible()) return;
     if (localStorage.getItem(KEY_PAID) === '1') return;
@@ -125,8 +118,6 @@
     // Esto garantiza que localStorage tenga el valor correcto
     _syncTrialFromSupabase();
   }
-
-  // ── getStatus: usa localStorage (rápido) ───────
   // localStorage se sincroniza desde Supabase al cargar
   function getStatus() {
     if (!isTrialEligible()) {
@@ -159,8 +150,6 @@
       expired:  daysLeft === 0,
     };
   }
-
-  // ── renderBanner ────────────────────────────────
   function renderBanner() {
     const st = getStatus();
     if (st.paid) {
@@ -213,8 +202,6 @@
       if (scroll) scroll.prepend(banner);
     }
   }
-
-  // ── Paywall ──────────────────────────────────────
   function openPaywall() {
     const st = getStatus();
     const sessions = getTotalSessions();
@@ -319,8 +306,6 @@
     try { return Object.keys(localStorage).filter(k => k.startsWith('af-sets-')).length; }
     catch(e) { return 0; }
   }
-
-  // ── Auto-sync al cargar ─────────────────────────
   // Siempre verifica Supabase para que localStorage tenga el valor correcto
   document.addEventListener('DOMContentLoaded', function() {
     setTimeout(_syncTrialFromSupabase, 1000);
