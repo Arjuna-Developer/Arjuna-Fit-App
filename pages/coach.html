@@ -503,6 +503,11 @@ setTimeout(function() {
   }
 }, 6000);
 </script>
+  <!-- Supabase + Auth -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="/js/core/auth-bootstrap.js"></script>
+  <script src="/js/core/coach-context.js"></script>
+  <script src="/js/core/arju-prompts.js"></script>
 </head>
 <body>
 <div id="ldr" style="position:fixed;inset:0;background:#090611;z-index:999;display:flex;align-items:center;justify-content:center;transition:opacity .3s"><div style="width:36px;height:36px;border-radius:50%;border:3px solid rgba(124,58,237,.2);border-top-color:#7c3aed;animation:spin .7s linear infinite"></div></div>
@@ -1195,11 +1200,11 @@ function toggleCoachTTS() {
 async function initCoach() {
   let _sb = null;
   try {
-    _sb = window.sb || window.supabase?.createClient(
+    _sb = window.sb || (window.supabase && window.supabase.createClient(
       'https://egswsqymkxmbtcpnozcq.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnc3dzcXlta3htYnRjcG5vemNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjAzODIsImV4cCI6MjA5Mjg5NjM4Mn0.yIcQ7c4QF8wv0Dvtvaien5e-gi12CiruOBbYTeQRusM',
       { auth: { persistSession: true, storageKey: 'arjunafit-auth' } }
-    );
+    ));
   } catch(e) {}
 
   // Timeout — loader nunca queda colgado
@@ -1210,7 +1215,12 @@ async function initCoach() {
   }, 5000);
 
   try {
-    if (!_sb) throw new Error('no sb');
+    if (!_sb) {
+      console.warn('[Coach] Supabase no disponible — cargando sin auth');
+      // Mostrar coach sin auth — el usuario puede escribir igual
+      _showCoachReady('Invitado');
+      return;
+    }
     const { data: { session } } = await Promise.race([
       _sb.auth.getSession(),
       new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 4000))
