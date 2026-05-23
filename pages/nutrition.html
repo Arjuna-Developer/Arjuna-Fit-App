@@ -396,6 +396,13 @@ window.openMealDetail = window.openMealDetail || function(meal) {
 };
 </script>
 
+  <!-- ⚡ Performance: preconnect critical domains -->
+  <link rel="preconnect" href="https://egswsqymkxmbtcpnozcq.supabase.co" crossorigin>
+  <link rel="preconnect" href="https://api.openai.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <!-- Session cache global — 1 sola auth call -->
+  <script src="/js/core/session-cache.js"></script>
 </head>
 <body>
 <div class="ldr" id="ldr"><div style="width:36px;height:36px;border-radius:50%;border:3px solid rgba(124,58,237,.2);border-top-color:#7c3aed;animation:spin .7s linear infinite"></div></div>
