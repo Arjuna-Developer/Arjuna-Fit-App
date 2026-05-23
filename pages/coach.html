@@ -747,7 +747,7 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;')
     .replace(/\n/g, '<br>');
 }
-async function sendMessage() {
+async async function sendMessage() {
   const input = document.getElementById('textInput');
   const text  = input.value.trim();
   if (!text || COACH.isProcessing) return;
@@ -796,6 +796,7 @@ async function processMessage(text) {
 
   addMessage('assistant', '', true); // typing
 
+  console.log('[Coach] processMessage:', text.slice(0,50));
   try {
     // V2: context-aware mode detection
     var ctx = window.getArjuContext ? getArjuContext() : {};
@@ -811,6 +812,7 @@ async function processMessage(text) {
 
     var result;
     if (window.arjuSend) {
+      console.log('[Coach] llamando arjuSend, mode:', detectedMode);
       result = await arjuSend(text, detectedMode, ctx);
     } else {
       var reply = await AF_Coach.chat(COACH.user.id, text, COACH.history.slice(-6));
@@ -826,6 +828,7 @@ async function processMessage(text) {
     }
     if (window.AF) AF.track('arju_message_sent', { mode: detectedMode, product: ctx.productType || '' });
   } catch (e) {
+    console.error('[Coach] processMessage error:', e.message, e);
     removeTyping();
     var fallbackMsg = window.getArjuFallback ? getArjuFallback('daily_coach') : 'Vamos paso a paso. Elige una acción pequeña.';
     addMessage('assistant', fallbackMsg);
