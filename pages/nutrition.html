@@ -381,6 +381,15 @@ setTimeout(function() {
   border-radius:16px;padding:14px;margin-bottom:8px}
 .menu-meal-card:last-child{margin-bottom:0}
 </style>
+<script>
+/* localDateKey — disponible globalmente desde el inicio */
+window.localDateKey = function localDateKey() {
+  var d = new Date();
+  return d.getFullYear() + '-' +
+    String(d.getMonth()+1).padStart(2,'0') + '-' +
+    String(d.getDate()).padStart(2,'0');
+};
+</script>
 </head>
 <body>
 <div class="ldr" id="ldr"><div style="width:36px;height:36px;border-radius:50%;border:3px solid rgba(124,58,237,.2);border-top-color:#7c3aed;animation:spin .7s linear infinite"></div></div>
@@ -3327,7 +3336,8 @@ function renderLogList(entries) {
 async function saveFood(name, cal, prot, fat = 0, meal, carb = 0) {
   // Track first meal and meal confirmed
   try {
-    var _fk = 'af-food-' + localDateKey();
+    var _ldk0 = window.localDateKey || function(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+    var _fk = 'af-food-' + _ldk0();
     var _fe = JSON.parse(localStorage.getItem(_fk) || '[]');
     if (_fe.length === 0) {
       if (window.AF) AF.track('first_meal_logged', { source: meal || 'entry', name: name });
@@ -3341,7 +3351,8 @@ async function saveFood(name, cal, prot, fat = 0, meal, carb = 0) {
   var safeFat  = Math.round(fat  || 0);
   var carb     = Math.max(0, Math.round((safeCal - safeProt*4 - safeFat*9) / 4));
 
-  var key  = `af-food-${localDateKey()}`;
+  var _ldk2 = window.localDateKey || function(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+  var key  = 'af-food-' + _ldk2();
   var local = JSON.parse(localStorage.getItem(key) || '[]');
   local.push({ name, cal:safeCal, prot:safeProt, carb, fat:safeFat, meal, ts:Date.now() });
   localStorage.setItem(key, JSON.stringify(local));
@@ -4554,7 +4565,8 @@ function renderTodayFoods() {
   var list = document.getElementById('todayFoodList');
   if (!list) return;
 
-  var dateKey = localDateKey();
+  var _ldk = window.localDateKey || function(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+  var dateKey = _ldk();
   var foods = [];
   try { foods = JSON.parse(localStorage.getItem('af-food-' + dateKey) || '[]'); } catch(e){}
 
@@ -4593,7 +4605,8 @@ function renderTodayFoods() {
 }
 
 function deleteFoodEntry(idx) {
-  var dateKey = localDateKey();
+  var _ldk = window.localDateKey || function(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+  var dateKey = _ldk();
   var foods = [];
   try { foods = JSON.parse(localStorage.getItem('af-food-' + dateKey) || '[]'); } catch(e){}
   foods.splice(idx, 1);
@@ -4663,7 +4676,8 @@ document.addEventListener('DOMContentLoaded', function() {
 setTimeout(function() {
   renderTodayFoods();
   // Also refresh macros on load
-  var dateKey = localDateKey();
+  var _ldk = window.localDateKey || function(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+  var dateKey = _ldk();
   var foods = [];
   try { foods = JSON.parse(localStorage.getItem('af-food-' + dateKey) || '[]'); } catch(e){}
   if (typeof updateMacroUI === 'function') updateMacroUI(foods);
