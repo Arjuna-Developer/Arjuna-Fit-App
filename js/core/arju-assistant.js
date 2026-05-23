@@ -199,7 +199,7 @@
     setTimeout(() => toast('<span style="color:#c4b5fd;font-size:11px">ARJU</span><br>Dame un segundo...'), 5000);
 
     try {
-      const r = await fetch('/.netlify/functions/chat', {
+      const r = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         signal: ctrl.signal,
@@ -238,7 +238,7 @@
     const clean = text.replace(/[^\u0000-\u024F\s.,!?¿¡;:\-]/g, '').trim();
 
     try {
-      const r = await fetch('/.netlify/functions/tts', {
+      const r = await fetch('/api/tts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: clean }),
@@ -453,7 +453,7 @@
     }, 10000);
 
     try {
-      const r = await fetch('/.netlify/functions/chat', {
+      const r = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         signal: ctrl.signal,
