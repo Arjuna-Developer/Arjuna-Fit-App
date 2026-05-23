@@ -73,7 +73,7 @@ window.ARJU_PROMPTS = {
 
 // ── Fallback messages (used when API fails) ───────────────────────
 window.ARJU_FALLBACKS = {
-  daily_coach:       "Vamos paso a paso. Elige una acción pequeña para empezar hoy.",
+  daily_coach:       "Oye, sin conexión ahora. Revisa tu internet y escríbeme de nuevo 💜",
   nutrition_coach:   "Registra una comida y ajusta las cantidades si hace falta.",
   recipe_coach:      "Te recomiendo una tortilla de huevo con vegetales. Es rápida, tiene proteína y no complica la noche.",
   workout_session:   "Controla la bajada. Escucha tu cuerpo.",
