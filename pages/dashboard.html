@@ -1078,9 +1078,29 @@ setTimeout(function() {
 
 <!-- Loader -->
 <div class="ldr" id="ldr">
-  <div class="ldr-icon">🏋️</div>
-  <div style="font-size:13px;font-weight:500;color:var(--text-3)">Cargando tu reto</div>
-  <div class="ldr-dots"><div class="ldr-dot"></div><div class="ldr-dot"></div><div class="ldr-dot"></div></div>
+  <!-- Skeleton loader — visible inmediatamente, sin pantalla negra -->
+  <div style="width:100%;max-width:430px;padding:20px 16px;display:flex;flex-direction:column;gap:12px">
+    <!-- Avatar skeleton -->
+    <div style="display:flex;align-items:center;gap:12px;padding:16px;background:rgba(255,255,255,.04);border-radius:20px">
+      <div style="width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,rgba(124,58,237,.3),rgba(236,72,153,.2));animation:pulse 1.5s ease infinite"></div>
+      <div>
+        <div style="width:120px;height:14px;border-radius:7px;background:rgba(255,255,255,.08);animation:pulse 1.5s ease infinite .1s"></div>
+        <div style="width:80px;height:10px;border-radius:5px;background:rgba(255,255,255,.05);margin-top:6px;animation:pulse 1.5s ease infinite .2s"></div>
+      </div>
+    </div>
+    <!-- Ring skeleton -->
+    <div style="padding:20px;background:rgba(255,255,255,.03);border-radius:20px;display:flex;gap:16px;align-items:center">
+      <div style="width:72px;height:72px;border-radius:50%;border:4px solid rgba(124,58,237,.2);flex-shrink:0"></div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+        <div style="width:60%;height:12px;border-radius:6px;background:rgba(255,255,255,.07);animation:pulse 1.5s ease infinite .15s"></div>
+        <div style="width:40%;height:10px;border-radius:5px;background:rgba(255,255,255,.05);animation:pulse 1.5s ease infinite .25s"></div>
+      </div>
+    </div>
+    <!-- Cards skeleton -->
+    <div style="height:60px;border-radius:16px;background:rgba(255,255,255,.04);animation:pulse 1.5s ease infinite .3s"></div>
+    <div style="height:60px;border-radius:16px;background:rgba(255,255,255,.04);animation:pulse 1.5s ease infinite .4s"></div>
+  </div>
+  <style>@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}</style>
 </div>
 
 <!-- Atmosphere -->
@@ -1618,7 +1638,7 @@ const ds = d => d.toISOString().split('T')[0];
 const greet = () => { const h=new Date().getHours(); return h<12?'Buenos días':h<18?'Buenas tardes':'Buenas noches'; };
 
 // Hard timeout
-const _to = setTimeout(()=>showApp(),7000);
+const _to = setTimeout(()=>showApp(),1500); // reducido de 7s → 1.5s
 function showApp(){
   clearTimeout(_to);
   document.getElementById('ldr').classList.add('off');
@@ -3298,7 +3318,7 @@ async function init(){
     if (page && page.style.display === 'none' || page?.style.opacity === '0') {
       if (window.AB_showError) AB_showError(null, 'ldr');
     }
-  }, 5000);
+  }, 2000);
 
   const emergency = setTimeout(() => {
     clearTimeout(visTimeout);
@@ -3314,10 +3334,9 @@ async function init(){
     if(!_sb) throw new Error('no sb');
 
     // Auth — 4s max
-    const {data:{session}} = await Promise.race([
-      _sb.auth.getSession(),
-      new Promise((_,r)=>setTimeout(()=>r(new Error('auth timeout')),4000))
-    ]);
+    // Usar session cache global — evita llamada duplicada
+    const _cachedSess = window.AF_getSession ? await window.AF_getSession() : null;
+    const session = _cachedSess || (await _sb.auth.getSession())?.data?.session;
     if(!session?.user){ clearTimeout(emergency); window.location.replace('/'); return; }
     const uid = session.user.id;
 
