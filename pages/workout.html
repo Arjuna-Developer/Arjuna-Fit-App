@@ -438,12 +438,12 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .scroll::-webkit-scrollbar{display:none}
 </style>
   <link rel="stylesheet" href="/assets/visual-system.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="/js/core/supabase-client.js"></script>
-<script src="/js/core/auth-bootstrap.js"></script>
-<script src="/js/core/auth-guard.js"></script>
-<script src="/js/core/ops-config.js"></script>
-<script src="/js/core/analytics.js"></script>
+  
+
+
+
+
+
 
   <style>
   .nav-ambient{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100vw,430px);height:140px;background:radial-gradient(ellipse at 50% 100%,rgba(124,58,237,.18) 0%,rgba(168,85,247,.1) 30%,transparent 70%);filter:blur(20px);z-index:99;pointer-events:none}
@@ -483,7 +483,6 @@ setTimeout(function(){var l=document.getElementById("ldr");if(l&&!l.classList.co
   </div>
 
   <script>
-// ── Hard timeout: 8s → show error if still loading ──────────────
 setTimeout(function() {
   var ldr = document.getElementById('ldr');
   if (!ldr || ldr.classList.contains('off')) return;
@@ -497,8 +496,6 @@ setTimeout(function() {
     '<a href="/" style="display:block;text-align:center;margin-top:10px;font-size:12px;color:rgba(255,255,255,.35);text-decoration:none">Ir al inicio</a>' +
     '<a href="' + wa + '" target="_blank" style="display:block;text-align:center;margin-top:8px;font-size:12px;color:rgba(139,92,246,.6);text-decoration:none">💬 Hablar con Arjuna</a>';
 }, 8000);
-
-// ── Workout coach messages — human tone ──────────────
 const WORKOUT_COACH = {
   session_start: [
     'Hoy no buscamos hacerlo perfecto. Buscamos hacerlo con control.',
@@ -536,9 +533,6 @@ function getWorkoutCoachMsg(context) {
   const pool = WORKOUT_COACH[context] || WORKOUT_COACH.heavy_set;
   return pool[Math.floor(Math.random() * pool.length)];
 }
-
-
-// ── Progresión sin miedo — decisiones y molestia ─────
 let _progressionLog = [];
 
 function saveProgressionChoice(weight, choice) {
@@ -579,8 +573,6 @@ function showMolestiaBlock(exerciseName) {
   document.body.appendChild(el);
   setTimeout(function() { var e = document.getElementById('molestia-block'); if(e) e.remove(); }, 20000);
 }
-
-// ── Calentamiento guiado ──────────────────────────────
 // Track workout started
   if (window.AF) AF.track('workout_started', { reto: localStorage.getItem('af-selected-reto'), trialDay: parseInt(localStorage.getItem('af-trial-start')||'0') ? Math.min(7,Math.floor((Date.now()-parseInt(localStorage.getItem('af-trial-start')))/86400000)+1) : 0 });
   localStorage.setItem('af-workout-started', '1');
@@ -632,8 +624,6 @@ function showMolestiaBlock(exerciseName) {
 if(window.MV && typeof getWorkoutCoachMsg==='function') window.MV.show(getWorkoutCoachMsg('session_start'),{emoji:'💪',color:'rgba(250,204,21,.35)'});
 document.body.appendChild(ov);
 }
-
-// ── Progresión sin miedo ─────────────────────────────
 function checkProgressionSuggestion(exerciseName, lastWeight) {
   if (!lastWeight || lastWeight <= 0) return null;
   const suggested = Math.round((lastWeight + 2.5) * 4) / 4;
@@ -768,11 +758,9 @@ function showProgressionPrompt(exerciseName, lastWeight) {
 
 <!-- Supabase carga async — NO bloquea el render del workout -->
 <script>
-// ════════════════════════════════════════════════
 // ARJUNAFIT — workout.html
 // REGLA: El workout se muestra SIEMPRE.
 // Supabase es opcional para personalizar, no para cargar.
-// ════════════════════════════════════════════════
 
 // Supabase client (se inicializa cuando CDN carga)
 let _sb = null;
@@ -790,9 +778,6 @@ function _initSupabase() {
     console.warn('[AF] Supabase init error:', e.message);
   }
 }
-
-
-// ── Workout data ──────────────────────────────
 const SESSIONS = {
   A: { warmup:{title:'Activa glúteos y cadera',why:'Vamos a despertar el glúteo antes de cargar peso. Te ayuda a sentir mejor cada repetición.',steps:[{type:'movilidad',name:'Círculos de cadera',detail:'10 círculos por lado — suave'},{type:'movilidad',name:'Sentadilla suave',detail:'10 reps — sin peso, solo movilidad'},{type:'activacion',name:'Puente de glúteo',detail:'15 reps — aprieta arriba cada vez'},{type:'activacion',name:'Abducciones con banda',detail:'20 reps — banda por encima de rodillas'},{type:'aprox',name:'Hip Thrust 50% del peso',detail:'1 serie × 10 — peso que puedas mover fácil'}]}, name:'Glúteos · Empuje', emoji:'🍑', focus:'Glúteo Mayor', color:'rgba(124,58,237,.4)', duration:'45–55 min', rpe:'RPE 6',
     exercises:[
@@ -826,8 +811,6 @@ const PHASES_INFO = [{w:[1,2],name:'Activación'},{w:[3,4],name:'Desarrollo'},
   {w:[5,6],name:'Intensificación'},{w:[7,8],name:'Peak'}];
 const getPhase=wk=>PHASES_INFO.find(p=>p.w.includes(wk))||PHASES_INFO[0];
 const getType=n=>['A','B','C'][(n-1)%3];
-
-// ── Warmup data ───────────────────────────────
 const WARMUP = [
   {icon:'🚶', name:'Caminata / Trote en lugar', spec:'2 minutos', type:'time', seconds:120},
   {icon:'🔄', name:'Círculos de cadera', spec:'10 c/l'},
@@ -852,8 +835,6 @@ const COOLDOWN = [
   {icon:'🙇', name:'Postura del niño', spec:'60 segundos', type:'time', seconds:60},
   {icon:'🦵', name:'Cuádriceps de pie', spec:'30 seg c/l', type:'time', seconds:30},
 ];
-
-// ── Isometric / Timed exercise renderer ──────────
 let _isoTimer = null;
 
 function renderTimedEx(ex, key, idx) {
@@ -983,8 +964,6 @@ function doneIsoTimer(id, key, idx) {
   if (!S.simpleChecks[key]) S.simpleChecks[key] = {};
   S.simpleChecks[key][idx] = true;
 }
-
-// ── Video placeholder renderer ────────────────
 function videoSlot(title, emoji = '🎬') {
   const safe = title.replace(/"/g, '&quot;');
   return `
@@ -1001,8 +980,6 @@ function videoTap(el) {
   el.style.borderColor = 'rgba(124,58,237,.5)';
   setTimeout(() => el.style.borderColor = '', 600);
 }
-
-// ── State ─────────────────────────────────────
 let S = {
   uid:null, profile:null, session:null,
   dayNum:1, weekNum:1,
@@ -1013,8 +990,6 @@ let S = {
 };
 
 const PHASE_COUNT = 5;
-
-// ── Timer ──────────────────────────────────────
 function startTimer(){
   S.startMs=Date.now();
   S.timerInt=setInterval(()=>{
@@ -1023,8 +998,6 @@ function startTimer(){
       `${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`;
   },1000);
 }
-
-// ── Phase strip ────────────────────────────────
 function updateStrip(){
   [0,1,2,3,4].forEach(i=>{
     const el=document.getElementById(`ps${i}`);
@@ -1032,8 +1005,6 @@ function updateStrip(){
     el.className='ps '+(i<S.phase?'done':i===S.phase?'active':'');
   });
 }
-
-// ── Phase headers ──────────────────────────────
 const PHASE_SHORT = ['Calentamiento','Movilidad','Activación','Ejercicios','Enfriamiento'];
 const PHASE_META = [
   {icon:'🔥', name:'Calentamiento',       detail:'5 min · Activación cardiovascular'},
@@ -1042,8 +1013,6 @@ const PHASE_META = [
   {icon:'💪', name:'Ejercicios',          detail:'30–40 min · Fuerza progresiva'},
   {icon:'🧘', name:'Enfriamiento',        detail:'5 min · Estiramiento y recuperación'},
 ];
-
-// ── Main render ────────────────────────────────
 function renderCurrentPhase(){
   updateStrip();
   const scroll=document.getElementById('scroll');
@@ -1176,8 +1145,6 @@ function togglePhasePreview(i){
   var body = ph.querySelector('.phase-body');
   if (body) body.style.display = isOpen ? 'none' : 'block';
 }
-
-// ── Phase navigation (clickable strip) ────────
 function navigateToPhase(targetPhase) {
   if (targetPhase === S.phase) return;
   if (targetPhase > S.phase) {
@@ -1197,8 +1164,6 @@ function navigateToPhase(targetPhase) {
   saveWorkoutState();
   showPhaseFlash(S.phase);
 }
-
-// ── Exercise prev/next navigation ─────────────
 function prevExercise() {
   const all = document.querySelectorAll('.ex-card');
   let current = -1;
@@ -1468,8 +1433,6 @@ function toggleSet(i,s){
   checkMainDone();
   saveWorkoutState();
 }
-
-// ── Session state persistence ─────────────────
 function saveWorkoutState() {
   try {
     sessionStorage.setItem('af-workout-live', JSON.stringify({
@@ -1497,8 +1460,6 @@ function restoreWorkoutState() {
     return true;
   } catch(e) { return false; }
 }
-
-// ── Guardar set to Supabase (silent fail) ───────
 async function saveSet(exIdx, setIdx, setData) {
   if(window.AF) AF.track('set_logged', {ex: exIdx, set: setIdx});
   if (!_sb || !S.uid || !setData.done) return;
@@ -1524,8 +1485,6 @@ async function saveSet(exIdx, setIdx, setData) {
     localStorage.setItem(key, JSON.stringify(local.slice(-50)));
   }
 }
-
-// ── PR Detection ──────────────────────────────
 const _localMaxes = {};
 
 async function checkPR(exName, kg, reps) {
@@ -1557,8 +1516,6 @@ async function loadPRs() {
     console.log('[AF] PRs cargados:', Object.keys(_localMaxes).length);
   } catch(e) {}
 }
-
-// ── PR Toast ──────────────────────────────────
 function showPRToast(exName, kg, diff) {
   const t = document.createElement('div');
   t.style.cssText = `
@@ -1757,8 +1714,6 @@ function checkMainDone(){
     `${total-done} ejercicio${total-done!==1?'s':''} restante${total-done!==1?'s':''}`:
     '✓ Todo completado — toca para el enfriamiento';
 }
-
-// ── Phase navigation ───────────────────────────
 function prevPhase(){
   if(S.phase <= 0) {
     if (confirm('¿Salir del entrenamiento?')) {
@@ -1843,8 +1798,6 @@ function showPhaseFlash(phase){
   },600);
 }
 
-// ── Finish ─────────────────────────────────────
-// ── Discomfort handler ───────────────────────────────────────────
 async function reportDiscomfort() {
   if (window.AF) AF.track('exercise_discomfort_reported', {});
   var ov = document.createElement('div');
@@ -1941,9 +1894,6 @@ async function finishWorkout(){
     console.error('Finish error:',e);
   }
 }
-
-
-// ── Workout completion screen ─────────────────────────
 function showCompletionScreen(volume, exercises, sets, duration) {
   const mins = Math.round(duration / 60) || 45;
   const finishMsg = getWorkoutCoachMsg('finish');
@@ -2016,9 +1966,6 @@ function showCompletionScreen(volume, exercises, sets, duration) {
     }
   }, 3000);
 }
-
-
-// ── Show state ─────────────────────────────────
 function showState(icon,title,sub,btns=[]){
   document.getElementById('scroll').innerHTML=`
     <div class="state">
@@ -2154,16 +2101,11 @@ function showCoachWelcome(name, weekNum, session) {
   welcome.addEventListener('click', closeWelcome);
 }
 
-// ── Hard timeout ───────────────────────────────
-// ── Init ─────────────────────────────────────
 // Estrategia: mostrar workout inmediatamente con datos locales.
 // Supabase se usa en background para personalizar.
 // NUNCA queda en spinner infinito.
-
-// ══════════════════════════════════════════════
 // INIT — Mostrar workout INMEDIATAMENTE.
 // Supabase personaliza después, nunca bloquea.
-// ══════════════════════════════════════════════
 
 function showWorkoutNow(dayNum, name) {
   const d = Math.max(1, dayNum || 1);
@@ -2272,19 +2214,16 @@ async function loadRealData() {
     // Workout ya está mostrando Sem1 — no hacer nada
   }
 }
-
-// ── buildPhaseBody: generates accordion content per phase ─────────────────
 </script>
-<script src="/js/core/arjuna-voice.js"></script>
-<script src="/js/core/coach-context.js"></script>
-<script src="/js/core/arju-prompts.js"></script>
-<script src="/js/core/icons.js"></script>
-<script src="/js/core/exercise-library.js"></script>
-  <script src="/js/core/microvictorias.js"></script>
+
+
+
+
+
+  
 <!-- arju-assistant disabled in workout -->
-<script src="/js/core/transitions.js"></script>
+
 <script>
-// ── buildPhaseBody: content for each accordion phase ─────────────────────
 function buildPhaseBody(phaseIndex, sess) {
   var idx = phaseIndex;
   
