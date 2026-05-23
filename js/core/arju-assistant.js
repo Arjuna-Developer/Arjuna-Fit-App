@@ -28,7 +28,7 @@
     d.id = 'af';
     d.innerHTML = '<span id="af-i">🤖</span><span id="af-l">Arju</span>';
     d.style.cssText = `position:fixed;bottom:calc(74px + env(safe-area-inset-bottom));
-      right:16px;z-index:180;width:54px;height:54px;border-radius:18px;
+      right:16px;z-index:9001;width:54px;height:54px;border-radius:18px;
       background:linear-gradient(135deg,#7c3aed,#ec4899);
       border:1.5px solid rgba(255,255,255,.15);cursor:pointer;
       display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
@@ -317,7 +317,7 @@
   function openOverlay() {
     const ov = document.createElement('div');
     ov.id = 'arju-ov';
-    ov.style.cssText = `position:fixed;inset:0;z-index:300;
+    ov.style.cssText = `position:fixed;inset:0;z-index:9000;
       background:rgba(8,5,17,.92);backdrop-filter:blur(18px);
       display:flex;align-items:flex-end;font-family:'Outfit',sans-serif;`;
 
