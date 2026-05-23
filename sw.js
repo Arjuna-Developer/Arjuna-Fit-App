@@ -1,89 +1,103 @@
-// ArjunaFit Service Worker v3
-// CAMBIO CLAVE: los HTML nunca se cachean — siempre vienen del servidor.
-// Solo se cachean assets estáticos (CSS, JS, imágenes).
+// sw.js — Service Worker con cache agresivo
+// Cache-first para assets, network-first para HTML y API
+const CACHE_V = 'af-v3';
+const STATIC_CACHE = 'af-static-v3';
+const RUNTIME_CACHE = 'af-runtime-v3';
 
-const CACHE = 'arjunafit-v3';
-
-// Solo assets que no cambian frecuentemente
+// Assets que se cachean en install (críticos)
 const PRECACHE = [
+  '/',
+  '/index.html',
+  '/pages/dashboard.html',
+  '/pages/nutrition.html',
+  '/pages/coach.html',
+  '/pages/workout.html',
+  '/pages/progress.html',
+  '/pages/profile.html',
   '/offline.html',
-  '/styles/tokens.css',
-  '/styles/reset.css',
-  '/styles/components.css',
-  'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js'
+  '/js/core/session-cache.js',
+  '/js/core/auth-bootstrap.js',
+  '/js/core/coach-ai.js',
+  '/js/core/arju-prompts.js',
+  '/js/core/trial-guard.js',
+  '/js/nutrition/food-log.js',
+  '/manifest.json',
 ];
 
-// Nunca cachear estos patrones
-const NO_CACHE = [
-  '.html',        // TODOS los HTML siempre del servidor
-  'supabase.co',  // API Supabase
-  'api.openai',   // API OpenAI
-  'hotmart.com',  // Hotmart
-  'netlify/functions', // Netlify functions
-  'fonts.googleapis',  // Google Fonts (tienen su propio cache)
-];
-
-self.addEventListener('install', e => {
+// Instalar — pre-cachear críticos
+self.addEventListener('install', function(e) {
   e.waitUntil(
-    caches.open(CACHE)
-      .then(cache => cache.addAll(PRECACHE).catch(err => console.warn('[SW] Precache error:', err)))
-      .then(() => self.skipWaiting())
+    caches.open(STATIC_CACHE).then(function(cache) {
+      return cache.addAll(PRECACHE).catch(function(err) {
+        console.warn('[SW] Precache error:', err.message);
+      });
+    }).then(function() {
+      return self.skipWaiting();
+    })
   );
 });
 
-self.addEventListener('activate', e => {
+// Activar — limpiar caches viejos
+self.addEventListener('activate', function(e) {
   e.waitUntil(
-    caches.keys()
-      .then(keys => Promise.all(
-        keys.filter(k => k !== CACHE).map(k => {
-          console.log('[SW] Eliminando cache viejo:', k);
-          return caches.delete(k);
-        })
-      ))
-      .then(() => self.clients.claim())
+    caches.keys().then(function(keys) {
+      return Promise.all(
+        keys.filter(function(k) { return k !== STATIC_CACHE && k !== RUNTIME_CACHE; })
+            .map(function(k) { return caches.delete(k); })
+      );
+    }).then(function() {
+      return self.clients.claim();
+    })
   );
 });
 
-// Offline fallback page
-const OFFLINE_URL = '/offline.html';
+// Fetch — estrategia por tipo de recurso
+self.addEventListener('fetch', function(e) {
+  var url = new URL(e.request.url);
 
-self.addEventListener('fetch', e => {
-  if (e.request.method !== 'GET') return;
+  // API calls — siempre network (nunca cachear)
+  if (url.pathname.startsWith('/api/')) {
+    return; // sin interceptar
+  }
 
-  const url = e.request.url;
-
-  // ── Navegación offline: fallback antes del NO_CACHE check ──
-  if (e.request.mode === 'navigate') {
+  // Assets estáticos (JS, CSS, fonts, imágenes) — cache-first
+  if (e.request.destination === 'script' ||
+      e.request.destination === 'style' ||
+      e.request.destination === 'font' ||
+      e.request.destination === 'image') {
     e.respondWith(
-      fetch(e.request).catch(() =>
-        caches.match(OFFLINE_URL).then(r => r || new Response(
-          '<html><body style="font-family:sans-serif;text-align:center;padding:40px;background:#090611;color:#fff"><h1>Sin conexion</h1><p>Revisa tu internet.</p></body></html>',
-          { headers: { 'Content-Type': 'text/html' } }
-        ))
-      )
+      caches.match(e.request).then(function(cached) {
+        if (cached) return cached;
+        return fetch(e.request).then(function(response) {
+          if (response.ok) {
+            var clone = response.clone();
+            caches.open(RUNTIME_CACHE).then(function(cache) {
+              cache.put(e.request, clone);
+            });
+          }
+          return response;
+        });
+      })
     );
     return;
   }
 
-  // Nunca interceptar si coincide con NO_CACHE
-  const skip = NO_CACHE.some(pattern => url.includes(pattern));
-  if (skip) return;
-
-  // Cache-first para assets estáticos (CSS, JS, imágenes, fuentes CDN)
-  e.respondWith(
-    caches.match(e.request).then(cached => {
-      if (cached) return cached;
-
-      return fetch(e.request).then(res => {
-        if (res && res.status === 200 && res.type !== 'opaque') {
-          const clone = res.clone();
-          caches.open(CACHE).then(cache => cache.put(e.request, clone));
+  // HTML pages — network-first con fallback a cache
+  if (e.request.mode === 'navigate' || e.request.destination === 'document') {
+    e.respondWith(
+      fetch(e.request).then(function(response) {
+        if (response.ok) {
+          var clone = response.clone();
+          caches.open(RUNTIME_CACHE).then(function(cache) {
+            cache.put(e.request, clone);
+          });
         }
-        return res;
-      }).catch(() => {
-        // Sin red y sin cache → nada que hacer
-        console.warn('[SW] Sin red para:', url);
-      });
-    })
-  );
+        return response;
+      }).catch(function() {
+        return caches.match(e.request)
+          .then(function(cached) { return cached || caches.match('/offline.html'); });
+      })
+    );
+    return;
+  }
 });
