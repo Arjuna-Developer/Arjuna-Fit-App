@@ -586,7 +586,7 @@ window.saveFood = window.saveFood || function(name, cal, prot, fat, meal) {
     <div id="mealRhythm" style="display:flex;flex-direction:column;gap:8px">
 
       <!-- Desayuno -->
-      <div onclick="openMealDetail('desayuno')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;
+      <button onclick="window.openMealDetail('desayuno')" ontouchstart="window.openMealDetail('desayuno')" type="button" style="display:flex;align-items:center;gap:12px;padding:14px 16px;
         background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
         border-radius:18px;cursor:pointer;-webkit-tap-highlight-color:transparent;
         transition:background .12s" 
@@ -604,7 +604,7 @@ window.saveFood = window.saveFood || function(name, cal, prot, fat, meal) {
       </div>
 
       <!-- Almuerzo -->
-      <div onclick="openMealDetail('almuerzo')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;
+      <button onclick="window.openMealDetail('almuerzo')" ontouchstart="window.openMealDetail('almuerzo')" type="button" style="display:flex;align-items:center;gap:12px;padding:14px 16px;
         background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
         border-radius:18px;cursor:pointer;-webkit-tap-highlight-color:transparent;
         transition:background .12s"
@@ -622,7 +622,7 @@ window.saveFood = window.saveFood || function(name, cal, prot, fat, meal) {
       </div>
 
       <!-- Cena -->
-      <div onclick="openMealDetail('cena')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;
+      <button onclick="window.openMealDetail('cena')" ontouchstart="window.openMealDetail('cena')" type="button" style="display:flex;align-items:center;gap:12px;padding:14px 16px;
         background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
         border-radius:18px;cursor:pointer;-webkit-tap-highlight-color:transparent;
         transition:background .12s"
@@ -640,7 +640,7 @@ window.saveFood = window.saveFood || function(name, cal, prot, fat, meal) {
       </div>
 
       <!-- Snack -->
-      <div onclick="openMealDetail('snack')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;
+      <button onclick="window.openMealDetail('snack')" ontouchstart="window.openMealDetail('snack')" type="button" style="display:flex;align-items:center;gap:12px;padding:14px 16px;
         background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
         border-radius:18px;cursor:pointer;-webkit-tap-highlight-color:transparent;
         transition:background .12s"
@@ -5659,6 +5659,42 @@ function menuFallback(reto){
 loadSaved();
 
 })();
+</script>
+
+
+<script>
+// Fix táctil — agregar listeners en todos los meal cards
+document.addEventListener('DOMContentLoaded', function() {
+  var meals = ['desayuno','almuerzo','cena','snack'];
+  meals.forEach(function(meal) {
+    // Buscar por el id del subtítulo y subir al padre
+    var sub = document.getElementById('meal-' + meal + '-sub');
+    if (sub) {
+      var card = sub.closest('[onclick],[ontouchstart]') || sub.parentElement.parentElement;
+      if (card) {
+        card.addEventListener('touchend', function(e) {
+          e.preventDefault();
+          window.openMealDetail(meal);
+        }, { passive: false });
+        card.addEventListener('click', function(e) {
+          window.openMealDetail(meal);
+        });
+      }
+    }
+  });
+
+  // También el botón + Registrar principal
+  var regBtn = document.querySelector('.log-btn');
+  if (regBtn) {
+    regBtn.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      if (typeof openPhotoLog === 'function') openPhotoLog();
+      else if (typeof window.openMealDetail === 'function') window.openMealDetail('snack');
+    }, { passive: false });
+  }
+  
+  console.log('[Nutrition] Touch listeners agregados');
+});
 </script>
 
 </body>
