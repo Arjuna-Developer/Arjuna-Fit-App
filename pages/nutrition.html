@@ -390,6 +390,80 @@ window.localDateKey = function localDateKey() {
     String(d.getDate()).padStart(2,'0');
 };
 </script>
+<script>
+/* Funciones críticas — disponibles antes que cualquier onclick */
+window.localDateKey = window.localDateKey || function() {
+  var d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+};
+
+window.openMealDetail = function(meal) {
+  var cap = meal ? meal.charAt(0).toUpperCase() + meal.slice(1) : 'Comida';
+  // Intentar openQuickLog si está definido
+  if (typeof window.openQuickLog === 'function') {
+    window.openQuickLog(cap);
+    return;
+  }
+  // Sheet de emergencia siempre funciona
+  var OPTS = {
+    Desayuno:[
+      {n:'Bowl de huevos y aguacate',c:380,p:28,e:'🍳'},
+      {n:'Avena con banano',c:310,p:12,e:'🥣'},
+      {n:'Omelette de proteína',c:280,p:25,e:'🥚'},
+    ],
+    Almuerzo:[
+      {n:'Pechuga con arroz y brócoli',c:420,p:45,e:'🍗'},
+      {n:'Atún con fríjoles',c:310,p:35,e:'🥗'},
+      {n:'Carne molida con papa',c:480,p:32,e:'🥩'},
+    ],
+    Cena:[
+      {n:'Ensalada con pollo',c:320,p:35,e:'🥬'},
+      {n:'Sopa de pollo',c:280,p:28,e:'🍲'},
+      {n:'Huevos revueltos',c:250,p:20,e:'🥚'},
+    ],
+    Snack:[
+      {n:'Fruta con yogur',c:180,p:10,e:'🍓'},
+      {n:'Maní y almendras',c:200,p:8,e:'🥜'},
+      {n:'Batido de proteína',c:220,p:25,e:'🥤'},
+    ]
+  };
+  var opts = OPTS[cap] || OPTS['Almuerzo'];
+  var mealLow = meal.toLowerCase();
+  var sheet = document.createElement('div');
+  sheet.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(8,5,17,.95);display:flex;align-items:flex-end;font-family:Outfit,sans-serif';
+  sheet.innerHTML = '<div style="width:100%;max-width:430px;margin:0 auto;padding:20px 16px calc(28px + env(safe-area-inset-bottom));background:rgba(14,7,26,.99);border-radius:24px 24px 0 0;border-top:1px solid rgba(255,255,255,.1)">'
+    + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">'
+      + '<div style="font-size:16px;font-weight:800;color:#f1f0f4">' + cap + '</div>'
+      + '<button onclick="this.closest('div[style*=\"position:fixed\"]').remove()" style="padding:6px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:rgba(255,255,255,.5);cursor:pointer;font-size:12px">Cerrar</button>'
+    + '</div>'
+    + opts.map(function(o){
+        return '<button onclick="if(typeof window.saveFood==='function')window.saveFood(''+o.n+'','+o.c+','+o.p+',0,''+mealLow+'');this.closest('div[style*=\"position:fixed\"]').remove()" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03);width:100%;text-align:left;cursor:pointer;margin-bottom:7px;-webkit-tap-highlight-color:transparent">'
+          + '<span style="font-size:24px">'+o.e+'</span>'
+          + '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#f1f0f4">'+o.n+'</div>'
+          + '<div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:2px">'+o.p+'g prot · '+o.c+' kcal</div></div>'
+          + '</button>';
+      }).join('')
+    + '</div>';
+  sheet.addEventListener('click', function(e){ if(e.target===sheet) sheet.remove(); });
+  document.body.appendChild(sheet);
+};
+
+window.saveFood = window.saveFood || function(name, cal, prot, fat, meal) {
+  // Fallback mínimo — siempre guarda en localStorage
+  var key = 'af-food-' + window.localDateKey();
+  var foods = [];
+  try { foods = JSON.parse(localStorage.getItem(key) || '[]'); } catch(e){}
+  foods.push({ name:name, cal:cal||0, prot:prot||0, fat:fat||0, meal:meal||'snack', ts:Date.now() });
+  localStorage.setItem(key, JSON.stringify(foods));
+  console.log('[saveFood] Guardado:', name, cal, 'kcal', prot, 'g prot');
+  // Intentar actualizar UI si está disponible
+  setTimeout(function() {
+    if (typeof window.renderTodayFoods === 'function') window.renderTodayFoods();
+    if (typeof window.updateMacroUI === 'function') window.updateMacroUI(foods);
+  }, 300);
+};
+</script>
+
 </head>
 <body>
 <div class="ldr" id="ldr"><div style="width:36px;height:36px;border-radius:50%;border:3px solid rgba(124,58,237,.2);border-top-color:#7c3aed;animation:spin .7s linear infinite"></div></div>
