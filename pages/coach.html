@@ -508,6 +508,7 @@ setTimeout(function() {
   <script src="/js/core/auth-bootstrap.js"></script>
   <script src="/js/core/coach-context.js"></script>
   <script src="/js/core/arju-prompts.js"></script>
+  <script src="/js/core/coach-ai.js"></script>
 </head>
 <body>
 <div id="ldr" style="position:fixed;inset:0;background:#090611;z-index:999;display:flex;align-items:center;justify-content:center;transition:opacity .3s"><div style="width:36px;height:36px;border-radius:50%;border:3px solid rgba(124,58,237,.2);border-top-color:#7c3aed;animation:spin .7s linear infinite"></div></div>
@@ -817,7 +818,24 @@ async function processMessage(text) {
       console.log('[Coach] llamando arjuSend, mode:', detectedMode);
       result = await arjuSend(text, detectedMode, ctx);
     } else {
-      var reply = await AF_Coach.chat(COACH.user.id, text, COACH.history.slice(-6));
+      // Fallback directo a /api/chat si arjuSend no está disponible
+      console.log('[Coach] arjuSend no disponible, llamando /api/chat directo');
+      var tok = '';
+      try {
+        var rw = localStorage.getItem('sb-egswsqymkxmbtcpnozcq-auth-token') || localStorage.getItem('arjunafit-auth');
+        if (rw) tok = JSON.parse(rw).access_token || '';
+      } catch(e) {}
+      var r = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tok },
+        body: JSON.stringify({
+          messages: [{ role: 'user', content: text }],
+          system: 'Eres Arju, coach de ArjunaFit. Mujer colombiana directa y calida. Max 3 oraciones.',
+          max_tokens: 300
+        })
+      });
+      var d = await r.json();
+      var reply = d.choices && d.choices[0] && d.choices[0].message && d.choices[0].message.content || 'No pude responder ahora.';
       result = { message: reply, suggestedActions: [], isFallback: false };
     }
     removeTyping();
