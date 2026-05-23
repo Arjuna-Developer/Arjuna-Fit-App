@@ -403,6 +403,21 @@ window.openMealDetail = window.openMealDetail || function(meal) {
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   <!-- Session cache global — 1 sola auth call -->
   <script src="/js/core/session-cache.js"></script>
+<style>
+.tc[data-lazy]:not(.loaded) { min-height: 200px; }
+.tc[data-lazy]:not(.loaded)::after {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin: 80px auto;
+  border: 3px solid rgba(124,58,237,.3);
+  border-top-color: #7c3aed;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
 </head>
 <body>
 <div class="ldr" id="ldr"><div style="width:36px;height:36px;border-radius:50%;border:3px solid rgba(124,58,237,.2);border-top-color:#7c3aed;animation:spin .7s linear infinite"></div></div>
@@ -5450,5 +5465,22 @@ loadSaved();
 })();
 </script>
 
+
+<script>
+// Lazy load de tabs pesados — cargar solo al hacer click
+(function() {
+  var lazyLoaded = {};
+  var origSw = window.sw;
+  window.sw = function(id) {
+    if (origSw) origSw(id);
+    // Marcar tab como loaded la primera vez
+    var tc = document.getElementById('tc-' + id);
+    if (tc && tc.dataset.lazy && !lazyLoaded[id]) {
+      lazyLoaded[id] = true;
+      tc.classList.add('loaded');
+    }
+  };
+})();
+</script>
 </body>
 </html>
