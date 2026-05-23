@@ -3712,79 +3712,65 @@ function renderPhotoResult(data) {
   el.style.display = 'flex';
 
   var foods = data.foods || [];
-  var total = data.total || { cal: 0, prot: 0, carb: 0, fat: 0 };
+  var total = data.total || { cal: 0, prot: 0 };
   var h = new Date().getHours();
   var defaultMeal = h<11?'desayuno':h<15?'almuerzo':h<19?'cena':'snack';
 
-  // Totales calculados
-  var totCal  = Math.round(total.cal  || foods.reduce((s,f)=>s+(f.cal||0),0));
-  var totProt = Math.round(total.prot || foods.reduce((s,f)=>s+(f.prot||0),0));
+  var totCal  = Math.round(total.cal  || foods.reduce(function(s,f){return s+(f.cal||0);},0));
+  var totProt = Math.round(total.prot || foods.reduce(function(s,f){return s+(f.prot||0);},0));
 
-  var humanMsg = totProt >= 25
-    ? 'Buen aporte de proteína. Esta comida sostiene tu energía.'
-    : totProt >= 12
-    ? 'En la próxima agrega un poco más de proteína si puedes.'
-    : 'Registrado. Intenta agregar proteína en la próxima comida.';
+  el.innerHTML =
+    // Totales prominentes
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">' +
+      '<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px;text-align:center">' +
+        '<div style="font-size:26px;font-weight:800;color:#f1f0f4">' + totCal + '</div>' +
+        '<div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:2px">kcal totales</div>' +
+      '</div>' +
+      '<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px;text-align:center">' +
+        '<div style="font-size:26px;font-weight:800;color:#4ade80">' + totProt + 'g</div>' +
+        '<div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:2px">proteína</div>' +
+      '</div>' +
+    '</div>' +
 
-  el.innerHTML = `
-<!-- cuadro morado eliminado -->
+    // Lista compacta de alimentos
+    '<div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden">' +
+      '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.25);padding:10px 14px 6px">DETECTADO</div>' +
+      foods.map(function(f){
+        return '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-top:1px solid rgba(255,255,255,.04)">' +
+          '<span style="font-size:13px;color:rgba(255,255,255,.75)">' + (f.name||'') + '</span>' +
+          '<span style="font-size:12px;color:rgba(255,255,255,.35);white-space:nowrap;margin-left:8px">' +
+            Math.round(f.cal||0) + ' cal · ' + Math.round(f.prot||0) + 'g prot' +
+          '</span>' +
+        '</div>';
+      }).join('') +
+    '</div>' +
 
-    <!-- Totales prominentes -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
-        border-radius:14px;padding:14px;text-align:center">
-        <div style="font-size:26px;font-weight:800;color:#f1f0f4">${totCal}</div>
-        <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:2px">kcal totales</div>
-      </div>
-      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
-        border-radius:14px;padding:14px;text-align:center">
-        <div style="font-size:26px;font-weight:800;color:#4ade80">${totProt}g</div>
-        <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:2px">proteína</div>
-      </div>
-    </div>
+    // Selector de comida — 4 en una fila
+    '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">' +
+      ['desayuno','almuerzo','cena','snack'].map(function(m){
+        var ico = m==='desayuno'?'🌅':m==='almuerzo'?'🌞':m==='cena'?'🌙':'🍎';
+        var lbl = m==='desayuno'?'Desay.':m==='almuerzo'?'Alm.':m==='cena'?'Cena':'Snack';
+        var act = m===defaultMeal;
+        return '<button id="pfm-'+m+'" onclick="selectPhotoMeal(''+m+'')" style="' +
+          'padding:8px 2px;border-radius:10px;cursor:pointer;font-family:var(--font,Outfit);' +
+          'font-size:11px;font-weight:600;text-align:center;' +
+          'border:1px solid '+(act?'rgba(139,92,246,.5)':'rgba(255,255,255,.08)')+';' +
+          'background:'+(act?'rgba(139,92,246,.2)':'transparent')+';' +
+          'color:'+(act?'#c4b5fd':'rgba(240,238,248,.4)')+';' +
+          '-webkit-tap-highlight-color:transparent;display:flex;flex-direction:column;align-items:center;gap:2px">' +
+          '<span>' + ico + '</span><span>' + lbl + '</span></button>';
+      }).join('') +
+    '</div>' +
 
-    <!-- Lista compacta de alimentos -->
-    <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
-      border-radius:14px;overflow:hidden">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
-        color:rgba(255,255,255,.25);padding:10px 14px 6px">Detectado</div>
-      ${foods.map((f,i)=>`
-        <div style="display:flex;justify-content:space-between;align-items:center;
-          padding:8px 14px;border-top:1px solid rgba(255,255,255,.04)">
-          <span style="font-size:13px;color:rgba(255,255,255,.75)">${f.name}</span>
-          <span style="font-size:12px;color:rgba(255,255,255,.35);white-space:nowrap;margin-left:8px">
-            ${Math.round(f.cal||0)} cal · ${Math.round(f.prot||0)}g prot</span>
-        </div>`).join('')}
-    </div>
+    // Botón guardar
+    '<button onclick="confirmPhotoGuardar(' + foods.length + ',' + totCal + ',' + totProt + ')" style="' +
+      'width:100%;padding:14px;border-radius:14px;border:none;cursor:pointer;' +
+      'background:linear-gradient(135deg,#8b5cf6,#ec4899);' +
+      'color:#fff;font-family:var(--font,Outfit);font-size:15px;font-weight:800;' +
+      '-webkit-tap-highlight-color:transparent">✓ Guardar comida</button>';
 
-    <!-- Asignar a comida -->
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
-      ${['desayuno','almuerzo','cena','snack'].map(m=>`
-        <button id="pfm-${m}" onclick="selectPhotoMeal('${m}')" style="
-          padding:8px 4px;border-radius:10px;cursor:pointer;font-family:var(--font);
-          font-size:11px;font-weight:600;text-align:center;
-          border:1px solid ${m===defaultMeal?'rgba(139,92,246,.5)':'rgba(255,255,255,.08)'};
-          background:${m===defaultMeal?'rgba(139,92,246,.2)':'transparent'};
-          color:${m===defaultMeal?'#c4b5fd':'rgba(240,238,248,.4)'};
-          -webkit-tap-highlight-color:transparent;display:flex;flex-direction:column;
-          align-items:center;gap:2px">
-          <span>${m==='desayuno'?'🌅':m==='almuerzo'?'🌞':m==='cena'?'🌙':'🍎'}</span>
-          <span>${m==='desayuno'?'Desay.':m==='almuerzo'?'Almuerzo':m==='cena'?'Cena':'Snack'}</span>
-        </button>`).join('')}
-    </div>
-
-    <button onclick="confirmPhotoGuardar(${foods.length},${totCal},${totProt})" style="
-      width:100%;padding:14px;border-radius:14px;border:none;cursor:pointer;
-      background:linear-gradient(135deg,#8b5cf6,#ec4899);
-      color:#fff;font-family:var(--font);font-size:15px;font-weight:800;
-      -webkit-tap-highlight-color:transparent">
-      ✓ Guardar comida
-    </button>
-  `;
-
-  window._photoMeal = defaultMeal;
-  window._photoFoodsCount = foods.length;
-  window._photoTotals = { cal: totCal, prot: totProt };
+  window._photoMeal    = defaultMeal;
+  window._photoTotals  = { cal: totCal, prot: totProt };
 }
 
 function selectPhotoMeal(meal) {
@@ -4011,7 +3997,7 @@ function mkOverlay(id) {
   document.getElementById(id)?.remove();
   var ov = document.createElement('div');
   ov.id = id;
-  ov.style.cssText = `position:fixed;inset:0;z-index:9999;background:var(--bg);
+  ov.style.cssText = `position:fixed;inset:0;z-index:99999;background:var(--bg);
     overflow-y:auto;-webkit-overflow-scrolling:touch;font-family:var(--font);`;
   document.body.style.overflow = 'hidden';
   ov.addEventListener('click', e => { if (e.target===ov) { ov.remove(); document.body.style.overflow=''; } });
