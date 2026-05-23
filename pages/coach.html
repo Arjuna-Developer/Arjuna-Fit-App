@@ -824,7 +824,7 @@ async function processMessage(text) {
     removeTyping();
     var fallbackMsg = window.getArjuFallback ? getArjuFallback('daily_coach') : 'Vamos paso a paso. Elige una acción pequeña.';
     addMessage('assistant', fallbackMsg);
-    setStatus('Error de conexión', '');
+    setStatus('Sin conexión — revisa tu internet', '');
     updateMicUI('idle');
     if (window.AF_logError) AF_logError('/pages/coach.html', e.message, 'warning');
   } finally {
