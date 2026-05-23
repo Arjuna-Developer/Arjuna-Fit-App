@@ -605,18 +605,18 @@ setTimeout(function() {
 
 <div class="perm-toast" id="permToast"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="/js/core/supabase-client.js"></script>
-<script src="/js/core/auth-bootstrap.js"></script>
-<script src="/js/core/auth-guard.js"></script>
-<script src="/js/core/ops-config.js"></script>
-<script src="/js/core/arju-knowledge.js"></script>
-<script src="/js/core/analytics.js"></script>
-<script src="/js/core/icons.js"></script>
-<script src="/js/core/microvictorias.js"></script>
-<script src="/js/core/coach-context.js"></script>
-<script src="/js/core/arju-prompts.js"></script>
-<script src="/js/core/coach-ai.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
 // Hard loader timeout
 setTimeout(()=>{const l=document.getElementById('ldr');if(l){l.style.opacity='0';l.style.visibility='hidden';}},2500);
@@ -624,9 +624,7 @@ setTimeout(()=>{const l=document.getElementById('ldr');if(l){l.style.opacity='0'
 // Unlock audio on first touch anywhere
 document.addEventListener('touchstart', unlockAudio, { once: true });
 document.addEventListener('click', unlockAudio, { once: true });
-// ══════════════════════════════════════════════════
 // COACH PAGE — Chat + Auto Micrófono
-// ══════════════════════════════════════════════════
 
 let COACH = {
   user: null,
@@ -640,8 +638,6 @@ let COACH = {
   wakeWordActive: true,  // sin wake word — escucha inmediata  // "Arju" wake word mode
   _wakeTimer: null,
 };
-
-// ── Helpers ────────────────────────────────────────
 function now() {
   return new Date().toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit' });
 }
@@ -664,8 +660,6 @@ function showToast(msg, duration = 3000) {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), duration);
 }
-
-// ── Mensajes ───────────────────────────────────────
 function addMessage(role, content, isTyping = false) {
   const area = document.getElementById('messagesArea');
   const div  = document.createElement('div');
@@ -748,8 +742,6 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;')
     .replace(/\n/g, '<br>');
 }
-
-// ── Send ──────────────────────────────────────────
 async function sendMessage() {
   const input = document.getElementById('textInput');
   const text  = input.value.trim();
@@ -840,8 +832,6 @@ async function processMessage(text) {
     if (!TTS.speaking) resumeMic();
   }
 }
-
-// ── Auto resize textarea ──────────────────────────
 function updateSendBtn() {
   const input = document.getElementById('textInput');
   const btn   = document.getElementById('sendBtn');
@@ -866,8 +856,6 @@ document.getElementById('textInput').addEventListener('keydown', function(e) {
   }
 });
 
-// ── MICRÓFONO ─────────────────────────────────────
-// ── TTS — Coach speaks replies ─────────────────
 const TTS = {
   preferredVoiceURI: null,
   enabled: localStorage.getItem('af-coach-tts') !== '0', // on by default
@@ -961,12 +949,8 @@ function initSpeechRecognition() {
     const allText  = (interim + final).toLowerCase();
 
     document.getElementById('interimText').textContent = interim;
-
-    // ── Wake word "Arju" ─────────────────────────
     // Wake word desactivado — escucha directa
       // (usuario puede hablar sin decir "Arju" primero)
-
-    // ── Normal message processing ─────────────────
     if (final.trim()) {
       COACH.wakeWordActive = false; // reset after message
       clearTimeout(COACH._wakeTimer);
@@ -1068,8 +1052,6 @@ function toggleMic() {
     setStatus('Micrófono pausado · Toca para reactivar');
   }
 }
-
-// ── Mic states: off / listening / wake / thinking / speaking / muted ──
 const MIC_STATE_CONFIG = {
   idle:      { icon:'🎤', label:'Toca el micro o di "Arju"', glow:'rgba(255,255,255,.0)',  pulse:false },
   listening: { icon:'🎙️', label:'Escuchando...',             glow:'rgba(124,58,237,.5)',   pulse:true  },
@@ -1096,8 +1078,6 @@ function updateMicUI(state) {
       : '#10b981';
   }
 }
-
-// ── Anti-self-loop: pause STT when coach speaks ───
 function speakCoachReply(text) {
   if (!TTS.enabled) return;
   var clean = text.replace(/[\u{1F300}-\u{1FFFF}]/gu, '')
@@ -1107,8 +1087,6 @@ function speakCoachReply(text) {
   stopListening();
   updateMicUI('speaking');
   TTS.speaking = true;
-
-  // ── Intentar ElevenLabs primero ─────────────────
   var authToken = '';
   try {
     var raw = localStorage.getItem('sb-egswsqymkxmbtcpnozcq-auth-token')
@@ -1148,7 +1126,6 @@ function speakCoachReply(text) {
   })
   .catch(function(err) {
     console.warn('[TTS] ElevenLabs fallback a browser:', err.message);
-    // ── Fallback: browser TTS ─────────────────────
     _browserSpeak(clean);
   });
 }
@@ -1215,8 +1192,6 @@ function toggleCoachTTS() {
   if (btn) btn.textContent = TTS.enabled ? '🔊' : '🔇';
   showToast(TTS.enabled ? 'Voz activada' : 'Voz silenciada', 1500);
 }
-
-// ── INIT ──────────────────────────────────────────
 async function initCoach() {
   let _sb = null;
   try {
@@ -1326,7 +1301,7 @@ async function initCoach() {
 
 initCoach();
 </script>
-<script src="/js/core/transitions.js"></script>
+
 <style>
 /* ── Premium Nav Bar ───────────────────────────── */
 @keyframes nav-ripple {
@@ -1357,9 +1332,6 @@ initCoach();
             nav-gradient-spin .45s ease forwards !important;
 }
 </style>
-
-
-
 
 
 <style>
@@ -1493,8 +1465,6 @@ function afNavRegister() {
     else window.location.href='/pages/nutrition.html?camera=1';
   },150);
 }
-
-// ── Active page — por ID, limpia todo primero ──────────
 (function(){
   var path = window.location.pathname;
   var MAP = {
@@ -1537,8 +1507,6 @@ function afNavRegister() {
     });
   }
 })();
-
-// ── Inject rich context into system prompt ────────────────────
 function buildSystemWithContext() {
   var base = (window.ARJU_BASE || 'Eres Arju, el coach de ArjunaFit. Eres humano, cercano, directo.');
   var ctx  = (typeof getArjuRichContext === 'function') ? getArjuRichContext() : '';
