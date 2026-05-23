@@ -4783,10 +4783,48 @@ function addToLog(rid) {
 
 // ── openMealDetail ─────────────────────────────────
 function openMealDetail(meal) {
+  console.log('[Nutrition] openMealDetail called:', meal);
   // Capitalizar para que coincida con QUICK_FOODS keys
   var cap = meal ? meal.charAt(0).toUpperCase() + meal.slice(1) : null;
   window._quickLogMeal = meal;
-  if (typeof openQuickLog === 'function') openQuickLog(cap);
+  if (typeof openQuickLog === 'function') {
+    console.log('[Nutrition] openQuickLog exists, calling with:', cap);
+    openQuickLog(cap);
+  } else {
+    console.error('[Nutrition] openQuickLog NOT defined!');
+    // Fallback: abrir sheet manual
+    openManualLog(meal);
+  }
+}
+
+// Sheet ultra simple de emergencia — siempre funciona
+function openManualLog(meal) {
+  var cap = meal ? meal.charAt(0).toUpperCase() + meal.slice(1) : 'Comida';
+  var sheet = document.createElement('div');
+  sheet.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(8,5,17,.95);display:flex;align-items:flex-end;font-family:Outfit,sans-serif';
+  var OPTS = [
+    {name:'Pechuga con arroz',cal:420,prot:45,emoji:'🍗'},
+    {name:'Huevos revueltos',cal:250,prot:18,emoji:'🍳'},
+    {name:'Avena con banano',cal:310,prot:12,emoji:'🥣'},
+    {name:'Atún con fríjoles',cal:310,prot:35,emoji:'🥗'},
+    {name:'Carne con papa',cal:480,prot:32,emoji:'🥩'},
+    {name:'Ensalada proteica',cal:280,prot:25,emoji:'🥬'},
+  ];
+  sheet.innerHTML = '<div style="width:100%;max-width:430px;margin:0 auto;padding:20px 16px 32px;background:rgba(14,7,26,.99);border-radius:24px 24px 0 0;border-top:1px solid rgba(255,255,255,.1)">'
+    + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">'
+      + '<div style="font-size:16px;font-weight:800;color:#f1f0f4">' + cap + '</div>'
+      + '<button onclick="this.closest('[style*=z-index:99999]').remove()" style="padding:6px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);cursor:pointer;font-size:12px">Cerrar</button>'
+    + '</div>'
+    + OPTS.map(function(o){
+        return '<button onclick="saveFood(''+o.name+'','+o.cal+','+o.prot+',0,''+meal.toLowerCase()+'');this.closest('[style*=z-index:99999]').remove()" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03);width:100%;text-align:left;cursor:pointer;margin-bottom:7px;-webkit-tap-highlight-color:transparent">'
+          + '<span style="font-size:24px">'+o.emoji+'</span>'
+          + '<div><div style="font-size:13px;font-weight:600;color:#f1f0f4">'+o.name+'</div>'
+          + '<div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:1px">'+o.prot+'g prot · '+o.cal+' cal</div></div>'
+          + '</button>';
+      }).join('')
+    + '</div>';
+  sheet.addEventListener('click', function(e){ if(e.target===sheet) sheet.remove(); });
+  document.body.appendChild(sheet);
 }
 
 // ── filterByMeal ────────────────────────────────────
