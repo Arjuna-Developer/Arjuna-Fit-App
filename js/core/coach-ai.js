@@ -271,13 +271,18 @@ window.arjuSend = async function(userMessage, mode, ctx) {
       tone:                (window.ARJU_MODES && window.ARJU_MODES[mode]) ? window.ARJU_MODES[mode].tone : 'helpful',
     };
   } catch(e) {
+    console.error('[Arju] API error:', e.message);
     if (window.AF) AF.track('arju_response_failed', { mode: mode, error: e.message });
-    var fallback = window.getArjuFallback ? getArjuFallback(mode) : 'Sin conexión ahora mismo. Revisa tu internet e intenta de nuevo.';
+    // Intentar una vez más después de 2 segundos
+    if (!ctx._retry) {
+      await new Promise(r => setTimeout(r, 2000));
+      return window.arjuSend(userMessage, mode, { ...ctx, _retry: true });
+    }
     return {
-      message:          fallback,
-      suggestedActions: window.getArjuActions ? getArjuActions(mode) : [],
-      mode:             mode,
-      isFallback:       true,
+      message: 'No pude conectarme ahora. Revisa tu internet e intenta de nuevo 💜',
+      suggestedActions: [],
+      mode: mode,
+      isFallback: true,
     };
   }
 };
