@@ -233,6 +233,7 @@ window.arjuSend = async function(userMessage, mode, ctx) {
     : "Eres Arju, coach de ArjunaFit. Responde breve y útil.";
 
   try {
+    console.log('[arjuSend] Llamando /api/chat, msgs:', msgs.length, 'mode:', mode);
     var response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -244,7 +245,12 @@ window.arjuSend = async function(userMessage, mode, ctx) {
         user_id:    ctx?.userId || ''
       })
     });
-    if (!response.ok) throw new Error('api_error');
+    console.log('[arjuSend] Response status:', response.status);
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error('[arjuSend] HTTP error:', response.status, errText.slice(0,200));
+      throw new Error('api_error_' + response.status);
+    }
     var data = await response.json();
     var message = data.choices?.[0]?.message?.content || data.reply || data.message || '';
     if (window.AF) AF.track('arju_response_generated', { mode: mode, product: ctx?.productType || '' });
@@ -259,6 +265,7 @@ window.arjuSend = async function(userMessage, mode, ctx) {
       tone:                (window.ARJU_MODES && window.ARJU_MODES[mode]) ? window.ARJU_MODES[mode].tone : 'helpful',
     };
   } catch(e) {
+    console.error('[arjuSend] ERROR:', e.message, e);
     if (window.AF) AF.track('arju_response_failed', { mode: mode, error: e.message });
     var fallback = window.getArjuFallback ? getArjuFallback(mode) : 'Vamos paso a paso.';
     return {
