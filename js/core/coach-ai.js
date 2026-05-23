@@ -260,7 +260,7 @@ window.arjuSend = async function(userMessage, mode, ctx) {
     };
   } catch(e) {
     if (window.AF) AF.track('arju_response_failed', { mode: mode, error: e.message });
-    var fallback = window.getArjuFallback ? getArjuFallback(mode) : 'Vamos paso a paso.';
+    var fallback = window.getArjuFallback ? getArjuFallback(mode) : 'Sin conexión ahora mismo. Revisa tu internet e intenta de nuevo.';
     return {
       message:          fallback,
       suggestedActions: window.getArjuActions ? getArjuActions(mode) : [],
