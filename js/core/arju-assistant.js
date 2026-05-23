@@ -6,12 +6,8 @@
 
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   const SS = window.speechSynthesis;
-
-  // ── Config ──────────────────────────────────────
   const WAKE = ['arju', 'arjuna', 'hey arju', 'oye arju'];
   const MAX_HISTORY = 10;
-
-  // ── State ────────────────────────────────────────
   let rec       = null;
   let speaking  = false;
   let inConvo   = false;   // true = next transcript es pregunta directa
@@ -19,8 +15,6 @@
   let lastReply = '';
   let convoTimer = null;
   let audioUnlocked = false;
-
-  // ── FAB ──────────────────────────────────────────
   function renderFAB() {
     if (document.getElementById('af')) return;
     if (location.pathname.includes('coach')) return;
@@ -64,8 +58,6 @@
     if (l) l.textContent = label;
     if (f) f.style.animation = pulse ? 'af-pulse 1.8s ease-in-out infinite' : '';
   }
-
-  // ── Toast ─────────────────────────────────────────
   let toastTimer;
   function toast(html, dur = 5000) {
     let t = document.getElementById('arju-toast');
@@ -79,8 +71,6 @@
     clearTimeout(toastTimer);
     if (dur > 0) toastTimer = setTimeout(() => { t.style.opacity = '0'; }, dur);
   }
-
-  // ── Unlock audio (must be in user gesture) ────────
   function unlockAudio() {
     if (audioUnlocked || !SS) return;
     try {
@@ -91,8 +81,6 @@
       audioUnlocked = true;
     } catch(e) {}
   }
-
-  // ── Recognition ───────────────────────────────────
   function startRec() {
     if (!SR || speaking) return;
     if (rec) { try { rec.stop(); } catch(e) {} }
@@ -140,8 +128,6 @@
     try { if (rec) { rec.onend = null; rec.stop(); } } catch(e) {}
     rec = null;
   }
-
-  // ── Handle transcript ─────────────────────────────
   function handleText(text) {
     const lower = text.toLowerCase().trim();
 
@@ -173,8 +159,6 @@
       speak('Dime.');
     }
   }
-
-  // ── Answer via OpenAI ─────────────────────────────
   async function answer(question) {
     inConvo = true;
     clearTimeout(convoTimer);
@@ -227,8 +211,6 @@
       speak(msg);
     }
   }
-
-  // ── Speak via OpenAI TTS ──────────────────────────
   async function speak(text) {
     if (!text) return;
     speaking = true;
@@ -290,8 +272,6 @@
       console.log('[Arju] Conversación cerrada');
     }, 4000);
   }
-
-  // ── Page context ──────────────────────────────────
   function getContext() {
     const p = location.pathname;
     if (p.includes('workout')) {
@@ -302,8 +282,6 @@
     if (p.includes('progress'))  return 'Viendo progreso.';
     return 'Dashboard de ArjunaFit.';
   }
-
-  // ── FAB click ─────────────────────────────────────
   function onFABClick() {
     unlockAudio();
     if (document.getElementById('arju-ov')) {
@@ -312,8 +290,6 @@
     }
     openOverlay();
   }
-
-  // ── Main overlay — text + optional voice ─────────
   function openOverlay() {
     const ov = document.createElement('div');
     ov.id = 'arju-ov';
@@ -419,8 +395,6 @@
     // Focus text input
     setTimeout(() => document.getElementById('ov-input')?.focus(), 200);
   }
-
-  // ── Send from overlay ─────────────────────────────
   window.arjuSend = async function(text) {
     if (!text?.trim()) {
       const resp = document.getElementById('ov-response');
@@ -500,8 +474,6 @@
       setFAB('🤖', 'Arju', false);
     }
   };
-
-  // ── Mic in overlay ────────────────────────────────
   window.arjuMic = function() {
     if (!SR) {
       alert('Tu navegador no soporta reconocimiento de voz.\nUsa el teclado para escribir tu pregunta.');
@@ -525,8 +497,6 @@
     localStorage.setItem('arju-voice', muted ? '1' : '0');
     btn.textContent = muted ? '🔊' : '🔇';
   };
-
-  // ── Init ──────────────────────────────────────────
   function init() {
     const activated = localStorage.getItem('arju-activated') === '1';
     console.log('[Arju] Init | SR:', !!SR, '| activated:', activated);
