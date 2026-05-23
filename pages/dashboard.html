@@ -1052,12 +1052,12 @@ html, body {
 
 </style>
   <link rel="stylesheet" href="/assets/visual-system.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="/js/core/auth-bootstrap.js"></script>
-<script src="/js/core/auth-guard.js"></script>
-<script src="/js/core/ops-config.js"></script>
-<script src="/js/core/analytics.js"></script>
-<script src="/js/core/experiment-config.js"></script>
+  
+
+
+
+
+
   <link rel="stylesheet" href="/assets/visual-polish.css">
 <script>
 // Safety: si el loader sigue visible después de 6s → mostrar página
@@ -1110,7 +1110,6 @@ setTimeout(function() {
     </div>
 
     <div class="stack">
-
 
 
       <!-- Workout Hero -->
@@ -1446,7 +1445,6 @@ setTimeout(function() {
 </style>
 
 
-
 </div>
 
 <!-- Day close modal — emotional closure -->
@@ -1533,7 +1531,6 @@ setTimeout(function() {
 </div>
 
 <script>
-// ── Admin mode indicator ──────────────────────────────────────
   (function() {
     if (localStorage.getItem('af-is-admin') === '1' || localStorage.getItem('af-role') === 'admin') {
       document.addEventListener('DOMContentLoaded', function() {
@@ -1545,8 +1542,6 @@ setTimeout(function() {
       });
     }
   })();
-
-  // ── Custom plan payment guard (runs before everything) ──────
 (function() {
   var tipo   = localStorage.getItem('af-product-tipo') || '';
   var status = localStorage.getItem('af-subscription-status') || '';
@@ -1592,10 +1587,7 @@ setTimeout(function() {
     if (window.AF) AF.track('custom_plan_payment_required_viewed', { product: productType, source: 'dashboard_guard' });
   });
 })();
-
-// ═══════════════════════════════════════════
 // ARJUNAFIT DASHBOARD — Premium
-// ═══════════════════════════════════════════
 let _sb = null;
 try {
   _sb = window.supabase.createClient(
@@ -1763,8 +1755,7 @@ function renderNutrition(p, log){
 }
 
 // Coach message
-// ── Coach: usa AF.voice (arjuna-voice.js) ──
-// ── Coach messages ──────────────────────────
+
 function showCoachMsg(msg, withSpeakBtn = false) {
   const el = document.getElementById('coachBubble');
   if (!el) return;
@@ -1835,8 +1826,6 @@ function toggleVoiceMute() {
 
     var content = window.AF_Challenge.getChallengeDayContent();
     var dayMode = localStorage.getItem('af-day-mode') || 'normal_day';
-
-    // ── Update Arju bubble ──
     var bubble = document.getElementById('coachBubble');
     if (bubble) {
       var msg = content.arjuMessage;
@@ -1845,8 +1834,6 @@ function toggleVoiceMute() {
       if (dayMode === 'return_day')   msg = 'Volver también cuenta. Hoy retomamos con una acción pequeña.';
       bubble.textContent = msg;
     }
-
-    // ── Update trial badge + subcopy ──
     var badge = document.getElementById('trialBadge');
     var trialSub = document.getElementById('trialSubcopy');
     // Custom plans show different badge
@@ -1865,16 +1852,10 @@ function toggleVoiceMute() {
     if (badge) badge.textContent = content.badgeLabel;
     if (trialSub) trialSub.textContent = content.trialSubcopy;
     }
-
-    // ── Update focus of the day ──
     var focusEl = document.getElementById('dayFocusText');
     if (focusEl) focusEl.textContent = content.focus;
-
-    // ── Update nutrition focus ──
     var nutrFocus = document.getElementById('nutritionFocusText');
     if (nutrFocus) nutrFocus.textContent = content.nutritionFocus;
-
-    // ── Recipe suggestion card ──
     var recipeCard = document.getElementById('recipeSuggestToday');
     if (recipeCard && content.recipeSuggestion) {
       var r = content.recipeSuggestion;
@@ -1889,8 +1870,6 @@ function toggleVoiceMute() {
           '<a href="/pages/nutrition.html?tab=recetario" style="padding:7px 12px;background:rgba(124,58,237,.2);border:1px solid rgba(196,181,253,.2);border-radius:10px;color:#c4b5fd;font-size:11px;font-weight:700;text-decoration:none;white-space:nowrap">Ver receta →</a>' +
         '</div>';
     }
-
-    // ── Phase end summary ──
     if (content.isPhaseEnd && !content.isTrialDay) {
       var phaseSum = document.getElementById('phaseEndCard');
       if (!phaseSum) {
@@ -1910,13 +1889,9 @@ function toggleVoiceMute() {
       }
       if (window.AF) AF.track('challenge_phase_completed', { phase: content.phase, challenge: content.challengeType });
     }
-
-    // ── Challenge end (Day 37) ──
     if (content.isChallengeEnd) {
       if (window.AF) AF.track('challenge_completed', { challenge: content.challengeType, dayNumber: content.dayNumber });
     }
-
-    // ── Day 6 warning ──
     if (content.isTrialDay && content.trialDay >= 6) {
       var d6 = document.getElementById('day6Warning');
       if (!d6) {
@@ -1938,16 +1913,12 @@ function toggleVoiceMute() {
     if (window.AF) AF.track('dashboard_arju_message_shown', { reto: content.challengeType, trialDay: content.trialDay, dayMode });
     if (window.AF) AF.track('trial_day_viewed', { challenge: content.challengeType, trialDay: content.trialDay });
   })();
-
-  // ── Retention smart notification + check-in ──────────
   if (window.AF_Retention || window.AF_Checkin) {
     setTimeout(function() {
       if (window.AF_Retention) window.AF_Retention.renderSmartNotification('retention-slot');
       if (window.AF_Checkin)   window.AF_Checkin.initCheckin('retention-slot');
     }, 600);
   }
-
-  // ── Community card ───────────────────────────────────────────
   (function() {
     var paid   = localStorage.getItem('af-paid') === '1';
     var status = localStorage.getItem('af-subscription-status') || '';
@@ -1968,8 +1939,6 @@ function toggleVoiceMute() {
       card.innerHTML = '<div style="padding:12px 16px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:13px;font-size:12px;color:rgba(255,255,255,.3);text-align:center">🤝 Comunidad incluida al desbloquear tu reto.</div>';
     }
   })();
-
-  // ── Pending product from landing ─────────────────────
   (function() {
     var pending = localStorage.getItem('af-pending-product');
     if (!pending) return;
@@ -1999,10 +1968,8 @@ function toggleVoiceMute() {
   const btn = document.getElementById('voiceToggleBtn');
   if (btn) { btn.textContent = muted ? '🔇' : '🔊'; btn.style.transform='scale(.85)'; setTimeout(()=>btn.style.transform='',150); }
 }
-// ═══════════════════════════════════════════════
 // PLAN DEL DÍA — Arju prepara tu día completo
 // Sin API. Sin fricción mental. Solo claridad.
-// ═══════════════════════════════════════════════
 const PLAN_MEALS = {
   training: {
     desayuno: [
@@ -2066,8 +2033,6 @@ const PLAN_FOCUS = {
     'Hidrata, descansa, sigue.',
   ],
 };
-
-// ── Registrar comida desde home ────────────────────
 const HOME_FOODS = {
   'Desayuno': [
     {name:'Bowl de huevos y aguacate', cal:380, prot:28, emoji:'🍳'},
@@ -2309,8 +2274,6 @@ function openMealSheet(meal) {
   ov.addEventListener('click', e => { if (e.target === ov) ov.remove(); });
   document.body.appendChild(ov);
 }
-
-// ── Receta del día ─────────────────────────────
 const ROTD_LIST = [
   { emoji:'🍗', name:'Pechuga con arroz y brócoli',   sub:'Simple, rico y alto en proteína.', time:'20 min', prot:'45g prot', id:'pechuga-arroz' },
   { emoji:'🥗', name:'Atún con fríjoles negros',       sub:'Sin cocción. Listo en 5 minutos.',  time:'5 min',  prot:'35g prot', id:'atun-frijoles' },
@@ -2320,8 +2283,6 @@ const ROTD_LIST = [
   { emoji:'🥚', name:'Omelette de proteína',           sub:'Alta proteína en menos de 10 minutos.', time:'8 min', prot:'25g prot', id:'omelette' },
   { emoji:'🍵', name:'Caldo de papa con pollo',        sub:'Reconfortante. Ideal para descanso.', time:'30 min', prot:'25g prot', id:'caldo-papa' },
 ];
-
-// ── Apply semantic colors to cards ────────────────
 function applyCardColors() {
   // Register/camera card — fucsia-violeta protagonista
   const cam = document.getElementById('cameraHero');
@@ -2361,8 +2322,6 @@ function initRecipeOfDay() {
 function goToRecipe() {
   location.href = '/pages/nutrition.html?recipe=' + (window._rotdId || '');
 }
-
-// ── Foto IA desde dashboard ──────────────────────
 function handleDashPhoto(input) {
   const file = input.files?.[0];
   if (!file) return;
@@ -2806,9 +2765,6 @@ function logPlanMeal(mealKey, name, cal, prot) {
   document.body.appendChild(t);
   setTimeout(() => t.remove(), 2000);
 }
-
-
-// ── Cierre del día — modal completo ──────────────────
 function openDayClose(data) {
   // Remove banner
   var b = document.getElementById('eod-banner');
@@ -3024,8 +2980,6 @@ function showDayClosedState(tomorrowMsg) {
       '<a href="/pages/progress.html" style="font-size:12px;color:rgba(196,181,253,.6);text-decoration:none;display:flex;align-items:center;gap:4px;flex-shrink:0">Ver progreso ›</a>';
   }
 }
-
-// ── End-of-day banner (8pm–9pm) ─────────────────
 function checkEndOfDay() {
   const h = new Date().getHours();
   if (h < 20 || h >= 23) return; // 8–11pm
@@ -3519,7 +3473,6 @@ init().then(function() {
 <script>
 window.AF_VERSION = "workout-guided-v1"; console.log("[ArjunaFit] v" + AF_VERSION);
 // Hard loader timeout — never stuck
-// ── Local date helper (fixes UTC timezone bug) ─
 function localDateKey() {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -3558,12 +3511,11 @@ function dismissVoiceBanner() {
 window.addEventListener('load', showVoiceActivationBanner);
 </script>
 
-<script src="/js/core/arjuna-voice.js"></script>
-<script src="/js/core/challenge-engine.js"></script>
-  <script src="/js/core/retention.js"></script>
-  <script src="/js/core/checkin.js"></script>
+
+
+  
+  
 <script>
-// ── Challenge engine: inject today's content ──────────
 (function() {
   if (!window.AF_Challenge) return;
   var today = window.AF_Challenge.getTodaySummary();
@@ -3613,12 +3565,12 @@ window.addEventListener('load', showVoiceActivationBanner);
   }
 })();
 </script>
-  <script src="/js/core/commerce-config.js"></script>
-  <script src="/js/core/trial-guard.js"></script>
-<script src="/js/core/icons.js"></script>
-<script src="/js/core/microvictorias.js"></script>
-<script src="/js/core/coach-context.js"></script>
-<script src="/js/core/arju-prompts.js"></script>
+  
+  
+
+
+
+
 <!-- arju-assistant disabled: floating btn handled by coach strip -->
 <script src="/js/core/transitions.js">
   // Week summary widget
@@ -3639,7 +3591,7 @@ window.addEventListener('load', showVoiceActivationBanner);
     if(wsM) wsM.textContent = weekMeals;
   })();
 </script>
-<script src="/js/core/pwa-install.js"></script>
+
 
 <!-- ── PWA Install Card ─────────────────────────────────────────── -->
 <div id="afInstallCard" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
@@ -3834,11 +3786,9 @@ var _arjuCitySync = setInterval(function(){
 </div>
 
 <script>
-// ══════════════════════════════════════════════════════
 // SMART MEAL REGISTRATION STRIP
 // Muestra la siguiente comida a registrar
 // Se actualiza automáticamente al registrar una comida
-// ══════════════════════════════════════════════════════
 (function() {
   var MEALS = [
     { key:'desayuno', label:'Desayuno',  icon:'🌅', from:5,  to:11 },
@@ -4102,8 +4052,6 @@ function afNavRegister() {
     else window.triggerDashCamera();
   },150);
 }
-
-// ── Active page — por ID, limpia todo primero ──────────
 (function(){
   var path = window.location.pathname;
   var MAP = {
@@ -4124,8 +4072,6 @@ function afNavRegister() {
   if (lbl) { lbl.style.color=cfg.color; lbl.style.fontWeight='800'; }
   if (dot.length) { var d=dot[dot.length-1]; d.style.background=cfg.glow; d.style.boxShadow='0 0 6px '+cfg.glow; }
 })();
-
-// ── PWA Install functions ──────────────────────
 function AF_installPWA() {
   if (window._pwaInstallPrompt) {
     window._pwaInstallPrompt.prompt();
@@ -4219,14 +4165,10 @@ function triggerDashCamera() {
   // Last resort fallback
   setTimeout(openRegisterSheet, 80);
 }
-
-
-// ══════════════════════════════════════════════════
 // STREAK ENGINE — Supabase como fuente de verdad
 // La racha NUNCA se pierde por limpiar caché,
 // cambiar dispositivo, o cambiar de perfil.
 // Solo decrece si pasan 2 días sin actividad.
-// ══════════════════════════════════════════════════
 window._streakSync = async function(){
   var sb = window.sb;
   if(!sb) return;
