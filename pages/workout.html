@@ -454,6 +454,21 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 setTimeout(function(){var l=document.getElementById("ldr");if(l&&!l.classList.contains("off")){l.style.display="none";}},6000);
 </script>
   <script src="/js/core/session-cache.js"></script>
+<script>
+// Global error handler — captura errores no manejados
+window.onerror = function(msg, src, line, col, err) {
+  // Solo loguear en desarrollo, no en producción
+  if (location.hostname === 'localhost') {
+    console.error('[AF Error]', msg, src + ':' + line);
+  }
+  return true; // Previene el error en consola del usuario
+};
+window.onunhandledrejection = function(e) {
+  if (location.hostname === 'localhost') {
+    console.error('[AF Unhandled Promise]', e.reason);
+  }
+};
+</script>
 </head>
 <body>
 
