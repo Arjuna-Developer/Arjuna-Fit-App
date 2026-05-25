@@ -122,11 +122,11 @@ window.openMealDetail = window.openMealDetail || function(meal) {
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         Hoy
       </button>
-      <button onclick="loadTab('recetas')" id="t-recetas" style="display:flex;align-items:center;justify-content:center;gap:5px;padding:8px 4px;border-radius:12px;border:1px solid rgba(255,255,255,.08);cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;background:rgba(255,255,255,.05);color:rgba(255,255,255,.55);-webkit-tap-highlight-color:transparent">
+      <button onclick="sw('recetas');document.getElementById('tc-recetas')?.scrollIntoView({behavior:'smooth'})" id="t-recetas" style="display:flex;align-items:center;justify-content:center;gap:5px;padding:8px 4px;border-radius:12px;border:1px solid rgba(255,255,255,.08);cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;background:rgba(255,255,255,.05);color:rgba(255,255,255,.55);-webkit-tap-highlight-color:transparent">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
         Recetario
       </button>
-      <button onclick="loadTab('mercado')" id="t-mercado" style="display:flex;align-items:center;justify-content:center;gap:5px;padding:8px 4px;border-radius:12px;border:1px solid rgba(255,255,255,.08);cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;background:rgba(255,255,255,.05);color:rgba(255,255,255,.55);-webkit-tap-highlight-color:transparent">
+      <button onclick="sw('mercado')" id="t-mercado" style="display:flex;align-items:center;justify-content:center;gap:5px;padding:8px 4px;border-radius:12px;border:1px solid rgba(255,255,255,.08);cursor:pointer;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;background:rgba(255,255,255,.05);color:rgba(255,255,255,.55);-webkit-tap-highlight-color:transparent">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 001.95-1.57l1.65-7.43H6"/></svg>
         Mercado
       </button>
@@ -728,62 +728,63 @@ window.openMealDetail = window.openMealDetail || function(meal) {
 <script src="/js/nutrition/nutrition-menu.js"></script>
 
 
-
-
-
-
+<script>
+// Lazy load de tabs pesados — cargar solo al hacer click
+(function() {
+  var lazyLoaded = {};
+  var origSw = window.sw;
+  window.sw = function(id) {
+    if (origSw) origSw(id);
+    // Marcar tab como loaded la primera vez
+    var tc = document.getElementById('tc-' + id);
+    if (tc && tc.dataset.lazy && !lazyLoaded[id]) {
+      lazyLoaded[id] = true;
+      tc.classList.add('loaded');
+    }
+  };
+})();
+</script>
 
 <script>
-// ── Lazy loader limpio — carga recetas/mercado al primer click ──
+// Lazy load de tabs pesados via fetch
 (function() {
   var _loaded = {};
+  var _origSw = window.sw;
 
-  window.loadTab = function(id) {
-    // Primero mostrar el tab (llamar sw normal)
-    if (typeof window.sw === 'function') window.sw(id);
-
-    // Si ya cargó, no hacer nada
+  window.sw = function(id) {
+    if (_origSw) _origSw(id);
     if (_loaded[id]) return;
 
-    // Solo recetas y mercado son lazy
     var urls = {
-      recetas: '/data/nutrition/tab-recetas.html',
-      mercado: '/data/nutrition/tab-mercado.html'
+      'recetas': '/data/nutrition/tab-recetas.html',
+      'mercado': '/data/nutrition/tab-mercado.html'
     };
+
     if (!urls[id]) return;
+    _loaded[id] = true;
 
     var tc = document.getElementById('tc-' + id);
     if (!tc) return;
 
-    _loaded[id] = true;
-
     fetch(urls[id])
-      .then(function(r) {
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        return r.text();
-      })
+      .then(function(r) { return r.text(); })
       .then(function(html) {
         tc.innerHTML = html;
-        // Re-ejecutar cualquier script inline del contenido cargado
-        tc.querySelectorAll('script').forEach(function(s) {
-          try {
-            var ns = document.createElement('script');
-            ns.textContent = s.textContent;
-            document.head.appendChild(ns);
-          } catch(e) {}
+        // Re-ejecutar scripts inline si los hay
+        var scripts = tc.querySelectorAll('script');
+        scripts.forEach(function(s) {
+          var ns = document.createElement('script');
+          ns.textContent = s.textContent;
+          document.body.appendChild(ns);
         });
       })
       .catch(function(e) {
-        _loaded[id] = false; // permitir retry
-        console.warn('[LazyTab]', id, e.message);
-        tc.innerHTML = '<div style="padding:32px;text-align:center;color:rgba(255,255,255,.4)">'
-          + '<div style="font-size:24px;margin-bottom:8px">⚠️</div>'
-          + '<div>Error cargando. '
-          + '<button onclick="loadTab('' + id + '')" style="background:rgba(124,58,237,.3);border:none;border-radius:8px;padding:6px 14px;color:white;cursor:pointer;margin-top:8px">Reintentar</button>'
-          + '</div></div>';
+        console.warn('[LazyTab] Error cargando', id, e.message);
+        tc.innerHTML = '<p style="padding:20px;color:rgba(255,255,255,.4);text-align:center">Error cargando. Recarga la página.</p>';
       });
   };
 })();
 </script>
+
 </body>
 </html>
