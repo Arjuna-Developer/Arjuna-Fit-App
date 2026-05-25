@@ -510,6 +510,21 @@ setTimeout(function() {
   <script src="/js/core/arju-prompts.js"></script>
   <script src="/js/core/coach-ai.js"></script>
   <script src="/js/core/session-cache.js"></script>
+<script>
+// Global error handler — captura errores no manejados
+window.onerror = function(msg, src, line, col, err) {
+  // Solo loguear en desarrollo, no en producción
+  if (location.hostname === 'localhost') {
+    console.error('[AF Error]', msg, src + ':' + line);
+  }
+  return true; // Previene el error en consola del usuario
+};
+window.onunhandledrejection = function(e) {
+  if (location.hostname === 'localhost') {
+    console.error('[AF Unhandled Promise]', e.reason);
+  }
+};
+</script>
 </head>
 <body>
 <div id="ldr" style="position:fixed;inset:0;background:#090611;z-index:999;display:flex;align-items:center;justify-content:center;transition:opacity .3s"><div style="width:36px;height:36px;border-radius:50%;border:3px solid rgba(124,58,237,.2);border-top-color:#7c3aed;animation:spin .7s linear infinite"></div></div>
