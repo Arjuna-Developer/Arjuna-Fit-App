@@ -36,7 +36,7 @@
       if (_session?.user?.id) {
         window.AF_uid = _session.user.id;
         window.AF_user = _session.user;
-        localStorage.setItem('af-uid', _session.user.id);
+        try { localStorage.setItem('af-uid', _session.user.id); } catch(e) {}
       }
       return _session;
     }).catch(function() {
