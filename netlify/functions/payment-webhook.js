@@ -38,7 +38,7 @@ const EXPECTED_AMOUNTS = {
 function validateHotmartSignature(body, signature, secret) {
   if (!secret) {
     // En desarrollo sin secret: permitir. En producción debe estar configurado.
-    console.warn('[Webhook] ⚠️ HOTMART_WEBHOOK_SECRET no configurado — validando sin firma. Configura el secret en Vercel.');
+    console.warn('[Webhook] ⚠️ HOTMART_WEBHOOK_TOKEN no configurado — validando sin firma. Configura el secret en Vercel.');
     return true;
   }
   const crypto = require('crypto');
@@ -310,7 +310,7 @@ exports.handler = async (event, context) => {
 
     // ── Validate Hotmart signature ────────────────
     const signature = event.headers['x-hotmart-signature'] || event.headers['X-Hotmart-Signature'] || '';
-    const webhookSecret = process.env.HOTMART_WEBHOOK_SECRET || '';
+    const webhookSecret = process.env.HOTMART_WEBHOOK_TOKEN || '';
     if (!validateHotmartSignature(event.body, signature, webhookSecret)) {
       console.warn('[Webhook] Invalid signature');
       return { statusCode: 401, headers, body: JSON.stringify({ error: 'Invalid signature' }) };
