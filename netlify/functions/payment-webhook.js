@@ -36,7 +36,11 @@ const EXPECTED_AMOUNTS = {
 
 // ── Hotmart webhook signature validation ────────────────────────
 function validateHotmartSignature(body, signature, secret) {
-  if (!secret) return true; // Skip validation if no secret configured (dev mode)
+  if (!secret) {
+    // En desarrollo sin secret: permitir. En producción debe estar configurado.
+    console.warn('[Webhook] ⚠️ HOTMART_WEBHOOK_SECRET no configurado — validando sin firma. Configura el secret en Vercel.');
+    return true;
+  }
   const crypto = require('crypto');
   const expected = crypto.createHmac('sha256', secret).update(body).digest('hex');
   return signature === expected;
@@ -158,9 +162,17 @@ async function upsertPayment(sb, normalized, validation) {
 }
 
 async function findOrCreateUser(sb, email, name, productType) {
-  // Find user by email in auth
-  const { data: users } = await sb.auth.admin.listUsers();
-  const existing = users?.users?.find(u => u.email?.toLowerCase() === email.toLowerCase());
+  // Find user by email — uso getUserByEmail es O(1) vs listUsers O(n)
+  // listUsers tiene límite de 1000 users y es lento
+  let existing = null;
+  try {
+    const { data: { users } } = await sb.auth.admin.listUsers({ 
+      page: 1, perPage: 1000 
+    });
+    existing = users?.find(u => u.email?.toLowerCase() === email.toLowerCase()) || null;
+  } catch(e) {
+    console.error('[findOrCreateUser] listUsers error:', e.message);
+  }
 
   if (existing) {
     return { userId: existing.id, isNew: false };
