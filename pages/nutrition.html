@@ -102,6 +102,60 @@ window.openMealDetail = window.openMealDetail || function(meal) {
   <!-- Session cache global — 1 sola auth call -->
   <script src="/js/core/session-cache.js"></script>
 
+<script>
+// loadTab — disponible desde el inicio, antes que cualquier onclick
+var _lazyLoaded = {};
+window.loadTab = function(id) {
+  // Mostrar el tab
+  if (typeof window.sw === 'function') {
+    window.sw(id);
+  } else {
+    // sw no está lista todavía — mostrar directamente
+    ['hoy','recetas','mercado','fuera'].forEach(function(k) {
+      var tc = document.getElementById('tc-'+k);
+      if (tc) tc.style.display = k === id ? 'flex' : 'none';
+    });
+  }
+
+  // Lazy load solo recetas y mercado
+  var urls = {
+    recetas: '/data/nutrition/tab-recetas.html',
+    mercado: '/data/nutrition/tab-mercado.html'
+  };
+  if (!urls[id] || _lazyLoaded[id]) return;
+  _lazyLoaded[id] = true;
+
+  var tc = document.getElementById('tc-' + id);
+  if (!tc) return;
+
+  fetch(urls[id])
+    .then(function(r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.text();
+    })
+    .then(function(html) {
+      tc.innerHTML = html;
+      // Ejecutar scripts del contenido
+      tc.querySelectorAll('script').forEach(function(s) {
+        var ns = document.createElement('script');
+        ns.textContent = s.textContent;
+        document.head.appendChild(ns);
+      });
+    })
+    .catch(function(e) {
+      _lazyLoaded[id] = false;
+      console.warn('[LazyTab]', id, e.message);
+      tc.innerHTML = '<div style="padding:32px;text-align:center;color:rgba(255,255,255,.4)">'
+        + '<div style="font-size:24px;margin-bottom:8px">⚠️</div>'
+        + '<div>No se pudo cargar.<br>'
+        + '<button onclick="loadTab('' + id + '')" '
+        + 'style="margin-top:10px;background:rgba(124,58,237,.4);border:none;border-radius:10px;'
+        + 'padding:8px 18px;color:white;cursor:pointer;font-size:13px">Reintentar</button>'
+        + '</div></div>';
+    });
+};
+</script>
+
 </head>
 <body>
 <div class="ldr" id="ldr"><div style="width:36px;height:36px;border-radius:50%;border:3px solid rgba(124,58,237,.2);border-top-color:#7c3aed;animation:spin .7s linear infinite"></div></div>
@@ -733,57 +787,5 @@ window.openMealDetail = window.openMealDetail || function(meal) {
 
 
 
-<script>
-// ── Lazy loader limpio — carga recetas/mercado al primer click ──
-(function() {
-  var _loaded = {};
-
-  window.loadTab = function(id) {
-    // Primero mostrar el tab (llamar sw normal)
-    if (typeof window.sw === 'function') window.sw(id);
-
-    // Si ya cargó, no hacer nada
-    if (_loaded[id]) return;
-
-    // Solo recetas y mercado son lazy
-    var urls = {
-      recetas: '/data/nutrition/tab-recetas.html',
-      mercado: '/data/nutrition/tab-mercado.html'
-    };
-    if (!urls[id]) return;
-
-    var tc = document.getElementById('tc-' + id);
-    if (!tc) return;
-
-    _loaded[id] = true;
-
-    fetch(urls[id])
-      .then(function(r) {
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        return r.text();
-      })
-      .then(function(html) {
-        tc.innerHTML = html;
-        // Re-ejecutar cualquier script inline del contenido cargado
-        tc.querySelectorAll('script').forEach(function(s) {
-          try {
-            var ns = document.createElement('script');
-            ns.textContent = s.textContent;
-            document.head.appendChild(ns);
-          } catch(e) {}
-        });
-      })
-      .catch(function(e) {
-        _loaded[id] = false; // permitir retry
-        console.warn('[LazyTab]', id, e.message);
-        tc.innerHTML = '<div style="padding:32px;text-align:center;color:rgba(255,255,255,.4)">'
-          + '<div style="font-size:24px;margin-bottom:8px">⚠️</div>'
-          + '<div>Error cargando. '
-          + '<button onclick="loadTab('recetas')" style="background:rgba(124,58,237,.3);border:none;border-radius:8px;padding:6px 14px;color:white;cursor:pointer;margin-top:8px">Reintentar</button>'
-          + '</div></div>';
-      });
-  };
-})();
-</script>
 </body>
 </html>
