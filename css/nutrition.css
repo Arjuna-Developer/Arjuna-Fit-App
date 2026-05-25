@@ -249,9 +249,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
 .tc { display: none; }
 
 .tc.on {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  display: block;
   height: calc(100dvh - var(--nutr-hdr));
   overflow-y: auto;
   overflow-x: hidden;
@@ -369,3 +367,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);
   50%  { transform:scale(1.08) rotate(4deg); }
   100% { transform:scale(1) rotate(0deg); }
 }
+
+/* Espaciado entre secciones de los tabs */
+.tc.on > div { margin-bottom: 16px; }
+.tc.on > div:last-child { margin-bottom: 0; }
