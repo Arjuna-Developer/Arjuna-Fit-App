@@ -8,26 +8,26 @@
     {
       "phase": 1,
       "weeks": "1-2",
-      "focus": "Base metabólica y activación",
-      "intensity": "Moderada"
+      "focus": "Base metabólica",
+      "days_per_week": 6
     },
     {
       "phase": 2,
       "weeks": "3-4",
-      "focus": "Incremento de intensidad",
-      "intensity": "Media-Alta"
+      "focus": "Progresión de intensidad",
+      "days_per_week": 6
     },
     {
       "phase": 3,
       "weeks": "5-6",
-      "focus": "Máximo metabólico (Tabata + Fuerza)",
-      "intensity": "Alta-Máxima"
+      "focus": "Máximo metabólico Tabata",
+      "days_per_week": 6
     },
     {
       "phase": 4,
       "weeks": "7-8",
-      "focus": "Pico + Descarga",
-      "intensity": "Máxima → Suave"
+      "focus": "Pico + Descarga activa",
+      "days_per_week": 6
     }
   ],
   "weekly_template": {
@@ -162,1112 +162,1268 @@
     {
       "week": 1,
       "phase": 1,
-      "phase_name": "Base metabólica y activación",
-      "phase_focus": "Construir la base. Técnica en compuestos. Activar el metabolismo.",
+      "phase_name": "Base metabólica",
+      "training_days": 6,
+      "rest_days": 1,
+      "total_calories_week_est": 3421,
+      "fat_loss_equivalent_kg": 0.44,
       "days": [
         {
-          "title": "Cuerpo Completo · Fuerza A",
-          "focus": "Compuestos que queman más calorías",
-          "duration_min": 50,
+          "day_name": "Lunes",
+          "title": "Fuerza Full Body A — Piernas + Empuje",
+          "phase": 1,
           "type": "training",
-          "warm_up": [
-            {
-              "name": "Jumping Jacks",
-              "sets": 1,
-              "reps": "30 seg",
-              "rest_sec": 15,
-              "tip": "Activa el sistema cardiovascular",
-              "progression": ""
-            },
-            {
-              "name": "Círculos de cadera",
-              "sets": 1,
-              "reps": "10 c/l",
-              "rest_sec": 15,
-              "tip": "Movilidad lumbo-pélvica",
-              "progression": ""
-            },
-            {
-              "name": "Estocada con rotación",
-              "sets": 1,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Moviliza toda la cadena",
-              "progression": ""
-            }
-          ],
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 15 min",
+            "duration_min": 15,
+            "calories_burned_est": 130,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 15 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 15 min intervalado 45seg/15seg",
+              "CORRER — 15 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 15 min a 6 km/h"
+            ]
+          },
+          "duration_min": 65,
           "exercises": [
             {
-              "name": "Sentadilla Goblet con Mancuerna",
+              "name": "Sentadilla con barra o goblet",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "200+ músculos. Profundidad completa."
+            },
+            {
+              "name": "Peso Muerto Rumano",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "Caderas atrás. Espalda neutra."
+            },
+            {
+              "name": "Press Militar de Pie",
               "sets": 3,
               "reps": "15",
               "rest_sec": 75,
-              "tip": "Técnica perfecta. Profundidad completa.",
-              "progression": "La sentadilla activa 200+ músculos y quema más calorías"
-            },
-            {
-              "name": "Peso Muerto con Mancuernas",
-              "sets": 3,
-              "reps": "12",
-              "rest_sec": 75,
-              "tip": "Bisagra de cadera. Espalda neutra.",
-              "progression": "Compuesto clave para pérdida de grasa total"
-            },
-            {
-              "name": "Press de hombros con mancuernas",
-              "sets": 3,
-              "reps": "12",
-              "rest_sec": 75,
-              "tip": "Estabiliza el core mientras presionas",
-              "progression": "Cuerpo completo = más gasto calórico"
-            },
-            {
-              "name": "Remo con mancuerna",
-              "sets": 3,
-              "reps": "12 c/l",
-              "rest_sec": 75,
-              "tip": "Espalda paralela al suelo, codo al techo",
-              "progression": "La espalda fuerte protege la columna"
-            },
-            {
-              "name": "Plancha frontal",
-              "sets": 3,
-              "reps": "30 seg",
-              "rest_sec": 45,
-              "tip": "Cuerpo recto. No elevar cadera.",
-              "progression": "Core antiflexión = cintura más definida"
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "Recuperación activa",
-          "focus": "Flujo sanguíneo y movilidad",
-          "duration_min": 30,
-          "type": "recovery",
-          "warm_up": [],
-          "exercises": [
-            {
-              "name": "Caminata 20 min",
-              "sets": 1,
-              "reps": "20 min",
-              "rest_sec": 0,
-              "tip": "Ritmo cómodo, sin prisa",
-              "progression": ""
-            },
-            {
-              "name": "Estiramiento cadera y glúteos",
-              "sets": 1,
-              "reps": "10 min",
-              "rest_sec": 0,
-              "tip": "Sostener 30s cada posición",
-              "progression": ""
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "Metabólico · Circuito A",
-          "focus": "Cardio + fuerza. EPOC activado.",
-          "duration_min": 40,
-          "type": "training",
-          "warm_up": [
-            {
-              "name": "Jumping Jacks",
-              "sets": 1,
-              "reps": "30 seg",
-              "rest_sec": 15,
-              "tip": "Activa el sistema cardiovascular",
-              "progression": ""
-            },
-            {
-              "name": "Círculos de cadera",
-              "sets": 1,
-              "reps": "10 c/l",
-              "rest_sec": 15,
-              "tip": "Movilidad lumbo-pélvica",
-              "progression": ""
-            },
-            {
-              "name": "Estocada con rotación",
-              "sets": 1,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Moviliza toda la cadena",
-              "progression": ""
-            }
-          ],
-          "exercises": [
-            {
-              "name": "Circuito 1: Sentadilla con salto + Flexión de codos",
-              "sets": 4,
-              "reps": "10+10",
-              "rest_sec": 60,
-              "tip": "Sin descanso entre ejercicios del mismo circuito",
-              "progression": "El HIIT quema grasa 24-48h después del entreno"
-            },
-            {
-              "name": "Circuito 2: Mountain Climbers + Remo con banda",
-              "sets": 4,
-              "reps": "20+12",
-              "rest_sec": 60,
-              "tip": "Core y espalda juntos. Pulso arriba.",
-              "progression": "Mantén la frecuencia cardiaca elevada"
-            },
-            {
-              "name": "Circuito 3: Sentadilla lateral + Step-up",
-              "sets": 4,
-              "reps": "12 c/l + 12 c/l",
-              "rest_sec": 60,
-              "tip": "Glúteos activados. Rodillas afuera.",
-              "progression": "Movimientos laterales queman más grasa en piernas"
-            },
-            {
-              "name": "Finisher: Burpees o Jumping Jacks",
-              "sets": 3,
-              "reps": "30 seg",
-              "rest_sec": 30,
-              "tip": "Máximo esfuerzo. 30 segundos.",
-              "progression": "El finisher maximiza el EPOC"
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
-        },
-        {
-          "title": "Fuerza + Core · Sesión B",
-          "focus": "Abdomen funcional y fuerza total",
-          "duration_min": 50,
-          "type": "training",
-          "warm_up": [
-            {
-              "name": "Dead Bug",
-              "sets": 2,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Espalda pegada al suelo",
-              "progression": ""
-            },
-            {
-              "name": "Bird Dog",
-              "sets": 2,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Columna neutra siempre",
-              "progression": ""
-            },
-            {
-              "name": "Plancha lateral",
-              "sets": 1,
-              "reps": "20 seg c/l",
-              "rest_sec": 20,
-              "tip": "Cadera arriba",
-              "progression": ""
-            }
-          ],
-          "exercises": [
-            {
-              "name": "Peso Muerto Rumano + Encogimiento de hombros",
-              "sets": 3,
-              "reps": "12",
-              "rest_sec": 75,
-              "tip": "Compuesto que activa todo el posterior",
-              "progression": "Más músculo = más grasa quemada en reposo"
+              "tip": "Core activado. No arquear la espalda."
             },
             {
               "name": "Zancada caminando con mancuernas",
               "sets": 3,
-              "reps": "10 c/l",
+              "reps": "12 c/l",
               "rest_sec": 75,
-              "tip": "Paso largo, rodilla trasera casi al suelo",
-              "progression": "Activa glúteos, cuadriceps e isquiotibiales"
+              "tip": "Paso largo, rodilla casi al suelo."
             },
             {
-              "name": "Press banca o flexiones",
+              "name": "Plancha frontal",
               "sets": 3,
-              "reps": "12",
-              "rest_sec": 75,
-              "tip": "Técnica de press correcta. Escápulas juntas.",
-              "progression": "Pectoral + hombros + tríceps"
-            },
-            {
-              "name": "Dead Bug — Anti-extensión",
-              "sets": 3,
-              "reps": "8 c/l",
+              "reps": "30-45 seg",
               "rest_sec": 45,
-              "tip": "Espalda pegada al suelo siempre",
-              "progression": "Activa transverso del abdomen"
-            },
-            {
-              "name": "Plancha lateral + Rotación",
-              "sets": 3,
-              "reps": "8 c/l",
-              "rest_sec": 45,
-              "tip": "Sube el brazo al techo. No rotar la cadera.",
-              "progression": "Oblicuos + cadena lateral"
+              "tip": "Cuerpo recto. No elevar cadera."
             }
           ],
-          "notes": ""
+          "finisher": "2 rondas: 15 burpees + 20 mountain climbers + 15 squat jumps",
+          "finisher_min": 5,
+          "calories_burned_est": 574,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 300 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
         },
         {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
+          "day_name": "Martes",
+          "title": "HIIT Metabólico Puro",
+          "phase": 1,
+          "type": "hiit",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 15 min",
+            "duration_min": 15,
+            "calories_burned_est": 130,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 15 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 15 min intervalado 45seg/15seg",
+              "CORRER — 15 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 15 min a 6 km/h"
+            ]
+          },
+          "duration_min": 45,
+          "protocol": "3 rondas 40/20: Burpees · Climbers · Squat jump · Plancha shoulder tap · Step-up",
+          "epoc_note": "EPOC activo 24-48h después. El cuerpo sigue quemando grasa mientras duermes.",
+          "calories_burned_est": 552,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 400 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
         },
         {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
+          "day_name": "Miércoles",
+          "title": "Fuerza Full Body B — Posterior + Tracción",
+          "phase": 1,
+          "type": "training",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 15 min",
+            "duration_min": 15,
+            "calories_burned_est": 130,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 15 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 15 min intervalado 45seg/15seg",
+              "CORRER — 15 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 15 min a 6 km/h"
+            ]
+          },
+          "duration_min": 65,
+          "exercises": [
+            {
+              "name": "Peso Muerto Convencional o Sumo",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 120,
+              "tip": "600 músculos. Mayor quema calórica."
+            },
+            {
+              "name": "Sentadilla Búlgara con mancuernas",
+              "sets": 3,
+              "reps": "10 c/l",
+              "rest_sec": 90,
+              "tip": "Unilateral: glúteo + core."
+            },
+            {
+              "name": "Remo con barra o mancuernas",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 75,
+              "tip": "Espalda fuerte = cintura definida."
+            },
+            {
+              "name": "Press inclinado o flexiones",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 75,
+              "tip": "Pecho + hombros + tríceps."
+            },
+            {
+              "name": "Pallof Press anti-rotación",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "Oblicuos y cintura. Mejor que crunches."
+            }
+          ],
+          "core_finisher": "3 rondas: Dead Bug 8 c/l + Plancha lateral 20 seg + Rueda abdomen 8 reps",
+          "calories_burned_est": 541,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 300 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Jueves",
+          "title": "Cardio Dedicado — Escaladora o Lazo o Correr",
+          "type": "cardio",
+          "duration_min": 35,
+          "calories_burned_est": 379,
+          "phase": 1,
+          "protocols": [
+            {
+              "option": "ESCALADORA DECLINADO 15-20% — RECOMENDADA",
+              "detail": "35 min: 10 min 15%, 15 min 20%, 10 min vuelta gradual → 417 cal",
+              "why": "Activa glúteos, isquiotibiales y cuadriceps. Quema +40% vs plano."
+            },
+            {
+              "option": "SALTAR LAZO (casa o gym)",
+              "detail": "Intervalos: 45 seg salto / 15 seg pausa × 17 rondas → 417 cal",
+              "why": "Más accesible y eficiente para casa. Cardio de alto impacto."
+            },
+            {
+              "option": "CORRER AFUERA O CINTA",
+              "detail": "Intervalos: 2 min 8km/h + 1 min 5km/h × 11 → 341 cal",
+              "why": "Zona 2-3. Grasa como combustible principal."
+            }
+          ],
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 500 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Viernes",
+          "title": "Fuerza Full Body C — La Sesión Más Pesada",
+          "phase": 1,
+          "type": "training",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 15 min",
+            "duration_min": 15,
+            "calories_burned_est": 130,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 15 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 15 min intervalado 45seg/15seg",
+              "CORRER — 15 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 15 min a 6 km/h"
+            ]
+          },
+          "duration_min": 70,
+          "exercises": [
+            {
+              "name": "Sentadilla con barra — CARGA MÁXIMA",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 120,
+              "tip": "El más pesado de la semana. Registra el peso."
+            },
+            {
+              "name": "Peso Muerto — CARGA MÁXIMA",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 120,
+              "tip": "PR semanal. Técnica perfecta."
+            },
+            {
+              "name": "Press banca o inclinado",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "Empuje horizontal fuerte."
+            },
+            {
+              "name": "Dominadas o jalones",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "Espalda ancha define la cintura visualmente."
+            },
+            {
+              "name": "Farmer's Carry pesado",
+              "sets": 3,
+              "reps": "30 metros",
+              "rest_sec": 60,
+              "tip": "Full body: core, grip, trapecios, piernas."
+            }
+          ],
+          "hiit_finisher": "EMOM 8 min: min impar 12 burpees / min par 20 climbers",
+          "calories_burned_est": 660,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 400 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Sábado",
+          "title": "HIIT Tabata + Core Intenso — Mayor Quema de Grasa",
+          "phase": 1,
+          "type": "hiit",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 15 min",
+            "duration_min": 15,
+            "calories_burned_est": 130,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 15 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 15 min intervalado 45seg/15seg",
+              "CORRER — 15 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 15 min a 6 km/h"
+            ]
+          },
+          "duration_min": 50,
+          "tabata_protocol": "2× Tabata (4 min c/u): Burpees + Mountain Climbers → Core: Dead Bug + Plancha",
+          "science": "Tabata (Tremblay 1994): quema 9× más grasa que cardio estable. EPOC 36-48h.",
+          "calories_burned_est": 585,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 500 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Domingo",
+          "title": "Recuperación Activa — Obligatoria",
+          "type": "recovery",
+          "duration_min": 30,
+          "calories_burned_est": 130,
+          "phase": 1,
+          "protocol": [
+            "Caminata 20-30 min ritmo suave (NO correr)",
+            "Foam rolling 10 min: piernas, glúteos, espalda",
+            "Estiramiento 10 min: paloma, torsión supina, apertura",
+            "Movilidad cadera: círculos, flexión, rotación"
+          ],
+          "note": "El descanso activo es parte del programa. El músculo se recupera hoy.",
+          "si_comiste_demas": {
+            "protocol": "20 min caminata inclinación 10-12%",
+            "calories": 152
+          }
         }
       ]
     },
     {
       "week": 2,
       "phase": 1,
-      "phase_name": "Base metabólica y activación",
-      "phase_focus": "Construir la base. Técnica en compuestos. Activar el metabolismo.",
+      "phase_name": "Base metabólica",
+      "training_days": 6,
+      "rest_days": 1,
+      "total_calories_week_est": 3460,
+      "fat_loss_equivalent_kg": 0.45,
       "days": [
         {
-          "title": "Cuerpo Completo · Fuerza A",
-          "focus": "Compuestos que queman más calorías",
-          "duration_min": 50,
+          "day_name": "Lunes",
+          "title": "Fuerza Full Body A — Piernas + Empuje",
+          "phase": 1,
           "type": "training",
-          "warm_up": [
-            {
-              "name": "Jumping Jacks",
-              "sets": 1,
-              "reps": "30 seg",
-              "rest_sec": 15,
-              "tip": "Activa el sistema cardiovascular",
-              "progression": ""
-            },
-            {
-              "name": "Círculos de cadera",
-              "sets": 1,
-              "reps": "10 c/l",
-              "rest_sec": 15,
-              "tip": "Movilidad lumbo-pélvica",
-              "progression": ""
-            },
-            {
-              "name": "Estocada con rotación",
-              "sets": 1,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Moviliza toda la cadena",
-              "progression": ""
-            }
-          ],
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 15 min",
+            "duration_min": 15,
+            "calories_burned_est": 130,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 15 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 15 min intervalado 45seg/15seg",
+              "CORRER — 15 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 15 min a 6 km/h"
+            ]
+          },
+          "duration_min": 65,
           "exercises": [
             {
-              "name": "Sentadilla Goblet con Mancuerna",
+              "name": "Sentadilla con barra o goblet",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "200+ músculos. Profundidad completa."
+            },
+            {
+              "name": "Peso Muerto Rumano",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "Caderas atrás. Espalda neutra."
+            },
+            {
+              "name": "Press Militar de Pie",
               "sets": 3,
               "reps": "15",
               "rest_sec": 75,
-              "tip": "Técnica perfecta. Profundidad completa.",
-              "progression": "La sentadilla activa 200+ músculos y quema más calorías"
-            },
-            {
-              "name": "Peso Muerto con Mancuernas",
-              "sets": 3,
-              "reps": "12",
-              "rest_sec": 75,
-              "tip": "Bisagra de cadera. Espalda neutra.",
-              "progression": "Compuesto clave para pérdida de grasa total"
-            },
-            {
-              "name": "Press de hombros con mancuernas",
-              "sets": 3,
-              "reps": "12",
-              "rest_sec": 75,
-              "tip": "Estabiliza el core mientras presionas",
-              "progression": "Cuerpo completo = más gasto calórico"
-            },
-            {
-              "name": "Remo con mancuerna",
-              "sets": 3,
-              "reps": "12 c/l",
-              "rest_sec": 75,
-              "tip": "Espalda paralela al suelo, codo al techo",
-              "progression": "La espalda fuerte protege la columna"
-            },
-            {
-              "name": "Plancha frontal",
-              "sets": 3,
-              "reps": "30 seg",
-              "rest_sec": 45,
-              "tip": "Cuerpo recto. No elevar cadera.",
-              "progression": "Core antiflexión = cintura más definida"
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "Recuperación activa",
-          "focus": "Flujo sanguíneo y movilidad",
-          "duration_min": 30,
-          "type": "recovery",
-          "warm_up": [],
-          "exercises": [
-            {
-              "name": "Caminata 20 min",
-              "sets": 1,
-              "reps": "20 min",
-              "rest_sec": 0,
-              "tip": "Ritmo cómodo, sin prisa",
-              "progression": ""
-            },
-            {
-              "name": "Estiramiento cadera y glúteos",
-              "sets": 1,
-              "reps": "10 min",
-              "rest_sec": 0,
-              "tip": "Sostener 30s cada posición",
-              "progression": ""
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "Metabólico · Circuito A",
-          "focus": "Cardio + fuerza. EPOC activado.",
-          "duration_min": 40,
-          "type": "training",
-          "warm_up": [
-            {
-              "name": "Jumping Jacks",
-              "sets": 1,
-              "reps": "30 seg",
-              "rest_sec": 15,
-              "tip": "Activa el sistema cardiovascular",
-              "progression": ""
-            },
-            {
-              "name": "Círculos de cadera",
-              "sets": 1,
-              "reps": "10 c/l",
-              "rest_sec": 15,
-              "tip": "Movilidad lumbo-pélvica",
-              "progression": ""
-            },
-            {
-              "name": "Estocada con rotación",
-              "sets": 1,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Moviliza toda la cadena",
-              "progression": ""
-            }
-          ],
-          "exercises": [
-            {
-              "name": "Circuito 1: Sentadilla con salto + Flexión de codos",
-              "sets": 4,
-              "reps": "10+10",
-              "rest_sec": 60,
-              "tip": "Sin descanso entre ejercicios del mismo circuito",
-              "progression": "El HIIT quema grasa 24-48h después del entreno"
-            },
-            {
-              "name": "Circuito 2: Mountain Climbers + Remo con banda",
-              "sets": 4,
-              "reps": "20+12",
-              "rest_sec": 60,
-              "tip": "Core y espalda juntos. Pulso arriba.",
-              "progression": "Mantén la frecuencia cardiaca elevada"
-            },
-            {
-              "name": "Circuito 3: Sentadilla lateral + Step-up",
-              "sets": 4,
-              "reps": "12 c/l + 12 c/l",
-              "rest_sec": 60,
-              "tip": "Glúteos activados. Rodillas afuera.",
-              "progression": "Movimientos laterales queman más grasa en piernas"
-            },
-            {
-              "name": "Finisher: Burpees o Jumping Jacks",
-              "sets": 3,
-              "reps": "30 seg",
-              "rest_sec": 30,
-              "tip": "Máximo esfuerzo. 30 segundos.",
-              "progression": "El finisher maximiza el EPOC"
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
-        },
-        {
-          "title": "Fuerza + Core · Sesión B",
-          "focus": "Abdomen funcional y fuerza total",
-          "duration_min": 50,
-          "type": "training",
-          "warm_up": [
-            {
-              "name": "Dead Bug",
-              "sets": 2,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Espalda pegada al suelo",
-              "progression": ""
-            },
-            {
-              "name": "Bird Dog",
-              "sets": 2,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Columna neutra siempre",
-              "progression": ""
-            },
-            {
-              "name": "Plancha lateral",
-              "sets": 1,
-              "reps": "20 seg c/l",
-              "rest_sec": 20,
-              "tip": "Cadera arriba",
-              "progression": ""
-            }
-          ],
-          "exercises": [
-            {
-              "name": "Peso Muerto Rumano + Encogimiento de hombros",
-              "sets": 3,
-              "reps": "12",
-              "rest_sec": 75,
-              "tip": "Compuesto que activa todo el posterior",
-              "progression": "Más músculo = más grasa quemada en reposo"
+              "tip": "Core activado. No arquear la espalda."
             },
             {
               "name": "Zancada caminando con mancuernas",
               "sets": 3,
-              "reps": "10 c/l",
+              "reps": "12 c/l",
               "rest_sec": 75,
-              "tip": "Paso largo, rodilla trasera casi al suelo",
-              "progression": "Activa glúteos, cuadriceps e isquiotibiales"
+              "tip": "Paso largo, rodilla casi al suelo."
             },
             {
-              "name": "Press banca o flexiones",
+              "name": "Plancha frontal",
               "sets": 3,
-              "reps": "12",
-              "rest_sec": 75,
-              "tip": "Técnica de press correcta. Escápulas juntas.",
-              "progression": "Pectoral + hombros + tríceps"
-            },
-            {
-              "name": "Dead Bug — Anti-extensión",
-              "sets": 3,
-              "reps": "8 c/l",
+              "reps": "30-45 seg",
               "rest_sec": 45,
-              "tip": "Espalda pegada al suelo siempre",
-              "progression": "Activa transverso del abdomen"
-            },
-            {
-              "name": "Plancha lateral + Rotación",
-              "sets": 3,
-              "reps": "8 c/l",
-              "rest_sec": 45,
-              "tip": "Sube el brazo al techo. No rotar la cadera.",
-              "progression": "Oblicuos + cadena lateral"
+              "tip": "Cuerpo recto. No elevar cadera."
             }
           ],
-          "notes": ""
+          "finisher": "2 rondas: 15 burpees + 20 mountain climbers + 15 squat jumps",
+          "finisher_min": 5,
+          "calories_burned_est": 613,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 300 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
         },
         {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
+          "day_name": "Martes",
+          "title": "HIIT Metabólico Puro",
+          "phase": 1,
+          "type": "hiit",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 15 min",
+            "duration_min": 15,
+            "calories_burned_est": 130,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 15 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 15 min intervalado 45seg/15seg",
+              "CORRER — 15 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 15 min a 6 km/h"
+            ]
+          },
+          "duration_min": 45,
+          "protocol": "3 rondas 40/20: Burpees · Climbers · Squat jump · Plancha shoulder tap · Step-up",
+          "epoc_note": "EPOC activo 24-48h después. El cuerpo sigue quemando grasa mientras duermes.",
+          "calories_burned_est": 552,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 400 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
         },
         {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
+          "day_name": "Miércoles",
+          "title": "Fuerza Full Body B — Posterior + Tracción",
+          "phase": 1,
+          "type": "training",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 15 min",
+            "duration_min": 15,
+            "calories_burned_est": 130,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 15 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 15 min intervalado 45seg/15seg",
+              "CORRER — 15 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 15 min a 6 km/h"
+            ]
+          },
+          "duration_min": 65,
+          "exercises": [
+            {
+              "name": "Peso Muerto Convencional o Sumo",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 120,
+              "tip": "600 músculos. Mayor quema calórica."
+            },
+            {
+              "name": "Sentadilla Búlgara con mancuernas",
+              "sets": 3,
+              "reps": "10 c/l",
+              "rest_sec": 90,
+              "tip": "Unilateral: glúteo + core."
+            },
+            {
+              "name": "Remo con barra o mancuernas",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 75,
+              "tip": "Espalda fuerte = cintura definida."
+            },
+            {
+              "name": "Press inclinado o flexiones",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 75,
+              "tip": "Pecho + hombros + tríceps."
+            },
+            {
+              "name": "Pallof Press anti-rotación",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "Oblicuos y cintura. Mejor que crunches."
+            }
+          ],
+          "core_finisher": "3 rondas: Dead Bug 8 c/l + Plancha lateral 20 seg + Rueda abdomen 8 reps",
+          "calories_burned_est": 541,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 300 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Jueves",
+          "title": "Cardio Dedicado — Escaladora o Lazo o Correr",
+          "type": "cardio",
+          "duration_min": 35,
+          "calories_burned_est": 379,
+          "phase": 1,
+          "protocols": [
+            {
+              "option": "ESCALADORA DECLINADO 15-20% — RECOMENDADA",
+              "detail": "35 min: 10 min 15%, 15 min 20%, 10 min vuelta gradual → 417 cal",
+              "why": "Activa glúteos, isquiotibiales y cuadriceps. Quema +40% vs plano."
+            },
+            {
+              "option": "SALTAR LAZO (casa o gym)",
+              "detail": "Intervalos: 45 seg salto / 15 seg pausa × 17 rondas → 417 cal",
+              "why": "Más accesible y eficiente para casa. Cardio de alto impacto."
+            },
+            {
+              "option": "CORRER AFUERA O CINTA",
+              "detail": "Intervalos: 2 min 8km/h + 1 min 5km/h × 11 → 341 cal",
+              "why": "Zona 2-3. Grasa como combustible principal."
+            }
+          ],
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 500 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Viernes",
+          "title": "Fuerza Full Body C — La Sesión Más Pesada",
+          "phase": 1,
+          "type": "training",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 15 min",
+            "duration_min": 15,
+            "calories_burned_est": 130,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 15 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 15 min intervalado 45seg/15seg",
+              "CORRER — 15 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 15 min a 6 km/h"
+            ]
+          },
+          "duration_min": 70,
+          "exercises": [
+            {
+              "name": "Sentadilla con barra — CARGA MÁXIMA",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 120,
+              "tip": "El más pesado de la semana. Registra el peso."
+            },
+            {
+              "name": "Peso Muerto — CARGA MÁXIMA",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 120,
+              "tip": "PR semanal. Técnica perfecta."
+            },
+            {
+              "name": "Press banca o inclinado",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "Empuje horizontal fuerte."
+            },
+            {
+              "name": "Dominadas o jalones",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "Espalda ancha define la cintura visualmente."
+            },
+            {
+              "name": "Farmer's Carry pesado",
+              "sets": 3,
+              "reps": "30 metros",
+              "rest_sec": 60,
+              "tip": "Full body: core, grip, trapecios, piernas."
+            }
+          ],
+          "hiit_finisher": "EMOM 8 min: min impar 12 burpees / min par 20 climbers",
+          "calories_burned_est": 660,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 400 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Sábado",
+          "title": "HIIT Tabata + Core Intenso — Mayor Quema de Grasa",
+          "phase": 1,
+          "type": "hiit",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 15 min",
+            "duration_min": 15,
+            "calories_burned_est": 130,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 15 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 15 min intervalado 45seg/15seg",
+              "CORRER — 15 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 15 min a 6 km/h"
+            ]
+          },
+          "duration_min": 50,
+          "tabata_protocol": "2× Tabata: Burpees + Mountain Climbers → Core: Dead Bug + Plancha",
+          "science": "Tabata (Tremblay 1994): quema 9× más grasa que cardio estable. EPOC 36-48h.",
+          "calories_burned_est": 585,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 500 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Domingo",
+          "title": "Recuperación Activa — Obligatoria",
+          "type": "recovery",
+          "duration_min": 30,
+          "calories_burned_est": 130,
+          "phase": 1,
+          "protocol": [
+            "Caminata 20-30 min ritmo suave (NO correr)",
+            "Foam rolling 10 min: piernas, glúteos, espalda",
+            "Estiramiento 10 min: paloma, torsión supina, apertura",
+            "Movilidad cadera: círculos, flexión, rotación"
+          ],
+          "note": "El descanso activo es parte del programa. El músculo se recupera hoy.",
+          "si_comiste_demas": {
+            "protocol": "20 min caminata inclinación 10-12%",
+            "calories": 152
+          }
         }
       ]
     },
     {
       "week": 3,
       "phase": 2,
-      "phase_name": "Incremento de intensidad",
-      "phase_focus": "Más peso, más velocidad en los circuitos. El cuerpo se adapta.",
+      "phase_name": "Progresión intensidad",
+      "training_days": 6,
+      "rest_days": 1,
+      "total_calories_week_est": 4146,
+      "fat_loss_equivalent_kg": 0.54,
       "days": [
         {
-          "title": "Cuerpo Completo · Fuerza A Progresiva",
-          "focus": "Más carga en compuestos",
-          "duration_min": 55,
+          "day_name": "Lunes",
+          "title": "Fuerza Full Body A — Piernas + Empuje",
+          "phase": 2,
           "type": "training",
-          "warm_up": [
-            {
-              "name": "Jumping Jacks",
-              "sets": 1,
-              "reps": "30 seg",
-              "rest_sec": 15,
-              "tip": "Activa el sistema cardiovascular",
-              "progression": ""
-            },
-            {
-              "name": "Círculos de cadera",
-              "sets": 1,
-              "reps": "10 c/l",
-              "rest_sec": 15,
-              "tip": "Movilidad lumbo-pélvica",
-              "progression": ""
-            },
-            {
-              "name": "Estocada con rotación",
-              "sets": 1,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Moviliza toda la cadena",
-              "progression": ""
-            }
-          ],
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 20 min",
+            "duration_min": 20,
+            "calories_burned_est": 217,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 20 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 20 min intervalado 45seg/15seg",
+              "CORRER — 20 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 20 min a 6 km/h"
+            ]
+          },
+          "duration_min": 70,
           "exercises": [
             {
-              "name": "Sentadilla con Barra o Goblet Pesada",
+              "name": "Sentadilla con barra o goblet",
               "sets": 4,
               "reps": "12",
               "rest_sec": 90,
-              "tip": "Semana 3: +5-10% peso. Semana 4: otro +5%.",
-              "progression": "La progresión de carga es clave para mantener músculo en déficit"
+              "tip": "200+ músculos. Profundidad completa."
             },
             {
-              "name": "Peso Muerto con Barra o Mancuernas Pesadas",
+              "name": "Peso Muerto Rumano",
               "sets": 4,
-              "reps": "10",
+              "reps": "12",
               "rest_sec": 90,
-              "tip": "Carga progresiva. Técnica primero.",
-              "progression": "El músculo protege el metabolismo en pérdida de peso"
+              "tip": "Caderas atrás. Espalda neutra."
             },
             {
-              "name": "Press militar de pie",
+              "name": "Press Militar de Pie",
               "sets": 4,
-              "reps": "10",
-              "rest_sec": 90,
-              "tip": "De pie activa más core que sentado",
-              "progression": "Cuerpo completo = más gasto"
-            },
-            {
-              "name": "Remo Barra o Mancuernas — Pesado",
-              "sets": 3,
-              "reps": "10",
+              "reps": "12",
               "rest_sec": 75,
-              "tip": "Espalda fuerte = postura mejor y cintura más definida",
-              "progression": "La espalda es el músculo más ignorado en reto pancita"
+              "tip": "Core activado. No arquear la espalda."
             },
             {
-              "name": "Rueda de abdomen (ab wheel) o Hollow Body",
-              "sets": 3,
-              "reps": "8-10",
-              "rest_sec": 60,
-              "tip": "El movimiento antiextensión más efectivo para abdomen plano",
-              "progression": "Activa transverso y recto del abdomen"
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "Recuperación activa",
-          "focus": "Flujo sanguíneo y movilidad",
-          "duration_min": 30,
-          "type": "recovery",
-          "warm_up": [],
-          "exercises": [
-            {
-              "name": "Caminata 20 min",
-              "sets": 1,
-              "reps": "20 min",
-              "rest_sec": 0,
-              "tip": "Ritmo cómodo, sin prisa",
-              "progression": ""
-            },
-            {
-              "name": "Estiramiento cadera y glúteos",
-              "sets": 1,
-              "reps": "10 min",
-              "rest_sec": 0,
-              "tip": "Sostener 30s cada posición",
-              "progression": ""
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "Metabólico · HIIT Progresivo",
-          "focus": "Intervalos más intensos",
-          "duration_min": 45,
-          "type": "training",
-          "warm_up": [
-            {
-              "name": "Jumping Jacks",
-              "sets": 1,
-              "reps": "30 seg",
-              "rest_sec": 15,
-              "tip": "Activa el sistema cardiovascular",
-              "progression": ""
-            },
-            {
-              "name": "Círculos de cadera",
-              "sets": 1,
-              "reps": "10 c/l",
-              "rest_sec": 15,
-              "tip": "Movilidad lumbo-pélvica",
-              "progression": ""
-            },
-            {
-              "name": "Estocada con rotación",
-              "sets": 1,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Moviliza toda la cadena",
-              "progression": ""
-            }
-          ],
-          "exercises": [
-            {
-              "name": "Circuito 1: Sentadilla con salto + Remo rápido + Plancha",
-              "sets": 5,
-              "reps": "12+12+20seg",
-              "rest_sec": 60,
-              "tip": "3 ejercicios sin pausa. Intensidad máxima.",
-              "progression": "El circuito triple maximiza el EPOC"
-            },
-            {
-              "name": "Circuito 2: Burpee + Mountain Climber + Step-up",
-              "sets": 5,
-              "reps": "8+15+10 c/l",
-              "rest_sec": 60,
-              "tip": "Esfuerzo máximo. Pulso > 75% frecuencia max.",
-              "progression": "Quema visceral mejorada con HIIT"
-            },
-            {
-              "name": "Sprint en sitio o bicicleta 30/30",
-              "sets": 8,
-              "reps": "30 seg trabajo / 30 seg pausa",
-              "rest_sec": 0,
-              "tip": "8 intervalos. Al 90% de tu capacidad máxima.",
-              "progression": "HIIT supera al cardio estable para grasa visceral"
-            },
-            {
-              "name": "Core finisher: plancha + rotación 10 reps",
-              "sets": 3,
-              "reps": "10 c/l",
-              "rest_sec": 45,
-              "tip": "Cierra con core. Oblicuos activados.",
-              "progression": "El core fuerte = cintura más definida"
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
-        },
-        {
-          "title": "Fuerza + Core Avanzado",
-          "focus": "Compuestos pesados + core intenso",
-          "duration_min": 55,
-          "type": "training",
-          "warm_up": [
-            {
-              "name": "Dead Bug",
-              "sets": 2,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Espalda pegada al suelo",
-              "progression": ""
-            },
-            {
-              "name": "Bird Dog",
-              "sets": 2,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Columna neutra siempre",
-              "progression": ""
-            },
-            {
-              "name": "Plancha lateral",
-              "sets": 1,
-              "reps": "20 seg c/l",
-              "rest_sec": 20,
-              "tip": "Cadera arriba",
-              "progression": ""
-            }
-          ],
-          "exercises": [
-            {
-              "name": "Zancada con peso — alternadas",
+              "name": "Zancada caminando con mancuernas",
               "sets": 4,
               "reps": "12 c/l",
               "rest_sec": 75,
-              "tip": "Mancuernas o barra. Paso largo.",
-              "progression": "El movimiento unilateral activa el core automáticamente"
+              "tip": "Paso largo, rodilla casi al suelo."
             },
             {
-              "name": "Peso muerto sumo con barra",
+              "name": "Plancha frontal",
               "sets": 4,
-              "reps": "10",
-              "rest_sec": 90,
-              "tip": "Posición ancha. Glúteos activados.",
-              "progression": "Activa glúteos, isquiotibiales y core"
-            },
-            {
-              "name": "Press de pecho con mancuernas — Puente de cadera",
-              "sets": 4,
-              "reps": "10",
-              "rest_sec": 75,
-              "tip": "Presiona el suelo con la cadera mientras haces el press",
-              "progression": "Combinación pecho + glúteo + core"
-            },
-            {
-              "name": "Turkish Get-Up con mancuerna ligera",
-              "sets": 3,
-              "reps": "3 c/l",
-              "rest_sec": 90,
-              "tip": "El ejercicio más funcional para el core",
-              "progression": "Activa todo el core tridimensionalmente"
-            },
-            {
-              "name": "Plank Walk-Out + Flexión",
-              "sets": 3,
-              "reps": "8",
-              "rest_sec": 60,
-              "tip": "Camina las manos al frente y haz 1 flexión",
-              "progression": "Core antiextensión + fuerza de empuje"
+              "reps": "30-45 seg",
+              "rest_sec": 45,
+              "tip": "Cuerpo recto. No elevar cadera."
             }
           ],
-          "notes": ""
+          "finisher": "3 rondas: 15 burpees + 20 mountain climbers + 15 squat jumps",
+          "finisher_min": 8,
+          "calories_burned_est": 726,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 300 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
         },
         {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
+          "day_name": "Martes",
+          "title": "HIIT Metabólico Puro",
+          "phase": 2,
+          "type": "hiit",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 20 min",
+            "duration_min": 20,
+            "calories_burned_est": 217,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 20 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 20 min intervalado 45seg/15seg",
+              "CORRER — 20 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 20 min a 6 km/h"
+            ]
+          },
+          "duration_min": 55,
+          "protocol": "4 rondas 40/20: Burpee completo · Climbers rápido · Squat jump · Flexión rodilla codo",
+          "epoc_note": "EPOC activo 24-48h después. El cuerpo sigue quemando grasa mientras duermes.",
+          "calories_burned_est": 710,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 400 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
         },
         {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
+          "day_name": "Miércoles",
+          "title": "Fuerza Full Body B — Posterior + Tracción",
+          "phase": 2,
+          "type": "training",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 20 min",
+            "duration_min": 20,
+            "calories_burned_est": 217,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 20 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 20 min intervalado 45seg/15seg",
+              "CORRER — 20 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 20 min a 6 km/h"
+            ]
+          },
+          "duration_min": 70,
+          "exercises": [
+            {
+              "name": "Peso Muerto Convencional o Sumo",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 120,
+              "tip": "600 músculos. Mayor quema calórica."
+            },
+            {
+              "name": "Sentadilla Búlgara con mancuernas",
+              "sets": 4,
+              "reps": "10 c/l",
+              "rest_sec": 90,
+              "tip": "Unilateral: glúteo + core."
+            },
+            {
+              "name": "Remo con barra o mancuernas",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Espalda fuerte = cintura definida."
+            },
+            {
+              "name": "Press inclinado o flexiones",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Pecho + hombros + tríceps."
+            },
+            {
+              "name": "Pallof Press anti-rotación",
+              "sets": 4,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "Oblicuos y cintura. Mejor que crunches."
+            }
+          ],
+          "core_finisher": "3 rondas: Dead Bug 8 c/l + Plancha lateral 20 seg + Rueda abdomen 8 reps",
+          "calories_burned_est": 635,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 300 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Jueves",
+          "title": "Cardio Dedicado — Escaladora o Lazo o Correr",
+          "type": "cardio",
+          "duration_min": 40,
+          "calories_burned_est": 433,
+          "phase": 2,
+          "protocols": [
+            {
+              "option": "ESCALADORA DECLINADO 15-20% — RECOMENDADA",
+              "detail": "40 min: 10 min 15%, 15 min 20%, 10 min vuelta gradual → 477 cal",
+              "why": "Activa glúteos, isquiotibiales y cuadriceps. Quema +40% vs plano."
+            },
+            {
+              "option": "SALTAR LAZO (casa o gym)",
+              "detail": "Intervalos: 45 seg salto / 15 seg pausa × 20 rondas → 477 cal",
+              "why": "Más accesible y eficiente para casa. Cardio de alto impacto."
+            },
+            {
+              "option": "CORRER AFUERA O CINTA",
+              "detail": "Intervalos: 2 min 8km/h + 1 min 5km/h × 13 → 390 cal",
+              "why": "Zona 2-3. Grasa como combustible principal."
+            }
+          ],
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 500 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Viernes",
+          "title": "Fuerza Full Body C — La Sesión Más Pesada",
+          "phase": 2,
+          "type": "training",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 20 min",
+            "duration_min": 20,
+            "calories_burned_est": 217,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 20 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 20 min intervalado 45seg/15seg",
+              "CORRER — 20 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 20 min a 6 km/h"
+            ]
+          },
+          "duration_min": 75,
+          "exercises": [
+            {
+              "name": "Sentadilla con barra — CARGA MÁXIMA",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 120,
+              "tip": "El más pesado de la semana. Registra el peso."
+            },
+            {
+              "name": "Peso Muerto — CARGA MÁXIMA",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 120,
+              "tip": "PR semanal. Técnica perfecta."
+            },
+            {
+              "name": "Press banca o inclinado",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Empuje horizontal fuerte."
+            },
+            {
+              "name": "Dominadas o jalones",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Espalda ancha define la cintura visualmente."
+            },
+            {
+              "name": "Farmer's Carry pesado",
+              "sets": 3,
+              "reps": "30 metros",
+              "rest_sec": 60,
+              "tip": "Full body: core, grip, trapecios, piernas."
+            }
+          ],
+          "hiit_finisher": "AMRAP 10 min: 8 burpees + 15 squat jumps + 20 climbers",
+          "calories_burned_est": 775,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 400 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Sábado",
+          "title": "HIIT Tabata + Core Intenso — Mayor Quema de Grasa",
+          "phase": 2,
+          "type": "hiit",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 20 min",
+            "duration_min": 20,
+            "calories_burned_est": 217,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 20 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 20 min intervalado 45seg/15seg",
+              "CORRER — 20 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 20 min a 6 km/h"
+            ]
+          },
+          "duration_min": 60,
+          "tabata_protocol": "3× Tabata: Burpees / Squat Jump / Climbers → Core: Rueda + Plancha con peso",
+          "science": "Tabata (Tremblay 1994): quema 9× más grasa que cardio estable. EPOC 36-48h.",
+          "calories_burned_est": 737,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 500 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Domingo",
+          "title": "Recuperación Activa — Obligatoria",
+          "type": "recovery",
+          "duration_min": 30,
+          "calories_burned_est": 130,
+          "phase": 2,
+          "protocol": [
+            "Caminata 20-30 min ritmo suave (NO correr)",
+            "Foam rolling 10 min: piernas, glúteos, espalda",
+            "Estiramiento 10 min: paloma, torsión supina, apertura",
+            "Movilidad cadera: círculos, flexión, rotación"
+          ],
+          "note": "El descanso activo es parte del programa. El músculo se recupera hoy.",
+          "si_comiste_demas": {
+            "protocol": "20 min caminata inclinación 10-12%",
+            "calories": 152
+          }
         }
       ]
     },
     {
       "week": 4,
       "phase": 2,
-      "phase_name": "Incremento de intensidad",
-      "phase_focus": "Más peso, más velocidad en los circuitos. El cuerpo se adapta.",
+      "phase_name": "Progresión intensidad",
+      "training_days": 6,
+      "rest_days": 1,
+      "total_calories_week_est": 4172,
+      "fat_loss_equivalent_kg": 0.54,
       "days": [
         {
-          "title": "Cuerpo Completo · Fuerza A Progresiva",
-          "focus": "Más carga en compuestos",
-          "duration_min": 55,
+          "day_name": "Lunes",
+          "title": "Fuerza Full Body A — Piernas + Empuje",
+          "phase": 2,
           "type": "training",
-          "warm_up": [
-            {
-              "name": "Jumping Jacks",
-              "sets": 1,
-              "reps": "30 seg",
-              "rest_sec": 15,
-              "tip": "Activa el sistema cardiovascular",
-              "progression": ""
-            },
-            {
-              "name": "Círculos de cadera",
-              "sets": 1,
-              "reps": "10 c/l",
-              "rest_sec": 15,
-              "tip": "Movilidad lumbo-pélvica",
-              "progression": ""
-            },
-            {
-              "name": "Estocada con rotación",
-              "sets": 1,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Moviliza toda la cadena",
-              "progression": ""
-            }
-          ],
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 20 min",
+            "duration_min": 20,
+            "calories_burned_est": 217,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 20 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 20 min intervalado 45seg/15seg",
+              "CORRER — 20 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 20 min a 6 km/h"
+            ]
+          },
+          "duration_min": 70,
           "exercises": [
             {
-              "name": "Sentadilla con Barra o Goblet Pesada",
+              "name": "Sentadilla con barra o goblet",
               "sets": 4,
               "reps": "12",
               "rest_sec": 90,
-              "tip": "Semana 3: +5-10% peso. Semana 4: otro +5%.",
-              "progression": "La progresión de carga es clave para mantener músculo en déficit"
+              "tip": "200+ músculos. Profundidad completa."
             },
             {
-              "name": "Peso Muerto con Barra o Mancuernas Pesadas",
+              "name": "Peso Muerto Rumano",
               "sets": 4,
-              "reps": "10",
+              "reps": "12",
               "rest_sec": 90,
-              "tip": "Carga progresiva. Técnica primero.",
-              "progression": "El músculo protege el metabolismo en pérdida de peso"
+              "tip": "Caderas atrás. Espalda neutra."
             },
             {
-              "name": "Press militar de pie",
+              "name": "Press Militar de Pie",
               "sets": 4,
-              "reps": "10",
-              "rest_sec": 90,
-              "tip": "De pie activa más core que sentado",
-              "progression": "Cuerpo completo = más gasto"
-            },
-            {
-              "name": "Remo Barra o Mancuernas — Pesado",
-              "sets": 3,
-              "reps": "10",
+              "reps": "12",
               "rest_sec": 75,
-              "tip": "Espalda fuerte = postura mejor y cintura más definida",
-              "progression": "La espalda es el músculo más ignorado en reto pancita"
+              "tip": "Core activado. No arquear la espalda."
             },
             {
-              "name": "Rueda de abdomen (ab wheel) o Hollow Body",
-              "sets": 3,
-              "reps": "8-10",
-              "rest_sec": 60,
-              "tip": "El movimiento antiextensión más efectivo para abdomen plano",
-              "progression": "Activa transverso y recto del abdomen"
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "Recuperación activa",
-          "focus": "Flujo sanguíneo y movilidad",
-          "duration_min": 30,
-          "type": "recovery",
-          "warm_up": [],
-          "exercises": [
-            {
-              "name": "Caminata 20 min",
-              "sets": 1,
-              "reps": "20 min",
-              "rest_sec": 0,
-              "tip": "Ritmo cómodo, sin prisa",
-              "progression": ""
-            },
-            {
-              "name": "Estiramiento cadera y glúteos",
-              "sets": 1,
-              "reps": "10 min",
-              "rest_sec": 0,
-              "tip": "Sostener 30s cada posición",
-              "progression": ""
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "Metabólico · HIIT Progresivo",
-          "focus": "Intervalos más intensos",
-          "duration_min": 45,
-          "type": "training",
-          "warm_up": [
-            {
-              "name": "Jumping Jacks",
-              "sets": 1,
-              "reps": "30 seg",
-              "rest_sec": 15,
-              "tip": "Activa el sistema cardiovascular",
-              "progression": ""
-            },
-            {
-              "name": "Círculos de cadera",
-              "sets": 1,
-              "reps": "10 c/l",
-              "rest_sec": 15,
-              "tip": "Movilidad lumbo-pélvica",
-              "progression": ""
-            },
-            {
-              "name": "Estocada con rotación",
-              "sets": 1,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Moviliza toda la cadena",
-              "progression": ""
-            }
-          ],
-          "exercises": [
-            {
-              "name": "Circuito 1: Sentadilla con salto + Remo rápido + Plancha",
-              "sets": 5,
-              "reps": "12+12+20seg",
-              "rest_sec": 60,
-              "tip": "3 ejercicios sin pausa. Intensidad máxima.",
-              "progression": "El circuito triple maximiza el EPOC"
-            },
-            {
-              "name": "Circuito 2: Burpee + Mountain Climber + Step-up",
-              "sets": 5,
-              "reps": "8+15+10 c/l",
-              "rest_sec": 60,
-              "tip": "Esfuerzo máximo. Pulso > 75% frecuencia max.",
-              "progression": "Quema visceral mejorada con HIIT"
-            },
-            {
-              "name": "Sprint en sitio o bicicleta 30/30",
-              "sets": 8,
-              "reps": "30 seg trabajo / 30 seg pausa",
-              "rest_sec": 0,
-              "tip": "8 intervalos. Al 90% de tu capacidad máxima.",
-              "progression": "HIIT supera al cardio estable para grasa visceral"
-            },
-            {
-              "name": "Core finisher: plancha + rotación 10 reps",
-              "sets": 3,
-              "reps": "10 c/l",
-              "rest_sec": 45,
-              "tip": "Cierra con core. Oblicuos activados.",
-              "progression": "El core fuerte = cintura más definida"
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
-        },
-        {
-          "title": "Fuerza + Core Avanzado",
-          "focus": "Compuestos pesados + core intenso",
-          "duration_min": 55,
-          "type": "training",
-          "warm_up": [
-            {
-              "name": "Dead Bug",
-              "sets": 2,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Espalda pegada al suelo",
-              "progression": ""
-            },
-            {
-              "name": "Bird Dog",
-              "sets": 2,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Columna neutra siempre",
-              "progression": ""
-            },
-            {
-              "name": "Plancha lateral",
-              "sets": 1,
-              "reps": "20 seg c/l",
-              "rest_sec": 20,
-              "tip": "Cadera arriba",
-              "progression": ""
-            }
-          ],
-          "exercises": [
-            {
-              "name": "Zancada con peso — alternadas",
+              "name": "Zancada caminando con mancuernas",
               "sets": 4,
               "reps": "12 c/l",
               "rest_sec": 75,
-              "tip": "Mancuernas o barra. Paso largo.",
-              "progression": "El movimiento unilateral activa el core automáticamente"
+              "tip": "Paso largo, rodilla casi al suelo."
             },
             {
-              "name": "Peso muerto sumo con barra",
+              "name": "Plancha frontal",
               "sets": 4,
-              "reps": "10",
-              "rest_sec": 90,
-              "tip": "Posición ancha. Glúteos activados.",
-              "progression": "Activa glúteos, isquiotibiales y core"
-            },
-            {
-              "name": "Press de pecho con mancuernas — Puente de cadera",
-              "sets": 4,
-              "reps": "10",
-              "rest_sec": 75,
-              "tip": "Presiona el suelo con la cadera mientras haces el press",
-              "progression": "Combinación pecho + glúteo + core"
-            },
-            {
-              "name": "Turkish Get-Up con mancuerna ligera",
-              "sets": 3,
-              "reps": "3 c/l",
-              "rest_sec": 90,
-              "tip": "El ejercicio más funcional para el core",
-              "progression": "Activa todo el core tridimensionalmente"
-            },
-            {
-              "name": "Plank Walk-Out + Flexión",
-              "sets": 3,
-              "reps": "8",
-              "rest_sec": 60,
-              "tip": "Camina las manos al frente y haz 1 flexión",
-              "progression": "Core antiextensión + fuerza de empuje"
+              "reps": "30-45 seg",
+              "rest_sec": 45,
+              "tip": "Cuerpo recto. No elevar cadera."
             }
           ],
-          "notes": ""
+          "finisher": "3 rondas: 15 burpees + 20 mountain climbers + 15 squat jumps",
+          "finisher_min": 8,
+          "calories_burned_est": 752,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 300 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
         },
         {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
+          "day_name": "Martes",
+          "title": "HIIT Metabólico Puro",
+          "phase": 2,
+          "type": "hiit",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 20 min",
+            "duration_min": 20,
+            "calories_burned_est": 217,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 20 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 20 min intervalado 45seg/15seg",
+              "CORRER — 20 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 20 min a 6 km/h"
+            ]
+          },
+          "duration_min": 55,
+          "protocol": "4 rondas 40/20: Burpee completo · Climbers rápido · Squat jump · Flexión rodilla codo",
+          "epoc_note": "EPOC activo 24-48h después. El cuerpo sigue quemando grasa mientras duermes.",
+          "calories_burned_est": 710,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 400 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
         },
         {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
+          "day_name": "Miércoles",
+          "title": "Fuerza Full Body B — Posterior + Tracción",
+          "phase": 2,
+          "type": "training",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 20 min",
+            "duration_min": 20,
+            "calories_burned_est": 217,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 20 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 20 min intervalado 45seg/15seg",
+              "CORRER — 20 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 20 min a 6 km/h"
+            ]
+          },
+          "duration_min": 70,
+          "exercises": [
+            {
+              "name": "Peso Muerto Convencional o Sumo",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 120,
+              "tip": "600 músculos. Mayor quema calórica."
+            },
+            {
+              "name": "Sentadilla Búlgara con mancuernas",
+              "sets": 4,
+              "reps": "10 c/l",
+              "rest_sec": 90,
+              "tip": "Unilateral: glúteo + core."
+            },
+            {
+              "name": "Remo con barra o mancuernas",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Espalda fuerte = cintura definida."
+            },
+            {
+              "name": "Press inclinado o flexiones",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Pecho + hombros + tríceps."
+            },
+            {
+              "name": "Pallof Press anti-rotación",
+              "sets": 4,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "Oblicuos y cintura. Mejor que crunches."
+            }
+          ],
+          "core_finisher": "3 rondas: Dead Bug 8 c/l + Plancha lateral 20 seg + Rueda abdomen 8 reps",
+          "calories_burned_est": 635,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 300 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Jueves",
+          "title": "Cardio Dedicado — Escaladora o Lazo o Correr",
+          "type": "cardio",
+          "duration_min": 40,
+          "calories_burned_est": 433,
+          "phase": 2,
+          "protocols": [
+            {
+              "option": "ESCALADORA DECLINADO 15-20% — RECOMENDADA",
+              "detail": "40 min: 10 min 15%, 15 min 20%, 10 min vuelta gradual → 477 cal",
+              "why": "Activa glúteos, isquiotibiales y cuadriceps. Quema +40% vs plano."
+            },
+            {
+              "option": "SALTAR LAZO (casa o gym)",
+              "detail": "Intervalos: 45 seg salto / 15 seg pausa × 20 rondas → 477 cal",
+              "why": "Más accesible y eficiente para casa. Cardio de alto impacto."
+            },
+            {
+              "option": "CORRER AFUERA O CINTA",
+              "detail": "Intervalos: 2 min 8km/h + 1 min 5km/h × 13 → 390 cal",
+              "why": "Zona 2-3. Grasa como combustible principal."
+            }
+          ],
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 500 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Viernes",
+          "title": "Fuerza Full Body C — La Sesión Más Pesada",
+          "phase": 2,
+          "type": "training",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 20 min",
+            "duration_min": 20,
+            "calories_burned_est": 217,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 20 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 20 min intervalado 45seg/15seg",
+              "CORRER — 20 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 20 min a 6 km/h"
+            ]
+          },
+          "duration_min": 75,
+          "exercises": [
+            {
+              "name": "Sentadilla con barra — CARGA MÁXIMA",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 120,
+              "tip": "El más pesado de la semana. Registra el peso."
+            },
+            {
+              "name": "Peso Muerto — CARGA MÁXIMA",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 120,
+              "tip": "PR semanal. Técnica perfecta."
+            },
+            {
+              "name": "Press banca o inclinado",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Empuje horizontal fuerte."
+            },
+            {
+              "name": "Dominadas o jalones",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Espalda ancha define la cintura visualmente."
+            },
+            {
+              "name": "Farmer's Carry pesado",
+              "sets": 3,
+              "reps": "30 metros",
+              "rest_sec": 60,
+              "tip": "Full body: core, grip, trapecios, piernas."
+            }
+          ],
+          "hiit_finisher": "AMRAP 10 min: 8 burpees + 15 squat jumps + 20 climbers",
+          "calories_burned_est": 775,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 400 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Sábado",
+          "title": "HIIT Tabata + Core Intenso — Mayor Quema de Grasa",
+          "phase": 2,
+          "type": "hiit",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 20 min",
+            "duration_min": 20,
+            "calories_burned_est": 217,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 20 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 20 min intervalado 45seg/15seg",
+              "CORRER — 20 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 20 min a 6 km/h"
+            ]
+          },
+          "duration_min": 60,
+          "tabata_protocol": "3× Tabata: Burpees / Squat Jump / Climbers → Core: Rueda + Plancha con peso",
+          "science": "Tabata (Tremblay 1994): quema 9× más grasa que cardio estable. EPOC 36-48h.",
+          "calories_burned_est": 737,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 500 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Domingo",
+          "title": "Recuperación Activa — Obligatoria",
+          "type": "recovery",
+          "duration_min": 30,
+          "calories_burned_est": 130,
+          "phase": 2,
+          "protocol": [
+            "Caminata 20-30 min ritmo suave (NO correr)",
+            "Foam rolling 10 min: piernas, glúteos, espalda",
+            "Estiramiento 10 min: paloma, torsión supina, apertura",
+            "Movilidad cadera: círculos, flexión, rotación"
+          ],
+          "note": "El descanso activo es parte del programa. El músculo se recupera hoy.",
+          "si_comiste_demas": {
+            "protocol": "20 min caminata inclinación 10-12%",
+            "calories": 152
+          }
         }
       ]
     },
@@ -1275,277 +1431,316 @@
       "week": 5,
       "phase": 3,
       "phase_name": "Máximo metabólico",
-      "phase_focus": "La intensidad más alta del programa. Grasa al mínimo.",
+      "training_days": 6,
+      "rest_days": 1,
+      "total_calories_week_est": 4937,
+      "fat_loss_equivalent_kg": 0.64,
       "days": [
         {
-          "title": "Fuerza Total · Máxima Carga",
-          "focus": "Los pesos más altos del programa",
-          "duration_min": 60,
+          "day_name": "Lunes",
+          "title": "Fuerza Full Body A — Piernas + Empuje",
+          "phase": 3,
           "type": "training",
-          "warm_up": [
-            {
-              "name": "Jumping Jacks",
-              "sets": 1,
-              "reps": "30 seg",
-              "rest_sec": 15,
-              "tip": "Activa el sistema cardiovascular",
-              "progression": ""
-            },
-            {
-              "name": "Círculos de cadera",
-              "sets": 1,
-              "reps": "10 c/l",
-              "rest_sec": 15,
-              "tip": "Movilidad lumbo-pélvica",
-              "progression": ""
-            },
-            {
-              "name": "Estocada con rotación",
-              "sets": 1,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Moviliza toda la cadena",
-              "progression": ""
-            }
-          ],
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 25 min",
+            "duration_min": 25,
+            "calories_burned_est": 325,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 25 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 25 min intervalado 45seg/15seg",
+              "CORRER — 25 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 25 min a 6 km/h"
+            ]
+          },
+          "duration_min": 75,
           "exercises": [
             {
-              "name": "Sentadilla con Barra — Series de Fuerza",
-              "sets": 5,
-              "reps": "6-8",
-              "rest_sec": 120,
-              "tip": "Carga máxima. El músculo quema grasa en reposo.",
-              "progression": "Más músculo = metabolismo basal más alto"
-            },
-            {
-              "name": "Peso Muerto Convencional — Serie Fuerza",
-              "sets": 5,
-              "reps": "5-6",
-              "rest_sec": 120,
-              "tip": "El más completo para preservar músculo en déficit",
-              "progression": "Activa > 600 músculos simultáneamente"
-            },
-            {
-              "name": "Press Banca — Serie Pesada",
+              "name": "Sentadilla con barra o goblet",
               "sets": 4,
-              "reps": "8",
+              "reps": "10",
               "rest_sec": 90,
-              "tip": "Técnica perfecta. Escápulas juntas.",
-              "progression": "Fuerza de empuje horizontal"
+              "tip": "200+ músculos. Profundidad completa."
             },
             {
-              "name": "Remo con Barra — Pesado",
+              "name": "Peso Muerto Rumano",
               "sets": 4,
-              "reps": "8",
+              "reps": "10",
               "rest_sec": 90,
-              "tip": "Espalda fuerte = cuerpo equilibrado",
-              "progression": "Pareja del press banca"
+              "tip": "Caderas atrás. Espalda neutra."
             },
             {
-              "name": "Hollow Body Hold",
+              "name": "Press Militar de Pie",
               "sets": 4,
-              "reps": "20-30 seg",
-              "rest_sec": 60,
-              "tip": "La posición más difícil para el core. Mantén.",
-              "progression": "Activa recto del abdomen más que cualquier crunch"
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "Recuperación activa",
-          "focus": "Flujo sanguíneo y movilidad",
-          "duration_min": 30,
-          "type": "recovery",
-          "warm_up": [],
-          "exercises": [
-            {
-              "name": "Caminata 30 minutos al aire libre",
-              "sets": 1,
-              "reps": "30 min",
-              "rest_sec": 0,
-              "tip": "Ritmo moderado. Zona 2 cardíaca = quema grasa",
-              "progression": ""
-            },
-            {
-              "name": "Movilidad de cadera y columna",
-              "sets": 1,
-              "reps": "15 min",
-              "rest_sec": 0,
-              "tip": "Cat-cow, torsiones, aperturas",
-              "progression": ""
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "HIIT Máximo · Protocolo Tabata Mixto",
-          "focus": "El entreno más intenso del programa",
-          "duration_min": 45,
-          "type": "training",
-          "warm_up": [
-            {
-              "name": "Jumping Jacks",
-              "sets": 1,
-              "reps": "30 seg",
-              "rest_sec": 15,
-              "tip": "Activa el sistema cardiovascular",
-              "progression": ""
-            },
-            {
-              "name": "Círculos de cadera",
-              "sets": 1,
-              "reps": "10 c/l",
-              "rest_sec": 15,
-              "tip": "Movilidad lumbo-pélvica",
-              "progression": ""
-            },
-            {
-              "name": "Estocada con rotación",
-              "sets": 1,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Moviliza toda la cadena",
-              "progression": ""
-            }
-          ],
-          "exercises": [
-            {
-              "name": "Tabata 1: Burpees (20seg/10seg x8)",
-              "sets": 1,
-              "reps": "4 min",
-              "rest_sec": 60,
-              "tip": "20 seg máximo esfuerzo, 10 seg pausa. 8 rondas.",
-              "progression": "Tabata quema más grasa visceral que 1 hora de cardio moderado"
-            },
-            {
-              "name": "Tabata 2: Mountain Climbers (20/10 x8)",
-              "sets": 1,
-              "reps": "4 min",
-              "rest_sec": 60,
-              "tip": "Máxima velocidad. Core activado.",
-              "progression": "2 min descanso entre tabatas"
-            },
-            {
-              "name": "Tabata 3: Sentadilla con salto (20/10 x8)",
-              "sets": 1,
-              "reps": "4 min",
-              "rest_sec": 60,
-              "tip": "Aterriza suave. Rodillas no adentro.",
-              "progression": "El más intenso. EPOC máximo"
-            },
-            {
-              "name": "Core finisher: 100 reps mixtas",
-              "sets": 1,
-              "reps": "100",
-              "rest_sec": 0,
-              "tip": "Combina: planchas, dead bugs, bird dogs. 100 reps en total.",
-              "progression": "Sin descanso entre variantes. Termina bien."
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
-        },
-        {
-          "title": "Fuerza Funcional + Core Total",
-          "focus": "Movimientos complejos y core tridimensional",
-          "duration_min": 55,
-          "type": "training",
-          "warm_up": [
-            {
-              "name": "Dead Bug",
-              "sets": 2,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Espalda pegada al suelo",
-              "progression": ""
-            },
-            {
-              "name": "Bird Dog",
-              "sets": 2,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Columna neutra siempre",
-              "progression": ""
-            },
-            {
-              "name": "Plancha lateral",
-              "sets": 1,
-              "reps": "20 seg c/l",
-              "rest_sec": 20,
-              "tip": "Cadera arriba",
-              "progression": ""
-            }
-          ],
-          "exercises": [
-            {
-              "name": "Clean & Press con Mancuernas",
-              "sets": 4,
-              "reps": "8",
-              "rest_sec": 90,
-              "tip": "Jalón + press en un movimiento. Máxima quema.",
-              "progression": "Ejercicio olímpico = activación total"
-            },
-            {
-              "name": "Zancadas con peso + rotación de tronco",
-              "sets": 4,
-              "reps": "10 c/l",
-              "rest_sec": 90,
-              "tip": "Mancuerna al pecho. Rota al frente.",
-              "progression": "Activa oblicuos + piernas juntos"
-            },
-            {
-              "name": "Remo a una mano + Rotación",
-              "sets": 4,
-              "reps": "10 c/l",
+              "reps": "10",
               "rest_sec": 75,
-              "tip": "Rota el tronco al traer el codo",
-              "progression": "Cadena lateral completa"
+              "tip": "Core activado. No arquear la espalda."
             },
             {
-              "name": "Pallof Press con banda",
+              "name": "Zancada caminando con mancuernas",
+              "sets": 4,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Paso largo, rodilla casi al suelo."
+            },
+            {
+              "name": "Plancha frontal",
+              "sets": 4,
+              "reps": "30-45 seg",
+              "rest_sec": 45,
+              "tip": "Cuerpo recto. No elevar cadera."
+            }
+          ],
+          "finisher": "4 rondas: 15 burpees + 20 mountain climbers + 15 squat jumps",
+          "finisher_min": 10,
+          "calories_burned_est": 860,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 300 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Martes",
+          "title": "HIIT Metabólico Puro",
+          "phase": 3,
+          "type": "hiit",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 25 min",
+            "duration_min": 25,
+            "calories_burned_est": 325,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 25 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 25 min intervalado 45seg/15seg",
+              "CORRER — 25 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 25 min a 6 km/h"
+            ]
+          },
+          "duration_min": 65,
+          "protocol": "5 rondas 45/15: Burpee press · Climbers giro · Squat profundo rápido · Sprint sitio",
+          "epoc_note": "EPOC activo 24-48h después. El cuerpo sigue quemando grasa mientras duermes.",
+          "calories_burned_est": 888,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 400 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Miércoles",
+          "title": "Fuerza Full Body B — Posterior + Tracción",
+          "phase": 3,
+          "type": "training",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 25 min",
+            "duration_min": 25,
+            "calories_burned_est": 325,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 25 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 25 min intervalado 45seg/15seg",
+              "CORRER — 25 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 25 min a 6 km/h"
+            ]
+          },
+          "duration_min": 75,
+          "exercises": [
+            {
+              "name": "Peso Muerto Convencional o Sumo",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 120,
+              "tip": "600 músculos. Mayor quema calórica."
+            },
+            {
+              "name": "Sentadilla Búlgara con mancuernas",
+              "sets": 4,
+              "reps": "10 c/l",
+              "rest_sec": 90,
+              "tip": "Unilateral: glúteo + core."
+            },
+            {
+              "name": "Remo con barra o mancuernas",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 75,
+              "tip": "Espalda fuerte = cintura definida."
+            },
+            {
+              "name": "Press inclinado o flexiones",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 75,
+              "tip": "Pecho + hombros + tríceps."
+            },
+            {
+              "name": "Pallof Press anti-rotación",
               "sets": 4,
               "reps": "12 c/l",
               "rest_sec": 60,
-              "tip": "Anti-rotación. No dejar que la banda te gire.",
-              "progression": "El mejor ejercicio para oblicuos y transverso"
-            },
-            {
-              "name": "Rueda de abdomen o Pike with sliders",
-              "sets": 3,
-              "reps": "8-10",
-              "rest_sec": 60,
-              "tip": "Máxima extensión. Core antiextensión.",
-              "progression": "Más efectivo que mil crunches"
+              "tip": "Oblicuos y cintura. Mejor que crunches."
             }
           ],
-          "notes": ""
+          "core_finisher": "3 rondas: Dead Bug 8 c/l + Plancha lateral 20 seg + Rueda abdomen 8 reps",
+          "calories_burned_est": 750,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 300 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
         },
         {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
+          "day_name": "Jueves",
+          "title": "Cardio Dedicado — Escaladora o Lazo o Correr",
+          "type": "cardio",
+          "duration_min": 45,
+          "calories_burned_est": 488,
+          "phase": 3,
+          "protocols": [
+            {
+              "option": "ESCALADORA DECLINADO 15-20% — RECOMENDADA",
+              "detail": "45 min: 10 min 15%, 15 min 20%, 10 min vuelta gradual → 536 cal",
+              "why": "Activa glúteos, isquiotibiales y cuadriceps. Quema +40% vs plano."
+            },
+            {
+              "option": "SALTAR LAZO (casa o gym)",
+              "detail": "Intervalos: 45 seg salto / 15 seg pausa × 22 rondas → 536 cal",
+              "why": "Más accesible y eficiente para casa. Cardio de alto impacto."
+            },
+            {
+              "option": "CORRER AFUERA O CINTA",
+              "detail": "Intervalos: 2 min 8km/h + 1 min 5km/h × 15 → 439 cal",
+              "why": "Zona 2-3. Grasa como combustible principal."
+            }
+          ],
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 500 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
         },
         {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
+          "day_name": "Viernes",
+          "title": "Fuerza Full Body C — La Sesión Más Pesada",
+          "phase": 3,
+          "type": "training",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 25 min",
+            "duration_min": 25,
+            "calories_burned_est": 325,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 25 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 25 min intervalado 45seg/15seg",
+              "CORRER — 25 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 25 min a 6 km/h"
+            ]
+          },
+          "duration_min": 80,
+          "exercises": [
+            {
+              "name": "Sentadilla con barra — CARGA MÁXIMA",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 120,
+              "tip": "El más pesado de la semana. Registra el peso."
+            },
+            {
+              "name": "Peso Muerto — CARGA MÁXIMA",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 120,
+              "tip": "PR semanal. Técnica perfecta."
+            },
+            {
+              "name": "Press banca o inclinado",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Empuje horizontal fuerte."
+            },
+            {
+              "name": "Dominadas o jalones",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Espalda ancha define la cintura visualmente."
+            },
+            {
+              "name": "Farmer's Carry pesado",
+              "sets": 3,
+              "reps": "30 metros",
+              "rest_sec": 60,
+              "tip": "Full body: core, grip, trapecios, piernas."
+            }
+          ],
+          "hiit_finisher": "AMRAP 12 min máximas rondas: 8 burpees + 15 squat jumps + 20 climbers",
+          "calories_burned_est": 911,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 400 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Sábado",
+          "title": "HIIT Tabata + Core Intenso — Mayor Quema de Grasa",
+          "phase": 3,
+          "type": "hiit",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 25 min",
+            "duration_min": 25,
+            "calories_burned_est": 325,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 25 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 25 min intervalado 45seg/15seg",
+              "CORRER — 25 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 25 min a 6 km/h"
+            ]
+          },
+          "duration_min": 70,
+          "tabata_protocol": "3× Tabata + 5 intervalos 30/30 escaladora/lazo → Core: Pallof + Rueda + Hollow Body",
+          "science": "Tabata (Tremblay 1994): quema 9× más grasa que cardio estable. EPOC 36-48h.",
+          "calories_burned_est": 910,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 500 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Domingo",
+          "title": "Recuperación Activa — Obligatoria",
+          "type": "recovery",
+          "duration_min": 30,
+          "calories_burned_est": 130,
+          "phase": 3,
+          "protocol": [
+            "Caminata 20-30 min ritmo suave (NO correr)",
+            "Foam rolling 10 min: piernas, glúteos, espalda",
+            "Estiramiento 10 min: paloma, torsión supina, apertura",
+            "Movilidad cadera: círculos, flexión, rotación"
+          ],
+          "note": "El descanso activo es parte del programa. El músculo se recupera hoy.",
+          "si_comiste_demas": {
+            "protocol": "20 min caminata inclinación 10-12%",
+            "calories": 152
+          }
         }
       ]
     },
@@ -1553,770 +1748,968 @@
       "week": 6,
       "phase": 3,
       "phase_name": "Máximo metabólico",
-      "phase_focus": "La intensidad más alta del programa. Grasa al mínimo.",
+      "training_days": 6,
+      "rest_days": 1,
+      "total_calories_week_est": 4937,
+      "fat_loss_equivalent_kg": 0.64,
       "days": [
         {
-          "title": "Fuerza Total · Máxima Carga",
-          "focus": "Los pesos más altos del programa",
-          "duration_min": 60,
+          "day_name": "Lunes",
+          "title": "Fuerza Full Body A — Piernas + Empuje",
+          "phase": 3,
           "type": "training",
-          "warm_up": [
-            {
-              "name": "Jumping Jacks",
-              "sets": 1,
-              "reps": "30 seg",
-              "rest_sec": 15,
-              "tip": "Activa el sistema cardiovascular",
-              "progression": ""
-            },
-            {
-              "name": "Círculos de cadera",
-              "sets": 1,
-              "reps": "10 c/l",
-              "rest_sec": 15,
-              "tip": "Movilidad lumbo-pélvica",
-              "progression": ""
-            },
-            {
-              "name": "Estocada con rotación",
-              "sets": 1,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Moviliza toda la cadena",
-              "progression": ""
-            }
-          ],
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 25 min",
+            "duration_min": 25,
+            "calories_burned_est": 325,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 25 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 25 min intervalado 45seg/15seg",
+              "CORRER — 25 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 25 min a 6 km/h"
+            ]
+          },
+          "duration_min": 75,
           "exercises": [
             {
-              "name": "Sentadilla con Barra — Series de Fuerza",
-              "sets": 5,
-              "reps": "6-8",
-              "rest_sec": 120,
-              "tip": "Carga máxima. El músculo quema grasa en reposo.",
-              "progression": "Más músculo = metabolismo basal más alto"
-            },
-            {
-              "name": "Peso Muerto Convencional — Serie Fuerza",
-              "sets": 5,
-              "reps": "5-6",
-              "rest_sec": 120,
-              "tip": "El más completo para preservar músculo en déficit",
-              "progression": "Activa > 600 músculos simultáneamente"
-            },
-            {
-              "name": "Press Banca — Serie Pesada",
+              "name": "Sentadilla con barra o goblet",
               "sets": 4,
-              "reps": "8",
+              "reps": "10",
               "rest_sec": 90,
-              "tip": "Técnica perfecta. Escápulas juntas.",
-              "progression": "Fuerza de empuje horizontal"
+              "tip": "200+ músculos. Profundidad completa."
             },
             {
-              "name": "Remo con Barra — Pesado",
+              "name": "Peso Muerto Rumano",
               "sets": 4,
-              "reps": "8",
+              "reps": "10",
               "rest_sec": 90,
-              "tip": "Espalda fuerte = cuerpo equilibrado",
-              "progression": "Pareja del press banca"
+              "tip": "Caderas atrás. Espalda neutra."
             },
             {
-              "name": "Hollow Body Hold",
+              "name": "Press Militar de Pie",
               "sets": 4,
-              "reps": "20-30 seg",
-              "rest_sec": 60,
-              "tip": "La posición más difícil para el core. Mantén.",
-              "progression": "Activa recto del abdomen más que cualquier crunch"
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "Recuperación activa",
-          "focus": "Flujo sanguíneo y movilidad",
-          "duration_min": 30,
-          "type": "recovery",
-          "warm_up": [],
-          "exercises": [
-            {
-              "name": "Caminata 30 minutos al aire libre",
-              "sets": 1,
-              "reps": "30 min",
-              "rest_sec": 0,
-              "tip": "Ritmo moderado. Zona 2 cardíaca = quema grasa",
-              "progression": ""
-            },
-            {
-              "name": "Movilidad de cadera y columna",
-              "sets": 1,
-              "reps": "15 min",
-              "rest_sec": 0,
-              "tip": "Cat-cow, torsiones, aperturas",
-              "progression": ""
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "HIIT Máximo · Protocolo Tabata Mixto",
-          "focus": "El entreno más intenso del programa",
-          "duration_min": 45,
-          "type": "training",
-          "warm_up": [
-            {
-              "name": "Jumping Jacks",
-              "sets": 1,
-              "reps": "30 seg",
-              "rest_sec": 15,
-              "tip": "Activa el sistema cardiovascular",
-              "progression": ""
-            },
-            {
-              "name": "Círculos de cadera",
-              "sets": 1,
-              "reps": "10 c/l",
-              "rest_sec": 15,
-              "tip": "Movilidad lumbo-pélvica",
-              "progression": ""
-            },
-            {
-              "name": "Estocada con rotación",
-              "sets": 1,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Moviliza toda la cadena",
-              "progression": ""
-            }
-          ],
-          "exercises": [
-            {
-              "name": "Tabata 1: Burpees (20seg/10seg x8)",
-              "sets": 1,
-              "reps": "4 min",
-              "rest_sec": 60,
-              "tip": "20 seg máximo esfuerzo, 10 seg pausa. 8 rondas.",
-              "progression": "Tabata quema más grasa visceral que 1 hora de cardio moderado"
-            },
-            {
-              "name": "Tabata 2: Mountain Climbers (20/10 x8)",
-              "sets": 1,
-              "reps": "4 min",
-              "rest_sec": 60,
-              "tip": "Máxima velocidad. Core activado.",
-              "progression": "2 min descanso entre tabatas"
-            },
-            {
-              "name": "Tabata 3: Sentadilla con salto (20/10 x8)",
-              "sets": 1,
-              "reps": "4 min",
-              "rest_sec": 60,
-              "tip": "Aterriza suave. Rodillas no adentro.",
-              "progression": "El más intenso. EPOC máximo"
-            },
-            {
-              "name": "Core finisher: 100 reps mixtas",
-              "sets": 1,
-              "reps": "100",
-              "rest_sec": 0,
-              "tip": "Combina: planchas, dead bugs, bird dogs. 100 reps en total.",
-              "progression": "Sin descanso entre variantes. Termina bien."
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
-        },
-        {
-          "title": "Fuerza Funcional + Core Total",
-          "focus": "Movimientos complejos y core tridimensional",
-          "duration_min": 55,
-          "type": "training",
-          "warm_up": [
-            {
-              "name": "Dead Bug",
-              "sets": 2,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Espalda pegada al suelo",
-              "progression": ""
-            },
-            {
-              "name": "Bird Dog",
-              "sets": 2,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Columna neutra siempre",
-              "progression": ""
-            },
-            {
-              "name": "Plancha lateral",
-              "sets": 1,
-              "reps": "20 seg c/l",
-              "rest_sec": 20,
-              "tip": "Cadera arriba",
-              "progression": ""
-            }
-          ],
-          "exercises": [
-            {
-              "name": "Clean & Press con Mancuernas",
-              "sets": 4,
-              "reps": "8",
-              "rest_sec": 90,
-              "tip": "Jalón + press en un movimiento. Máxima quema.",
-              "progression": "Ejercicio olímpico = activación total"
-            },
-            {
-              "name": "Zancadas con peso + rotación de tronco",
-              "sets": 4,
-              "reps": "10 c/l",
-              "rest_sec": 90,
-              "tip": "Mancuerna al pecho. Rota al frente.",
-              "progression": "Activa oblicuos + piernas juntos"
-            },
-            {
-              "name": "Remo a una mano + Rotación",
-              "sets": 4,
-              "reps": "10 c/l",
+              "reps": "10",
               "rest_sec": 75,
-              "tip": "Rota el tronco al traer el codo",
-              "progression": "Cadena lateral completa"
+              "tip": "Core activado. No arquear la espalda."
             },
             {
-              "name": "Pallof Press con banda",
+              "name": "Zancada caminando con mancuernas",
+              "sets": 4,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Paso largo, rodilla casi al suelo."
+            },
+            {
+              "name": "Plancha frontal",
+              "sets": 4,
+              "reps": "30-45 seg",
+              "rest_sec": 45,
+              "tip": "Cuerpo recto. No elevar cadera."
+            }
+          ],
+          "finisher": "4 rondas: 15 burpees + 20 mountain climbers + 15 squat jumps",
+          "finisher_min": 10,
+          "calories_burned_est": 860,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 300 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Martes",
+          "title": "HIIT Metabólico Puro",
+          "phase": 3,
+          "type": "hiit",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 25 min",
+            "duration_min": 25,
+            "calories_burned_est": 325,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 25 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 25 min intervalado 45seg/15seg",
+              "CORRER — 25 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 25 min a 6 km/h"
+            ]
+          },
+          "duration_min": 65,
+          "protocol": "5 rondas 45/15: Burpee press · Climbers giro · Squat profundo rápido · Sprint sitio",
+          "epoc_note": "EPOC activo 24-48h después. El cuerpo sigue quemando grasa mientras duermes.",
+          "calories_burned_est": 888,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 400 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Miércoles",
+          "title": "Fuerza Full Body B — Posterior + Tracción",
+          "phase": 3,
+          "type": "training",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 25 min",
+            "duration_min": 25,
+            "calories_burned_est": 325,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 25 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 25 min intervalado 45seg/15seg",
+              "CORRER — 25 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 25 min a 6 km/h"
+            ]
+          },
+          "duration_min": 75,
+          "exercises": [
+            {
+              "name": "Peso Muerto Convencional o Sumo",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 120,
+              "tip": "600 músculos. Mayor quema calórica."
+            },
+            {
+              "name": "Sentadilla Búlgara con mancuernas",
+              "sets": 4,
+              "reps": "10 c/l",
+              "rest_sec": 90,
+              "tip": "Unilateral: glúteo + core."
+            },
+            {
+              "name": "Remo con barra o mancuernas",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 75,
+              "tip": "Espalda fuerte = cintura definida."
+            },
+            {
+              "name": "Press inclinado o flexiones",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 75,
+              "tip": "Pecho + hombros + tríceps."
+            },
+            {
+              "name": "Pallof Press anti-rotación",
               "sets": 4,
               "reps": "12 c/l",
               "rest_sec": 60,
-              "tip": "Anti-rotación. No dejar que la banda te gire.",
-              "progression": "El mejor ejercicio para oblicuos y transverso"
-            },
-            {
-              "name": "Rueda de abdomen o Pike with sliders",
-              "sets": 3,
-              "reps": "8-10",
-              "rest_sec": 60,
-              "tip": "Máxima extensión. Core antiextensión.",
-              "progression": "Más efectivo que mil crunches"
+              "tip": "Oblicuos y cintura. Mejor que crunches."
             }
           ],
-          "notes": ""
+          "core_finisher": "3 rondas: Dead Bug 8 c/l + Plancha lateral 20 seg + Rueda abdomen 8 reps",
+          "calories_burned_est": 750,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 300 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
         },
         {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
+          "day_name": "Jueves",
+          "title": "Cardio Dedicado — Escaladora o Lazo o Correr",
+          "type": "cardio",
+          "duration_min": 45,
+          "calories_burned_est": 488,
+          "phase": 3,
+          "protocols": [
+            {
+              "option": "ESCALADORA DECLINADO 15-20% — RECOMENDADA",
+              "detail": "45 min: 10 min 15%, 15 min 20%, 10 min vuelta gradual → 536 cal",
+              "why": "Activa glúteos, isquiotibiales y cuadriceps. Quema +40% vs plano."
+            },
+            {
+              "option": "SALTAR LAZO (casa o gym)",
+              "detail": "Intervalos: 45 seg salto / 15 seg pausa × 22 rondas → 536 cal",
+              "why": "Más accesible y eficiente para casa. Cardio de alto impacto."
+            },
+            {
+              "option": "CORRER AFUERA O CINTA",
+              "detail": "Intervalos: 2 min 8km/h + 1 min 5km/h × 15 → 439 cal",
+              "why": "Zona 2-3. Grasa como combustible principal."
+            }
+          ],
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 500 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
         },
         {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
+          "day_name": "Viernes",
+          "title": "Fuerza Full Body C — La Sesión Más Pesada",
+          "phase": 3,
+          "type": "training",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 25 min",
+            "duration_min": 25,
+            "calories_burned_est": 325,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 25 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 25 min intervalado 45seg/15seg",
+              "CORRER — 25 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 25 min a 6 km/h"
+            ]
+          },
+          "duration_min": 80,
+          "exercises": [
+            {
+              "name": "Sentadilla con barra — CARGA MÁXIMA",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 120,
+              "tip": "El más pesado de la semana. Registra el peso."
+            },
+            {
+              "name": "Peso Muerto — CARGA MÁXIMA",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 120,
+              "tip": "PR semanal. Técnica perfecta."
+            },
+            {
+              "name": "Press banca o inclinado",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Empuje horizontal fuerte."
+            },
+            {
+              "name": "Dominadas o jalones",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Espalda ancha define la cintura visualmente."
+            },
+            {
+              "name": "Farmer's Carry pesado",
+              "sets": 3,
+              "reps": "30 metros",
+              "rest_sec": 60,
+              "tip": "Full body: core, grip, trapecios, piernas."
+            }
+          ],
+          "hiit_finisher": "AMRAP 12 min máximas rondas: 8 burpees + 15 squat jumps + 20 climbers",
+          "calories_burned_est": 911,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 400 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Sábado",
+          "title": "HIIT Tabata + Core Intenso — Mayor Quema de Grasa",
+          "phase": 3,
+          "type": "hiit",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 25 min",
+            "duration_min": 25,
+            "calories_burned_est": 325,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 25 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 25 min intervalado 45seg/15seg",
+              "CORRER — 25 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 25 min a 6 km/h"
+            ]
+          },
+          "duration_min": 70,
+          "tabata_protocol": "3× Tabata + 5 intervalos 30/30 escaladora/lazo → Core: Pallof + Rueda + Hollow Body",
+          "science": "Tabata (Tremblay 1994): quema 9× más grasa que cardio estable. EPOC 36-48h.",
+          "calories_burned_est": 910,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 500 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Domingo",
+          "title": "Recuperación Activa — Obligatoria",
+          "type": "recovery",
+          "duration_min": 30,
+          "calories_burned_est": 130,
+          "phase": 3,
+          "protocol": [
+            "Caminata 20-30 min ritmo suave (NO correr)",
+            "Foam rolling 10 min: piernas, glúteos, espalda",
+            "Estiramiento 10 min: paloma, torsión supina, apertura",
+            "Movilidad cadera: círculos, flexión, rotación"
+          ],
+          "note": "El descanso activo es parte del programa. El músculo se recupera hoy.",
+          "si_comiste_demas": {
+            "protocol": "20 min caminata inclinación 10-12%",
+            "calories": 152
+          }
         }
       ]
     },
     {
       "week": 7,
       "phase": 4,
-      "phase_name": "Pico — Semana de máximos",
-      "phase_focus": "Todo junto. La semana más completa del programa.",
+      "phase_name": "Pico — semana más exigente",
+      "training_days": 6,
+      "rest_days": 1,
+      "total_calories_week_est": 4889,
+      "fat_loss_equivalent_kg": 0.63,
       "days": [
         {
-          "title": "Fuerza + Metabólico Mixto",
-          "focus": "Compuestos pesados + finisher HIIT",
+          "day_name": "Lunes",
+          "title": "Fuerza Full Body A — Piernas + Empuje",
+          "phase": 4,
+          "type": "training",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 20 min",
+            "duration_min": 20,
+            "calories_burned_est": 260,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 20 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 20 min intervalado 45seg/15seg",
+              "CORRER — 20 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 20 min a 6 km/h"
+            ]
+          },
+          "duration_min": 70,
+          "exercises": [
+            {
+              "name": "Sentadilla con barra o goblet",
+              "sets": 5,
+              "reps": "8",
+              "rest_sec": 90,
+              "tip": "200+ músculos. Profundidad completa."
+            },
+            {
+              "name": "Peso Muerto Rumano",
+              "sets": 5,
+              "reps": "8",
+              "rest_sec": 90,
+              "tip": "Caderas atrás. Espalda neutra."
+            },
+            {
+              "name": "Press Militar de Pie",
+              "sets": 5,
+              "reps": "8",
+              "rest_sec": 75,
+              "tip": "Core activado. No arquear la espalda."
+            },
+            {
+              "name": "Zancada caminando con mancuernas",
+              "sets": 5,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Paso largo, rodilla casi al suelo."
+            },
+            {
+              "name": "Plancha frontal",
+              "sets": 5,
+              "reps": "30-45 seg",
+              "rest_sec": 45,
+              "tip": "Cuerpo recto. No elevar cadera."
+            }
+          ],
+          "finisher": "5 rondas: 15 burpees + 20 mountain climbers + 15 squat jumps",
+          "finisher_min": 12,
+          "calories_burned_est": 834,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 300 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Martes",
+          "title": "HIIT Metabólico Puro",
+          "phase": 4,
+          "type": "hiit",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 20 min",
+            "duration_min": 20,
+            "calories_burned_est": 260,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 20 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 20 min intervalado 45seg/15seg",
+              "CORRER — 20 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 20 min a 6 km/h"
+            ]
+          },
           "duration_min": 65,
+          "protocol": "6 rondas 45/15 MÁXIMO: Burpee · Climbers · Squat jump · Flexión explosiva",
+          "epoc_note": "EPOC activo 24-48h después. El cuerpo sigue quemando grasa mientras duermes.",
+          "calories_burned_est": 894,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 400 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Miércoles",
+          "title": "Fuerza Full Body B — Posterior + Tracción",
+          "phase": 4,
           "type": "training",
-          "warm_up": [
-            {
-              "name": "Jumping Jacks",
-              "sets": 1,
-              "reps": "30 seg",
-              "rest_sec": 15,
-              "tip": "Activa el sistema cardiovascular",
-              "progression": ""
-            },
-            {
-              "name": "Círculos de cadera",
-              "sets": 1,
-              "reps": "10 c/l",
-              "rest_sec": 15,
-              "tip": "Movilidad lumbo-pélvica",
-              "progression": ""
-            },
-            {
-              "name": "Estocada con rotación",
-              "sets": 1,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Moviliza toda la cadena",
-              "progression": ""
-            }
-          ],
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 20 min",
+            "duration_min": 20,
+            "calories_burned_est": 260,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 20 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 20 min intervalado 45seg/15seg",
+              "CORRER — 20 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 20 min a 6 km/h"
+            ]
+          },
+          "duration_min": 70,
           "exercises": [
             {
-              "name": "Sentadilla con Barra — PR de 5 reps",
+              "name": "Peso Muerto Convencional o Sumo",
               "sets": 5,
-              "reps": "5",
+              "reps": "8",
               "rest_sec": 120,
-              "tip": "El peso más alto del programa.",
-              "progression": "El músculo construido protege tu metabolismo"
+              "tip": "600 músculos. Mayor quema calórica."
             },
             {
-              "name": "Peso Muerto Convencional — PR de 5 reps",
+              "name": "Sentadilla Búlgara con mancuernas",
               "sets": 5,
-              "reps": "5",
-              "rest_sec": 120,
-              "tip": "Máximo. Técnica perfecta.",
-              "progression": "Registra el peso. Es tu progresión real"
-            },
-            {
-              "name": "Press + Remo Superserie",
-              "sets": 4,
-              "reps": "8+8",
-              "rest_sec": 75,
-              "tip": "Press de hombros seguido de remo. Sin descanso entre los dos.",
-              "progression": "Superserie antagónica = más quema en menos tiempo"
-            },
-            {
-              "name": "Finisher HIIT: 5 min de trabajo máximo",
-              "sets": 1,
-              "reps": "5 min",
-              "rest_sec": 0,
-              "tip": "Burpees, mountain climbers o sentadillas con salto. Máximo.",
-              "progression": "El finisher metabólico cierra la sesión"
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "Recuperación activa",
-          "focus": "Flujo sanguíneo y movilidad",
-          "duration_min": 30,
-          "type": "recovery",
-          "warm_up": [],
-          "exercises": [
-            {
-              "name": "Caminata 20 min",
-              "sets": 1,
-              "reps": "20 min",
-              "rest_sec": 0,
-              "tip": "Ritmo cómodo, sin prisa",
-              "progression": ""
-            },
-            {
-              "name": "Estiramiento cadera y glúteos",
-              "sets": 1,
-              "reps": "10 min",
-              "rest_sec": 0,
-              "tip": "Sostener 30s cada posición",
-              "progression": ""
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "HIIT Final · Máxima Intensidad",
-          "focus": "El entreno cardio más intenso del programa",
-          "duration_min": 50,
-          "type": "training",
-          "warm_up": [
-            {
-              "name": "Jumping Jacks",
-              "sets": 1,
-              "reps": "30 seg",
-              "rest_sec": 15,
-              "tip": "Activa el sistema cardiovascular",
-              "progression": ""
-            },
-            {
-              "name": "Círculos de cadera",
-              "sets": 1,
               "reps": "10 c/l",
-              "rest_sec": 15,
-              "tip": "Movilidad lumbo-pélvica",
-              "progression": ""
-            },
-            {
-              "name": "Estocada con rotación",
-              "sets": 1,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Moviliza toda la cadena",
-              "progression": ""
-            }
-          ],
-          "exercises": [
-            {
-              "name": "Calentamiento intenso 5 min",
-              "sets": 1,
-              "reps": "5 min",
-              "rest_sec": 0,
-              "tip": "Jumping jacks, sentadillas sin peso, rotaciones",
-              "progression": ""
-            },
-            {
-              "name": "3 Rondas del Circuito Final: Burpee + Sentadilla con salto + Mountain Climbers + Plancha",
-              "sets": 3,
-              "reps": "12+12+20+30seg",
               "rest_sec": 90,
-              "tip": "Sin pausa entre ejercicios. Pausa 90 seg entre rondas.",
-              "progression": "El circuito final más intenso del reto"
+              "tip": "Unilateral: glúteo + core."
             },
             {
-              "name": "Sprint final: 10 intervalos 30/30",
-              "sets": 10,
-              "reps": "30 seg trabajo / 30 pausa",
-              "rest_sec": 0,
-              "tip": "Al 95% de tu capacidad. Todo lo que tengas.",
-              "progression": "El último HIIT del programa"
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
-        },
-        {
-          "title": "Cuerpo Completo · Sesión Final Intensa",
-          "focus": "Último entreno duro del programa",
-          "duration_min": 60,
-          "type": "training",
-          "warm_up": [
-            {
-              "name": "Jumping Jacks",
-              "sets": 1,
-              "reps": "30 seg",
-              "rest_sec": 15,
-              "tip": "Activa el sistema cardiovascular",
-              "progression": ""
-            },
-            {
-              "name": "Círculos de cadera",
-              "sets": 1,
-              "reps": "10 c/l",
-              "rest_sec": 15,
-              "tip": "Movilidad lumbo-pélvica",
-              "progression": ""
-            },
-            {
-              "name": "Estocada con rotación",
-              "sets": 1,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Moviliza toda la cadena",
-              "progression": ""
-            }
-          ],
-          "exercises": [
-            {
-              "name": "Sentadilla + Peso Muerto Superserie",
-              "sets": 4,
-              "reps": "10+10",
-              "rest_sec": 90,
-              "tip": "Sentadilla goblet seguido de PMR. Sin descanso.",
-              "progression": "La superserie más efectiva para quema calórica"
-            },
-            {
-              "name": "Press + Remo Superserie",
-              "sets": 4,
-              "reps": "10+10",
+              "name": "Remo con barra o mancuernas",
+              "sets": 5,
+              "reps": "8",
               "rest_sec": 75,
-              "tip": "Press seguido de remo. Sin pausa.",
-              "progression": "Músculos opuestos = recuperación rápida"
+              "tip": "Espalda fuerte = cintura definida."
             },
             {
-              "name": "Circuit Core: Dead Bug + Pallof + Rueda",
-              "sets": 3,
-              "reps": "8+12+8",
+              "name": "Press inclinado o flexiones",
+              "sets": 5,
+              "reps": "8",
+              "rest_sec": 75,
+              "tip": "Pecho + hombros + tríceps."
+            },
+            {
+              "name": "Pallof Press anti-rotación",
+              "sets": 5,
+              "reps": "12 c/l",
               "rest_sec": 60,
-              "tip": "El trío de core más científicamente respaldado",
-              "progression": "Transverso + oblicuos + recto del abdomen"
-            },
-            {
-              "name": "Finisher: 50 Burpees o 200 Mountain Climbers",
-              "sets": 1,
-              "reps": "max rep",
-              "rest_sec": 0,
-              "tip": "El que puedas. Sin parar si es posible.",
-              "progression": "Cierra el programa con todo"
+              "tip": "Oblicuos y cintura. Mejor que crunches."
             }
           ],
-          "notes": ""
+          "core_finisher": "3 rondas: Dead Bug 8 c/l + Plancha lateral 20 seg + Rueda abdomen 8 reps",
+          "calories_burned_est": 691,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 300 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
         },
         {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
+          "day_name": "Jueves",
+          "title": "Cardio Dedicado — Escaladora o Lazo o Correr",
+          "type": "cardio",
+          "duration_min": 50,
+          "calories_burned_est": 542,
+          "phase": 4,
+          "protocols": [
+            {
+              "option": "ESCALADORA DECLINADO 15-20% — RECOMENDADA",
+              "detail": "50 min: 10 min 15%, 15 min 20%, 10 min vuelta gradual → 596 cal",
+              "why": "Activa glúteos, isquiotibiales y cuadriceps. Quema +40% vs plano."
+            },
+            {
+              "option": "SALTAR LAZO (casa o gym)",
+              "detail": "Intervalos: 45 seg salto / 15 seg pausa × 25 rondas → 596 cal",
+              "why": "Más accesible y eficiente para casa. Cardio de alto impacto."
+            },
+            {
+              "option": "CORRER AFUERA O CINTA",
+              "detail": "Intervalos: 2 min 8km/h + 1 min 5km/h × 16 → 488 cal",
+              "why": "Zona 2-3. Grasa como combustible principal."
+            }
+          ],
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 500 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
         },
         {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
+          "day_name": "Viernes",
+          "title": "Fuerza Full Body C — La Sesión Más Pesada",
+          "phase": 4,
+          "type": "training",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 20 min",
+            "duration_min": 20,
+            "calories_burned_est": 260,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 20 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 20 min intervalado 45seg/15seg",
+              "CORRER — 20 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 20 min a 6 km/h"
+            ]
+          },
+          "duration_min": 75,
+          "exercises": [
+            {
+              "name": "Sentadilla con barra — CARGA MÁXIMA",
+              "sets": 5,
+              "reps": "8",
+              "rest_sec": 120,
+              "tip": "El más pesado de la semana. Registra el peso."
+            },
+            {
+              "name": "Peso Muerto — CARGA MÁXIMA",
+              "sets": 5,
+              "reps": "8",
+              "rest_sec": 120,
+              "tip": "PR semanal. Técnica perfecta."
+            },
+            {
+              "name": "Press banca o inclinado",
+              "sets": 5,
+              "reps": "8",
+              "rest_sec": 90,
+              "tip": "Empuje horizontal fuerte."
+            },
+            {
+              "name": "Dominadas o jalones",
+              "sets": 5,
+              "reps": "8",
+              "rest_sec": 90,
+              "tip": "Espalda ancha define la cintura visualmente."
+            },
+            {
+              "name": "Farmer's Carry pesado",
+              "sets": 3,
+              "reps": "30 metros",
+              "rest_sec": 60,
+              "tip": "Full body: core, grip, trapecios, piernas."
+            }
+          ],
+          "hiit_finisher": "15 min sin parar: 5 burpees + 10 squat jumps + 15 climbers + 20 mountain climbers",
+          "calories_burned_est": 888,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 400 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Sábado",
+          "title": "HIIT Tabata + Core Intenso — Mayor Quema de Grasa",
+          "phase": 4,
+          "type": "hiit",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 20 min",
+            "duration_min": 20,
+            "calories_burned_est": 260,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 20 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 20 min intervalado 45seg/15seg",
+              "CORRER — 20 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 20 min a 6 km/h"
+            ]
+          },
+          "duration_min": 70,
+          "tabata_protocol": "4× Tabata + 10 min escaladora/lazo máxima intensidad → Core triset 5 rondas",
+          "science": "Tabata (Tremblay 1994): quema 9× más grasa que cardio estable. EPOC 36-48h.",
+          "calories_burned_est": 910,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 500 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Domingo",
+          "title": "Recuperación Activa — Obligatoria",
+          "type": "recovery",
+          "duration_min": 30,
+          "calories_burned_est": 130,
+          "phase": 4,
+          "protocol": [
+            "Caminata 20-30 min ritmo suave (NO correr)",
+            "Foam rolling 10 min: piernas, glúteos, espalda",
+            "Estiramiento 10 min: paloma, torsión supina, apertura",
+            "Movilidad cadera: círculos, flexión, rotación"
+          ],
+          "note": "El descanso activo es parte del programa. El músculo se recupera hoy.",
+          "si_comiste_demas": {
+            "protocol": "20 min caminata inclinación 10-12%",
+            "calories": 152
+          }
         }
       ]
     },
     {
       "week": 8,
       "phase": 4,
-      "phase_name": "Descarga y consolidación",
-      "phase_focus": "El cuerpo asimila 7 semanas de trabajo. Menos intensidad, más técnica.",
+      "phase_name": "Descarga activa",
+      "training_days": 6,
+      "rest_days": 1,
+      "total_calories_week_est": 4181,
+      "fat_loss_equivalent_kg": 0.54,
       "days": [
         {
-          "title": "Cuerpo Completo · Suave A",
-          "focus": "Todos los movimientos, mitad del peso",
-          "duration_min": 40,
+          "day_name": "Lunes",
+          "title": "Fuerza Full Body A — Piernas + Empuje",
+          "phase": 3,
           "type": "training",
-          "warm_up": [
-            {
-              "name": "Jumping Jacks",
-              "sets": 1,
-              "reps": "30 seg",
-              "rest_sec": 15,
-              "tip": "Activa el sistema cardiovascular",
-              "progression": ""
-            },
-            {
-              "name": "Círculos de cadera",
-              "sets": 1,
-              "reps": "10 c/l",
-              "rest_sec": 15,
-              "tip": "Movilidad lumbo-pélvica",
-              "progression": ""
-            },
-            {
-              "name": "Estocada con rotación",
-              "sets": 1,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Moviliza toda la cadena",
-              "progression": ""
-            }
-          ],
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 25 min",
+            "duration_min": 25,
+            "calories_burned_est": 325,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 25 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 25 min intervalado 45seg/15seg",
+              "CORRER — 25 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 25 min a 6 km/h"
+            ]
+          },
+          "duration_min": 75,
           "exercises": [
             {
-              "name": "Sentadilla Goblet",
+              "name": "Sentadilla con barra o goblet",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "200+ músculos. Profundidad completa."
+            },
+            {
+              "name": "Peso Muerto Rumano",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Caderas atrás. Espalda neutra."
+            },
+            {
+              "name": "Press Militar de Pie",
               "sets": 3,
               "reps": "12",
               "rest_sec": 75,
-              "tip": "60% peso semana 7. Disfruta.",
-              "progression": ""
+              "tip": "Core activado. No arquear la espalda."
             },
             {
-              "name": "Peso Muerto Rumano Ligero",
+              "name": "Zancada caminando con mancuernas",
               "sets": 3,
-              "reps": "12",
+              "reps": "12 c/l",
               "rest_sec": 75,
-              "tip": "Técnica perfecta.",
-              "progression": ""
-            },
-            {
-              "name": "Press de hombros ligero",
-              "sets": 3,
-              "reps": "12",
-              "rest_sec": 60,
-              "tip": "Movimiento fluido.",
-              "progression": ""
+              "tip": "Paso largo, rodilla casi al suelo."
             },
             {
               "name": "Plancha frontal",
               "sets": 3,
-              "reps": "30 seg",
+              "reps": "30-45 seg",
               "rest_sec": 45,
-              "tip": "Cuerpo recto.",
-              "progression": ""
+              "tip": "Cuerpo recto. No elevar cadera."
             }
           ],
-          "notes": ""
+          "finisher": "2 rondas: 15 burpees + 20 mountain climbers + 15 squat jumps",
+          "finisher_min": 5,
+          "calories_burned_est": 808,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 300 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
         },
         {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
+          "day_name": "Martes",
+          "title": "HIIT Metabólico Puro",
+          "phase": 3,
+          "type": "hiit",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 25 min",
+            "duration_min": 25,
+            "calories_burned_est": 325,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 25 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 25 min intervalado 45seg/15seg",
+              "CORRER — 25 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 25 min a 6 km/h"
+            ]
+          },
+          "duration_min": 50,
+          "protocol": "3 rondas 40/20: recuperación activa intensa",
+          "epoc_note": "EPOC activo 24-48h después. El cuerpo sigue quemando grasa mientras duermes.",
+          "calories_burned_est": 677,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 400 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
         },
         {
-          "title": "Movilidad + Core Suave",
-          "focus": "Recuperación activa especializada",
-          "duration_min": 35,
+          "day_name": "Miércoles",
+          "title": "Fuerza Full Body B — Posterior + Tracción",
+          "phase": 3,
           "type": "training",
-          "warm_up": [
-            {
-              "name": "Dead Bug",
-              "sets": 2,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Espalda pegada al suelo",
-              "progression": ""
-            },
-            {
-              "name": "Bird Dog",
-              "sets": 2,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Columna neutra siempre",
-              "progression": ""
-            },
-            {
-              "name": "Plancha lateral",
-              "sets": 1,
-              "reps": "20 seg c/l",
-              "rest_sec": 20,
-              "tip": "Cadera arriba",
-              "progression": ""
-            }
-          ],
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 25 min",
+            "duration_min": 25,
+            "calories_burned_est": 325,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 25 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 25 min intervalado 45seg/15seg",
+              "CORRER — 25 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 25 min a 6 km/h"
+            ]
+          },
+          "duration_min": 75,
           "exercises": [
             {
-              "name": "Yoga flujo de 20 min",
-              "sets": 1,
-              "reps": "20 min",
-              "rest_sec": 0,
-              "tip": "Sun salutations, warriors, torsiones",
-              "progression": ""
-            },
-            {
-              "name": "Dead Bug",
+              "name": "Peso Muerto Convencional o Sumo",
               "sets": 3,
-              "reps": "8 c/l",
-              "rest_sec": 30,
-              "tip": "Activación suave del core profundo",
-              "progression": ""
+              "reps": "12",
+              "rest_sec": 120,
+              "tip": "600 músculos. Mayor quema calórica."
             },
             {
-              "name": "Caminata 15 min",
-              "sets": 1,
-              "reps": "15 min",
-              "rest_sec": 0,
-              "tip": "Ritmo cómodo. Cierre del programa",
-              "progression": ""
-            }
-          ],
-          "notes": ""
-        },
-        {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
-        },
-        {
-          "title": "Resumen · Celebra 8 Semanas",
-          "focus": "Un poco de todo. Orgullo merecido.",
-          "duration_min": 40,
-          "type": "training",
-          "warm_up": [
-            {
-              "name": "Jumping Jacks",
-              "sets": 1,
-              "reps": "30 seg",
-              "rest_sec": 15,
-              "tip": "Activa el sistema cardiovascular",
-              "progression": ""
-            },
-            {
-              "name": "Círculos de cadera",
-              "sets": 1,
+              "name": "Sentadilla Búlgara con mancuernas",
+              "sets": 3,
               "reps": "10 c/l",
-              "rest_sec": 15,
-              "tip": "Movilidad lumbo-pélvica",
-              "progression": ""
+              "rest_sec": 90,
+              "tip": "Unilateral: glúteo + core."
             },
             {
-              "name": "Estocada con rotación",
-              "sets": 1,
-              "reps": "8 c/l",
-              "rest_sec": 20,
-              "tip": "Moviliza toda la cadena",
-              "progression": ""
+              "name": "Remo con barra o mancuernas",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Espalda fuerte = cintura definida."
+            },
+            {
+              "name": "Press inclinado o flexiones",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Pecho + hombros + tríceps."
+            },
+            {
+              "name": "Pallof Press anti-rotación",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "Oblicuos y cintura. Mejor que crunches."
             }
           ],
+          "core_finisher": "3 rondas: Dead Bug 8 c/l + Plancha lateral 20 seg + Rueda abdomen 8 reps",
+          "calories_burned_est": 736,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 300 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Jueves",
+          "title": "Cardio Dedicado — Escaladora o Lazo o Correr",
+          "type": "cardio",
+          "duration_min": 30,
+          "calories_burned_est": 325,
+          "phase": 3,
+          "protocols": [
+            {
+              "option": "ESCALADORA DECLINADO 15-20% — RECOMENDADA",
+              "detail": "30 min: 10 min 15%, 15 min 20%, 10 min vuelta gradual → 358 cal",
+              "why": "Activa glúteos, isquiotibiales y cuadriceps. Quema +40% vs plano."
+            },
+            {
+              "option": "SALTAR LAZO (casa o gym)",
+              "detail": "Intervalos: 45 seg salto / 15 seg pausa × 15 rondas → 358 cal",
+              "why": "Más accesible y eficiente para casa. Cardio de alto impacto."
+            },
+            {
+              "option": "CORRER AFUERA O CINTA",
+              "detail": "Intervalos: 2 min 8km/h + 1 min 5km/h × 10 → 292 cal",
+              "why": "Zona 2-3. Grasa como combustible principal."
+            }
+          ],
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 500 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
+        },
+        {
+          "day_name": "Viernes",
+          "title": "Fuerza Full Body C — La Sesión Más Pesada",
+          "phase": 3,
+          "type": "training",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 25 min",
+            "duration_min": 25,
+            "calories_burned_est": 325,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 25 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 25 min intervalado 45seg/15seg",
+              "CORRER — 25 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 25 min a 6 km/h"
+            ]
+          },
+          "duration_min": 80,
           "exercises": [
             {
-              "name": "Sentadilla con peso cómodo",
+              "name": "Sentadilla con barra — CARGA MÁXIMA",
               "sets": 3,
-              "reps": "10",
-              "rest_sec": 75,
-              "tip": "8 semanas de constancia.",
-              "progression": ""
+              "reps": "12",
+              "rest_sec": 120,
+              "tip": "El más pesado de la semana. Registra el peso."
             },
             {
-              "name": "Peso Muerto Ligero",
+              "name": "Peso Muerto — CARGA MÁXIMA",
               "sets": 3,
-              "reps": "10",
-              "rest_sec": 75,
-              "tip": "La base está construida.",
-              "progression": ""
+              "reps": "12",
+              "rest_sec": 120,
+              "tip": "PR semanal. Técnica perfecta."
             },
             {
-              "name": "Circuito Core: 5 ejercicios, 2 rondas",
-              "sets": 2,
-              "reps": "10 c/ejercicio",
-              "rest_sec": 30,
-              "tip": "Dead bug, bird dog, plancha, lateral, hollow body",
-              "progression": "El core que construiste dura. No se va."
+              "name": "Press banca o inclinado",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Empuje horizontal fuerte."
             },
             {
-              "name": "Caminata final 10 min",
-              "sets": 1,
-              "reps": "10 min",
-              "rest_sec": 0,
-              "tip": "Cierra con calma. 8 semanas de trabajo real.",
-              "progression": ""
+              "name": "Dominadas o jalones",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Espalda ancha define la cintura visualmente."
+            },
+            {
+              "name": "Farmer's Carry pesado",
+              "sets": 3,
+              "reps": "30 metros",
+              "rest_sec": 60,
+              "tip": "Full body: core, grip, trapecios, piernas."
             }
           ],
-          "notes": ""
+          "hiit_finisher": "AMRAP 8 min: 8 burpees + 15 squat jumps",
+          "calories_burned_est": 855,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 400 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
         },
         {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
+          "day_name": "Sábado",
+          "title": "HIIT Tabata + Core Intenso — Mayor Quema de Grasa",
+          "phase": 3,
+          "type": "hiit",
+          "cardio_warmup": {
+            "title": "Cardio Calentamiento 25 min",
+            "duration_min": 25,
+            "calories_burned_est": 325,
+            "options": [
+              "ESCALADORA DECLINADO 15-20% — 25 min → RECOMENDADA (quema +40%)",
+              "SALTAR LAZO — 25 min intervalado 45seg/15seg",
+              "CORRER — 25 min a 7-8 km/h",
+              "CAMINADORA 8-10% inclinación — 25 min a 6 km/h"
+            ]
+          },
+          "duration_min": 50,
+          "tabata_protocol": "1× Tabata Suave + Core: Dead Bug + Plancha lateral",
+          "science": "Tabata (Tremblay 1994): quema 9× más grasa que cardio estable. EPOC 36-48h.",
+          "calories_burned_est": 650,
+          "si_comiste_demas": {
+            "protocol": "SI COMISTE DE MÁS — agrega 500 cal extra con:",
+            "options": [
+              "Escaladora declinado 20% — 25 min → 325 cal",
+              "Saltar lazo intenso — 25 min → 298 cal",
+              "Correr 8 km/h — 30 min → 325 cal"
+            ]
+          }
         },
         {
-          "title": "Descanso completo",
-          "focus": "Recuperación y síntesis proteica",
-          "duration_min": 0,
-          "type": "rest",
-          "warm_up": [],
-          "exercises": [],
-          "notes": ""
+          "day_name": "Domingo",
+          "title": "Recuperación Activa — Obligatoria",
+          "type": "recovery",
+          "duration_min": 30,
+          "calories_burned_est": 130,
+          "phase": 3,
+          "protocol": [
+            "Caminata 20-30 min ritmo suave (NO correr)",
+            "Foam rolling 10 min: piernas, glúteos, espalda",
+            "Estiramiento 10 min: paloma, torsión supina, apertura",
+            "Movilidad cadera: círculos, flexión, rotación"
+          ],
+          "note": "El descanso activo es parte del programa. El músculo se recupera hoy.",
+          "si_comiste_demas": {
+            "protocol": "20 min caminata inclinación 10-12%",
+            "calories": 152
+          }
         }
       ]
     }
-  ]
+  ],
+  "training_days_per_week": 6,
+  "calorie_method": "MET×kg×horas (ACSM). Estimado mujer 60-70kg.",
+  "cardio_options": {
+    "best": "Escaladora declinado 15-20%",
+    "home": "Saltar lazo",
+    "outdoor": "Correr"
+  },
+  "si_comiste_demas_global": "Escaladora declinado 25 min o lazo 25 min o correr 30 min",
+  "weekly_calorie_burn": {
+    "weeks_1_2": "~3286 cal = 0.43kg grasa",
+    "weeks_3_4": "~4053 cal = 0.53kg grasa",
+    "weeks_5_6": "~4925 cal = 0.64kg grasa",
+    "week_7": "~4756 cal = 0.62kg grasa",
+    "total_8_weeks": "~30943 cal = ~4.0kg grasa",
+    "with_diet_deficit": "5-7kg en 8 semanas con déficit 300-500 kcal/día"
+  }
 }
