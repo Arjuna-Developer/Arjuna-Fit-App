@@ -774,7 +774,6 @@ function _initSupabase() {
       { auth:{ persistSession:true, autoRefreshToken:true, detectSessionInUrl:false, storageKey:'arjunafit-auth' } }
     );
     window.sb = _sb;
-    console.log('[AF] Supabase listo');
   } catch(e) {
     console.warn('[AF] Supabase init error:', e.message);
   }
@@ -1154,7 +1153,6 @@ function navigateToPhase(targetPhase) {
       return; // Don't allow skipping multiple phases forward
     }
   }
-  console.log(`[Workout] Navigate: phase ${S.phase} → ${targetPhase}`);
   if (targetPhase > S.phase) {
     // Going forward — use normal nextPhase-like flow
     S.phase = targetPhase;
@@ -1457,7 +1455,6 @@ function restoreWorkoutState() {
     S.simpleChecks = st.simpleChecks || {};
     S.sets = st.sets || {};
     S.startMs = st.startMs;
-    console.log('[AF] Estado de sesión restaurado — fase', S.phase);
     return true;
   } catch(e) { return false; }
 }
@@ -1514,7 +1511,6 @@ async function loadPRs() {
       .select('exercise_name,value')
       .eq('user_id', S.uid).eq('record_type', 'max_kg');
     (data || []).forEach(r => { _localMaxes[r.exercise_name] = r.value; });
-    console.log('[AF] PRs cargados:', Object.keys(_localMaxes).length);
   } catch(e) {}
 }
 function showPRToast(exName, kg, diff) {
@@ -2119,7 +2115,6 @@ function showWorkoutNow(dayNum, name) {
     `Sem ${S.weekNum} · Sesión ${d} · ${getPhase(S.weekNum).name}`;
   document.getElementById('ldr').classList.add('off');
   document.getElementById('page').style.display = '';
-  console.log(`[AF] Workout listo — Sem ${S.weekNum} Día ${d} (${S.session.name})`);
 
   // Try to restore previous session state
   const restored = restoreWorkoutState();
@@ -2138,14 +2133,12 @@ function showWorkoutNow(dayNum, name) {
 
 // Paso 1: mostrar inmediatamente con Sem1 Día1
 window.addEventListener('DOMContentLoaded', () => {
-  console.log('[AF] DOMContentLoaded — mostrando workout base');
   showWorkoutNow(1, '');
 
   // Paso 2: cargar Supabase y datos reales en background
   const sbScript = document.createElement('script');
   sbScript.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
   sbScript.onload = () => {
-    console.log('[AF] Supabase CDN cargado — obteniendo datos reales');
     _initSupabase();
     loadRealData();
   };
@@ -2156,19 +2149,16 @@ window.addEventListener('DOMContentLoaded', () => {
 async function loadRealData() {
   if (!_sb) { console.warn('[AF] Supabase no disponible'); return; }
   try {
-    console.log('[AF] Obteniendo sesión...');
     const { data: { session } } = await Promise.race([
       _sb.auth.getSession(),
       new Promise((_, r) => setTimeout(() => r(new Error('auth timeout')), 4000))
     ]);
 
     if (!session?.user) {
-      console.log('[AF] Sin sesión → login');
       window.location.replace('/');
       return;
     }
     S.uid = session.user.id;
-    console.log('[AF] Sesión OK, uid:', S.uid.slice(0, 8));
 
     const { data: p } = await Promise.race([
       _sb.from('profiles').select('*').eq('id', S.uid).maybeSingle(),
@@ -2206,7 +2196,6 @@ async function loadRealData() {
     }
 
     S.profile = p;
-    console.log(`[AF] Perfil OK — día ${completed + 1}`);
     // ✅ Actualizar con datos reales
     showWorkoutNow(completed + 1, p.nombre || '');
 
