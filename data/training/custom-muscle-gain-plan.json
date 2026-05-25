@@ -1,0 +1,3042 @@
+{
+  "program_id": "custom_muscle_gain",
+  "name": "Plan Personalizado — Aumento de Masa Muscular",
+  "duration_days": 56,
+  "goal": "muscle_gain",
+  "method": "Upper/Lower Split — 4 días/semana",
+  "science_base": "Schoenfeld 2010, Brad Contreras, NSCA guidelines. 10-20 series semanales por grupo muscular. Progresión doble (carga + volumen). Rango hipertrofia 6-15 reps.",
+  "frequency": "4 days/week — Upper A, Lower A, Upper B, Lower B",
+  "phases": [
+    {
+      "phase": 1,
+      "weeks": "1-2",
+      "focus": "Técnica y base de volumen",
+      "intensity": "Moderada — aprender patrones"
+    },
+    {
+      "phase": 2,
+      "weeks": "3-4",
+      "focus": "Acumulación de volumen",
+      "intensity": "Media-Alta — +1 serie/ejercicio"
+    },
+    {
+      "phase": 3,
+      "weeks": "5-6",
+      "focus": "Intensificación y fuerza",
+      "intensity": "Alta — reps bajas, carga máxima"
+    },
+    {
+      "phase": 4,
+      "weeks": "7-8",
+      "focus": "Pico de fuerza + Deload",
+      "intensity": "Máxima → Descarga"
+    }
+  ],
+  "progressive_overload": {
+    "rule": "Cuando completes todas las series en el rango superior de reps, aumenta el peso 2.5-5kg",
+    "upper_body": "2.5kg por lado en ejercicios con mancuernas, 5kg en barra",
+    "lower_body": "5kg por lado en barra",
+    "note": "La progresión constante es el único requisito para ganar masa"
+  },
+  "nutrition_note": "Superávit calórico de 250-500 kcal/día. 1.6-2.2g proteína/kg peso corporal. Carbohidratos alrededor del entrenamiento.",
+  "weeks": [
+    {
+      "week": 1,
+      "phase": 1,
+      "phase_name": "Técnica y base de volumen",
+      "phase_focus": "Aprender los patrones. Técnica perfecta antes de aumentar carga.",
+      "days": [
+        {
+          "title": "Upper A · Empuje Semana 1",
+          "focus": "Pectoral, hombros, tríceps + espalda antagonista",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca con Barra o Mancuernas",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 120,
+              "tip": "Escápulas juntas y abajo. Arco natural.",
+              "progression": "El fundamental de masa en tren superior"
+            },
+            {
+              "name": "Press Inclinado con Mancuernas",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 90,
+              "tip": "30-45° de inclinación. Enfoca la parte alta del pecho.",
+              "progression": "Completa el pectoral superior"
+            },
+            {
+              "name": "Press Militar de Pie con Barra",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 120,
+              "tip": "Activa core y hombros. Cabeza hacia adelante al empujar.",
+              "progression": "El press de hombros construye masa más que las elevaciones"
+            },
+            {
+              "name": "Elevaciones Laterales con Mancuernas",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 75,
+              "tip": "Codo ligeramente doblado. No balancear.",
+              "progression": "Define la anchura del hombro"
+            },
+            {
+              "name": "Remo con Barra o Cable — antagonista",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Pareja del press. Espalda fuerte = hombros sanos.",
+              "progression": "El equilibrio empuje-tracción previene lesiones"
+            },
+            {
+              "name": "Extensiones de tríceps en polea",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 60,
+              "tip": "Codos fijos. Solo mueve el antebrazo.",
+              "progression": "Tríceps = 2/3 del brazo. Masa del brazo aquí."
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Caminata 20 min",
+              "sets": 1,
+              "reps": "20 min",
+              "rest_sec": 0,
+              "tip": "Ritmo cómodo, sin prisa",
+              "progression": ""
+            },
+            {
+              "name": "Estiramiento cadera y glúteos",
+              "sets": 1,
+              "reps": "10 min",
+              "rest_sec": 0,
+              "tip": "Sostener 30s cada posición",
+              "progression": ""
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower A · Cuadriceps Semana 1",
+          "focus": "Sentadilla y patrones de empuje de pierna",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 120,
+              "tip": "La reina. Profundidad hasta que muslos paralelos.",
+              "progression": "El ejercicio que más masa muscular construye en el cuerpo"
+            },
+            {
+              "name": "Prensa de piernas o Sentadilla Hack",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 90,
+              "tip": "Pies a la anchura de hombros. Profundidad completa.",
+              "progression": "Volumen extra de cuadriceps sin cargar columna"
+            },
+            {
+              "name": "Extensiones de cuadriceps en máquina",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 75,
+              "tip": "Aislamiento. Pausa arriba 1 segundo.",
+              "progression": "Define la parte frontal del muslo"
+            },
+            {
+              "name": "Curl de piernas tumbado o sentado",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Control en la bajada. No usar inercia.",
+              "progression": "Isquiotibiales equilibran la sentadilla"
+            },
+            {
+              "name": "Elevación de talones de pie (gemelos)",
+              "sets": 3,
+              "reps": "15-20",
+              "rest_sec": 60,
+              "tip": "Rango completo. Hasta abajo, arriba completo.",
+              "progression": "Gemelos gruesos = piernas definidas"
+            },
+            {
+              "name": "Plancha frontal con peso en espalda",
+              "sets": 3,
+              "reps": "30 seg",
+              "rest_sec": 60,
+              "tip": "Core que aguanta la carga de los compuestos",
+              "progression": "El core fuerte mejora todos los levantamientos"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Upper B · Tracción Semana 1",
+          "focus": "Espalda, bíceps + hombro posterior",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Dominadas o Jalones en Máquina",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 120,
+              "tip": "Omoplatos abajo antes de subir. Agarre prono.",
+              "progression": "El mejor constructor de espalda ancha"
+            },
+            {
+              "name": "Remo con Barra — Básico de Tracción",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 120,
+              "tip": "Espalda paralela. Codo roza el cuerpo.",
+              "progression": "Masa de la espalda media y grosor"
+            },
+            {
+              "name": "Remo en Polea Sentado",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Pecho al frente. Aprieta escápulas al final.",
+              "progression": "Complemento del remo con barra"
+            },
+            {
+              "name": "Curl de bíceps con barra o mancuernas",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "No balancear el cuerpo. Codos fijos.",
+              "progression": "Bíceps = músculo de lucimiento. Masa aquí."
+            },
+            {
+              "name": "Curl martillo",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Agarre neutro. Activa braquial y braquiorradial.",
+              "progression": "Volumen del brazo desde el bíceps interno"
+            },
+            {
+              "name": "Face Pulls con polea",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 60,
+              "tip": "Codos a la altura de los hombros. Externo rotador.",
+              "progression": "Salud del hombro y hombro posterior definido"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower B · Posterior Semana 1",
+          "focus": "Peso muerto e isquiotibiales",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Peso Muerto Convencional con Barra",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 120,
+              "tip": "El rey de la masa total. Espalda neutra.",
+              "progression": "Activa más de 600 músculos. Hormona de crecimiento maximizada"
+            },
+            {
+              "name": "Peso Muerto Rumano con Barra",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Bisagra de cadera. Estiramiento máximo isquiotibiales.",
+              "progression": "El mejor para isquiotibiales + glúteos"
+            },
+            {
+              "name": "Sentadilla Búlgara con Mancuernas",
+              "sets": 3,
+              "reps": "10 c/l",
+              "rest_sec": 90,
+              "tip": "El unilateral más completo. Glúteo + cuadriceps.",
+              "progression": "Corrige asimetrías entre piernas"
+            },
+            {
+              "name": "Curl de piernas — Serie Lenta",
+              "sets": 3,
+              "reps": "10 excéntrico",
+              "rest_sec": 75,
+              "tip": "Baja en 4 segundos. El excéntrico construye más músculo.",
+              "progression": "Isquiotibiales: el músculo más ignorado"
+            },
+            {
+              "name": "Hip Thrust con Barra",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Glúteos al máximo. Pausa 1 seg arriba.",
+              "progression": "Incluido también en masa: glúteos grandes = más potencia"
+            },
+            {
+              "name": "Elevación de talones sentado (sóleo)",
+              "sets": 3,
+              "reps": "15-20",
+              "rest_sec": 60,
+              "tip": "Sentado activa más el sóleo que de pie.",
+              "progression": "Completa el desarrollo de pantorrilla"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 2,
+      "phase": 1,
+      "phase_name": "Técnica y base de volumen",
+      "phase_focus": "Aprender los patrones. Técnica perfecta antes de aumentar carga.",
+      "days": [
+        {
+          "title": "Upper A · Empuje Semana 2",
+          "focus": "Pectoral, hombros, tríceps + espalda antagonista",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca con Barra o Mancuernas",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 120,
+              "tip": "Escápulas juntas y abajo. Arco natural.",
+              "progression": "El fundamental de masa en tren superior"
+            },
+            {
+              "name": "Press Inclinado con Mancuernas",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 90,
+              "tip": "30-45° de inclinación. Enfoca la parte alta del pecho.",
+              "progression": "Completa el pectoral superior"
+            },
+            {
+              "name": "Press Militar de Pie con Barra",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 120,
+              "tip": "Activa core y hombros. Cabeza hacia adelante al empujar.",
+              "progression": "El press de hombros construye masa más que las elevaciones"
+            },
+            {
+              "name": "Elevaciones Laterales con Mancuernas",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 75,
+              "tip": "Codo ligeramente doblado. No balancear.",
+              "progression": "Define la anchura del hombro"
+            },
+            {
+              "name": "Remo con Barra o Cable — antagonista",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Pareja del press. Espalda fuerte = hombros sanos.",
+              "progression": "El equilibrio empuje-tracción previene lesiones"
+            },
+            {
+              "name": "Extensiones de tríceps en polea",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 60,
+              "tip": "Codos fijos. Solo mueve el antebrazo.",
+              "progression": "Tríceps = 2/3 del brazo. Masa del brazo aquí."
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Caminata 20 min",
+              "sets": 1,
+              "reps": "20 min",
+              "rest_sec": 0,
+              "tip": "Ritmo cómodo, sin prisa",
+              "progression": ""
+            },
+            {
+              "name": "Estiramiento cadera y glúteos",
+              "sets": 1,
+              "reps": "10 min",
+              "rest_sec": 0,
+              "tip": "Sostener 30s cada posición",
+              "progression": ""
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower A · Cuadriceps Semana 2",
+          "focus": "Sentadilla y patrones de empuje de pierna",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 120,
+              "tip": "La reina. Profundidad hasta que muslos paralelos.",
+              "progression": "El ejercicio que más masa muscular construye en el cuerpo"
+            },
+            {
+              "name": "Prensa de piernas o Sentadilla Hack",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 90,
+              "tip": "Pies a la anchura de hombros. Profundidad completa.",
+              "progression": "Volumen extra de cuadriceps sin cargar columna"
+            },
+            {
+              "name": "Extensiones de cuadriceps en máquina",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 75,
+              "tip": "Aislamiento. Pausa arriba 1 segundo.",
+              "progression": "Define la parte frontal del muslo"
+            },
+            {
+              "name": "Curl de piernas tumbado o sentado",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Control en la bajada. No usar inercia.",
+              "progression": "Isquiotibiales equilibran la sentadilla"
+            },
+            {
+              "name": "Elevación de talones de pie (gemelos)",
+              "sets": 3,
+              "reps": "15-20",
+              "rest_sec": 60,
+              "tip": "Rango completo. Hasta abajo, arriba completo.",
+              "progression": "Gemelos gruesos = piernas definidas"
+            },
+            {
+              "name": "Plancha frontal con peso en espalda",
+              "sets": 3,
+              "reps": "30 seg",
+              "rest_sec": 60,
+              "tip": "Core que aguanta la carga de los compuestos",
+              "progression": "El core fuerte mejora todos los levantamientos"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Upper B · Tracción Semana 2",
+          "focus": "Espalda, bíceps + hombro posterior",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Dominadas o Jalones en Máquina",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 120,
+              "tip": "Omoplatos abajo antes de subir. Agarre prono.",
+              "progression": "El mejor constructor de espalda ancha"
+            },
+            {
+              "name": "Remo con Barra — Básico de Tracción",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 120,
+              "tip": "Espalda paralela. Codo roza el cuerpo.",
+              "progression": "Masa de la espalda media y grosor"
+            },
+            {
+              "name": "Remo en Polea Sentado",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Pecho al frente. Aprieta escápulas al final.",
+              "progression": "Complemento del remo con barra"
+            },
+            {
+              "name": "Curl de bíceps con barra o mancuernas",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "No balancear el cuerpo. Codos fijos.",
+              "progression": "Bíceps = músculo de lucimiento. Masa aquí."
+            },
+            {
+              "name": "Curl martillo",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Agarre neutro. Activa braquial y braquiorradial.",
+              "progression": "Volumen del brazo desde el bíceps interno"
+            },
+            {
+              "name": "Face Pulls con polea",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 60,
+              "tip": "Codos a la altura de los hombros. Externo rotador.",
+              "progression": "Salud del hombro y hombro posterior definido"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower B · Posterior Semana 2",
+          "focus": "Peso muerto e isquiotibiales",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Peso Muerto Convencional con Barra",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 120,
+              "tip": "El rey de la masa total. Espalda neutra.",
+              "progression": "Activa más de 600 músculos. Hormona de crecimiento maximizada"
+            },
+            {
+              "name": "Peso Muerto Rumano con Barra",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Bisagra de cadera. Estiramiento máximo isquiotibiales.",
+              "progression": "El mejor para isquiotibiales + glúteos"
+            },
+            {
+              "name": "Sentadilla Búlgara con Mancuernas",
+              "sets": 3,
+              "reps": "10 c/l",
+              "rest_sec": 90,
+              "tip": "El unilateral más completo. Glúteo + cuadriceps.",
+              "progression": "Corrige asimetrías entre piernas"
+            },
+            {
+              "name": "Curl de piernas — Serie Lenta",
+              "sets": 3,
+              "reps": "10 excéntrico",
+              "rest_sec": 75,
+              "tip": "Baja en 4 segundos. El excéntrico construye más músculo.",
+              "progression": "Isquiotibiales: el músculo más ignorado"
+            },
+            {
+              "name": "Hip Thrust con Barra",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Glúteos al máximo. Pausa 1 seg arriba.",
+              "progression": "Incluido también en masa: glúteos grandes = más potencia"
+            },
+            {
+              "name": "Elevación de talones sentado (sóleo)",
+              "sets": 3,
+              "reps": "15-20",
+              "rest_sec": 60,
+              "tip": "Sentado activa más el sóleo que de pie.",
+              "progression": "Completa el desarrollo de pantorrilla"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 3,
+      "phase": 2,
+      "phase_name": "Acumulación de volumen",
+      "phase_focus": "+1 serie por ejercicio principal. El volumen construye músculo.",
+      "days": [
+        {
+          "title": "Upper A · Empuje Semana 3",
+          "focus": "Pectoral, hombros, tríceps + espalda antagonista",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca con Barra o Mancuernas",
+              "sets": 4,
+              "reps": "10-12",
+              "rest_sec": 120,
+              "tip": "Escápulas juntas y abajo. Arco natural.",
+              "progression": "El fundamental de masa en tren superior"
+            },
+            {
+              "name": "Press Inclinado con Mancuernas",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 90,
+              "tip": "30-45° de inclinación. Enfoca la parte alta del pecho.",
+              "progression": "Completa el pectoral superior"
+            },
+            {
+              "name": "Press Militar de Pie con Barra",
+              "sets": 4,
+              "reps": "10-12",
+              "rest_sec": 120,
+              "tip": "Activa core y hombros. Cabeza hacia adelante al empujar.",
+              "progression": "El press de hombros construye masa más que las elevaciones"
+            },
+            {
+              "name": "Elevaciones Laterales con Mancuernas",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 75,
+              "tip": "Codo ligeramente doblado. No balancear.",
+              "progression": "Define la anchura del hombro"
+            },
+            {
+              "name": "Remo con Barra o Cable — antagonista",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Pareja del press. Espalda fuerte = hombros sanos.",
+              "progression": "El equilibrio empuje-tracción previene lesiones"
+            },
+            {
+              "name": "Extensiones de tríceps en polea",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 60,
+              "tip": "Codos fijos. Solo mueve el antebrazo.",
+              "progression": "Tríceps = 2/3 del brazo. Masa del brazo aquí."
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Caminata 20 min",
+              "sets": 1,
+              "reps": "20 min",
+              "rest_sec": 0,
+              "tip": "Ritmo cómodo, sin prisa",
+              "progression": ""
+            },
+            {
+              "name": "Estiramiento cadera y glúteos",
+              "sets": 1,
+              "reps": "10 min",
+              "rest_sec": 0,
+              "tip": "Sostener 30s cada posición",
+              "progression": ""
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower A · Cuadriceps Semana 3",
+          "focus": "Sentadilla y patrones de empuje de pierna",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra",
+              "sets": 4,
+              "reps": "10-12",
+              "rest_sec": 120,
+              "tip": "La reina. Profundidad hasta que muslos paralelos.",
+              "progression": "El ejercicio que más masa muscular construye en el cuerpo"
+            },
+            {
+              "name": "Prensa de piernas o Sentadilla Hack",
+              "sets": 4,
+              "reps": "10-12",
+              "rest_sec": 90,
+              "tip": "Pies a la anchura de hombros. Profundidad completa.",
+              "progression": "Volumen extra de cuadriceps sin cargar columna"
+            },
+            {
+              "name": "Extensiones de cuadriceps en máquina",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 75,
+              "tip": "Aislamiento. Pausa arriba 1 segundo.",
+              "progression": "Define la parte frontal del muslo"
+            },
+            {
+              "name": "Curl de piernas tumbado o sentado",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Control en la bajada. No usar inercia.",
+              "progression": "Isquiotibiales equilibran la sentadilla"
+            },
+            {
+              "name": "Elevación de talones de pie (gemelos)",
+              "sets": 3,
+              "reps": "15-20",
+              "rest_sec": 60,
+              "tip": "Rango completo. Hasta abajo, arriba completo.",
+              "progression": "Gemelos gruesos = piernas definidas"
+            },
+            {
+              "name": "Plancha frontal con peso en espalda",
+              "sets": 3,
+              "reps": "30 seg",
+              "rest_sec": 60,
+              "tip": "Core que aguanta la carga de los compuestos",
+              "progression": "El core fuerte mejora todos los levantamientos"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Upper B · Tracción Semana 3",
+          "focus": "Espalda, bíceps + hombro posterior",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Dominadas o Jalones en Máquina",
+              "sets": 4,
+              "reps": "10-12",
+              "rest_sec": 120,
+              "tip": "Omoplatos abajo antes de subir. Agarre prono.",
+              "progression": "El mejor constructor de espalda ancha"
+            },
+            {
+              "name": "Remo con Barra — Básico de Tracción",
+              "sets": 4,
+              "reps": "10-12",
+              "rest_sec": 120,
+              "tip": "Espalda paralela. Codo roza el cuerpo.",
+              "progression": "Masa de la espalda media y grosor"
+            },
+            {
+              "name": "Remo en Polea Sentado",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Pecho al frente. Aprieta escápulas al final.",
+              "progression": "Complemento del remo con barra"
+            },
+            {
+              "name": "Curl de bíceps con barra o mancuernas",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "No balancear el cuerpo. Codos fijos.",
+              "progression": "Bíceps = músculo de lucimiento. Masa aquí."
+            },
+            {
+              "name": "Curl martillo",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Agarre neutro. Activa braquial y braquiorradial.",
+              "progression": "Volumen del brazo desde el bíceps interno"
+            },
+            {
+              "name": "Face Pulls con polea",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 60,
+              "tip": "Codos a la altura de los hombros. Externo rotador.",
+              "progression": "Salud del hombro y hombro posterior definido"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower B · Posterior Semana 3",
+          "focus": "Peso muerto e isquiotibiales",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Peso Muerto Convencional con Barra",
+              "sets": 4,
+              "reps": "10-12",
+              "rest_sec": 120,
+              "tip": "El rey de la masa total. Espalda neutra.",
+              "progression": "Activa más de 600 músculos. Hormona de crecimiento maximizada"
+            },
+            {
+              "name": "Peso Muerto Rumano con Barra",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Bisagra de cadera. Estiramiento máximo isquiotibiales.",
+              "progression": "El mejor para isquiotibiales + glúteos"
+            },
+            {
+              "name": "Sentadilla Búlgara con Mancuernas",
+              "sets": 3,
+              "reps": "10 c/l",
+              "rest_sec": 90,
+              "tip": "El unilateral más completo. Glúteo + cuadriceps.",
+              "progression": "Corrige asimetrías entre piernas"
+            },
+            {
+              "name": "Curl de piernas — Serie Lenta",
+              "sets": 3,
+              "reps": "10 excéntrico",
+              "rest_sec": 75,
+              "tip": "Baja en 4 segundos. El excéntrico construye más músculo.",
+              "progression": "Isquiotibiales: el músculo más ignorado"
+            },
+            {
+              "name": "Hip Thrust con Barra",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Glúteos al máximo. Pausa 1 seg arriba.",
+              "progression": "Incluido también en masa: glúteos grandes = más potencia"
+            },
+            {
+              "name": "Elevación de talones sentado (sóleo)",
+              "sets": 3,
+              "reps": "15-20",
+              "rest_sec": 60,
+              "tip": "Sentado activa más el sóleo que de pie.",
+              "progression": "Completa el desarrollo de pantorrilla"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 4,
+      "phase": 2,
+      "phase_name": "Acumulación de volumen",
+      "phase_focus": "+1 serie por ejercicio principal. El volumen construye músculo.",
+      "days": [
+        {
+          "title": "Upper A · Empuje Semana 4",
+          "focus": "Pectoral, hombros, tríceps + espalda antagonista",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca con Barra o Mancuernas",
+              "sets": 4,
+              "reps": "10-12",
+              "rest_sec": 120,
+              "tip": "Escápulas juntas y abajo. Arco natural.",
+              "progression": "El fundamental de masa en tren superior"
+            },
+            {
+              "name": "Press Inclinado con Mancuernas",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 90,
+              "tip": "30-45° de inclinación. Enfoca la parte alta del pecho.",
+              "progression": "Completa el pectoral superior"
+            },
+            {
+              "name": "Press Militar de Pie con Barra",
+              "sets": 4,
+              "reps": "10-12",
+              "rest_sec": 120,
+              "tip": "Activa core y hombros. Cabeza hacia adelante al empujar.",
+              "progression": "El press de hombros construye masa más que las elevaciones"
+            },
+            {
+              "name": "Elevaciones Laterales con Mancuernas",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 75,
+              "tip": "Codo ligeramente doblado. No balancear.",
+              "progression": "Define la anchura del hombro"
+            },
+            {
+              "name": "Remo con Barra o Cable — antagonista",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Pareja del press. Espalda fuerte = hombros sanos.",
+              "progression": "El equilibrio empuje-tracción previene lesiones"
+            },
+            {
+              "name": "Extensiones de tríceps en polea",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 60,
+              "tip": "Codos fijos. Solo mueve el antebrazo.",
+              "progression": "Tríceps = 2/3 del brazo. Masa del brazo aquí."
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Caminata 20 min",
+              "sets": 1,
+              "reps": "20 min",
+              "rest_sec": 0,
+              "tip": "Ritmo cómodo, sin prisa",
+              "progression": ""
+            },
+            {
+              "name": "Estiramiento cadera y glúteos",
+              "sets": 1,
+              "reps": "10 min",
+              "rest_sec": 0,
+              "tip": "Sostener 30s cada posición",
+              "progression": ""
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower A · Cuadriceps Semana 4",
+          "focus": "Sentadilla y patrones de empuje de pierna",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra",
+              "sets": 4,
+              "reps": "10-12",
+              "rest_sec": 120,
+              "tip": "La reina. Profundidad hasta que muslos paralelos.",
+              "progression": "El ejercicio que más masa muscular construye en el cuerpo"
+            },
+            {
+              "name": "Prensa de piernas o Sentadilla Hack",
+              "sets": 4,
+              "reps": "10-12",
+              "rest_sec": 90,
+              "tip": "Pies a la anchura de hombros. Profundidad completa.",
+              "progression": "Volumen extra de cuadriceps sin cargar columna"
+            },
+            {
+              "name": "Extensiones de cuadriceps en máquina",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 75,
+              "tip": "Aislamiento. Pausa arriba 1 segundo.",
+              "progression": "Define la parte frontal del muslo"
+            },
+            {
+              "name": "Curl de piernas tumbado o sentado",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Control en la bajada. No usar inercia.",
+              "progression": "Isquiotibiales equilibran la sentadilla"
+            },
+            {
+              "name": "Elevación de talones de pie (gemelos)",
+              "sets": 3,
+              "reps": "15-20",
+              "rest_sec": 60,
+              "tip": "Rango completo. Hasta abajo, arriba completo.",
+              "progression": "Gemelos gruesos = piernas definidas"
+            },
+            {
+              "name": "Plancha frontal con peso en espalda",
+              "sets": 3,
+              "reps": "30 seg",
+              "rest_sec": 60,
+              "tip": "Core que aguanta la carga de los compuestos",
+              "progression": "El core fuerte mejora todos los levantamientos"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Upper B · Tracción Semana 4",
+          "focus": "Espalda, bíceps + hombro posterior",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Dominadas o Jalones en Máquina",
+              "sets": 4,
+              "reps": "10-12",
+              "rest_sec": 120,
+              "tip": "Omoplatos abajo antes de subir. Agarre prono.",
+              "progression": "El mejor constructor de espalda ancha"
+            },
+            {
+              "name": "Remo con Barra — Básico de Tracción",
+              "sets": 4,
+              "reps": "10-12",
+              "rest_sec": 120,
+              "tip": "Espalda paralela. Codo roza el cuerpo.",
+              "progression": "Masa de la espalda media y grosor"
+            },
+            {
+              "name": "Remo en Polea Sentado",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Pecho al frente. Aprieta escápulas al final.",
+              "progression": "Complemento del remo con barra"
+            },
+            {
+              "name": "Curl de bíceps con barra o mancuernas",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "No balancear el cuerpo. Codos fijos.",
+              "progression": "Bíceps = músculo de lucimiento. Masa aquí."
+            },
+            {
+              "name": "Curl martillo",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Agarre neutro. Activa braquial y braquiorradial.",
+              "progression": "Volumen del brazo desde el bíceps interno"
+            },
+            {
+              "name": "Face Pulls con polea",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 60,
+              "tip": "Codos a la altura de los hombros. Externo rotador.",
+              "progression": "Salud del hombro y hombro posterior definido"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower B · Posterior Semana 4",
+          "focus": "Peso muerto e isquiotibiales",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Peso Muerto Convencional con Barra",
+              "sets": 4,
+              "reps": "10-12",
+              "rest_sec": 120,
+              "tip": "El rey de la masa total. Espalda neutra.",
+              "progression": "Activa más de 600 músculos. Hormona de crecimiento maximizada"
+            },
+            {
+              "name": "Peso Muerto Rumano con Barra",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Bisagra de cadera. Estiramiento máximo isquiotibiales.",
+              "progression": "El mejor para isquiotibiales + glúteos"
+            },
+            {
+              "name": "Sentadilla Búlgara con Mancuernas",
+              "sets": 3,
+              "reps": "10 c/l",
+              "rest_sec": 90,
+              "tip": "El unilateral más completo. Glúteo + cuadriceps.",
+              "progression": "Corrige asimetrías entre piernas"
+            },
+            {
+              "name": "Curl de piernas — Serie Lenta",
+              "sets": 3,
+              "reps": "10 excéntrico",
+              "rest_sec": 75,
+              "tip": "Baja en 4 segundos. El excéntrico construye más músculo.",
+              "progression": "Isquiotibiales: el músculo más ignorado"
+            },
+            {
+              "name": "Hip Thrust con Barra",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Glúteos al máximo. Pausa 1 seg arriba.",
+              "progression": "Incluido también en masa: glúteos grandes = más potencia"
+            },
+            {
+              "name": "Elevación de talones sentado (sóleo)",
+              "sets": 3,
+              "reps": "15-20",
+              "rest_sec": 60,
+              "tip": "Sentado activa más el sóleo que de pie.",
+              "progression": "Completa el desarrollo de pantorrilla"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 5,
+      "phase": 3,
+      "phase_name": "Intensificación y fuerza",
+      "phase_focus": "Reps bajas, carga alta. La fuerza construye el músculo más denso.",
+      "days": [
+        {
+          "title": "Upper A · Empuje Semana 5",
+          "focus": "Pectoral, hombros, tríceps + espalda antagonista",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca con Barra o Mancuernas",
+              "sets": 4,
+              "reps": "6-8",
+              "rest_sec": 120,
+              "tip": "Escápulas juntas y abajo. Arco natural.",
+              "progression": "El fundamental de masa en tren superior"
+            },
+            {
+              "name": "Press Inclinado con Mancuernas",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 90,
+              "tip": "30-45° de inclinación. Enfoca la parte alta del pecho.",
+              "progression": "Completa el pectoral superior"
+            },
+            {
+              "name": "Press Militar de Pie con Barra",
+              "sets": 4,
+              "reps": "6-8",
+              "rest_sec": 120,
+              "tip": "Activa core y hombros. Cabeza hacia adelante al empujar.",
+              "progression": "El press de hombros construye masa más que las elevaciones"
+            },
+            {
+              "name": "Elevaciones Laterales con Mancuernas",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 75,
+              "tip": "Codo ligeramente doblado. No balancear.",
+              "progression": "Define la anchura del hombro"
+            },
+            {
+              "name": "Remo con Barra o Cable — antagonista",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Pareja del press. Espalda fuerte = hombros sanos.",
+              "progression": "El equilibrio empuje-tracción previene lesiones"
+            },
+            {
+              "name": "Extensiones de tríceps en polea",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 60,
+              "tip": "Codos fijos. Solo mueve el antebrazo.",
+              "progression": "Tríceps = 2/3 del brazo. Masa del brazo aquí."
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Caminata 20 min",
+              "sets": 1,
+              "reps": "20 min",
+              "rest_sec": 0,
+              "tip": "Ritmo cómodo, sin prisa",
+              "progression": ""
+            },
+            {
+              "name": "Estiramiento cadera y glúteos",
+              "sets": 1,
+              "reps": "10 min",
+              "rest_sec": 0,
+              "tip": "Sostener 30s cada posición",
+              "progression": ""
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower A · Cuadriceps Semana 5",
+          "focus": "Sentadilla y patrones de empuje de pierna",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra",
+              "sets": 4,
+              "reps": "6-8",
+              "rest_sec": 120,
+              "tip": "La reina. Profundidad hasta que muslos paralelos.",
+              "progression": "El ejercicio que más masa muscular construye en el cuerpo"
+            },
+            {
+              "name": "Prensa de piernas o Sentadilla Hack",
+              "sets": 4,
+              "reps": "10-12",
+              "rest_sec": 90,
+              "tip": "Pies a la anchura de hombros. Profundidad completa.",
+              "progression": "Volumen extra de cuadriceps sin cargar columna"
+            },
+            {
+              "name": "Extensiones de cuadriceps en máquina",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 75,
+              "tip": "Aislamiento. Pausa arriba 1 segundo.",
+              "progression": "Define la parte frontal del muslo"
+            },
+            {
+              "name": "Curl de piernas tumbado o sentado",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Control en la bajada. No usar inercia.",
+              "progression": "Isquiotibiales equilibran la sentadilla"
+            },
+            {
+              "name": "Elevación de talones de pie (gemelos)",
+              "sets": 3,
+              "reps": "15-20",
+              "rest_sec": 60,
+              "tip": "Rango completo. Hasta abajo, arriba completo.",
+              "progression": "Gemelos gruesos = piernas definidas"
+            },
+            {
+              "name": "Plancha frontal con peso en espalda",
+              "sets": 3,
+              "reps": "30 seg",
+              "rest_sec": 60,
+              "tip": "Core que aguanta la carga de los compuestos",
+              "progression": "El core fuerte mejora todos los levantamientos"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Upper B · Tracción Semana 5",
+          "focus": "Espalda, bíceps + hombro posterior",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Dominadas o Jalones en Máquina",
+              "sets": 4,
+              "reps": "6-8",
+              "rest_sec": 120,
+              "tip": "Omoplatos abajo antes de subir. Agarre prono.",
+              "progression": "El mejor constructor de espalda ancha"
+            },
+            {
+              "name": "Remo con Barra — Básico de Tracción",
+              "sets": 4,
+              "reps": "6-8",
+              "rest_sec": 120,
+              "tip": "Espalda paralela. Codo roza el cuerpo.",
+              "progression": "Masa de la espalda media y grosor"
+            },
+            {
+              "name": "Remo en Polea Sentado",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Pecho al frente. Aprieta escápulas al final.",
+              "progression": "Complemento del remo con barra"
+            },
+            {
+              "name": "Curl de bíceps con barra o mancuernas",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "No balancear el cuerpo. Codos fijos.",
+              "progression": "Bíceps = músculo de lucimiento. Masa aquí."
+            },
+            {
+              "name": "Curl martillo",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Agarre neutro. Activa braquial y braquiorradial.",
+              "progression": "Volumen del brazo desde el bíceps interno"
+            },
+            {
+              "name": "Face Pulls con polea",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 60,
+              "tip": "Codos a la altura de los hombros. Externo rotador.",
+              "progression": "Salud del hombro y hombro posterior definido"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower B · Posterior Semana 5",
+          "focus": "Peso muerto e isquiotibiales",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Peso Muerto Convencional con Barra",
+              "sets": 4,
+              "reps": "6-8",
+              "rest_sec": 120,
+              "tip": "El rey de la masa total. Espalda neutra.",
+              "progression": "Activa más de 600 músculos. Hormona de crecimiento maximizada"
+            },
+            {
+              "name": "Peso Muerto Rumano con Barra",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Bisagra de cadera. Estiramiento máximo isquiotibiales.",
+              "progression": "El mejor para isquiotibiales + glúteos"
+            },
+            {
+              "name": "Sentadilla Búlgara con Mancuernas",
+              "sets": 3,
+              "reps": "10 c/l",
+              "rest_sec": 90,
+              "tip": "El unilateral más completo. Glúteo + cuadriceps.",
+              "progression": "Corrige asimetrías entre piernas"
+            },
+            {
+              "name": "Curl de piernas — Serie Lenta",
+              "sets": 3,
+              "reps": "10 excéntrico",
+              "rest_sec": 75,
+              "tip": "Baja en 4 segundos. El excéntrico construye más músculo.",
+              "progression": "Isquiotibiales: el músculo más ignorado"
+            },
+            {
+              "name": "Hip Thrust con Barra",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Glúteos al máximo. Pausa 1 seg arriba.",
+              "progression": "Incluido también en masa: glúteos grandes = más potencia"
+            },
+            {
+              "name": "Elevación de talones sentado (sóleo)",
+              "sets": 3,
+              "reps": "15-20",
+              "rest_sec": 60,
+              "tip": "Sentado activa más el sóleo que de pie.",
+              "progression": "Completa el desarrollo de pantorrilla"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 6,
+      "phase": 3,
+      "phase_name": "Intensificación y fuerza",
+      "phase_focus": "Reps bajas, carga alta. La fuerza construye el músculo más denso.",
+      "days": [
+        {
+          "title": "Upper A · Empuje Semana 6",
+          "focus": "Pectoral, hombros, tríceps + espalda antagonista",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca con Barra o Mancuernas",
+              "sets": 4,
+              "reps": "6-8",
+              "rest_sec": 120,
+              "tip": "Escápulas juntas y abajo. Arco natural.",
+              "progression": "El fundamental de masa en tren superior"
+            },
+            {
+              "name": "Press Inclinado con Mancuernas",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 90,
+              "tip": "30-45° de inclinación. Enfoca la parte alta del pecho.",
+              "progression": "Completa el pectoral superior"
+            },
+            {
+              "name": "Press Militar de Pie con Barra",
+              "sets": 4,
+              "reps": "6-8",
+              "rest_sec": 120,
+              "tip": "Activa core y hombros. Cabeza hacia adelante al empujar.",
+              "progression": "El press de hombros construye masa más que las elevaciones"
+            },
+            {
+              "name": "Elevaciones Laterales con Mancuernas",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 75,
+              "tip": "Codo ligeramente doblado. No balancear.",
+              "progression": "Define la anchura del hombro"
+            },
+            {
+              "name": "Remo con Barra o Cable — antagonista",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Pareja del press. Espalda fuerte = hombros sanos.",
+              "progression": "El equilibrio empuje-tracción previene lesiones"
+            },
+            {
+              "name": "Extensiones de tríceps en polea",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 60,
+              "tip": "Codos fijos. Solo mueve el antebrazo.",
+              "progression": "Tríceps = 2/3 del brazo. Masa del brazo aquí."
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Caminata 20 min",
+              "sets": 1,
+              "reps": "20 min",
+              "rest_sec": 0,
+              "tip": "Ritmo cómodo, sin prisa",
+              "progression": ""
+            },
+            {
+              "name": "Estiramiento cadera y glúteos",
+              "sets": 1,
+              "reps": "10 min",
+              "rest_sec": 0,
+              "tip": "Sostener 30s cada posición",
+              "progression": ""
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower A · Cuadriceps Semana 6",
+          "focus": "Sentadilla y patrones de empuje de pierna",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra",
+              "sets": 4,
+              "reps": "6-8",
+              "rest_sec": 120,
+              "tip": "La reina. Profundidad hasta que muslos paralelos.",
+              "progression": "El ejercicio que más masa muscular construye en el cuerpo"
+            },
+            {
+              "name": "Prensa de piernas o Sentadilla Hack",
+              "sets": 4,
+              "reps": "10-12",
+              "rest_sec": 90,
+              "tip": "Pies a la anchura de hombros. Profundidad completa.",
+              "progression": "Volumen extra de cuadriceps sin cargar columna"
+            },
+            {
+              "name": "Extensiones de cuadriceps en máquina",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 75,
+              "tip": "Aislamiento. Pausa arriba 1 segundo.",
+              "progression": "Define la parte frontal del muslo"
+            },
+            {
+              "name": "Curl de piernas tumbado o sentado",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Control en la bajada. No usar inercia.",
+              "progression": "Isquiotibiales equilibran la sentadilla"
+            },
+            {
+              "name": "Elevación de talones de pie (gemelos)",
+              "sets": 3,
+              "reps": "15-20",
+              "rest_sec": 60,
+              "tip": "Rango completo. Hasta abajo, arriba completo.",
+              "progression": "Gemelos gruesos = piernas definidas"
+            },
+            {
+              "name": "Plancha frontal con peso en espalda",
+              "sets": 3,
+              "reps": "30 seg",
+              "rest_sec": 60,
+              "tip": "Core que aguanta la carga de los compuestos",
+              "progression": "El core fuerte mejora todos los levantamientos"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Upper B · Tracción Semana 6",
+          "focus": "Espalda, bíceps + hombro posterior",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Dominadas o Jalones en Máquina",
+              "sets": 4,
+              "reps": "6-8",
+              "rest_sec": 120,
+              "tip": "Omoplatos abajo antes de subir. Agarre prono.",
+              "progression": "El mejor constructor de espalda ancha"
+            },
+            {
+              "name": "Remo con Barra — Básico de Tracción",
+              "sets": 4,
+              "reps": "6-8",
+              "rest_sec": 120,
+              "tip": "Espalda paralela. Codo roza el cuerpo.",
+              "progression": "Masa de la espalda media y grosor"
+            },
+            {
+              "name": "Remo en Polea Sentado",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Pecho al frente. Aprieta escápulas al final.",
+              "progression": "Complemento del remo con barra"
+            },
+            {
+              "name": "Curl de bíceps con barra o mancuernas",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "No balancear el cuerpo. Codos fijos.",
+              "progression": "Bíceps = músculo de lucimiento. Masa aquí."
+            },
+            {
+              "name": "Curl martillo",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Agarre neutro. Activa braquial y braquiorradial.",
+              "progression": "Volumen del brazo desde el bíceps interno"
+            },
+            {
+              "name": "Face Pulls con polea",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 60,
+              "tip": "Codos a la altura de los hombros. Externo rotador.",
+              "progression": "Salud del hombro y hombro posterior definido"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower B · Posterior Semana 6",
+          "focus": "Peso muerto e isquiotibiales",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Peso Muerto Convencional con Barra",
+              "sets": 4,
+              "reps": "6-8",
+              "rest_sec": 120,
+              "tip": "El rey de la masa total. Espalda neutra.",
+              "progression": "Activa más de 600 músculos. Hormona de crecimiento maximizada"
+            },
+            {
+              "name": "Peso Muerto Rumano con Barra",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Bisagra de cadera. Estiramiento máximo isquiotibiales.",
+              "progression": "El mejor para isquiotibiales + glúteos"
+            },
+            {
+              "name": "Sentadilla Búlgara con Mancuernas",
+              "sets": 3,
+              "reps": "10 c/l",
+              "rest_sec": 90,
+              "tip": "El unilateral más completo. Glúteo + cuadriceps.",
+              "progression": "Corrige asimetrías entre piernas"
+            },
+            {
+              "name": "Curl de piernas — Serie Lenta",
+              "sets": 3,
+              "reps": "10 excéntrico",
+              "rest_sec": 75,
+              "tip": "Baja en 4 segundos. El excéntrico construye más músculo.",
+              "progression": "Isquiotibiales: el músculo más ignorado"
+            },
+            {
+              "name": "Hip Thrust con Barra",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Glúteos al máximo. Pausa 1 seg arriba.",
+              "progression": "Incluido también en masa: glúteos grandes = más potencia"
+            },
+            {
+              "name": "Elevación de talones sentado (sóleo)",
+              "sets": 3,
+              "reps": "15-20",
+              "rest_sec": 60,
+              "tip": "Sentado activa más el sóleo que de pie.",
+              "progression": "Completa el desarrollo de pantorrilla"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 7,
+      "phase": 4,
+      "phase_name": "Pico de fuerza",
+      "phase_focus": "La semana de máximos. PR en los básicos.",
+      "days": [
+        {
+          "title": "Upper A · Empuje Semana 7",
+          "focus": "Pectoral, hombros, tríceps + espalda antagonista",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca con Barra o Mancuernas",
+              "sets": 5,
+              "reps": "5-6",
+              "rest_sec": 120,
+              "tip": "Escápulas juntas y abajo. Arco natural.",
+              "progression": "El fundamental de masa en tren superior"
+            },
+            {
+              "name": "Press Inclinado con Mancuernas",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 90,
+              "tip": "30-45° de inclinación. Enfoca la parte alta del pecho.",
+              "progression": "Completa el pectoral superior"
+            },
+            {
+              "name": "Press Militar de Pie con Barra",
+              "sets": 5,
+              "reps": "5-6",
+              "rest_sec": 120,
+              "tip": "Activa core y hombros. Cabeza hacia adelante al empujar.",
+              "progression": "El press de hombros construye masa más que las elevaciones"
+            },
+            {
+              "name": "Elevaciones Laterales con Mancuernas",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 75,
+              "tip": "Codo ligeramente doblado. No balancear.",
+              "progression": "Define la anchura del hombro"
+            },
+            {
+              "name": "Remo con Barra o Cable — antagonista",
+              "sets": 5,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Pareja del press. Espalda fuerte = hombros sanos.",
+              "progression": "El equilibrio empuje-tracción previene lesiones"
+            },
+            {
+              "name": "Extensiones de tríceps en polea",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 60,
+              "tip": "Codos fijos. Solo mueve el antebrazo.",
+              "progression": "Tríceps = 2/3 del brazo. Masa del brazo aquí."
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Caminata 20 min",
+              "sets": 1,
+              "reps": "20 min",
+              "rest_sec": 0,
+              "tip": "Ritmo cómodo, sin prisa",
+              "progression": ""
+            },
+            {
+              "name": "Estiramiento cadera y glúteos",
+              "sets": 1,
+              "reps": "10 min",
+              "rest_sec": 0,
+              "tip": "Sostener 30s cada posición",
+              "progression": ""
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower A · Cuadriceps Semana 7",
+          "focus": "Sentadilla y patrones de empuje de pierna",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra",
+              "sets": 5,
+              "reps": "5-6",
+              "rest_sec": 120,
+              "tip": "La reina. Profundidad hasta que muslos paralelos.",
+              "progression": "El ejercicio que más masa muscular construye en el cuerpo"
+            },
+            {
+              "name": "Prensa de piernas o Sentadilla Hack",
+              "sets": 5,
+              "reps": "10-12",
+              "rest_sec": 90,
+              "tip": "Pies a la anchura de hombros. Profundidad completa.",
+              "progression": "Volumen extra de cuadriceps sin cargar columna"
+            },
+            {
+              "name": "Extensiones de cuadriceps en máquina",
+              "sets": 3,
+              "reps": "12-15",
+              "rest_sec": 75,
+              "tip": "Aislamiento. Pausa arriba 1 segundo.",
+              "progression": "Define la parte frontal del muslo"
+            },
+            {
+              "name": "Curl de piernas tumbado o sentado",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Control en la bajada. No usar inercia.",
+              "progression": "Isquiotibiales equilibran la sentadilla"
+            },
+            {
+              "name": "Elevación de talones de pie (gemelos)",
+              "sets": 3,
+              "reps": "15-20",
+              "rest_sec": 60,
+              "tip": "Rango completo. Hasta abajo, arriba completo.",
+              "progression": "Gemelos gruesos = piernas definidas"
+            },
+            {
+              "name": "Plancha frontal con peso en espalda",
+              "sets": 3,
+              "reps": "30 seg",
+              "rest_sec": 60,
+              "tip": "Core que aguanta la carga de los compuestos",
+              "progression": "El core fuerte mejora todos los levantamientos"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Upper B · Tracción Semana 7",
+          "focus": "Espalda, bíceps + hombro posterior",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Dominadas o Jalones en Máquina",
+              "sets": 5,
+              "reps": "5-6",
+              "rest_sec": 120,
+              "tip": "Omoplatos abajo antes de subir. Agarre prono.",
+              "progression": "El mejor constructor de espalda ancha"
+            },
+            {
+              "name": "Remo con Barra — Básico de Tracción",
+              "sets": 5,
+              "reps": "5-6",
+              "rest_sec": 120,
+              "tip": "Espalda paralela. Codo roza el cuerpo.",
+              "progression": "Masa de la espalda media y grosor"
+            },
+            {
+              "name": "Remo en Polea Sentado",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Pecho al frente. Aprieta escápulas al final.",
+              "progression": "Complemento del remo con barra"
+            },
+            {
+              "name": "Curl de bíceps con barra o mancuernas",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "No balancear el cuerpo. Codos fijos.",
+              "progression": "Bíceps = músculo de lucimiento. Masa aquí."
+            },
+            {
+              "name": "Curl martillo",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Agarre neutro. Activa braquial y braquiorradial.",
+              "progression": "Volumen del brazo desde el bíceps interno"
+            },
+            {
+              "name": "Face Pulls con polea",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 60,
+              "tip": "Codos a la altura de los hombros. Externo rotador.",
+              "progression": "Salud del hombro y hombro posterior definido"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower B · Posterior Semana 7",
+          "focus": "Peso muerto e isquiotibiales",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Peso Muerto Convencional con Barra",
+              "sets": 5,
+              "reps": "5-6",
+              "rest_sec": 120,
+              "tip": "El rey de la masa total. Espalda neutra.",
+              "progression": "Activa más de 600 músculos. Hormona de crecimiento maximizada"
+            },
+            {
+              "name": "Peso Muerto Rumano con Barra",
+              "sets": 5,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Bisagra de cadera. Estiramiento máximo isquiotibiales.",
+              "progression": "El mejor para isquiotibiales + glúteos"
+            },
+            {
+              "name": "Sentadilla Búlgara con Mancuernas",
+              "sets": 3,
+              "reps": "10 c/l",
+              "rest_sec": 90,
+              "tip": "El unilateral más completo. Glúteo + cuadriceps.",
+              "progression": "Corrige asimetrías entre piernas"
+            },
+            {
+              "name": "Curl de piernas — Serie Lenta",
+              "sets": 3,
+              "reps": "10 excéntrico",
+              "rest_sec": 75,
+              "tip": "Baja en 4 segundos. El excéntrico construye más músculo.",
+              "progression": "Isquiotibiales: el músculo más ignorado"
+            },
+            {
+              "name": "Hip Thrust con Barra",
+              "sets": 5,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Glúteos al máximo. Pausa 1 seg arriba.",
+              "progression": "Incluido también en masa: glúteos grandes = más potencia"
+            },
+            {
+              "name": "Elevación de talones sentado (sóleo)",
+              "sets": 3,
+              "reps": "15-20",
+              "rest_sec": 60,
+              "tip": "Sentado activa más el sóleo que de pie.",
+              "progression": "Completa el desarrollo de pantorrilla"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 8,
+      "phase": 4,
+      "phase_name": "Descarga activa",
+      "phase_focus": "Recuperación y síntesis",
+      "days": [
+        {
+          "title": "Upper A · Empuje Semana 8",
+          "focus": "Pectoral, hombros, tríceps + espalda antagonista",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca con Barra o Mancuernas",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 120,
+              "tip": "Escápulas juntas y abajo. Arco natural.",
+              "progression": "El fundamental de masa en tren superior"
+            },
+            {
+              "name": "Press Inclinado con Mancuernas",
+              "sets": 2,
+              "reps": "10-12",
+              "rest_sec": 90,
+              "tip": "30-45° de inclinación. Enfoca la parte alta del pecho.",
+              "progression": "Completa el pectoral superior"
+            },
+            {
+              "name": "Press Militar de Pie con Barra",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 120,
+              "tip": "Activa core y hombros. Cabeza hacia adelante al empujar.",
+              "progression": "El press de hombros construye masa más que las elevaciones"
+            },
+            {
+              "name": "Elevaciones Laterales con Mancuernas",
+              "sets": 2,
+              "reps": "12-15",
+              "rest_sec": 75,
+              "tip": "Codo ligeramente doblado. No balancear.",
+              "progression": "Define la anchura del hombro"
+            },
+            {
+              "name": "Remo con Barra o Cable — antagonista",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Pareja del press. Espalda fuerte = hombros sanos.",
+              "progression": "El equilibrio empuje-tracción previene lesiones"
+            },
+            {
+              "name": "Extensiones de tríceps en polea",
+              "sets": 2,
+              "reps": "12-15",
+              "rest_sec": 60,
+              "tip": "Codos fijos. Solo mueve el antebrazo.",
+              "progression": "Tríceps = 2/3 del brazo. Masa del brazo aquí."
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Caminata 20 min",
+              "sets": 1,
+              "reps": "20 min",
+              "rest_sec": 0,
+              "tip": "Ritmo cómodo, sin prisa",
+              "progression": ""
+            },
+            {
+              "name": "Estiramiento cadera y glúteos",
+              "sets": 1,
+              "reps": "10 min",
+              "rest_sec": 0,
+              "tip": "Sostener 30s cada posición",
+              "progression": ""
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower A · Cuadriceps Semana 8",
+          "focus": "Sentadilla y patrones de empuje de pierna",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 120,
+              "tip": "La reina. Profundidad hasta que muslos paralelos.",
+              "progression": "El ejercicio que más masa muscular construye en el cuerpo"
+            },
+            {
+              "name": "Prensa de piernas o Sentadilla Hack",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 90,
+              "tip": "Pies a la anchura de hombros. Profundidad completa.",
+              "progression": "Volumen extra de cuadriceps sin cargar columna"
+            },
+            {
+              "name": "Extensiones de cuadriceps en máquina",
+              "sets": 2,
+              "reps": "12-15",
+              "rest_sec": 75,
+              "tip": "Aislamiento. Pausa arriba 1 segundo.",
+              "progression": "Define la parte frontal del muslo"
+            },
+            {
+              "name": "Curl de piernas tumbado o sentado",
+              "sets": 2,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Control en la bajada. No usar inercia.",
+              "progression": "Isquiotibiales equilibran la sentadilla"
+            },
+            {
+              "name": "Elevación de talones de pie (gemelos)",
+              "sets": 2,
+              "reps": "15-20",
+              "rest_sec": 60,
+              "tip": "Rango completo. Hasta abajo, arriba completo.",
+              "progression": "Gemelos gruesos = piernas definidas"
+            },
+            {
+              "name": "Plancha frontal con peso en espalda",
+              "sets": 2,
+              "reps": "30 seg",
+              "rest_sec": 60,
+              "tip": "Core que aguanta la carga de los compuestos",
+              "progression": "El core fuerte mejora todos los levantamientos"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Upper B · Tracción Semana 8",
+          "focus": "Espalda, bíceps + hombro posterior",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Dominadas o Jalones en Máquina",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 120,
+              "tip": "Omoplatos abajo antes de subir. Agarre prono.",
+              "progression": "El mejor constructor de espalda ancha"
+            },
+            {
+              "name": "Remo con Barra — Básico de Tracción",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 120,
+              "tip": "Espalda paralela. Codo roza el cuerpo.",
+              "progression": "Masa de la espalda media y grosor"
+            },
+            {
+              "name": "Remo en Polea Sentado",
+              "sets": 2,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Pecho al frente. Aprieta escápulas al final.",
+              "progression": "Complemento del remo con barra"
+            },
+            {
+              "name": "Curl de bíceps con barra o mancuernas",
+              "sets": 2,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "No balancear el cuerpo. Codos fijos.",
+              "progression": "Bíceps = músculo de lucimiento. Masa aquí."
+            },
+            {
+              "name": "Curl martillo",
+              "sets": 2,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Agarre neutro. Activa braquial y braquiorradial.",
+              "progression": "Volumen del brazo desde el bíceps interno"
+            },
+            {
+              "name": "Face Pulls con polea",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 60,
+              "tip": "Codos a la altura de los hombros. Externo rotador.",
+              "progression": "Salud del hombro y hombro posterior definido"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    }
+  ]
+}
