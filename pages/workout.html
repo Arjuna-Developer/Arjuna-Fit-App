@@ -994,7 +994,7 @@ function startTimer(){
   S.startMs=Date.now();
   S.timerInt=setInterval(()=>{
     const sec=Math.floor((Date.now()-S.startMs)/1000);
-    document.getElementById('timer').textContent=
+    const _timer = document.getElementById('timer'); if(_timer) _timer.textContent=
       `${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`;
   },1000);
 }
@@ -1707,7 +1707,7 @@ function checkMainDone(){
     return (S.sets[k]||[]).length>=ex.sets&&(S.sets[k]||[]).every(x=>x.done);
   }).length;
   document.getElementById('nextBtn').disabled=done<total;
-  document.getElementById('nextSub').textContent=done<total?
+  (document.getElementById('nextSub') || {}).textContent=done<total?
     `${total-done} ejercicio${total-done!==1?'s':''} restante${total-done!==1?'s':''}`:
     '✓ Todo completado — toca para el enfriamiento';
 }
@@ -1972,7 +1972,7 @@ function showState(icon,title,sub,btns=[]){
       ${btns.map(b=>b.href?`<a href="${b.href}" class="state-btn">${b.label}</a>`:
         `<button class="state-btn" onclick="${b.fn}">${b.label}</button>`).join('')}
     </div>`;
-  document.getElementById('bottomBar').style.display='none';
+  (document.getElementById('bottomBar') || {style:{}}).style.display='none';
 }
 
 // 👋 Coach welcome moment — usa AF.voice
@@ -2110,8 +2110,8 @@ function showWorkoutNow(dayNum, name) {
   S.weekNum  = Math.ceil(d / 3) || 1;
   S.session  = SESSIONS[getType(d)];
   S.session.exercises.forEach((_, i) => { if (!S.sets[i]) S.sets[i] = []; });
-  document.getElementById('hdrTitle').textContent = S.session.name;
-  document.getElementById('hdrSub').textContent   =
+  (document.getElementById('hdrTitle') || {}).textContent = S.session.name;
+  (document.getElementById('hdrSub') || {}).textContent   =
     `Sem ${S.weekNum} · Sesión ${d} · ${getPhase(S.weekNum).name}`;
   document.getElementById('ldr').classList.add('off');
   document.getElementById('page').style.display = '';
