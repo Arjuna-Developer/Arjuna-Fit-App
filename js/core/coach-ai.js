@@ -233,7 +233,6 @@ window.arjuSend = async function(userMessage, mode, ctx) {
     : "Eres Arju, coach de ArjunaFit. Responde breve y útil.";
 
   try {
-    console.log('[arjuSend] Llamando /api/chat, msgs:', msgs.length, 'mode:', mode);
     var response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -245,7 +244,6 @@ window.arjuSend = async function(userMessage, mode, ctx) {
         user_id:    ctx?.userId || ''
       })
     });
-    console.log('[arjuSend] Response status:', response.status);
     if (!response.ok) {
       const errText = await response.text();
       console.error('[arjuSend] HTTP error:', response.status, errText.slice(0,200));
