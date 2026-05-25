@@ -13,7 +13,6 @@ var _AB_RETOS  = ['challenge_glutes','challenge_belly'];
 
 // ── Internal helpers — all use [AuthBootstrap] prefix via _log/_warn ──
 function _log(msg, data) {
-  console.log('[AuthBootstrap] ' + msg, data !== undefined ? data : '');
 }
 function _warn(msg, data) {
   console.warn('[AuthBootstrap] ' + msg, data !== undefined ? data : '');
