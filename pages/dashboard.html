@@ -188,7 +188,7 @@ html, body {
 .scroll {
   flex: 1; overflow-y: auto; overflow-x: hidden;
   min-height: 100dvh;
-  padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  padding: 0 0 calc(100px + env(safe-area-inset-bottom)) 0;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
 }
@@ -1030,7 +1030,7 @@ html, body {
 .asm-type-txt { font-size:12px;font-weight:600;color:rgba(255,255,255,.4); }
 .asm-type.sel .asm-type-txt { color:rgba(253,164,175,.88); }
 .asm-rlbl   { font-size:10px;font-weight:700;color:rgba(255,255,255,.22);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px; }
-.asm-rlist  { display:flex;flex-direction:column;gap:7px; }
+.asm-rlist  { display:flex;flex-direction:column;gap:14px; }
 .asm-rcard  { background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.055);border-radius:13px;padding:10px 12px;display:flex;align-items:center;gap:11px;cursor:pointer;transition:all .18s; }
 .asm-rcard:active { background:rgba(124,58,237,.08);border-color:rgba(124,58,237,.18); }
 .asm-remo   { font-size:19px;flex-shrink:0; }
@@ -1091,7 +1091,7 @@ setTimeout(function() {
     <!-- Ring skeleton -->
     <div style="padding:20px;background:rgba(255,255,255,.03);border-radius:20px;display:flex;gap:16px;align-items:center">
       <div style="width:72px;height:72px;border-radius:50%;border:4px solid rgba(124,58,237,.2);flex-shrink:0"></div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+      <div style="flex:1;display:flex;flex-direction:column;gap:14px">
         <div style="width:60%;height:12px;border-radius:6px;background:rgba(255,255,255,.07);animation:pulse 1.5s ease infinite .15s"></div>
         <div style="width:40%;height:10px;border-radius:5px;background:rgba(255,255,255,.05);animation:pulse 1.5s ease infinite .25s"></div>
       </div>
@@ -1112,7 +1112,7 @@ setTimeout(function() {
 
 <!-- App -->
 <div class="page" id="page">
-  <div class="scroll" id="scrollArea">
+  <div class="scroll" id="scrollArea" style="padding-left:16px;padding-right:16px">
 
     <!-- Header -->
     <div class="hdr">
@@ -2274,7 +2274,7 @@ function openMealSheet(meal) {
       </div>
 
       <!-- Food options -->
-      <div style="display:flex;flex-direction:column;gap:7px">
+      <div style="display:flex;flex-direction:column;gap:14px">
         ${foods.map(r => `
           <button onclick="homeGuardarFood('${r.name.replace(/'/g,"\'")}',${r.cal},${r.prot},'${meal.toLowerCase()}')" style="
             display:flex;align-items:center;gap:12px;padding:11px 14px;
@@ -2492,7 +2492,7 @@ function showDashPhotoResult(data, imgSrc) {
         letter-spacing:.07em;color:rgba(255,255,255,.2);margin-bottom:8px">
         Detectado</div>
       <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
-        border-radius:14px;padding:12px 14px;margin-bottom:12px">
+        border-radius:14px;padding:16px;margin-bottom:12px">
         ${foods.map(f=>`
           <div style="display:flex;justify-content:space-between;padding:4px 0;
             font-size:13px;color:rgba(240,238,248,.75)">
@@ -3102,7 +3102,7 @@ function checkEndOfDay() {
 
     <!-- Emotional message -->
     <div style="background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.15);
-      border-radius:14px;padding:12px 14px;margin-bottom:12px;
+      border-radius:14px;padding:16px;margin-bottom:12px;
       display:flex;align-items:flex-start;gap:10px">
       <span style="font-size:18px;flex-shrink:0">${icon}</span>
       <div style="font-size:13px;color:rgba(219,234,254,.8);line-height:1.6">${msg}</div>
