@@ -1,0 +1,2746 @@
+{
+  "program_id": "custom_fat_loss",
+  "name": "Plan Personalizado — Reducción de Porcentaje Graso",
+  "duration_days": 56,
+  "goal": "fat_loss",
+  "method": "Upper/Lower + HIIT integrado — 4-5 días/semana",
+  "science_base": "EPOC research (Tremblay 1994), recomposición corporal, preservación muscular en déficit (Barakat 2020). Combina fuerza para preservar músculo + HIIT para maximizar gasto calórico.",
+  "frequency": "4 days training + 1-2 días cardio zona 2 opcional",
+  "phases": [
+    {
+      "phase": 1,
+      "weeks": "1-2",
+      "focus": "Base metabólica",
+      "intensity": "Moderada"
+    },
+    {
+      "phase": 2,
+      "weeks": "3-4",
+      "focus": "Progresión de carga",
+      "intensity": "Media-Alta"
+    },
+    {
+      "phase": 3,
+      "weeks": "5-6",
+      "focus": "Máximo metabólico",
+      "intensity": "Alta"
+    },
+    {
+      "phase": 4,
+      "weeks": "7-8",
+      "focus": "Pico + Descarga",
+      "intensity": "Máxima → Suave"
+    }
+  ],
+  "nutrition_note": "Déficit calórico 300-500 kcal/día. 2-2.4g proteína/kg (más alta que habitual para preservar músculo). Ciclado de carbohidratos opcional: más carbos en días de entrenamiento.",
+  "cardio_protocol": {
+    "zone2": "30-45 min bicicleta o caminata rápida, 60-70% FCmax. 2-3 días/semana opcionales.",
+    "hiit": "Incluido en los entrenos. No añadir HIIT extra los mismos días.",
+    "note": "Más cardio NO es siempre mejor. El déficit calórico viene principalmente de la dieta."
+  },
+  "weeks": [
+    {
+      "week": 1,
+      "phase": 1,
+      "phase_name": "Base metabólica",
+      "phase_focus": "Semana 1: Déficit calórico + preservar músculo",
+      "days": [
+        {
+          "title": "Upper · Fuerza + Metabólico S1",
+          "focus": "Mantener músculo mientras pierdes grasa",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca o Inclinado",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "Mantener la fuerza en déficit es mantener el músculo.",
+              "progression": "No bajar el peso en déficit calórico"
+            },
+            {
+              "name": "Remo con Barra o Mancuernas",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "Espalda fuerte. Postura correcta.",
+              "progression": "La espalda es clave en recomposición"
+            },
+            {
+              "name": "Press Militar de Pie",
+              "sets": 2,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "Core activado. Glúteos apretados.",
+              "progression": ""
+            },
+            {
+              "name": "Superserie: Curl bíceps + Extensión tríceps",
+              "sets": 3,
+              "reps": "12+12",
+              "rest_sec": 60,
+              "tip": "Sin descanso entre los dos ejercicios",
+              "progression": "Superserie ahorra tiempo y mantiene pulso alto"
+            },
+            {
+              "name": "Finisher metabólico: 3 min no-stop",
+              "sets": 1,
+              "reps": "3 min",
+              "rest_sec": 0,
+              "tip": "Mountain climbers, jumping jacks o saltos. Sin parar.",
+              "progression": "EPOC activado después del entreno"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Cardio zona 2 — 30-45 min",
+              "sets": 1,
+              "reps": "45 min",
+              "rest_sec": 0,
+              "tip": "Bici, caminata rápida, elíptica. Pulso 60-70% max.",
+              "progression": "Zona 2 quema principalmente grasa como combustible"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower · Fuerza + HIIT S1",
+          "focus": "Piernas fuertes + cardio de alta intensidad",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra o Goblet",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "Mantener el peso es mantener el músculo.",
+              "progression": "El músculo de pierna quema más grasa en reposo"
+            },
+            {
+              "name": "Peso Muerto Rumano",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Posterior fuerte. No perder masa muscular.",
+              "progression": "Isquiotibiales y glúteos = motores calóricos"
+            },
+            {
+              "name": "Zancada Caminando",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Activa glúteos, cuadriceps, core.",
+              "progression": ""
+            },
+            {
+              "name": "Circuito HIIT: Squat jump + Burpee + Climbers",
+              "sets": 4,
+              "reps": "10+8+20",
+              "rest_sec": 60,
+              "tip": "Sin pausa entre los tres. 60 seg pausa entre rondas.",
+              "progression": "El HIIT post-fuerza maximiza la quema de grasa"
+            },
+            {
+              "name": "Core anti-rotación: Pallof Press",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "No dejarse rotar. Core estabilizador.",
+              "progression": "Cintura más definida con este ejercicio"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Upper · Fuerza + Metabólico S1-B",
+          "focus": "Mantener músculo mientras pierdes grasa",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca o Inclinado",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "Mantener la fuerza en déficit es mantener el músculo.",
+              "progression": "No bajar el peso en déficit calórico"
+            },
+            {
+              "name": "Remo con Barra o Mancuernas",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "Espalda fuerte. Postura correcta.",
+              "progression": "La espalda es clave en recomposición"
+            },
+            {
+              "name": "Press Militar de Pie",
+              "sets": 2,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "Core activado. Glúteos apretados.",
+              "progression": ""
+            },
+            {
+              "name": "Superserie: Curl bíceps + Extensión tríceps",
+              "sets": 3,
+              "reps": "12+12",
+              "rest_sec": 60,
+              "tip": "Sin descanso entre los dos ejercicios",
+              "progression": "Superserie ahorra tiempo y mantiene pulso alto"
+            },
+            {
+              "name": "Finisher metabólico: 3 min no-stop",
+              "sets": 1,
+              "reps": "3 min",
+              "rest_sec": 0,
+              "tip": "Mountain climbers, jumping jacks o saltos. Sin parar.",
+              "progression": "EPOC activado después del entreno"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower · Fuerza + HIIT S1-B",
+          "focus": "Piernas fuertes + cardio de alta intensidad",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra o Goblet",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "Mantener el peso es mantener el músculo.",
+              "progression": "El músculo de pierna quema más grasa en reposo"
+            },
+            {
+              "name": "Peso Muerto Rumano",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Posterior fuerte. No perder masa muscular.",
+              "progression": "Isquiotibiales y glúteos = motores calóricos"
+            },
+            {
+              "name": "Zancada Caminando",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Activa glúteos, cuadriceps, core.",
+              "progression": ""
+            },
+            {
+              "name": "Circuito HIIT: Squat jump + Burpee + Climbers",
+              "sets": 4,
+              "reps": "10+8+20",
+              "rest_sec": 60,
+              "tip": "Sin pausa entre los tres. 60 seg pausa entre rondas.",
+              "progression": "El HIIT post-fuerza maximiza la quema de grasa"
+            },
+            {
+              "name": "Core anti-rotación: Pallof Press",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "No dejarse rotar. Core estabilizador.",
+              "progression": "Cintura más definida con este ejercicio"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 2,
+      "phase": 1,
+      "phase_name": "Base metabólica",
+      "phase_focus": "Semana 2: Déficit calórico + preservar músculo",
+      "days": [
+        {
+          "title": "Upper · Fuerza + Metabólico S2",
+          "focus": "Mantener músculo mientras pierdes grasa",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca o Inclinado",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "Mantener la fuerza en déficit es mantener el músculo.",
+              "progression": "No bajar el peso en déficit calórico"
+            },
+            {
+              "name": "Remo con Barra o Mancuernas",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "Espalda fuerte. Postura correcta.",
+              "progression": "La espalda es clave en recomposición"
+            },
+            {
+              "name": "Press Militar de Pie",
+              "sets": 2,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "Core activado. Glúteos apretados.",
+              "progression": ""
+            },
+            {
+              "name": "Superserie: Curl bíceps + Extensión tríceps",
+              "sets": 3,
+              "reps": "12+12",
+              "rest_sec": 60,
+              "tip": "Sin descanso entre los dos ejercicios",
+              "progression": "Superserie ahorra tiempo y mantiene pulso alto"
+            },
+            {
+              "name": "Finisher metabólico: 3 min no-stop",
+              "sets": 1,
+              "reps": "3 min",
+              "rest_sec": 0,
+              "tip": "Mountain climbers, jumping jacks o saltos. Sin parar.",
+              "progression": "EPOC activado después del entreno"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Cardio zona 2 — 30-45 min",
+              "sets": 1,
+              "reps": "45 min",
+              "rest_sec": 0,
+              "tip": "Bici, caminata rápida, elíptica. Pulso 60-70% max.",
+              "progression": "Zona 2 quema principalmente grasa como combustible"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower · Fuerza + HIIT S2",
+          "focus": "Piernas fuertes + cardio de alta intensidad",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra o Goblet",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "Mantener el peso es mantener el músculo.",
+              "progression": "El músculo de pierna quema más grasa en reposo"
+            },
+            {
+              "name": "Peso Muerto Rumano",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Posterior fuerte. No perder masa muscular.",
+              "progression": "Isquiotibiales y glúteos = motores calóricos"
+            },
+            {
+              "name": "Zancada Caminando",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Activa glúteos, cuadriceps, core.",
+              "progression": ""
+            },
+            {
+              "name": "Circuito HIIT: Squat jump + Burpee + Climbers",
+              "sets": 4,
+              "reps": "10+8+20",
+              "rest_sec": 60,
+              "tip": "Sin pausa entre los tres. 60 seg pausa entre rondas.",
+              "progression": "El HIIT post-fuerza maximiza la quema de grasa"
+            },
+            {
+              "name": "Core anti-rotación: Pallof Press",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "No dejarse rotar. Core estabilizador.",
+              "progression": "Cintura más definida con este ejercicio"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Upper · Fuerza + Metabólico S2-B",
+          "focus": "Mantener músculo mientras pierdes grasa",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca o Inclinado",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "Mantener la fuerza en déficit es mantener el músculo.",
+              "progression": "No bajar el peso en déficit calórico"
+            },
+            {
+              "name": "Remo con Barra o Mancuernas",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "Espalda fuerte. Postura correcta.",
+              "progression": "La espalda es clave en recomposición"
+            },
+            {
+              "name": "Press Militar de Pie",
+              "sets": 2,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "Core activado. Glúteos apretados.",
+              "progression": ""
+            },
+            {
+              "name": "Superserie: Curl bíceps + Extensión tríceps",
+              "sets": 3,
+              "reps": "12+12",
+              "rest_sec": 60,
+              "tip": "Sin descanso entre los dos ejercicios",
+              "progression": "Superserie ahorra tiempo y mantiene pulso alto"
+            },
+            {
+              "name": "Finisher metabólico: 3 min no-stop",
+              "sets": 1,
+              "reps": "3 min",
+              "rest_sec": 0,
+              "tip": "Mountain climbers, jumping jacks o saltos. Sin parar.",
+              "progression": "EPOC activado después del entreno"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower · Fuerza + HIIT S2-B",
+          "focus": "Piernas fuertes + cardio de alta intensidad",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra o Goblet",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "Mantener el peso es mantener el músculo.",
+              "progression": "El músculo de pierna quema más grasa en reposo"
+            },
+            {
+              "name": "Peso Muerto Rumano",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Posterior fuerte. No perder masa muscular.",
+              "progression": "Isquiotibiales y glúteos = motores calóricos"
+            },
+            {
+              "name": "Zancada Caminando",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Activa glúteos, cuadriceps, core.",
+              "progression": ""
+            },
+            {
+              "name": "Circuito HIIT: Squat jump + Burpee + Climbers",
+              "sets": 4,
+              "reps": "10+8+20",
+              "rest_sec": 60,
+              "tip": "Sin pausa entre los tres. 60 seg pausa entre rondas.",
+              "progression": "El HIIT post-fuerza maximiza la quema de grasa"
+            },
+            {
+              "name": "Core anti-rotación: Pallof Press",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "No dejarse rotar. Core estabilizador.",
+              "progression": "Cintura más definida con este ejercicio"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 3,
+      "phase": 2,
+      "phase_name": "Progresión de carga",
+      "phase_focus": "Semana 3: Déficit calórico + preservar músculo",
+      "days": [
+        {
+          "title": "Upper · Fuerza + Metabólico S3",
+          "focus": "Mantener músculo mientras pierdes grasa",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca o Inclinado",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Mantener la fuerza en déficit es mantener el músculo.",
+              "progression": "No bajar el peso en déficit calórico"
+            },
+            {
+              "name": "Remo con Barra o Mancuernas",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Espalda fuerte. Postura correcta.",
+              "progression": "La espalda es clave en recomposición"
+            },
+            {
+              "name": "Press Militar de Pie",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "Core activado. Glúteos apretados.",
+              "progression": ""
+            },
+            {
+              "name": "Superserie: Curl bíceps + Extensión tríceps",
+              "sets": 3,
+              "reps": "12+12",
+              "rest_sec": 60,
+              "tip": "Sin descanso entre los dos ejercicios",
+              "progression": "Superserie ahorra tiempo y mantiene pulso alto"
+            },
+            {
+              "name": "Finisher metabólico: 3 min no-stop",
+              "sets": 1,
+              "reps": "3 min",
+              "rest_sec": 0,
+              "tip": "Mountain climbers, jumping jacks o saltos. Sin parar.",
+              "progression": "EPOC activado después del entreno"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Cardio zona 2 — 30-45 min",
+              "sets": 1,
+              "reps": "45 min",
+              "rest_sec": 0,
+              "tip": "Bici, caminata rápida, elíptica. Pulso 60-70% max.",
+              "progression": "Zona 2 quema principalmente grasa como combustible"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower · Fuerza + HIIT S3",
+          "focus": "Piernas fuertes + cardio de alta intensidad",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra o Goblet",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Mantener el peso es mantener el músculo.",
+              "progression": "El músculo de pierna quema más grasa en reposo"
+            },
+            {
+              "name": "Peso Muerto Rumano",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Posterior fuerte. No perder masa muscular.",
+              "progression": "Isquiotibiales y glúteos = motores calóricos"
+            },
+            {
+              "name": "Zancada Caminando",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Activa glúteos, cuadriceps, core.",
+              "progression": ""
+            },
+            {
+              "name": "Circuito HIIT: Squat jump + Burpee + Climbers",
+              "sets": 4,
+              "reps": "10+8+20",
+              "rest_sec": 60,
+              "tip": "Sin pausa entre los tres. 60 seg pausa entre rondas.",
+              "progression": "El HIIT post-fuerza maximiza la quema de grasa"
+            },
+            {
+              "name": "Core anti-rotación: Pallof Press",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "No dejarse rotar. Core estabilizador.",
+              "progression": "Cintura más definida con este ejercicio"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Upper · Fuerza + Metabólico S3-B",
+          "focus": "Mantener músculo mientras pierdes grasa",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca o Inclinado",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Mantener la fuerza en déficit es mantener el músculo.",
+              "progression": "No bajar el peso en déficit calórico"
+            },
+            {
+              "name": "Remo con Barra o Mancuernas",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Espalda fuerte. Postura correcta.",
+              "progression": "La espalda es clave en recomposición"
+            },
+            {
+              "name": "Press Militar de Pie",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "Core activado. Glúteos apretados.",
+              "progression": ""
+            },
+            {
+              "name": "Superserie: Curl bíceps + Extensión tríceps",
+              "sets": 3,
+              "reps": "12+12",
+              "rest_sec": 60,
+              "tip": "Sin descanso entre los dos ejercicios",
+              "progression": "Superserie ahorra tiempo y mantiene pulso alto"
+            },
+            {
+              "name": "Finisher metabólico: 3 min no-stop",
+              "sets": 1,
+              "reps": "3 min",
+              "rest_sec": 0,
+              "tip": "Mountain climbers, jumping jacks o saltos. Sin parar.",
+              "progression": "EPOC activado después del entreno"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower · Fuerza + HIIT S3-B",
+          "focus": "Piernas fuertes + cardio de alta intensidad",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra o Goblet",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Mantener el peso es mantener el músculo.",
+              "progression": "El músculo de pierna quema más grasa en reposo"
+            },
+            {
+              "name": "Peso Muerto Rumano",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Posterior fuerte. No perder masa muscular.",
+              "progression": "Isquiotibiales y glúteos = motores calóricos"
+            },
+            {
+              "name": "Zancada Caminando",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Activa glúteos, cuadriceps, core.",
+              "progression": ""
+            },
+            {
+              "name": "Circuito HIIT: Squat jump + Burpee + Climbers",
+              "sets": 4,
+              "reps": "10+8+20",
+              "rest_sec": 60,
+              "tip": "Sin pausa entre los tres. 60 seg pausa entre rondas.",
+              "progression": "El HIIT post-fuerza maximiza la quema de grasa"
+            },
+            {
+              "name": "Core anti-rotación: Pallof Press",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "No dejarse rotar. Core estabilizador.",
+              "progression": "Cintura más definida con este ejercicio"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 4,
+      "phase": 2,
+      "phase_name": "Progresión de carga",
+      "phase_focus": "Semana 4: Déficit calórico + preservar músculo",
+      "days": [
+        {
+          "title": "Upper · Fuerza + Metabólico S4",
+          "focus": "Mantener músculo mientras pierdes grasa",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca o Inclinado",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Mantener la fuerza en déficit es mantener el músculo.",
+              "progression": "No bajar el peso en déficit calórico"
+            },
+            {
+              "name": "Remo con Barra o Mancuernas",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Espalda fuerte. Postura correcta.",
+              "progression": "La espalda es clave en recomposición"
+            },
+            {
+              "name": "Press Militar de Pie",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "Core activado. Glúteos apretados.",
+              "progression": ""
+            },
+            {
+              "name": "Superserie: Curl bíceps + Extensión tríceps",
+              "sets": 3,
+              "reps": "12+12",
+              "rest_sec": 60,
+              "tip": "Sin descanso entre los dos ejercicios",
+              "progression": "Superserie ahorra tiempo y mantiene pulso alto"
+            },
+            {
+              "name": "Finisher metabólico: 3 min no-stop",
+              "sets": 1,
+              "reps": "3 min",
+              "rest_sec": 0,
+              "tip": "Mountain climbers, jumping jacks o saltos. Sin parar.",
+              "progression": "EPOC activado después del entreno"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Cardio zona 2 — 30-45 min",
+              "sets": 1,
+              "reps": "45 min",
+              "rest_sec": 0,
+              "tip": "Bici, caminata rápida, elíptica. Pulso 60-70% max.",
+              "progression": "Zona 2 quema principalmente grasa como combustible"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower · Fuerza + HIIT S4",
+          "focus": "Piernas fuertes + cardio de alta intensidad",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra o Goblet",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Mantener el peso es mantener el músculo.",
+              "progression": "El músculo de pierna quema más grasa en reposo"
+            },
+            {
+              "name": "Peso Muerto Rumano",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Posterior fuerte. No perder masa muscular.",
+              "progression": "Isquiotibiales y glúteos = motores calóricos"
+            },
+            {
+              "name": "Zancada Caminando",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Activa glúteos, cuadriceps, core.",
+              "progression": ""
+            },
+            {
+              "name": "Circuito HIIT: Squat jump + Burpee + Climbers",
+              "sets": 4,
+              "reps": "10+8+20",
+              "rest_sec": 60,
+              "tip": "Sin pausa entre los tres. 60 seg pausa entre rondas.",
+              "progression": "El HIIT post-fuerza maximiza la quema de grasa"
+            },
+            {
+              "name": "Core anti-rotación: Pallof Press",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "No dejarse rotar. Core estabilizador.",
+              "progression": "Cintura más definida con este ejercicio"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Upper · Fuerza + Metabólico S4-B",
+          "focus": "Mantener músculo mientras pierdes grasa",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca o Inclinado",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Mantener la fuerza en déficit es mantener el músculo.",
+              "progression": "No bajar el peso en déficit calórico"
+            },
+            {
+              "name": "Remo con Barra o Mancuernas",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Espalda fuerte. Postura correcta.",
+              "progression": "La espalda es clave en recomposición"
+            },
+            {
+              "name": "Press Militar de Pie",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "Core activado. Glúteos apretados.",
+              "progression": ""
+            },
+            {
+              "name": "Superserie: Curl bíceps + Extensión tríceps",
+              "sets": 3,
+              "reps": "12+12",
+              "rest_sec": 60,
+              "tip": "Sin descanso entre los dos ejercicios",
+              "progression": "Superserie ahorra tiempo y mantiene pulso alto"
+            },
+            {
+              "name": "Finisher metabólico: 3 min no-stop",
+              "sets": 1,
+              "reps": "3 min",
+              "rest_sec": 0,
+              "tip": "Mountain climbers, jumping jacks o saltos. Sin parar.",
+              "progression": "EPOC activado después del entreno"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower · Fuerza + HIIT S4-B",
+          "focus": "Piernas fuertes + cardio de alta intensidad",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra o Goblet",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Mantener el peso es mantener el músculo.",
+              "progression": "El músculo de pierna quema más grasa en reposo"
+            },
+            {
+              "name": "Peso Muerto Rumano",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Posterior fuerte. No perder masa muscular.",
+              "progression": "Isquiotibiales y glúteos = motores calóricos"
+            },
+            {
+              "name": "Zancada Caminando",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Activa glúteos, cuadriceps, core.",
+              "progression": ""
+            },
+            {
+              "name": "Circuito HIIT: Squat jump + Burpee + Climbers",
+              "sets": 4,
+              "reps": "10+8+20",
+              "rest_sec": 60,
+              "tip": "Sin pausa entre los tres. 60 seg pausa entre rondas.",
+              "progression": "El HIIT post-fuerza maximiza la quema de grasa"
+            },
+            {
+              "name": "Core anti-rotación: Pallof Press",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "No dejarse rotar. Core estabilizador.",
+              "progression": "Cintura más definida con este ejercicio"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 5,
+      "phase": 3,
+      "phase_name": "Máximo metabólico",
+      "phase_focus": "Semana 5: Déficit calórico + preservar músculo",
+      "days": [
+        {
+          "title": "Upper · Fuerza + Metabólico S5",
+          "focus": "Mantener músculo mientras pierdes grasa",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca o Inclinado",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Mantener la fuerza en déficit es mantener el músculo.",
+              "progression": "No bajar el peso en déficit calórico"
+            },
+            {
+              "name": "Remo con Barra o Mancuernas",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Espalda fuerte. Postura correcta.",
+              "progression": "La espalda es clave en recomposición"
+            },
+            {
+              "name": "Press Militar de Pie",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "Core activado. Glúteos apretados.",
+              "progression": ""
+            },
+            {
+              "name": "Superserie: Curl bíceps + Extensión tríceps",
+              "sets": 3,
+              "reps": "12+12",
+              "rest_sec": 60,
+              "tip": "Sin descanso entre los dos ejercicios",
+              "progression": "Superserie ahorra tiempo y mantiene pulso alto"
+            },
+            {
+              "name": "Finisher metabólico: 3 min no-stop",
+              "sets": 1,
+              "reps": "3 min",
+              "rest_sec": 0,
+              "tip": "Mountain climbers, jumping jacks o saltos. Sin parar.",
+              "progression": "EPOC activado después del entreno"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Cardio zona 2 — 30-45 min",
+              "sets": 1,
+              "reps": "45 min",
+              "rest_sec": 0,
+              "tip": "Bici, caminata rápida, elíptica. Pulso 60-70% max.",
+              "progression": "Zona 2 quema principalmente grasa como combustible"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower · Fuerza + HIIT S5",
+          "focus": "Piernas fuertes + cardio de alta intensidad",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra o Goblet",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Mantener el peso es mantener el músculo.",
+              "progression": "El músculo de pierna quema más grasa en reposo"
+            },
+            {
+              "name": "Peso Muerto Rumano",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Posterior fuerte. No perder masa muscular.",
+              "progression": "Isquiotibiales y glúteos = motores calóricos"
+            },
+            {
+              "name": "Zancada Caminando",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Activa glúteos, cuadriceps, core.",
+              "progression": ""
+            },
+            {
+              "name": "Circuito HIIT: Squat jump + Burpee + Climbers",
+              "sets": 4,
+              "reps": "10+8+20",
+              "rest_sec": 60,
+              "tip": "Sin pausa entre los tres. 60 seg pausa entre rondas.",
+              "progression": "El HIIT post-fuerza maximiza la quema de grasa"
+            },
+            {
+              "name": "Core anti-rotación: Pallof Press",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "No dejarse rotar. Core estabilizador.",
+              "progression": "Cintura más definida con este ejercicio"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Upper · Fuerza + Metabólico S5-B",
+          "focus": "Mantener músculo mientras pierdes grasa",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca o Inclinado",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Mantener la fuerza en déficit es mantener el músculo.",
+              "progression": "No bajar el peso en déficit calórico"
+            },
+            {
+              "name": "Remo con Barra o Mancuernas",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Espalda fuerte. Postura correcta.",
+              "progression": "La espalda es clave en recomposición"
+            },
+            {
+              "name": "Press Militar de Pie",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "Core activado. Glúteos apretados.",
+              "progression": ""
+            },
+            {
+              "name": "Superserie: Curl bíceps + Extensión tríceps",
+              "sets": 3,
+              "reps": "12+12",
+              "rest_sec": 60,
+              "tip": "Sin descanso entre los dos ejercicios",
+              "progression": "Superserie ahorra tiempo y mantiene pulso alto"
+            },
+            {
+              "name": "Finisher metabólico: 3 min no-stop",
+              "sets": 1,
+              "reps": "3 min",
+              "rest_sec": 0,
+              "tip": "Mountain climbers, jumping jacks o saltos. Sin parar.",
+              "progression": "EPOC activado después del entreno"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower · Fuerza + HIIT S5-B",
+          "focus": "Piernas fuertes + cardio de alta intensidad",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra o Goblet",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Mantener el peso es mantener el músculo.",
+              "progression": "El músculo de pierna quema más grasa en reposo"
+            },
+            {
+              "name": "Peso Muerto Rumano",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Posterior fuerte. No perder masa muscular.",
+              "progression": "Isquiotibiales y glúteos = motores calóricos"
+            },
+            {
+              "name": "Zancada Caminando",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Activa glúteos, cuadriceps, core.",
+              "progression": ""
+            },
+            {
+              "name": "Circuito HIIT: Squat jump + Burpee + Climbers",
+              "sets": 4,
+              "reps": "10+8+20",
+              "rest_sec": 60,
+              "tip": "Sin pausa entre los tres. 60 seg pausa entre rondas.",
+              "progression": "El HIIT post-fuerza maximiza la quema de grasa"
+            },
+            {
+              "name": "Core anti-rotación: Pallof Press",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "No dejarse rotar. Core estabilizador.",
+              "progression": "Cintura más definida con este ejercicio"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 6,
+      "phase": 3,
+      "phase_name": "Máximo metabólico",
+      "phase_focus": "Semana 6: Déficit calórico + preservar músculo",
+      "days": [
+        {
+          "title": "Upper · Fuerza + Metabólico S6",
+          "focus": "Mantener músculo mientras pierdes grasa",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca o Inclinado",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Mantener la fuerza en déficit es mantener el músculo.",
+              "progression": "No bajar el peso en déficit calórico"
+            },
+            {
+              "name": "Remo con Barra o Mancuernas",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Espalda fuerte. Postura correcta.",
+              "progression": "La espalda es clave en recomposición"
+            },
+            {
+              "name": "Press Militar de Pie",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "Core activado. Glúteos apretados.",
+              "progression": ""
+            },
+            {
+              "name": "Superserie: Curl bíceps + Extensión tríceps",
+              "sets": 3,
+              "reps": "12+12",
+              "rest_sec": 60,
+              "tip": "Sin descanso entre los dos ejercicios",
+              "progression": "Superserie ahorra tiempo y mantiene pulso alto"
+            },
+            {
+              "name": "Finisher metabólico: 3 min no-stop",
+              "sets": 1,
+              "reps": "3 min",
+              "rest_sec": 0,
+              "tip": "Mountain climbers, jumping jacks o saltos. Sin parar.",
+              "progression": "EPOC activado después del entreno"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Cardio zona 2 — 30-45 min",
+              "sets": 1,
+              "reps": "45 min",
+              "rest_sec": 0,
+              "tip": "Bici, caminata rápida, elíptica. Pulso 60-70% max.",
+              "progression": "Zona 2 quema principalmente grasa como combustible"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower · Fuerza + HIIT S6",
+          "focus": "Piernas fuertes + cardio de alta intensidad",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra o Goblet",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Mantener el peso es mantener el músculo.",
+              "progression": "El músculo de pierna quema más grasa en reposo"
+            },
+            {
+              "name": "Peso Muerto Rumano",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Posterior fuerte. No perder masa muscular.",
+              "progression": "Isquiotibiales y glúteos = motores calóricos"
+            },
+            {
+              "name": "Zancada Caminando",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Activa glúteos, cuadriceps, core.",
+              "progression": ""
+            },
+            {
+              "name": "Circuito HIIT: Squat jump + Burpee + Climbers",
+              "sets": 4,
+              "reps": "10+8+20",
+              "rest_sec": 60,
+              "tip": "Sin pausa entre los tres. 60 seg pausa entre rondas.",
+              "progression": "El HIIT post-fuerza maximiza la quema de grasa"
+            },
+            {
+              "name": "Core anti-rotación: Pallof Press",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "No dejarse rotar. Core estabilizador.",
+              "progression": "Cintura más definida con este ejercicio"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Upper · Fuerza + Metabólico S6-B",
+          "focus": "Mantener músculo mientras pierdes grasa",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca o Inclinado",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Mantener la fuerza en déficit es mantener el músculo.",
+              "progression": "No bajar el peso en déficit calórico"
+            },
+            {
+              "name": "Remo con Barra o Mancuernas",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Espalda fuerte. Postura correcta.",
+              "progression": "La espalda es clave en recomposición"
+            },
+            {
+              "name": "Press Militar de Pie",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "Core activado. Glúteos apretados.",
+              "progression": ""
+            },
+            {
+              "name": "Superserie: Curl bíceps + Extensión tríceps",
+              "sets": 3,
+              "reps": "12+12",
+              "rest_sec": 60,
+              "tip": "Sin descanso entre los dos ejercicios",
+              "progression": "Superserie ahorra tiempo y mantiene pulso alto"
+            },
+            {
+              "name": "Finisher metabólico: 3 min no-stop",
+              "sets": 1,
+              "reps": "3 min",
+              "rest_sec": 0,
+              "tip": "Mountain climbers, jumping jacks o saltos. Sin parar.",
+              "progression": "EPOC activado después del entreno"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower · Fuerza + HIIT S6-B",
+          "focus": "Piernas fuertes + cardio de alta intensidad",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra o Goblet",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Mantener el peso es mantener el músculo.",
+              "progression": "El músculo de pierna quema más grasa en reposo"
+            },
+            {
+              "name": "Peso Muerto Rumano",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Posterior fuerte. No perder masa muscular.",
+              "progression": "Isquiotibiales y glúteos = motores calóricos"
+            },
+            {
+              "name": "Zancada Caminando",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Activa glúteos, cuadriceps, core.",
+              "progression": ""
+            },
+            {
+              "name": "Circuito HIIT: Squat jump + Burpee + Climbers",
+              "sets": 4,
+              "reps": "10+8+20",
+              "rest_sec": 60,
+              "tip": "Sin pausa entre los tres. 60 seg pausa entre rondas.",
+              "progression": "El HIIT post-fuerza maximiza la quema de grasa"
+            },
+            {
+              "name": "Core anti-rotación: Pallof Press",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "No dejarse rotar. Core estabilizador.",
+              "progression": "Cintura más definida con este ejercicio"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 7,
+      "phase": 4,
+      "phase_name": "Pico",
+      "phase_focus": "Semana 7: Déficit calórico + preservar músculo",
+      "days": [
+        {
+          "title": "Upper · Fuerza + Metabólico S7",
+          "focus": "Mantener músculo mientras pierdes grasa",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca o Inclinado",
+              "sets": 4,
+              "reps": "8",
+              "rest_sec": 90,
+              "tip": "Mantener la fuerza en déficit es mantener el músculo.",
+              "progression": "No bajar el peso en déficit calórico"
+            },
+            {
+              "name": "Remo con Barra o Mancuernas",
+              "sets": 4,
+              "reps": "8",
+              "rest_sec": 90,
+              "tip": "Espalda fuerte. Postura correcta.",
+              "progression": "La espalda es clave en recomposición"
+            },
+            {
+              "name": "Press Militar de Pie",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "Core activado. Glúteos apretados.",
+              "progression": ""
+            },
+            {
+              "name": "Superserie: Curl bíceps + Extensión tríceps",
+              "sets": 3,
+              "reps": "12+12",
+              "rest_sec": 60,
+              "tip": "Sin descanso entre los dos ejercicios",
+              "progression": "Superserie ahorra tiempo y mantiene pulso alto"
+            },
+            {
+              "name": "Finisher metabólico: 3 min no-stop",
+              "sets": 1,
+              "reps": "3 min",
+              "rest_sec": 0,
+              "tip": "Mountain climbers, jumping jacks o saltos. Sin parar.",
+              "progression": "EPOC activado después del entreno"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Cardio zona 2 — 30-45 min",
+              "sets": 1,
+              "reps": "45 min",
+              "rest_sec": 0,
+              "tip": "Bici, caminata rápida, elíptica. Pulso 60-70% max.",
+              "progression": "Zona 2 quema principalmente grasa como combustible"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower · Fuerza + HIIT S7",
+          "focus": "Piernas fuertes + cardio de alta intensidad",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra o Goblet",
+              "sets": 4,
+              "reps": "8",
+              "rest_sec": 90,
+              "tip": "Mantener el peso es mantener el músculo.",
+              "progression": "El músculo de pierna quema más grasa en reposo"
+            },
+            {
+              "name": "Peso Muerto Rumano",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Posterior fuerte. No perder masa muscular.",
+              "progression": "Isquiotibiales y glúteos = motores calóricos"
+            },
+            {
+              "name": "Zancada Caminando",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Activa glúteos, cuadriceps, core.",
+              "progression": ""
+            },
+            {
+              "name": "Circuito HIIT: Squat jump + Burpee + Climbers",
+              "sets": 4,
+              "reps": "10+8+20",
+              "rest_sec": 60,
+              "tip": "Sin pausa entre los tres. 60 seg pausa entre rondas.",
+              "progression": "El HIIT post-fuerza maximiza la quema de grasa"
+            },
+            {
+              "name": "Core anti-rotación: Pallof Press",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "No dejarse rotar. Core estabilizador.",
+              "progression": "Cintura más definida con este ejercicio"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Upper · Fuerza + Metabólico S7-B",
+          "focus": "Mantener músculo mientras pierdes grasa",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca o Inclinado",
+              "sets": 4,
+              "reps": "8",
+              "rest_sec": 90,
+              "tip": "Mantener la fuerza en déficit es mantener el músculo.",
+              "progression": "No bajar el peso en déficit calórico"
+            },
+            {
+              "name": "Remo con Barra o Mancuernas",
+              "sets": 4,
+              "reps": "8",
+              "rest_sec": 90,
+              "tip": "Espalda fuerte. Postura correcta.",
+              "progression": "La espalda es clave en recomposición"
+            },
+            {
+              "name": "Press Militar de Pie",
+              "sets": 3,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "Core activado. Glúteos apretados.",
+              "progression": ""
+            },
+            {
+              "name": "Superserie: Curl bíceps + Extensión tríceps",
+              "sets": 3,
+              "reps": "12+12",
+              "rest_sec": 60,
+              "tip": "Sin descanso entre los dos ejercicios",
+              "progression": "Superserie ahorra tiempo y mantiene pulso alto"
+            },
+            {
+              "name": "Finisher metabólico: 3 min no-stop",
+              "sets": 1,
+              "reps": "3 min",
+              "rest_sec": 0,
+              "tip": "Mountain climbers, jumping jacks o saltos. Sin parar.",
+              "progression": "EPOC activado después del entreno"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower · Fuerza + HIIT S7-B",
+          "focus": "Piernas fuertes + cardio de alta intensidad",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra o Goblet",
+              "sets": 4,
+              "reps": "8",
+              "rest_sec": 90,
+              "tip": "Mantener el peso es mantener el músculo.",
+              "progression": "El músculo de pierna quema más grasa en reposo"
+            },
+            {
+              "name": "Peso Muerto Rumano",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Posterior fuerte. No perder masa muscular.",
+              "progression": "Isquiotibiales y glúteos = motores calóricos"
+            },
+            {
+              "name": "Zancada Caminando",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Activa glúteos, cuadriceps, core.",
+              "progression": ""
+            },
+            {
+              "name": "Circuito HIIT: Squat jump + Burpee + Climbers",
+              "sets": 4,
+              "reps": "10+8+20",
+              "rest_sec": 60,
+              "tip": "Sin pausa entre los tres. 60 seg pausa entre rondas.",
+              "progression": "El HIIT post-fuerza maximiza la quema de grasa"
+            },
+            {
+              "name": "Core anti-rotación: Pallof Press",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "No dejarse rotar. Core estabilizador.",
+              "progression": "Cintura más definida con este ejercicio"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 8,
+      "phase": 4,
+      "phase_name": "Descarga",
+      "phase_focus": "Semana 8: Recuperación y síntesis",
+      "days": [
+        {
+          "title": "Upper · Fuerza + Metabólico S8",
+          "focus": "Mantener músculo mientras pierdes grasa",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca o Inclinado",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Mantener la fuerza en déficit es mantener el músculo.",
+              "progression": "No bajar el peso en déficit calórico"
+            },
+            {
+              "name": "Remo con Barra o Mancuernas",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Espalda fuerte. Postura correcta.",
+              "progression": "La espalda es clave en recomposición"
+            },
+            {
+              "name": "Press Militar de Pie",
+              "sets": 2,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "Core activado. Glúteos apretados.",
+              "progression": ""
+            },
+            {
+              "name": "Superserie: Curl bíceps + Extensión tríceps",
+              "sets": 3,
+              "reps": "12+12",
+              "rest_sec": 60,
+              "tip": "Sin descanso entre los dos ejercicios",
+              "progression": "Superserie ahorra tiempo y mantiene pulso alto"
+            },
+            {
+              "name": "Finisher metabólico: 3 min no-stop",
+              "sets": 1,
+              "reps": "3 min",
+              "rest_sec": 0,
+              "tip": "Mountain climbers, jumping jacks o saltos. Sin parar.",
+              "progression": "EPOC activado después del entreno"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Cardio zona 2 — 30-45 min",
+              "sets": 1,
+              "reps": "45 min",
+              "rest_sec": 0,
+              "tip": "Bici, caminata rápida, elíptica. Pulso 60-70% max.",
+              "progression": "Zona 2 quema principalmente grasa como combustible"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Lower · Fuerza + HIIT S8",
+          "focus": "Piernas fuertes + cardio de alta intensidad",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra o Goblet",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Mantener el peso es mantener el músculo.",
+              "progression": "El músculo de pierna quema más grasa en reposo"
+            },
+            {
+              "name": "Peso Muerto Rumano",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Posterior fuerte. No perder masa muscular.",
+              "progression": "Isquiotibiales y glúteos = motores calóricos"
+            },
+            {
+              "name": "Zancada Caminando",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Activa glúteos, cuadriceps, core.",
+              "progression": ""
+            },
+            {
+              "name": "Circuito HIIT: Squat jump + Burpee + Climbers",
+              "sets": 4,
+              "reps": "10+8+20",
+              "rest_sec": 60,
+              "tip": "Sin pausa entre los tres. 60 seg pausa entre rondas.",
+              "progression": "El HIIT post-fuerza maximiza la quema de grasa"
+            },
+            {
+              "name": "Core anti-rotación: Pallof Press",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "No dejarse rotar. Core estabilizador.",
+              "progression": "Cintura más definida con este ejercicio"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Upper · Fuerza + Metabólico S8-B",
+          "focus": "Mantener músculo mientras pierdes grasa",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Jumping Jacks",
+              "sets": 1,
+              "reps": "30 seg",
+              "rest_sec": 15,
+              "tip": "Activa el sistema cardiovascular",
+              "progression": ""
+            },
+            {
+              "name": "Círculos de cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 15,
+              "tip": "Movilidad lumbo-pélvica",
+              "progression": ""
+            },
+            {
+              "name": "Estocada con rotación",
+              "sets": 1,
+              "reps": "8 c/l",
+              "rest_sec": 20,
+              "tip": "Moviliza toda la cadena",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Press Banca o Inclinado",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Mantener la fuerza en déficit es mantener el músculo.",
+              "progression": "No bajar el peso en déficit calórico"
+            },
+            {
+              "name": "Remo con Barra o Mancuernas",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Espalda fuerte. Postura correcta.",
+              "progression": "La espalda es clave en recomposición"
+            },
+            {
+              "name": "Press Militar de Pie",
+              "sets": 2,
+              "reps": "10-12",
+              "rest_sec": 75,
+              "tip": "Core activado. Glúteos apretados.",
+              "progression": ""
+            },
+            {
+              "name": "Superserie: Curl bíceps + Extensión tríceps",
+              "sets": 3,
+              "reps": "12+12",
+              "rest_sec": 60,
+              "tip": "Sin descanso entre los dos ejercicios",
+              "progression": "Superserie ahorra tiempo y mantiene pulso alto"
+            },
+            {
+              "name": "Finisher metabólico: 3 min no-stop",
+              "sets": 1,
+              "reps": "3 min",
+              "rest_sec": 0,
+              "tip": "Mountain climbers, jumping jacks o saltos. Sin parar.",
+              "progression": "EPOC activado después del entreno"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Caminata 20 min",
+              "sets": 1,
+              "reps": "20 min",
+              "rest_sec": 0,
+              "tip": "Ritmo cómodo, sin prisa",
+              "progression": ""
+            },
+            {
+              "name": "Estiramiento cadera y glúteos",
+              "sets": 1,
+              "reps": "10 min",
+              "rest_sec": 0,
+              "tip": "Sostener 30s cada posición",
+              "progression": ""
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    }
+  ]
+}
