@@ -799,8 +799,6 @@ async function processMessage(text) {
   document.getElementById('sendBtn').classList.remove('active');
 
   addMessage('assistant', '', true); // typing
-
-  console.log('[Coach] processMessage:', text.slice(0,50));
   try {
     // V2: context-aware mode detection
     var ctx = window.getArjuContext ? getArjuContext() : {};
@@ -817,11 +815,9 @@ async function processMessage(text) {
     var result;
     if (window.arjuSend) {
       COACH.lastMode = detectedMode;
-    console.log('[Coach] llamando arjuSend, mode:', detectedMode);
       result = await arjuSend(text, detectedMode, ctx);
     } else {
       // Fallback directo a /api/chat si arjuSend no está disponible
-      console.log('[Coach] arjuSend no disponible, llamando /api/chat directo');
       var tok = '';
       try {
         var rw = localStorage.getItem('sb-egswsqymkxmbtcpnozcq-auth-token') || localStorage.getItem('arjunafit-auth');
@@ -998,7 +994,6 @@ function initSpeechRecognition() {
   };
 
   rec.onerror = (e) => {
-    console.log('[Mic] error:', e.error);
     if (e.error === 'no-speech') {
       // No hubo voz — reiniciar automáticamente
       setTimeout(() => {
@@ -1626,7 +1621,6 @@ async function sendFeedback(rating, msgId, btn) {
 
   // Si es positivo, guardar para fine-tuning automático
   if (rating === 1) {
-    console.log('[Feedback] 👍 guardado para fine-tuning');
   }
 }
 
