@@ -209,6 +209,52 @@ window.onunhandledrejection = function(e) {
   }
 };
 </script>
+<script>
+// safeLs — localStorage seguro para Safari iOS private mode
+// En modo privado, setItem lanza QuotaExceededError y rompe el app
+(function() {
+  var _mem = {}; // fallback in-memory si localStorage no disponible
+  var _ok = (function() {
+    try { localStorage.setItem('__af_test', '1'); localStorage.removeItem('__af_test'); return true; }
+    catch(e) { return false; }
+  })();
+  
+  window.safeLs = {
+    set: function(k, v) {
+      try { if (_ok) localStorage.setItem(k, v); else _mem[k] = v; }
+      catch(e) { _mem[k] = v; }
+    },
+    get: function(k, fallback) {
+      try { var v = _ok ? localStorage.getItem(k) : _mem[k]; return v !== null && v !== undefined ? v : (fallback || null); }
+      catch(e) { return fallback || null; }
+    },
+    remove: function(k) {
+      try { if (_ok) localStorage.removeItem(k); else delete _mem[k]; }
+      catch(e) { delete _mem[k]; }
+    }
+  };
+  
+  // Sobrescribir localStorage globalmente para que el código existente funcione sin cambios
+  if (!_ok) {
+    try {
+      Object.defineProperty(window, 'localStorage', {
+        get: function() {
+          return {
+            getItem: function(k) { return _mem[k] !== undefined ? _mem[k] : null; },
+            setItem: function(k, v) { _mem[k] = v; },
+            removeItem: function(k) { delete _mem[k]; },
+            clear: function() { _mem = {}; },
+            key: function(i) { return Object.keys(_mem)[i] || null; },
+            get length() { return Object.keys(_mem).length; }
+          };
+        }
+      });
+    } catch(e) {
+      // Si no se puede sobrescribir, safeLs.set/get funciona igual
+    }
+  }
+})();
+</script>
 </head>
 <body style="overflow-x:hidden">
 <input type="file" id="prog-cam-input" accept="image/*" capture="environment"
