@@ -22,6 +22,12 @@
       "weeks": "5-6",
       "focus": "Fuerza y consolidación",
       "intensity": "Alta"
+    },
+    {
+      "phase": 4,
+      "weeks": "7-8",
+      "focus": "Pico e integración + Deload",
+      "intensity": "Máxima → Descarga"
     }
   ],
   "weekly_template": {
@@ -149,5 +155,2070 @@
       "exercises": [],
       "duration_min": 0
     }
-  }
+  },
+  "weeks": [
+    {
+      "week": 1,
+      "phase": 1,
+      "phase_name": "Activación y técnica",
+      "phase_focus": "Aprender los movimientos. Peso ligero, técnica perfecta.",
+      "days": [
+        {
+          "title": "Glúteos · Empuje de Cadera",
+          "focus": "Hip thrust y patrones de empuje",
+          "duration_min": 45,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Glute Bridge",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteos antes de cargar",
+              "progression": ""
+            },
+            {
+              "name": "Abducción con banda",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteo medio",
+              "progression": ""
+            },
+            {
+              "name": "Rotación interna/externa cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 20,
+              "tip": "Movilidad de cadera",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Hip Thrust con Barra o Mancuernas",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "Pausa 1 segundo arriba, aprieta fuerte",
+              "progression": "Empieza con peso que permita técnica perfecta"
+            },
+            {
+              "name": "Glute Bridge Unilateral",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Una pierna extendida, otra flexionada",
+              "progression": "Agrega 2.5kg si sientes que las 12 reps son fáciles"
+            },
+            {
+              "name": "Abducción sentada con banda",
+              "sets": 3,
+              "reps": "20",
+              "rest_sec": 60,
+              "tip": "Abre las rodillas contra la banda lentamente",
+              "progression": "Aumenta tensión de la banda en semana 2"
+            },
+            {
+              "name": "Extensión de cadera de pie con polea baja",
+              "sets": 3,
+              "reps": "15 c/l",
+              "rest_sec": 60,
+              "tip": "Glúteo arriba, no arquear la espalda",
+              "progression": "Peso que permitas control total"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Caminata 20 min",
+              "sets": 1,
+              "reps": "20 min",
+              "rest_sec": 0,
+              "tip": "Ritmo cómodo, sin prisa",
+              "progression": ""
+            },
+            {
+              "name": "Estiramiento cadera y glúteos",
+              "sets": 1,
+              "reps": "10 min",
+              "rest_sec": 0,
+              "tip": "Sostener 30s cada posición",
+              "progression": ""
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Glúteos · Bisagra y Tracción",
+          "focus": "Peso muerto y patrones de bisagra",
+          "duration_min": 45,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Glute Bridge",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteos antes de cargar",
+              "progression": ""
+            },
+            {
+              "name": "Abducción con banda",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteo medio",
+              "progression": ""
+            },
+            {
+              "name": "Rotación interna/externa cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 20,
+              "tip": "Movilidad de cadera",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Peso Muerto Rumano con Mancuernas",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Caderas atrás NO hacia abajo. Espalda recta.",
+              "progression": "Siente el estiramiento en isquiotibiales"
+            },
+            {
+              "name": "Sentadilla Sumo con Mancuerna",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 75,
+              "tip": "Pies en 45°, rodillas en línea con pies",
+              "progression": "Baja hasta que caderas estén paralelas al suelo"
+            },
+            {
+              "name": "Patada de glúteo en cuadrupedia (donkey kick)",
+              "sets": 3,
+              "reps": "15 c/l",
+              "rest_sec": 60,
+              "tip": "No rotar la cadera al subir",
+              "progression": "Agrega tobillera o banda en semana 2"
+            },
+            {
+              "name": "Clamshell con banda",
+              "sets": 3,
+              "reps": "20 c/l",
+              "rest_sec": 60,
+              "tip": "Abre la rodilla sin rotar la cadera",
+              "progression": "Glúteo medio es clave para estabilidad"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Glúteos · Fuerza y Volumen",
+          "focus": "Compuestos + aislamiento final",
+          "duration_min": 50,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Hip Thrust con Barra",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Hoy más peso que día 1. Técnica correcta primero.",
+              "progression": "Incrementa 2.5-5kg respecto a día 1"
+            },
+            {
+              "name": "Sentadilla Búlgara con Mancuernas",
+              "sets": 3,
+              "reps": "10 c/l",
+              "rest_sec": 90,
+              "tip": "Pie trasero en banco, torso erguido",
+              "progression": "El ejercicio unilateral más efectivo para glúteos"
+            },
+            {
+              "name": "Peso Muerto Sumo con Barra",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Pies anchos, agarre estrecho, empuja el suelo",
+              "progression": "Versión sumo activa más glúteos que convencional"
+            },
+            {
+              "name": "Abducción tumbada con banda",
+              "sets": 3,
+              "reps": "20",
+              "rest_sec": 60,
+              "tip": "Tumbada de lado, banda sobre rodillas",
+              "progression": "Finisher de glúteo medio"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 2,
+      "phase": 1,
+      "phase_name": "Activación y técnica",
+      "phase_focus": "Aprender los movimientos. Peso ligero, técnica perfecta.",
+      "days": [
+        {
+          "title": "Glúteos · Empuje de Cadera",
+          "focus": "Hip thrust y patrones de empuje",
+          "duration_min": 45,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Glute Bridge",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteos antes de cargar",
+              "progression": ""
+            },
+            {
+              "name": "Abducción con banda",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteo medio",
+              "progression": ""
+            },
+            {
+              "name": "Rotación interna/externa cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 20,
+              "tip": "Movilidad de cadera",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Hip Thrust con Barra o Mancuernas",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 90,
+              "tip": "Pausa 1 segundo arriba, aprieta fuerte",
+              "progression": "Empieza con peso que permita técnica perfecta"
+            },
+            {
+              "name": "Glute Bridge Unilateral",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Una pierna extendida, otra flexionada",
+              "progression": "Agrega 2.5kg si sientes que las 12 reps son fáciles"
+            },
+            {
+              "name": "Abducción sentada con banda",
+              "sets": 3,
+              "reps": "20",
+              "rest_sec": 60,
+              "tip": "Abre las rodillas contra la banda lentamente",
+              "progression": "Aumenta tensión de la banda en semana 2"
+            },
+            {
+              "name": "Extensión de cadera de pie con polea baja",
+              "sets": 3,
+              "reps": "15 c/l",
+              "rest_sec": 60,
+              "tip": "Glúteo arriba, no arquear la espalda",
+              "progression": "Peso que permitas control total"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Caminata 20 min",
+              "sets": 1,
+              "reps": "20 min",
+              "rest_sec": 0,
+              "tip": "Ritmo cómodo, sin prisa",
+              "progression": ""
+            },
+            {
+              "name": "Estiramiento cadera y glúteos",
+              "sets": 1,
+              "reps": "10 min",
+              "rest_sec": 0,
+              "tip": "Sostener 30s cada posición",
+              "progression": ""
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Glúteos · Bisagra y Tracción",
+          "focus": "Peso muerto y patrones de bisagra",
+          "duration_min": 45,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Glute Bridge",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteos antes de cargar",
+              "progression": ""
+            },
+            {
+              "name": "Abducción con banda",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteo medio",
+              "progression": ""
+            },
+            {
+              "name": "Rotación interna/externa cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 20,
+              "tip": "Movilidad de cadera",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Peso Muerto Rumano con Mancuernas",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Caderas atrás NO hacia abajo. Espalda recta.",
+              "progression": "Siente el estiramiento en isquiotibiales"
+            },
+            {
+              "name": "Sentadilla Sumo con Mancuerna",
+              "sets": 3,
+              "reps": "15",
+              "rest_sec": 75,
+              "tip": "Pies en 45°, rodillas en línea con pies",
+              "progression": "Baja hasta que caderas estén paralelas al suelo"
+            },
+            {
+              "name": "Patada de glúteo en cuadrupedia (donkey kick)",
+              "sets": 3,
+              "reps": "15 c/l",
+              "rest_sec": 60,
+              "tip": "No rotar la cadera al subir",
+              "progression": "Agrega tobillera o banda en semana 2"
+            },
+            {
+              "name": "Clamshell con banda",
+              "sets": 3,
+              "reps": "20 c/l",
+              "rest_sec": 60,
+              "tip": "Abre la rodilla sin rotar la cadera",
+              "progression": "Glúteo medio es clave para estabilidad"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Glúteos · Fuerza y Volumen",
+          "focus": "Compuestos + aislamiento final",
+          "duration_min": 50,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Hip Thrust con Barra",
+              "sets": 4,
+              "reps": "12",
+              "rest_sec": 90,
+              "tip": "Hoy más peso que día 1. Técnica correcta primero.",
+              "progression": "Incrementa 2.5-5kg respecto a día 1"
+            },
+            {
+              "name": "Sentadilla Búlgara con Mancuernas",
+              "sets": 3,
+              "reps": "10 c/l",
+              "rest_sec": 90,
+              "tip": "Pie trasero en banco, torso erguido",
+              "progression": "El ejercicio unilateral más efectivo para glúteos"
+            },
+            {
+              "name": "Peso Muerto Sumo con Barra",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Pies anchos, agarre estrecho, empuja el suelo",
+              "progression": "Versión sumo activa más glúteos que convencional"
+            },
+            {
+              "name": "Abducción tumbada con banda",
+              "sets": 3,
+              "reps": "20",
+              "rest_sec": 60,
+              "tip": "Tumbada de lado, banda sobre rodillas",
+              "progression": "Finisher de glúteo medio"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 3,
+      "phase": 2,
+      "phase_name": "Progresión de volumen",
+      "phase_focus": "Más series, más carga. El músculo crece con el desafío.",
+      "days": [
+        {
+          "title": "Glúteos · Empuje de Cadera Intenso",
+          "focus": "Hip thrust pesado + variantes",
+          "duration_min": 50,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Glute Bridge",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteos antes de cargar",
+              "progression": ""
+            },
+            {
+              "name": "Abducción con banda",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteo medio",
+              "progression": ""
+            },
+            {
+              "name": "Rotación interna/externa cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 20,
+              "tip": "Movilidad de cadera",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Hip Thrust con Barra",
+              "sets": 4,
+              "reps": "10-12",
+              "rest_sec": 90,
+              "tip": "Peso que te cueste las últimas 2 reps",
+              "progression": "Semana 3: +5kg vs semana 1. Semana 4: +2.5kg más"
+            },
+            {
+              "name": "Sentadilla Búlgara con Mancuernas",
+              "sets": 4,
+              "reps": "10 c/l",
+              "rest_sec": 90,
+              "tip": "Controla la bajada 3 segundos",
+              "progression": "La excentrica lenta aumenta hipertrofia"
+            },
+            {
+              "name": "Extensión de cadera en polea",
+              "sets": 4,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Pierna recta, contrae glúteo al final",
+              "progression": "Agrega más peso si controlas bien"
+            },
+            {
+              "name": "Abducción con máquina o banda sentada",
+              "sets": 3,
+              "reps": "20-25",
+              "rest_sec": 60,
+              "tip": "Abre lento, cierra más lento aún",
+              "progression": "Finisher de alto rep para glúteo medio"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Caminata 20 min",
+              "sets": 1,
+              "reps": "20 min",
+              "rest_sec": 0,
+              "tip": "Ritmo cómodo, sin prisa",
+              "progression": ""
+            },
+            {
+              "name": "Estiramiento cadera y glúteos",
+              "sets": 1,
+              "reps": "10 min",
+              "rest_sec": 0,
+              "tip": "Sostener 30s cada posición",
+              "progression": ""
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Glúteos · Bisagra con Carga",
+          "focus": "Peso muerto y variantes pesadas",
+          "duration_min": 50,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Glute Bridge",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteos antes de cargar",
+              "progression": ""
+            },
+            {
+              "name": "Abducción con banda",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteo medio",
+              "progression": ""
+            },
+            {
+              "name": "Rotación interna/externa cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 20,
+              "tip": "Movilidad de cadera",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Peso Muerto Rumano con Barra",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Carga que sientas el estiramiento pero mantienes técnica",
+              "progression": "No redondear la espalda baja"
+            },
+            {
+              "name": "Good Morning con Barra Ligera",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Bisagra de cadera con barra en espalda, carga mínima",
+              "progression": "Excelente para isquiotibiales y glúteos"
+            },
+            {
+              "name": "Donkey Kick en polea o con tobillera",
+              "sets": 4,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Enfócate en el squeeze final arriba",
+              "progression": "Más efectivo que sin polea por tensión constante"
+            },
+            {
+              "name": "Caminata lateral con banda ancha",
+              "sets": 3,
+              "reps": "15 c/l",
+              "rest_sec": 60,
+              "tip": "Rodillas semiflexionadas, no juntar los pies",
+              "progression": "Glúteo medio y estabilidad de rodilla"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Glúteos · Sesión de Alta Carga",
+          "focus": "Los compuestos más pesados de la semana",
+          "duration_min": 55,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra o Goblet Pesada",
+              "sets": 4,
+              "reps": "8-10",
+              "rest_sec": 120,
+              "tip": "Profundidad: muslos paralelos al suelo o más bajo",
+              "progression": "Las sentadillas profundas activan más glúteos"
+            },
+            {
+              "name": "Hip Thrust con Barra - Series Pesadas",
+              "sets": 4,
+              "reps": "8-10",
+              "rest_sec": 120,
+              "tip": "Última sesión de la semana, máxima carga segura",
+              "progression": "Si hiciste 4x10 semana 3, haz 4x8 con más peso"
+            },
+            {
+              "name": "Peso Muerto Sumo con Barra",
+              "sets": 3,
+              "reps": "8",
+              "rest_sec": 120,
+              "tip": "Stance ancho, pies a 45°, la carga más alta hasta ahora",
+              "progression": "Asegura que la técnica sea perfecta"
+            },
+            {
+              "name": "Glute Kickback en Máquina o Polea",
+              "sets": 3,
+              "reps": "15 c/l",
+              "rest_sec": 60,
+              "tip": "Extensión completa con contracción al final",
+              "progression": "Cierra la sesión activando glúteo"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 4,
+      "phase": 2,
+      "phase_name": "Progresión de volumen",
+      "phase_focus": "Más series, más carga. El músculo crece con el desafío.",
+      "days": [
+        {
+          "title": "Glúteos · Empuje de Cadera Intenso",
+          "focus": "Hip thrust pesado + variantes",
+          "duration_min": 50,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Glute Bridge",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteos antes de cargar",
+              "progression": ""
+            },
+            {
+              "name": "Abducción con banda",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteo medio",
+              "progression": ""
+            },
+            {
+              "name": "Rotación interna/externa cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 20,
+              "tip": "Movilidad de cadera",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Hip Thrust con Barra",
+              "sets": 4,
+              "reps": "10-12",
+              "rest_sec": 90,
+              "tip": "Peso que te cueste las últimas 2 reps",
+              "progression": "Semana 3: +5kg vs semana 1. Semana 4: +2.5kg más"
+            },
+            {
+              "name": "Sentadilla Búlgara con Mancuernas",
+              "sets": 4,
+              "reps": "10 c/l",
+              "rest_sec": 90,
+              "tip": "Controla la bajada 3 segundos",
+              "progression": "La excentrica lenta aumenta hipertrofia"
+            },
+            {
+              "name": "Extensión de cadera en polea",
+              "sets": 4,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Pierna recta, contrae glúteo al final",
+              "progression": "Agrega más peso si controlas bien"
+            },
+            {
+              "name": "Abducción con máquina o banda sentada",
+              "sets": 3,
+              "reps": "20-25",
+              "rest_sec": 60,
+              "tip": "Abre lento, cierra más lento aún",
+              "progression": "Finisher de alto rep para glúteo medio"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Caminata 20 min",
+              "sets": 1,
+              "reps": "20 min",
+              "rest_sec": 0,
+              "tip": "Ritmo cómodo, sin prisa",
+              "progression": ""
+            },
+            {
+              "name": "Estiramiento cadera y glúteos",
+              "sets": 1,
+              "reps": "10 min",
+              "rest_sec": 0,
+              "tip": "Sostener 30s cada posición",
+              "progression": ""
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Glúteos · Bisagra con Carga",
+          "focus": "Peso muerto y variantes pesadas",
+          "duration_min": 50,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Glute Bridge",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteos antes de cargar",
+              "progression": ""
+            },
+            {
+              "name": "Abducción con banda",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteo medio",
+              "progression": ""
+            },
+            {
+              "name": "Rotación interna/externa cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 20,
+              "tip": "Movilidad de cadera",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Peso Muerto Rumano con Barra",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Carga que sientas el estiramiento pero mantienes técnica",
+              "progression": "No redondear la espalda baja"
+            },
+            {
+              "name": "Good Morning con Barra Ligera",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Bisagra de cadera con barra en espalda, carga mínima",
+              "progression": "Excelente para isquiotibiales y glúteos"
+            },
+            {
+              "name": "Donkey Kick en polea o con tobillera",
+              "sets": 4,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Enfócate en el squeeze final arriba",
+              "progression": "Más efectivo que sin polea por tensión constante"
+            },
+            {
+              "name": "Caminata lateral con banda ancha",
+              "sets": 3,
+              "reps": "15 c/l",
+              "rest_sec": 60,
+              "tip": "Rodillas semiflexionadas, no juntar los pies",
+              "progression": "Glúteo medio y estabilidad de rodilla"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Glúteos · Sesión de Alta Carga",
+          "focus": "Los compuestos más pesados de la semana",
+          "duration_min": 55,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra o Goblet Pesada",
+              "sets": 4,
+              "reps": "8-10",
+              "rest_sec": 120,
+              "tip": "Profundidad: muslos paralelos al suelo o más bajo",
+              "progression": "Las sentadillas profundas activan más glúteos"
+            },
+            {
+              "name": "Hip Thrust con Barra - Series Pesadas",
+              "sets": 4,
+              "reps": "8-10",
+              "rest_sec": 120,
+              "tip": "Última sesión de la semana, máxima carga segura",
+              "progression": "Si hiciste 4x10 semana 3, haz 4x8 con más peso"
+            },
+            {
+              "name": "Peso Muerto Sumo con Barra",
+              "sets": 3,
+              "reps": "8",
+              "rest_sec": 120,
+              "tip": "Stance ancho, pies a 45°, la carga más alta hasta ahora",
+              "progression": "Asegura que la técnica sea perfecta"
+            },
+            {
+              "name": "Glute Kickback en Máquina o Polea",
+              "sets": 3,
+              "reps": "15 c/l",
+              "rest_sec": 60,
+              "tip": "Extensión completa con contracción al final",
+              "progression": "Cierra la sesión activando glúteo"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 5,
+      "phase": 3,
+      "phase_name": "Fuerza y consolidación",
+      "phase_focus": "Reps bajas, peso máximo. Aquí el glúteo se densifica.",
+      "days": [
+        {
+          "title": "Glúteos · Fuerza — Empuje",
+          "focus": "Cargas máximas en hip thrust",
+          "duration_min": 55,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Glute Bridge",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteos antes de cargar",
+              "progression": ""
+            },
+            {
+              "name": "Abducción con banda",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteo medio",
+              "progression": ""
+            },
+            {
+              "name": "Rotación interna/externa cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 20,
+              "tip": "Movilidad de cadera",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Hip Thrust con Barra — Series de Fuerza",
+              "sets": 5,
+              "reps": "6-8",
+              "rest_sec": 120,
+              "tip": "Carga máxima que puedas mover con técnica. Sin comprometer postura.",
+              "progression": "Si semana 5 haces X, semana 6 intenta X+5kg"
+            },
+            {
+              "name": "Sentadilla Búlgara con Mancuernas Pesadas",
+              "sets": 4,
+              "reps": "8 c/l",
+              "rest_sec": 90,
+              "tip": "Controlado. Si vas a fallar, falla en la bajada, no arriba.",
+              "progression": "Este es el mejor ejercicio unilateral para glúteo"
+            },
+            {
+              "name": "Hip Thrust Unilateral con Peso",
+              "sets": 3,
+              "reps": "10 c/l",
+              "rest_sec": 90,
+              "tip": "Una pierna. Cadera no rota. Squeeze al tope.",
+              "progression": "Corrige desequilibrios entre piernas"
+            },
+            {
+              "name": "Abducción con máquina — Series lentas",
+              "sets": 3,
+              "reps": "15 pesado",
+              "rest_sec": 75,
+              "tip": "4 segundos para cerrar. Tensión constante.",
+              "progression": "Glúteo medio = estabilidad y anchura"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Foam rolling glúteos e isquiotibiales",
+              "sets": 1,
+              "reps": "10 min",
+              "rest_sec": 0,
+              "tip": "Presión sobre puntos tensos",
+              "progression": ""
+            },
+            {
+              "name": "Yoga restaurativo de cadera",
+              "sets": 1,
+              "reps": "15 min",
+              "rest_sec": 0,
+              "tip": "Paloma, ángulo ligado, torsión supina",
+              "progression": ""
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Glúteos · Fuerza — Bisagra",
+          "focus": "Peso muerto al máximo",
+          "duration_min": 55,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Glute Bridge",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteos antes de cargar",
+              "progression": ""
+            },
+            {
+              "name": "Abducción con banda",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteo medio",
+              "progression": ""
+            },
+            {
+              "name": "Rotación interna/externa cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 20,
+              "tip": "Movilidad de cadera",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Peso Muerto Rumano con Barra — Carga Máxima",
+              "sets": 5,
+              "reps": "6-8",
+              "rest_sec": 120,
+              "tip": "Máxima carga que permita espalda neutra.",
+              "progression": "Si fallas la técnica, reduce el peso"
+            },
+            {
+              "name": "Good Morning con Barra",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Bisagra de cadera. No es sentadilla.",
+              "progression": "Fortalece la cadena posterior completa"
+            },
+            {
+              "name": "Extensión de cadera en polea alta",
+              "sets": 4,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Glúteo máximo en contracción completa.",
+              "progression": "Tensión constante por el cable"
+            },
+            {
+              "name": "Clamshell con banda fuerte",
+              "sets": 3,
+              "reps": "15 c/l",
+              "rest_sec": 60,
+              "tip": "Resistencia que te cueste las últimas 3 reps",
+              "progression": "Glúteo medio y externo rotador"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Glúteos · Sesión Total de Fuerza",
+          "focus": "El entreno más intenso del programa",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra — Serie Top",
+              "sets": 5,
+              "reps": "5-6",
+              "rest_sec": 120,
+              "tip": "Máxima carga del programa hasta ahora. Spotting si es posible.",
+              "progression": "Profundidad correcta > peso máximo"
+            },
+            {
+              "name": "Hip Thrust con Barra — Máximo",
+              "sets": 5,
+              "reps": "6",
+              "rest_sec": 120,
+              "tip": "La serie más pesada de todo el programa.",
+              "progression": "Registra el peso para trackear progresión"
+            },
+            {
+              "name": "Peso Muerto Sumo con Barra — Intenso",
+              "sets": 3,
+              "reps": "6",
+              "rest_sec": 120,
+              "tip": "Explosivo para subir, controlado para bajar",
+              "progression": "Activa glúteos, isquiotibiales y aductores"
+            },
+            {
+              "name": "Patada de glúteo en polea — Series densas",
+              "sets": 3,
+              "reps": "15 c/l",
+              "rest_sec": 60,
+              "tip": "Cierra con aislamiento. Los compuestos hicieron el trabajo.",
+              "progression": "Finisher para terminar el glúteo"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 6,
+      "phase": 3,
+      "phase_name": "Fuerza y consolidación",
+      "phase_focus": "Reps bajas, peso máximo. Aquí el glúteo se densifica.",
+      "days": [
+        {
+          "title": "Glúteos · Fuerza — Empuje",
+          "focus": "Cargas máximas en hip thrust",
+          "duration_min": 55,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Glute Bridge",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteos antes de cargar",
+              "progression": ""
+            },
+            {
+              "name": "Abducción con banda",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteo medio",
+              "progression": ""
+            },
+            {
+              "name": "Rotación interna/externa cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 20,
+              "tip": "Movilidad de cadera",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Hip Thrust con Barra — Series de Fuerza",
+              "sets": 5,
+              "reps": "6-8",
+              "rest_sec": 120,
+              "tip": "Carga máxima que puedas mover con técnica. Sin comprometer postura.",
+              "progression": "Si semana 5 haces X, semana 6 intenta X+5kg"
+            },
+            {
+              "name": "Sentadilla Búlgara con Mancuernas Pesadas",
+              "sets": 4,
+              "reps": "8 c/l",
+              "rest_sec": 90,
+              "tip": "Controlado. Si vas a fallar, falla en la bajada, no arriba.",
+              "progression": "Este es el mejor ejercicio unilateral para glúteo"
+            },
+            {
+              "name": "Hip Thrust Unilateral con Peso",
+              "sets": 3,
+              "reps": "10 c/l",
+              "rest_sec": 90,
+              "tip": "Una pierna. Cadera no rota. Squeeze al tope.",
+              "progression": "Corrige desequilibrios entre piernas"
+            },
+            {
+              "name": "Abducción con máquina — Series lentas",
+              "sets": 3,
+              "reps": "15 pesado",
+              "rest_sec": 75,
+              "tip": "4 segundos para cerrar. Tensión constante.",
+              "progression": "Glúteo medio = estabilidad y anchura"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Foam rolling glúteos e isquiotibiales",
+              "sets": 1,
+              "reps": "10 min",
+              "rest_sec": 0,
+              "tip": "Presión sobre puntos tensos",
+              "progression": ""
+            },
+            {
+              "name": "Yoga restaurativo de cadera",
+              "sets": 1,
+              "reps": "15 min",
+              "rest_sec": 0,
+              "tip": "Paloma, ángulo ligado, torsión supina",
+              "progression": ""
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Glúteos · Fuerza — Bisagra",
+          "focus": "Peso muerto al máximo",
+          "duration_min": 55,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Glute Bridge",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteos antes de cargar",
+              "progression": ""
+            },
+            {
+              "name": "Abducción con banda",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteo medio",
+              "progression": ""
+            },
+            {
+              "name": "Rotación interna/externa cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 20,
+              "tip": "Movilidad de cadera",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Peso Muerto Rumano con Barra — Carga Máxima",
+              "sets": 5,
+              "reps": "6-8",
+              "rest_sec": 120,
+              "tip": "Máxima carga que permita espalda neutra.",
+              "progression": "Si fallas la técnica, reduce el peso"
+            },
+            {
+              "name": "Good Morning con Barra",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Bisagra de cadera. No es sentadilla.",
+              "progression": "Fortalece la cadena posterior completa"
+            },
+            {
+              "name": "Extensión de cadera en polea alta",
+              "sets": 4,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Glúteo máximo en contracción completa.",
+              "progression": "Tensión constante por el cable"
+            },
+            {
+              "name": "Clamshell con banda fuerte",
+              "sets": 3,
+              "reps": "15 c/l",
+              "rest_sec": 60,
+              "tip": "Resistencia que te cueste las últimas 3 reps",
+              "progression": "Glúteo medio y externo rotador"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Glúteos · Sesión Total de Fuerza",
+          "focus": "El entreno más intenso del programa",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra — Serie Top",
+              "sets": 5,
+              "reps": "5-6",
+              "rest_sec": 120,
+              "tip": "Máxima carga del programa hasta ahora. Spotting si es posible.",
+              "progression": "Profundidad correcta > peso máximo"
+            },
+            {
+              "name": "Hip Thrust con Barra — Máximo",
+              "sets": 5,
+              "reps": "6",
+              "rest_sec": 120,
+              "tip": "La serie más pesada de todo el programa.",
+              "progression": "Registra el peso para trackear progresión"
+            },
+            {
+              "name": "Peso Muerto Sumo con Barra — Intenso",
+              "sets": 3,
+              "reps": "6",
+              "rest_sec": 120,
+              "tip": "Explosivo para subir, controlado para bajar",
+              "progression": "Activa glúteos, isquiotibiales y aductores"
+            },
+            {
+              "name": "Patada de glúteo en polea — Series densas",
+              "sets": 3,
+              "reps": "15 c/l",
+              "rest_sec": 60,
+              "tip": "Cierra con aislamiento. Los compuestos hicieron el trabajo.",
+              "progression": "Finisher para terminar el glúteo"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 7,
+      "phase": 4,
+      "phase_name": "Pico e integración",
+      "phase_focus": "La semana más intensa. Body recomposición. Verás los resultados.",
+      "days": [
+        {
+          "title": "Glúteos · Pico — Empuje Máximo",
+          "focus": "El mejor entreno de glúteos del programa",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Glute Bridge",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteos antes de cargar",
+              "progression": ""
+            },
+            {
+              "name": "Abducción con banda",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteo medio",
+              "progression": ""
+            },
+            {
+              "name": "Rotación interna/externa cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 20,
+              "tip": "Movilidad de cadera",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Hip Thrust con Barra — PR (Personal Record)",
+              "sets": 5,
+              "reps": "5",
+              "rest_sec": 120,
+              "tip": "Intenta tu máximo peso con buena técnica. Esto es el pico.",
+              "progression": "Si lograste más que semana 6, anotalo. Es tu PR."
+            },
+            {
+              "name": "Sentadilla Búlgara con Mancuernas — Pesada",
+              "sets": 4,
+              "reps": "8 c/l",
+              "rest_sec": 90,
+              "tip": "El mejor unilateral. Máximo peso controlado.",
+              "progression": "Contracción total en la subida"
+            },
+            {
+              "name": "Hip Thrust Unilateral con Disco o Mancuerna",
+              "sets": 4,
+              "reps": "10 c/l",
+              "rest_sec": 90,
+              "tip": "Corrige el lado más débil.",
+              "progression": "La asimetría se trabaja unilateralmente"
+            },
+            {
+              "name": "Abducción en máquina — Series Gigante",
+              "sets": 4,
+              "reps": "20",
+              "rest_sec": 75,
+              "tip": "Alto volumen final. Glúteo medio exhausto.",
+              "progression": "4 segundos negativo"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Recuperación activa",
+          "focus": "Flujo sanguíneo y movilidad",
+          "duration_min": 30,
+          "type": "recovery",
+          "warm_up": [],
+          "exercises": [
+            {
+              "name": "Caminata 20 min",
+              "sets": 1,
+              "reps": "20 min",
+              "rest_sec": 0,
+              "tip": "Ritmo cómodo, sin prisa",
+              "progression": ""
+            },
+            {
+              "name": "Estiramiento cadera y glúteos",
+              "sets": 1,
+              "reps": "10 min",
+              "rest_sec": 0,
+              "tip": "Sostener 30s cada posición",
+              "progression": ""
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Glúteos · Pico — Bisagra Total",
+          "focus": "Isquiotibiales y glúteos al máximo",
+          "duration_min": 60,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Glute Bridge",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteos antes de cargar",
+              "progression": ""
+            },
+            {
+              "name": "Abducción con banda",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteo medio",
+              "progression": ""
+            },
+            {
+              "name": "Rotación interna/externa cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 20,
+              "tip": "Movilidad de cadera",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Peso Muerto Rumano con Barra — Serie Pico",
+              "sets": 5,
+              "reps": "6",
+              "rest_sec": 120,
+              "tip": "Máximo del programa. Espalda neutra.",
+              "progression": "Registra el peso. Es tu PR en este movimiento"
+            },
+            {
+              "name": "Good Morning + Pausa en el Fondo",
+              "sets": 4,
+              "reps": "8",
+              "rest_sec": 90,
+              "tip": "Mantén 2 seg en la posición de bisagra. Tensión real.",
+              "progression": "Fortalece la cadena posterior completa"
+            },
+            {
+              "name": "Patada trasera en polea — Serie Lenta",
+              "sets": 4,
+              "reps": "12 c/l",
+              "rest_sec": 75,
+              "tip": "Baja 4 segundos. El negativo construye músculo.",
+              "progression": "Fase excéntrica = mayor hipertrofia"
+            },
+            {
+              "name": "Clamshell + Extensión de Cadera combinado",
+              "sets": 3,
+              "reps": "12 c/l",
+              "rest_sec": 60,
+              "tip": "Abre la rodilla (clamshell) y luego extiende la cadera",
+              "progression": "Ejercicio combinado para glúteo total"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Glúteos · Sesión Final Intensa",
+          "focus": "El último entreno fuerte del programa",
+          "duration_min": 65,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Caminata lateral con banda",
+              "sets": 2,
+              "reps": "12 c/l",
+              "rest_sec": 30,
+              "tip": "Rodillas fuera, no adentro",
+              "progression": ""
+            },
+            {
+              "name": "Sentadilla goblet ligera",
+              "sets": 2,
+              "reps": "10",
+              "rest_sec": 30,
+              "tip": "Rango completo, lento",
+              "progression": ""
+            },
+            {
+              "name": "Peso muerto rumano leve",
+              "sets": 1,
+              "reps": "8",
+              "rest_sec": 30,
+              "tip": "Sentir tensión isquiotibiales",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Sentadilla con Barra — Máximo Absoluto",
+              "sets": 5,
+              "reps": "5",
+              "rest_sec": 120,
+              "tip": "El peso más alto del programa.",
+              "progression": "Profundidad y técnica primero"
+            },
+            {
+              "name": "Hip Thrust con Barra — Volumen Final",
+              "sets": 4,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Hoy bajamos el peso y subimos reps. El músculo se queda.",
+              "progression": "70% del peso de la serie pico"
+            },
+            {
+              "name": "Peso Muerto Sumo — Serie Final",
+              "sets": 3,
+              "reps": "8",
+              "rest_sec": 90,
+              "tip": "Carga moderada, ejecución perfecta.",
+              "progression": "Graba un video para ver tu técnica"
+            },
+            {
+              "name": "Superserie final: Abducción + Glute Bridge",
+              "sets": 3,
+              "reps": "15+15",
+              "rest_sec": 60,
+              "tip": "Sin descanso entre los dos. Activa el glúteo total.",
+              "progression": "Finisher clásico de glúteos"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "week": 8,
+      "phase": 4,
+      "phase_name": "Descarga (Deload) y mantenimiento",
+      "phase_focus": "El cuerpo necesita asimilar. Menos volumen, técnica perfecta.",
+      "days": [
+        {
+          "title": "Glúteos · Descarga — Empuje Suave",
+          "focus": "50% del volumen, movimientos principales",
+          "duration_min": 35,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Glute Bridge",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteos antes de cargar",
+              "progression": ""
+            },
+            {
+              "name": "Abducción con banda",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteo medio",
+              "progression": ""
+            },
+            {
+              "name": "Rotación interna/externa cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 20,
+              "tip": "Movilidad de cadera",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Hip Thrust con Barra",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "60% del peso de la semana pico. Disfruta el movimiento.",
+              "progression": "El deload no es pereza, es recuperación"
+            },
+            {
+              "name": "Sentadilla Goblet",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Técnica perfecta. Sin carga extra.",
+              "progression": "Consolida los patrones motores"
+            },
+            {
+              "name": "Abducción con banda — Ligera",
+              "sets": 2,
+              "reps": "20",
+              "rest_sec": 60,
+              "tip": "Activación suave. Sin fatigarte.",
+              "progression": "Mantén la activación del glúteo medio"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Glúteos · Descarga — Bisagra Ligera",
+          "focus": "Movilidad y técnica",
+          "duration_min": 35,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Glute Bridge",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteos antes de cargar",
+              "progression": ""
+            },
+            {
+              "name": "Abducción con banda",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteo medio",
+              "progression": ""
+            },
+            {
+              "name": "Rotación interna/externa cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 20,
+              "tip": "Movilidad de cadera",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Peso Muerto Rumano con Mancuernas Ligero",
+              "sets": 3,
+              "reps": "12",
+              "rest_sec": 75,
+              "tip": "Peso cómodo. Siente el movimiento.",
+              "progression": "La técnica se consolida en el deload"
+            },
+            {
+              "name": "Donkey Kick — Sin peso",
+              "sets": 3,
+              "reps": "15 c/l",
+              "rest_sec": 60,
+              "tip": "Activación pura. Mente-músculo.",
+              "progression": "Enfócate en la contracción"
+            },
+            {
+              "name": "Clamshell Ligero",
+              "sets": 2,
+              "reps": "20 c/l",
+              "rest_sec": 60,
+              "tip": "Solo activación. Nada de fatiga.",
+              "progression": "Mantén la conexión mente-glúteo"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Glúteos · Sesión Resumen",
+          "focus": "Un poco de todo. Celebra lo que lograste.",
+          "duration_min": 40,
+          "type": "training",
+          "warm_up": [
+            {
+              "name": "Glute Bridge",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteos antes de cargar",
+              "progression": ""
+            },
+            {
+              "name": "Abducción con banda",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 30,
+              "tip": "Activa glúteo medio",
+              "progression": ""
+            },
+            {
+              "name": "Rotación interna/externa cadera",
+              "sets": 1,
+              "reps": "10 c/l",
+              "rest_sec": 20,
+              "tip": "Movilidad de cadera",
+              "progression": ""
+            }
+          ],
+          "exercises": [
+            {
+              "name": "Hip Thrust con Barra",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 90,
+              "tip": "Celebra este movimiento. 8 semanas de progreso.",
+              "progression": "Compara con la semana 1. Cuánto avanzaste."
+            },
+            {
+              "name": "Sentadilla con peso cómodo",
+              "sets": 3,
+              "reps": "10",
+              "rest_sec": 75,
+              "tip": "Sin prisa. Disfruta el movimiento.",
+              "progression": "8 semanas de constancia. Eso es resultado."
+            },
+            {
+              "name": "Peso Muerto Rumano suave",
+              "sets": 2,
+              "reps": "12",
+              "rest_sec": 60,
+              "tip": "Técnica perfecta.",
+              "progression": "El cuerpo asimila el trabajo de 7 semanas"
+            },
+            {
+              "name": "Abducción + Estiramiento final",
+              "sets": 2,
+              "reps": "15",
+              "rest_sec": 60,
+              "tip": "Cierra con estiramiento de glúteo 2 minutos.",
+              "progression": "Descanso merecido después de 8 semanas"
+            }
+          ],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        },
+        {
+          "title": "Descanso completo",
+          "focus": "Recuperación y síntesis proteica",
+          "duration_min": 0,
+          "type": "rest",
+          "warm_up": [],
+          "exercises": [],
+          "notes": ""
+        }
+      ]
+    }
+  ]
 }
