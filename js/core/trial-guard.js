@@ -296,19 +296,90 @@
   function checkExpiry() {
     const st = getStatus();
     if (!st.expired) return false;
-    const actions = parseInt(sessionStorage.getItem('af-expired-actions') || '0');
-    if (actions >= 3) { sessionStorage.setItem('af-expired-actions', '0'); openPaywall(); return true; }
-    sessionStorage.setItem('af-expired-actions', (actions + 1).toString());
-    return false;
+
+    // Trial confirmado expirado — verificar vs Supabase antes de bloquear
+    // Esto evita falsos positivos si localStorage está desincronizado
+    _syncTrialFromSupabase().then(function() {
+      const st2 = getStatus();
+      if (!st2.expired) return; // Supabase dice que no expiró — dejar pasar
+      
+      // Expirado confirmado — bloqueo DURO
+      // Mostrar paywall fullscreen sin opción de cerrar
+      var existing = document.getElementById('af-hard-block');
+      if (existing) return;
+
+      var ov = document.createElement('div');
+      ov.id = 'af-hard-block';
+      ov.style.cssText = [
+        'position:fixed','inset:0','z-index:9999',
+        "background:rgba(8,5,17,.98)",
+        'display:flex','flex-direction:column',
+        'align-items:center','justify-content:center',
+        'padding:32px 24px',"font-family:'Outfit',sans-serif",
+        'overflow-y:auto'
+      ].join(';');
+
+      var sessions = getTotalSessions();
+      var checkoutUrl = getCheckoutUrl();
+
+      ov.innerHTML = [
+        '<div style="max-width:340px;width:100%;text-align:center">',
+        '<div style="font-size:44px;margin-bottom:16px">⏰</div>',
+        '<div style="font-size:22px;font-weight:800;color:#f1f0f4;margin-bottom:8px;letter-spacing:-.03em">',
+        'Tus 7 días gratis terminaron</div>',
+        '<div style="font-size:14px;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:24px">',
+        sessions > 0
+          ? 'Completaste <b style="color:#c4b5fd">' + sessions + ' sesiones</b>.<br>Tu progreso está guardado y te espera.'
+          : 'Tu progreso está guardado y te espera.',
+        '</div>',
+        '<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:16px;margin-bottom:20px;text-align:left">',
+        ['🏋️ 56 días de entrenamientos','🤖 Coach Arju sin límites','🥗 Recetario completo LATAM',
+         '📊 Progreso y seguimiento','🔒 Tu avance no desaparece'].map(function(f) {
+          return '<div style="display:flex;align-items:center;gap:10px;padding:5px 0;font-size:13px;color:rgba(255,255,255,.75)">' + f + '</div>';
+        }).join(''),
+        '</div>',
+        '<div style="margin-bottom:20px">',
+        '<div style="font-size:34px;font-weight:800;color:#f1f0f4">$32 USD</div>',
+        '<div style="font-size:12px;color:rgba(255,255,255,.35)">acceso completo al reto · pago único</div>',
+        '</div>',
+        '<a href="' + checkoutUrl + '" target="_blank" ',
+        'style="display:block;width:100%;padding:15px;border-radius:16px;border:none;',
+        'background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-size:16px;',
+        'font-weight:800;text-align:center;text-decoration:none;cursor:pointer;',
+        'box-shadow:0 6px 24px rgba(124,58,237,.4);margin-bottom:10px">',
+        'Desbloquear reto por $32 USD →</a>',
+        '<a href="https://wa.me/573209497919?text=' + encodeURIComponent('Hola! Terminaron mis 7 días de prueba en ArjunaFit y quiero continuar.') + '" ',
+        'target="_blank" style="display:block;width:100%;padding:12px;border-radius:14px;',
+        'background:rgba(37,211,102,.15);border:1px solid rgba(37,211,102,.3);color:#4ade80;',
+        'font-size:13px;font-weight:600;text-align:center;text-decoration:none">',
+        '💬 Hablar con Arjuna por WhatsApp</a>',
+        '</div>'
+      ].join('');
+
+      document.body.appendChild(ov);
+      // NO hay botón de cerrar — bloqueo real
+    });
+
+    return true;
   }
 
   function getTotalSessions() {
     try { return Object.keys(localStorage).filter(k => k.startsWith('af-sets-')).length; }
     catch(e) { return 0; }
   }
-  // Siempre verifica Supabase para que localStorage tenga el valor correcto
+  // Al cargar la página: sincronizar con Supabase y verificar expiración
   document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(_syncTrialFromSupabase, 1000);
+    // Sync inmediato con Supabase
+    _syncTrialFromSupabase().then(function() {
+      // Después de sync, verificar si expiró
+      if (isTrialEligible()) {
+        var st = getStatus();
+        if (st.expired) {
+          // Expirado → bloqueo duro automático al cargar la página
+          window.AF_Trial.checkExpiry();
+        }
+      }
+    });
   });
 
   window.AF_Trial = {
