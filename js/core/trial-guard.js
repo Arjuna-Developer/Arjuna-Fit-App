@@ -101,10 +101,16 @@
         console.log('[Trial] Iniciado en Supabase:', new Date(nowMs).toLocaleDateString());
       }
 
-      // Re-renderizar banner con el valor correcto
+      // Después de sync: verificar expiración y actuar
       setTimeout(function() {
-        if (typeof renderBanner === 'function') renderBanner();
-      }, 200);
+        var st2 = getStatus();
+        if (st2.expired) {
+          // Trial expirado confirmado por Supabase → bloqueo duro
+          window.AF_Trial.checkExpiry();
+        } else if (typeof renderBanner === 'function') {
+          renderBanner(); // Mostrar banner de días restantes
+        }
+      }, 300);
 
     } catch(e) {
       console.warn('[Trial] Sync error:', e.message);
